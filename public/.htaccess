@@ -1,0 +1,10 @@
+#reroute all requests to index.php except exact filenames
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+#don't apply to URLs that go to existing files or directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^.*$ index.php [PT,L]
+</IfModule>
