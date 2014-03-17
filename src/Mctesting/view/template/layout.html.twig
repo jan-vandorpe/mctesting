@@ -1,11 +1,37 @@
 {%extends "template/base.html.twig"%}
 {%block stylesheets%}
+<link rel="stylesheet" href="\mctesting\public\css\loginform.css">
 
 {%endblock%}
 
 {%block title%}MC Testing - {%endblock%}
 
 {%block body%}
+    {%block login%}
+    <div id='topmenu'>
+        <h1 id='titel'>Multiple Choice testing</h1>
+        <div id='loginform'>
+            <form action="/mctesting/home/login" method="post">
+			<table>
+				<tbody>
+					<tr>
+						<td>Gebruikersnaam:</td>
+						<td><input type="text" name="txtGebruikersnaam"></td>
+					</tr>
+					<tr>
+						<td>Wachtwoord:</td>
+						<td><input type="password" name="txtWachtwoord"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Aanmelden"></td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+        </div>
+         </div>
+    {%endblock%}
     {%block content%}
     {%endblock%}
 {%endblock%}

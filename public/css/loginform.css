@@ -1,0 +1,28 @@
+/* 
+    Document   : loginform
+    Created on : 17-mrt-2014, 11:42:17
+    Author     : cyber04
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#topmenu{
+    background-color:lightcyan;
+    padding-top:1em;
+    padding-bottom:3em;
+}
+
+#titel{
+    text-align:center;
+}
+#loginform{
+    float:right;
+    margin-top:-4em;
+    margin-right:2em;
+    background-color:lightskyblue;
+    padding:0.5em;  
+}
+

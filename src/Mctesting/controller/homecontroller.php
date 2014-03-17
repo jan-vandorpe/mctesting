@@ -24,12 +24,28 @@ class HomeController extends AbstractController
         $message1 = 'It works!';
         $message2 = 'It REALLY works!';
         $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
-        
+        $message4 = "Klik hier om in te loggen.";
         //view
         $this->render('home.html.twig', array(
             'message1' => $message1,
             'message2' => $message2,
             'message3' => $message3,
+            'message4' => $message4,
+            ));
+    }
+    public function login()
+    {
+        //model
+        $message1 = 'It works!';
+        $message2 = 'It REALLY works!';
+        $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
+        $message4 = "Klik hier om in te loggen.";
+        //view
+        $this->render('home.html.twig', array(
+            'message1' => $message1,
+            'message2' => $message2,
+            'message3' => $message3,
+            'message4' => $message4,
             ));
     }
     
