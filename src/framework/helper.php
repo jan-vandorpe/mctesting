@@ -1,7 +1,10 @@
 <?php
 
 namespace Framework;
+
 use Framework\Exception\SecurityException;
+use Framework\Exception\FrameworkException;
+
 /**
  * Description of helper
  * 
@@ -39,17 +42,57 @@ class Helper
      * a redirect to the login page.
      * @throws AuthenticationException
      */
-    public function check_access_allowed($request)
+    public function check_access_control($requestedController)
     {
-        //array containing first part of the names of controller that are accessible to
-        //public users
-        $public_access = array('home');
-        //test if requested controller needs login
-        if (!in_array(strtolower($request), $public_access)){
-            //test if SESSION var indicating login status is set
-            if (!isset($_SESSION['user'])) {
-                throw new SecurityException('Not logged in',1);
-            } 
+        //force lowercase
+        $requestedController = strtolower($requestedController);
+        /*
+         * multidimensional array containing first part of the names of controllers
+         * that are accessible to public users
+         */
+        $access_control = array('anonymous', 'user', 'admin', 'superadmin');
+        $access_control['anonymous'] = array('home');
+        $access_control['user'] = array();
+        $access_control['admin'] = array();
+        $access_control['superadmin'] = array();
+        /*
+         * Test if requestedController is in access_control array,
+         * if not then throw exception reporting this
+         */
+        if (!$this->in_multiarray(strtolower($requestedController), $access_control)) {
+            throw new FrameworkException('Requested controller '.$requestedController.' not listed in access control');
         }
+        
+        /*
+         * if user is logged in check if requestedController is in array
+         * associated with user privileges or any arrays lower in hierarchy
+         */
+        if (isset($_SESSION['user'])) {
+            $clearance = 1;
+//            $clearance = $user->getClearanceLevel();
+        } else {
+            $clearance = 0;
+        }
+        
+//        if (!in_array(strtolower($requestedController), $public_access)){
+//            //test if SESSION var indicating login status is set
+//            if (!isset($_SESSION['user'])) {
+//                throw new SecurityException('Not logged in',1);
+//            } 
+//        }
+    }
+    
+    /*
+     * Variant of PHP in_array() function that works for multi dimensional arrays
+     * source: http://stackoverflow.com/questions/4128323/in-array-and-multidimensional-array
+     */
+    public function in_multiarray($needle, $haystack, $strict = false)
+    {
+        foreach ($haystack as $item) {
+            if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && $this->in_multiarray($needle, $item, $strict))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

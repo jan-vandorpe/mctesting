@@ -9,7 +9,7 @@ require_once '../src/framework/application.php';
 
 use Framework\Application;
 use Framework\Helper;
-use Framework\Exception\AuthenticationException;
+use Framework\Exception\FrameworkException;
 use Framework\Exception\DispatcherException;
 
 //appname must be identical to the application folder in src folder(case sensitive)
@@ -27,6 +27,8 @@ try {
     $app->getDispatcher()->run();
 
 } catch (DispatcherException $ex) {
+    $app->render('error.html.twig', array('exception' => $ex));
+} catch (FrameworkException $ex) {
     $app->render('error.html.twig', array('exception' => $ex));
 } catch (Exception $ex) {
     $app->render('error.html.twig', array('exception' => $ex));

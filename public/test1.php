@@ -11,7 +11,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-                print('This is a test page');
+                $controller = 'Home';
+                echo $controller;
+                $controller = strtolower($controller);
+                echo $controller;
         ?>
     </body>
 </html>
