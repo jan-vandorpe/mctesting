@@ -1,0 +1,15 @@
+/* 
+    Document   : newCascadeStyleSheet
+    Created on : 18-mrt-2014, 8:23:15
+    Author     : cyber05
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.maincontainer{
+    min-width: 850px;
+    background-color: rgba(0,0,0,0.1);
+    /* test only, to remove! */
+    margin: 0 0 1em 0;
+}
+
