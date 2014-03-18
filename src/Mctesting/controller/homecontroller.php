@@ -24,7 +24,7 @@ class HomeController extends AbstractController
         $message1 = 'It works!';
         $message2 = 'It REALLY works!';
         $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
-        $message4 = "Klik hier om in te loggen.";
+        $message4 = '<b>help mij</b>';
         //view
         $this->render('home.html.twig', array(
             'message1' => $message1,
