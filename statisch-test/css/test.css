@@ -10,6 +10,54 @@
     min-width: 850px;
     background-color: rgba(0,0,0,0.1);
     /* test only, to remove! */
-    margin: 0 0 1em 0;
+    margin: 0 auto 1em auto;
+    width: 85%;
 }
 
+.antwoord{
+    height: auto;
+}
+.form-control{
+    height: auto;
+}
+.vraaggroep{
+    margin-bottom: 1.0em;
+    padding: 0.25em;
+    border-radius: 0.25em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0,0,0,0);
+}
+.vraaggroep:nth-of-type(even){
+    background-color: rgba(0,0,0,0.05);
+}
+.vraaggroep:nth-of-type(odd){
+    background-color: rgba(0,0,0,0.1);
+}
+.vraag .form-control{
+    background: rgba(0,0,0,0);
+}
+.antwoordmetradio{
+    margin: 0.5em 0 0 0.75em;
+}
+/*.antwoordmetradio:nth-of-type(even)>div>span{
+    background-color: rgba(0,0,0,0.1);
+}*/
+.vragencontainer{
+    background-color: rgba(0,0,0,0);
+}
+.vraag .input-group-addon{
+    vertical-align: top;
+}
+.imggroepbijvraag img{
+    float: left;
+    height: 18em;
+    
+    max-width: 18em;
+    margin: 0.5em;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5em;
+    border-color: rgba(0,0,0,0.2);
+}
