@@ -69,7 +69,7 @@ class Dispatcher
                                 $_SESSION['prev_req_page'] = $_SERVER['REQUEST_URI'];
     //                            header('Location: '.$app->getUrl().'/auth/go');
     //                            exit();
-                                throw new ApplicationException('Access denied');
+                                throw new ApplicationException($ex->getMessage());
                                 break;
                             //authentication errors on login page(username, password incorrect)
     //                        case '2':

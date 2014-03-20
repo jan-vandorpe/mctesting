@@ -44,34 +44,40 @@ class Helper
      */
     public function check_access_control($requestedController)
     {
-        //force lowercase
+        //force lowercase for requestedController
         $requestedController = strtolower($requestedController);
+        
+        //access control array
+        $access_control['anonymous'] = array('home','login',);
+        $access_control['user'] = array('user','test',);
+        $access_control['admin'] = array('testadmin','questionadmin',);
+        $access_control['superadmin'] = array('useradmin',);
+        
         /*
-         * multidimensional array containing first part of the names of controllers
-         * that are accessible to public users
-         */
-        $access_control = array('anonymous', 'user', 'admin', 'superadmin');
-        $access_control['anonymous'] = array('home');
-        $access_control['user'] = array();
-        $access_control['admin'] = array();
-        $access_control['superadmin'] = array();
-        /*
-         * Test if requestedController is in access_control array,
-         * if not then throw exception reporting this
+         * Determine if requested controller is listed in access control
          */
         if (!$this->in_multiarray(strtolower($requestedController), $access_control)) {
             throw new FrameworkException('Requested controller '.$requestedController.' not listed in access control');
         }
         
         /*
-         * if user is logged in check if requestedController is in array
-         * associated with user privileges or any arrays lower in hierarchy
+         * Determine ACL for current user
          */
-        if (isset($_SESSION['user'])) {
-            $clearance = 1;
-//            $clearance = $user->getClearanceLevel();
+        $_SESSION['user'] = 'Thomas';
+         if (isset($_SESSION['user'])) {
+            $clearance = 3;
+//            $clearance = $user->getGroup->getClearance();
         } else {
             $clearance = 0;
+        }
+        $acl = $this->generateACL($access_control, $clearance);
+        
+        /*
+         * If controller is listed but not in generated ACL then user does not have 
+         * the required clearance leven, throw exception
+         */
+        if (!in_array($requestedController, $acl)) {
+            throw new SecurityException('Access denied', 1);
         }
         
 //        if (!in_array(strtolower($requestedController), $public_access)){
@@ -94,5 +100,24 @@ class Helper
             }
         }
         return false;
+    }
+    
+    public function generateACL($access_control, $clearance)
+    {
+        $acl = array();
+        if ($clearance >= 0) {
+            $acl = array_merge($acl, $access_control['anonymous']);
+            if ($clearance >= 1) {
+                $acl = array_merge($acl, $access_control['user']);
+                if ($clearance >= 2) {
+                    $acl = array_merge($acl, $access_control['admin']);
+                    if ($clearance >= 3) {
+                        $acl = array_merge($acl, $access_control['superadmin']);
+                    }
+                }
+            }
+        }
+        
+        return $acl;
     }
 }
