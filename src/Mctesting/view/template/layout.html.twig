@@ -1,7 +1,9 @@
 {%extends "template/base.html.twig"%}
 {%block stylesheets%}
-<link rel="stylesheet" href="\mctesting\public\css\loginform.css">
+<link rel="stylesheet" href="\mctesting\public\css\normalize.css" />
+<link rel="stylesheet" href="\mctesting\public\css\bootstrap.min.css" />
 <link rel="stylesheet" href="\mctesting\public\css\baselayout.css">
+
 
 {%endblock%}
 
@@ -9,26 +11,31 @@
 
 {%block body%}
     {%block login%}
-    <div id='topmenu'>
-        <h1 id='titel'>Multiple Choice testing</h1>  
-            {% set user = 'eric' %}
-            {% set ingelogd = true %}
-        <div class="loginform">
-            {% if (user is defined) and (ingelogd == true) %}
-                 Welkom,  {{user}}  <a href='/mctesting/loginlogout/logout'>Afmelden</a> 
-            {%else%}
-                <form action="/mctesting/loginlogout/login" method="post">
-                    Gebruikers-id:<input type="text" name="txtGebruikersnaam">
-                    Wachtwoord:<input type="password" name="txtWachtwoord">
-                    <input type="submit" value="Aanmelden">				
-		</form>
-            {%endif%}
-                
-            
-        </div>
-         </div>
+<div class="container-fluid maincontainer">
+    <nav>
+        <div class="collapse navbar-collapse">
+            {#{% set user = 'eric' %}
+            {% set ingelogd = true %}#}
+                     {% if ( session.user ) and ( session.ingelogd ) %}
+                        <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
+                            Ingelogd als <a href="#" class="navbar-link">{{session.user}} Familienaam</a>
+                        <button type="submit" class="btn btn-default">Uitloggen</button>
+                        </form>                 
+                    {%else%}
+                        <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Login" name="Login" required>
+                                <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
+                            </div>
+                        <button type="submit" class="btn btn-default">Inloggen</button>
+                        </form>
+                    {%endif%}    
+            </div>
+        </nav>
+    </div> 
+
     {%endblock%}
-<div class="content">
+    <div class="content">
     {%block content%}
     {%endblock%}
         </div>

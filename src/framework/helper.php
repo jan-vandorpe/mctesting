@@ -43,7 +43,7 @@ class Helper
     {
         //array containing first part of the names of controller that are accessible to
         //public users
-        $public_access = array('home');
+        $public_access = array('home','login');
         //test if requested controller needs login
         if (!in_array(strtolower($request), $public_access)){
             //test if SESSION var indicating login status is set

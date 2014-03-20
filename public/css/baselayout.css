@@ -13,3 +13,9 @@ body{
     width:80%;
     margin: 0 auto;
 }
+.maincontainer{
+    min-width: 850px;
+    background-color: rgba(0,0,0,0.1);
+    /* test only, to remove! */
+    margin: 0 0 1em 0;
+}

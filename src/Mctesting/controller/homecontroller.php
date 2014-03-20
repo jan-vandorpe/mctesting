@@ -21,33 +21,20 @@ class HomeController extends AbstractController
     public function go()
     {
         //model
-        $message1 = 'It works!';
-        $message2 = 'It REALLY works!';
-        $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
-        $message4 = '<b>help mij</b>';
+        //$message1 = 'It works!';
+        //$message2 = 'It REALLY works!';
+        //$message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
+        //$message4 = '<b>help mij</b>';
         //view
         $this->render('home.html.twig', array(
-            'message1' => $message1,
-            'message2' => $message2,
-            'message3' => $message3,
-            'message4' => $message4,
+          //  'message1' => $message1,
+          //  'message2' => $message2,
+          //  'message3' => $message3,
+          //  'message4' => $message4,
             ));
+        print_r($_SESSION);
     }
-    public function login()
-    {
-        //model
-        $message1 = 'It works!';
-        $message2 = 'It REALLY works!';
-        $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
-        $message4 = "Klik hier om in te loggen.";
-        //view
-        $this->render('home.html.twig', array(
-            'message1' => $message1,
-            'message2' => $message2,
-            'message3' => $message3,
-            'message4' => $message4,
-            ));
-    }
+
     
     public function except()
     {
