@@ -4,6 +4,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 
+
 /**
  * Description of homecontroller
  * 
@@ -34,7 +35,7 @@ class LoginController extends AbstractController
              if ($foundUser == true){
                  header("location:  = /mctesting/menu/go");
              }else{
-                 error: "could not login with these credentials";
+                 print( "could not login with these credentials");
              }
          }else{
              print(" rijksregister");
@@ -44,10 +45,10 @@ class LoginController extends AbstractController
                          if ($magAfleggen == true){
                              header("location:  = /mctesting/menu/go");
                          }else{
-                         error: "U heeft geen toegang tot deze test";    
+                         print "U heeft geen toegang tot deze test";    
                          }
              }else{
-                 error: "No test with these credentials";
+                 print "No test with these credentials";
              }
          }
      }else{
@@ -80,9 +81,13 @@ class LoginController extends AbstractController
     public function getUser($email) {
 
         $sql = "select * from gebruikers where ".$email." = email";
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        //$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $dbh = new \PDO (DB_DSN, DB_USER, DB_PASS);
         $resultSet = $dbh->query($sql);
-        $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
+         print $email;
+        print $resultSet;
+        print $sql;
+        $rij = $resultSet->fetch(\PDO::FETCH_ASSOC);
         $user = new User($rij["rijksregisternr"],$rij["email"], $rij["voornaam"],$rij["familienaam"], $rij["gebruikerscategorie"]);
         $dbh = null;
         return $user;
@@ -91,7 +96,8 @@ class LoginController extends AbstractController
     public function getTest($pwd) {
 
         $sql = "select * from testen where ".$pwd." = wachtwoord";
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        //$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $dbh = new \PDO (DB_DSN, DB_USER, DB_PASS);
         $resultSet = $dbh->query($sql);
         $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
         $test = new Test($rij["TestId"]);
@@ -102,11 +108,12 @@ class LoginController extends AbstractController
     
     public function GetTestUser($login, $pwd) {
 
-        $sql = "'select * from db where $pwInDB = $loginpw and $testafleggersInDB = $login';
-        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $sql = "select * from db where $pwInDB = $loginpw and $testafleggersInDB = $login";
+        //$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $dbh = new \PDO (DB_DSN, DB_USER, DB_PASS);
         $resultSet = $dbh->query($sql);
         $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
-        $test = new Test($rij["TestId"]);
+
         $dbh = null;
         return $test;
     }
