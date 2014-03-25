@@ -48,10 +48,10 @@ class Helper
         $requestedController = strtolower($requestedController);
         
         //access control array
-        $access_control['anonymous'] = array('home','login',);
-        $access_control['user'] = array('user','test',);
-        $access_control['admin'] = array('testadmin','questionadmin',);
-        $access_control['superadmin'] = array('useradmin',);
+        $access_control['anonymous'] = array('home',);
+        $access_control['user'] = array();
+        $access_control['admin'] = array();
+        $access_control['superadmin'] = array();
         
         /*
          * Determine if requested controller is listed in access control
@@ -61,15 +61,17 @@ class Helper
         }
         
         /*
-         * Determine ACL for current user
+         * Determine security level for current user
          */
-        $_SESSION['user'] = 'Thomas';
+//        $_SESSION['user'] = 'Thomas';
          if (isset($_SESSION['user'])) {
-            $clearance = 3;
+//            $clearance = 1;
 //            $clearance = $user->getGroup->getClearance();
         } else {
             $clearance = 0;
         }
+        
+        //generate ACL based on security level
         $acl = $this->generateACL($access_control, $clearance);
         
         /*
