@@ -9,7 +9,7 @@ use Mctesting\Exception\ApplicationException;
  * 
  * Controller that shows the application homepage.
  *
- * @author Thomas
+ * @author Bram & Thomas
  */
 class LoginController extends AbstractController
 {
@@ -21,6 +21,7 @@ class LoginController extends AbstractController
     public function login()
     {
         $login = $_POST["Login"];
+        $password = $_POST["Wachtwoord"];
           //$_SESSION["user"] = "eric"; 
           //   $_SESSION["ingelogd"] = true;
              //header("location: /mctesting/home/go");
@@ -28,42 +29,31 @@ class LoginController extends AbstractController
      if($this->isValidEmailFormat($login) || $this->isValidRRNRFormat($login)){
          print("valid");
          if($this->isValidEmailFormat($login)){
-             print(" email");
+             print(" email");             
+             $foundUser = $this->getUser($login);
+             if ($foundUser == true){
+                 header("location:  = /mctesting/menu/go");
+             }else{
+                 error: "could not login with these credentials";
+             }
          }else{
              print(" rijksregister");
+             $foundTest = $this->getTest($password);
+             if($foundTest == true){
+                 $magAfleggen = $this->GetTestUser($login, $password);
+                         if ($magAfleggen == true){
+                             header("location:  = /mctesting/menu/go");
+                         }else{
+                         error: "U heeft geen toegang tot deze test";    
+                         }
+             }else{
+                 error: "No test with these credentials";
+             }
          }
      }else{
          print("Geen valid login");
      }
-       //if(isValidEmailFormat($login)){       
-            //$found = select * from db where $login = usernameInDB
-            //if ($found = true){
-                //if ($loginpw == $pwInDB){
-                    //header location = menu.html
-                //}else{
-                    //error: "could not login with these credentials";
-                //}
-            //}else{
-                //error: "could not login with these credentials"; || error: "user does not exist";
-            //}
-            
-       //testafnemer login
-       //}else{
-        //$test = select * from db where $loginpw = $pwInDB
-        //if($test == true){
-            //$magAfleggen = select * from db where $pwInDB = $loginpw and $testafleggersInDB = $login
-            //if ($magAfleggen == true){
-                //header location = menu.html
-            //}else{
-            //error: "U heeft geen toegang tot deze test";
-            //}
-        
-        //}else{
-            //error: "No test with these credentials";
-        //}       
-       //}
-    //error: "Controlleer de gegevens.";
-    //}         
+     
 
         
         
@@ -85,6 +75,40 @@ class LoginController extends AbstractController
             return $result;
         }
         return $result;
+    }
+    
+    public function getUser($email) {
+
+        $sql = "select * from gebruikers where ".$email." = email";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $resultSet = $dbh->query($sql);
+        $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
+        $user = new User($rij["rijksregisternr"],$rij["email"], $rij["voornaam"],$rij["familienaam"], $rij["gebruikerscategorie"]);
+        $dbh = null;
+        return $user;
+    }
+    
+    public function getTest($pwd) {
+
+        $sql = "select * from testen where ".$pwd." = wachtwoord";
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $resultSet = $dbh->query($sql);
+        $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
+        $test = new Test($rij["TestId"]);
+        $dbh = null;
+        return $test;
+    }
+    
+    
+    public function GetTestUser($login, $pwd) {
+
+        $sql = "'select * from db where $pwInDB = $loginpw and $testafleggersInDB = $login';
+        $dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
+        $resultSet = $dbh->query($sql);
+        $rij = $resultSet->fetch(PDO::FETCH_ASSOC);
+        $test = new Test($rij["TestId"]);
+        $dbh = null;
+        return $test;
     }
     
     

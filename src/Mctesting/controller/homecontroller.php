@@ -9,7 +9,7 @@ use Mctesting\Exception\ApplicationException;
  * 
  * Controller that shows the application homepage.
  *
- * @author Thomas
+ * @author Bram & Thomas
  */
 class HomeController extends AbstractController
 {
