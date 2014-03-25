@@ -22,6 +22,7 @@ class Application extends AbstractFramework
     protected $appLoader;
     protected $appEnvironment;
     protected $dispatcher;
+    protected $user;
             
     function __construct($appName)
     {
@@ -74,5 +75,13 @@ class Application extends AbstractFramework
     public function render($view, $model)
     {
         print($this->getFrameworkEnvironment()->render($view, $model));
+    }
+    
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function setUser($user) {
+        $this->user = $user;
     }
 }
