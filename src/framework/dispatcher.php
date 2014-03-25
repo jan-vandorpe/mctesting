@@ -56,7 +56,8 @@ class Dispatcher
                 try {
                     try {
                     //check if access is allowed to requested page(controller)
-                    $this->app->getHelper()->check_access_allowed($requestedController);
+//                    $this->app->getHelper()->check_access_control($requestedController);
+                        \Framework\check_access_control($requestedController);
                     
                     //call method and pass arguments
                     $controller->$methodName($arguments);
@@ -69,7 +70,7 @@ class Dispatcher
                                 $_SESSION['prev_req_page'] = $_SERVER['REQUEST_URI'];
     //                            header('Location: '.$app->getUrl().'/auth/go');
     //                            exit();
-                                throw new ApplicationException('Access denied');
+                                throw new ApplicationException($ex->getMessage());
                                 break;
                             //authentication errors on login page(username, password incorrect)
     //                        case '2':
