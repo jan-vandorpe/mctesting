@@ -1,0 +1,106 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test beheerders side</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="bs/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/test.css" />
+    </head>
+    <body>
+        <!-- ingelogd als beheerder -->
+        <div class="container-fluid maincontainer">
+            <nav>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a>Uitloggen</a></li>
+                        <li><a>Tests</a></li>
+                        <li><a>Vragen</a></li>
+                        <li><a>Gebruikers</a></li>
+                    </ul>
+                    <p class="navbar-text navbar-right">Ingelogd als <a href="#" class="navbar-link">Voornaam Familienaam</a></p>
+                </div>
+            </nav>
+        </div>
+        <div class="headertestupdates maincontainer">
+            Overzicht testen
+        </div>
+        <div class="container-fluid maincontainer">
+            <form name="testtebewerken">
+
+                <div class="categorie">
+                    <div class="catomschrtestoverzicht">CATEGORIEOMSCHRIJVING(bv IT)</div>
+                    <!-- TEST VOORBEELD IN OVERZICHT -->
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="antwoord1" />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="testtitel">TestTitel</div>
+                            <div class="testaantalvragen">25</div>
+                            <div class="testupdater"><a>Update</a></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="antwoord1" />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="testtitel">TestTitel</div>
+                            <div class="testaantalvragen">25</div>
+                            <div class="testupdater"><a>Update</a></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="antwoord1" />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="testtitel">TestTitel</div>
+                            <div class="testaantalvragen">50</div>
+                            <div class="testupdater"><a>Update</a></div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="antwoord1" />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="testtitel">TestTitel</div>
+                            <div class="testaantalvragen">20</div>
+                            <div class="testupdater"><a>Update</a></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- DE BEWERKINGSKNOPEN -->
+                <div>
+                    <nav>
+                        <div class="collapse navbar-collapse">
+                            <!-- knopen links -->
+                            <p class="navbar-text">Selectie: </p>
+                            <ul class="nav navbar-nav">
+                                <li><a>Maak inactief</a></li>
+                                <li><a>Maak actief</a></li>
+                                <li><a>Verwijder</a></li>
+                            </ul>
+                            <!-- knopen rechts -->
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a>Maak nieuwe test</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>

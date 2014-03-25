@@ -9,9 +9,13 @@
 .maincontainer{
     min-width: 850px;
     background-color: rgba(0,0,0,0.1);
-    /* test only, to remove! */
     margin: 0 auto 1em auto;
+    /* test only, to remove! */
     width: 85%;
+}
+
+body{
+    /*background-color: red;*/
 }
 
 .antwoord{
@@ -56,8 +60,49 @@
     max-width: 18em;
     margin: 0.5em;
     
+    width: 30%;
+    
     border-style: solid;
     border-width: 1px;
     border-radius: 0.5em;
     border-color: rgba(0,0,0,0.2);
+}
+.vraagteselecteren{
+    margin-left : 0.5em;
+    font-size: 1.25em;
+}
+
+.catomschrtestoverzicht{
+    margin: 0.25em 0;
+}
+
+.testtitel, .testaantalvragen, .testupdater{
+    display: inline-block;
+}
+.testtitel{
+    width: 80%;
+}
+.testaantalvragen{
+    width: 4%;
+    background-color: rgba(0,0,0,0.05);
+    text-align: right;
+    padding-right: 1%;
+}
+.testupdater{
+    float: right;
+    margin-right: 1em;
+}
+.headertestupdates{
+    padding: 0.125em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.input-group{
+    margin-left: 1.25em;
+}
+
+.rrnrgebrupdate, .fnaamgebrupdate , .vnaamgebrupdate, .gebrupdater{
+    display: inline-block;
 }
