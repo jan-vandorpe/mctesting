@@ -56,7 +56,8 @@ class Dispatcher
                 try {
                     try {
                     //check if access is allowed to requested page(controller)
-                    $this->app->getHelper()->check_access_control($requestedController);
+//                    $this->app->getHelper()->check_access_control($requestedController);
+                        \Framework\check_access_control($requestedController);
                     
                     //call method and pass arguments
                     $controller->$methodName($arguments);

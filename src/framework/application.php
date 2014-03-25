@@ -6,7 +6,6 @@ use Twig_Autoloader;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Framework\AbstractFramework;
-use Framework\Helper;
 use Framework\Dispatcher;
 
 /**
@@ -15,15 +14,13 @@ use Framework\Dispatcher;
  * Twig environment and loads Helper class and config file
  * for the application.
  *
- * @author cyber02
+ * @author Thomas
  */
 class Application extends AbstractFramework
 {
     protected $appName;
     protected $appLoader;
-//    protected $envLoader;
     protected $appEnvironment;
-    protected $helper;
     protected $dispatcher;
             
     function __construct($appName)
@@ -44,10 +41,7 @@ class Application extends AbstractFramework
         
         //load application config file
         require_once '../src/'.$appName.'/config/config.php';
-        
-        //load helper functions
-        $this->helper = new Helper;
-        
+
         //load dispatcher
         $this->dispatcher = new Dispatcher($this);
     }
@@ -62,11 +56,6 @@ class Application extends AbstractFramework
         return $this->appLoader;
     }
 
-//    public function getEnvLoader()
-//    {
-//        return $this->envLoader;
-//    }
-
     public function getDispatcher()
     {
         return $this->dispatcher;
@@ -75,11 +64,6 @@ class Application extends AbstractFramework
     public function getUrl()
     {
         return '/'.$this->getAppName();
-    }
-    
-    public function getHelper()
-    {
-        return $this->helper;
     }
     
     public function getAppEnvironment()
