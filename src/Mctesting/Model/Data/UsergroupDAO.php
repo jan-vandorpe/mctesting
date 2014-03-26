@@ -29,8 +29,8 @@ class UsergroupDAO
                 foreach ($recordset as $record) {
                     //create article object
                     $usergroup = new Usergroup();
-                    $usergroup->setId($id) = $record['typeid'];
-                    $usergroup->setName($name) = $record['typenaam'];
+                    $usergroup->setId($record['typeid']);
+                    $usergroup->setName($record['typenaam']);
                     array_push($result, $usergroup);
                 }
                 return $result;
