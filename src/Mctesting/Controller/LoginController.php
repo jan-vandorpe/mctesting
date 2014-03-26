@@ -85,10 +85,10 @@ class LoginController extends AbstractController
         $dbh = new \PDO (DB_DSN, DB_USER, DB_PASS);
         $resultSet = $dbh->query($sql);
          print $email;
-        print $resultSet;
+        print " - ".$resultSet." - ";
         print $sql;
-        $rij = $resultSet->fetch(\PDO::FETCH_ASSOC);
-        $user = new User($rij["rijksregisternr"],$rij["email"], $rij["voornaam"],$rij["familienaam"], $rij["gebruikerscategorie"]);
+        //$rij = $resultSet->fetch();
+        $user = new User($resultSet["rijksregisternr"],$resultSet["email"], $resultSet["voornaam"],$resultSet["familienaam"], $resultSet["gebruikerscategorie"]);
         $dbh = null;
         return $user;
     }
