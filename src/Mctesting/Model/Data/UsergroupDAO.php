@@ -17,7 +17,7 @@ class UsergroupDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM usergroup';
+        $sql = 'SELECT * FROM gebruikerscategorie';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -29,16 +29,16 @@ class UsergroupDAO
                 foreach ($recordset as $record) {
                     //create article object
                     $usergroup = new Usergroup();
-                    $usergroup->setId($id) = $record['id'];
-                    $usergroup->setName($name) = $record['name'];
+                    $usergroup->setId($id) = $record['typeid'];
+                    $usergroup->setName($name) = $record['typenaam'];
                     array_push($result, $usergroup);
                 }
                 return $result;
             } else {
-                throw new ApplicationException('usergroup selectAll recordset empty');
+                throw new ApplicationException('usergroup selectAll recordset is leeg');
             }
         } else {
-            throw new ApplicationException('usergroup selectAll statement could not be executed');
+            throw new ApplicationException('usergroup selectAll statement kon niet worden uitgevoerd');
         }
     }
     
@@ -47,7 +47,7 @@ class UsergroupDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM usergroup WHERE id = :id';
+        $sql = 'SELECT * FROM gebruikerscategorie WHERE typeid = :id';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':id' => $id))) {
@@ -57,14 +57,14 @@ class UsergroupDAO
                 //create object(s) and return
                 //create article object
                 $usergroup = new Usergroup();
-                $usergroup->setId($record['id']);
-                $usergroup->setName($record['name']);
+                $usergroup->setId($record['typeid']);
+                $usergroup->setName($record['typenaam']);
                 return $usergroup;
             } else {
-                throw new ApplicationException('usergroup selectById record empty');
+                throw new ApplicationException('usergroup selectById record is leeg');
             }
         } else {
-            throw new ApplicationException('usergroup selectById statement could not be executed');
+            throw new ApplicationException('usergroup selectById statement kan niet worden uitgevoerd');
         }
     }
 }
