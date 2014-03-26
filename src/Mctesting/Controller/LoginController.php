@@ -59,24 +59,7 @@ class LoginController extends AbstractController
         
         
     }
-    public function isValidEmailFormat($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL) 
-        && preg_match('/@.+\./', $email);
-    }
-    
-    public function isValidRRNRFormat($rijksregisterNr) {
-        //cleanup
-        $rijksregisterNr = preg_replace('/[^0-9]/',"",$rijksregisterNr);
-       
-        if(preg_match('/^\d{11}$/', $rijksregisterNr)){
-            $result = true;
-            return $result;
-        }else{
-            $result = false;
-            return $result;
-        }
-        return $result;
-    }
+
     
     public function getUser($email) {
 

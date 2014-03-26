@@ -2,6 +2,8 @@
 
 namespace Mctesting\Model\Service;
 
+use Mctesting\Model\Data\UsergroupDAO;
+
 /**
  * Description of UsergroupService
  *
@@ -9,5 +11,13 @@ namespace Mctesting\Model\Service;
  */
 class UsergroupService
 {
-    //put your code here
+    public static function getAll()
+    {
+        return UsergroupDAO::selectAll();
+    }
+    
+    public static function getById($id)
+    {
+        return UsergroupDAO::selectById($id);
+    }
 }
