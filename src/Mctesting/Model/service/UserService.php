@@ -2,6 +2,8 @@
 
 namespace Mctesting\Model\Service;
 
+use Mctesting\Model\Entity\User;
+
 /**
  * Description of UserService
  *

@@ -41,7 +41,7 @@ class Application extends AbstractFramework
         $this->appEnvironment = new Twig_Environment($twigLoader);
         
         //load application config file
-        require_once '../src/'.$appName.'/config/config.php';
+        require_once '../src/'.$appName.'/Config/Config.php';
 
         //load dispatcher
         $this->dispatcher = new Dispatcher($this);
