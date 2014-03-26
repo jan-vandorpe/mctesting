@@ -33,7 +33,7 @@ class LoginController extends AbstractController
              print(" email");             
              $foundUser = $this->getUser($login);
              if ($foundUser == true){
-                 header("location:  = /mctesting/menu/go");
+                header("location: /mctesting/home/go");
              }else{
                  print( "could not login with these credentials");
              }
@@ -43,7 +43,7 @@ class LoginController extends AbstractController
              if($foundTest == true){
                  $magAfleggen = $this->GetTestUser($login, $password);
                          if ($magAfleggen == true){
-                             header("location:  = /mctesting/menu/go");
+                             header("location: /mctesting/home/go");
                          }else{
                          print "U heeft geen toegang tot deze test";    
                          }
@@ -80,16 +80,22 @@ class LoginController extends AbstractController
     
     public function getUser($email) {
 
-        $sql = "select * from gebruikers where ".$email." = email";
+        $sql = "select * from gebruikers where email='".$email."'";
         //$dbh = new PDO(DBConfig::$DB_CONNSTRING, DBConfig::$DB_USERNAME, DBConfig::$DB_PASSWORD);
         $dbh = new \PDO (DB_DSN, DB_USER, DB_PASS);
         $resultSet = $dbh->query($sql);
-         print $email;
-        print " - ".$resultSet." - ";
+        print $email;
+        //print " - ".$resultSet." - ";
         print $sql;
+        foreach ($resultSet as $rij) {
+            //$ingr = new Extra($rij["IngredientId"], $rij["IngredientNaam"], $rij["IngredientPrijs"]);
+            print_r($rij);
+            //array_push($lijst, $ingr);
+        }
         //$rij = $resultSet->fetch();
-        $user = new User($resultSet["rijksregisternr"],$resultSet["email"], $resultSet["voornaam"],$resultSet["familienaam"], $resultSet["gebruikerscategorie"]);
+        //$user = new User($resultSet["rijksregisternr"],$resultSet["email"], $resultSet["voornaam"],$resultSet["familienaam"], $resultSet["gebruikerscategorie"]);
         $dbh = null;
+        $user = $rij["voornaam"];
         return $user;
     }
     
