@@ -11,5 +11,15 @@ use Mctesting\Model\Entity\User;
  */
 class UserService
 {
-    //put your code here
+    public static function serializeToSession($user)
+    {
+        $_SESSION['user'] = serialize($user);
+    }
+    
+    public static function unserializeFromSession()
+    {
+        $user = unserialize($_SESSION['user']);
+        
+        return $user;
+    }
 }

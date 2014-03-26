@@ -7,6 +7,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Framework\AbstractFramework;
 use Framework\Dispatcher;
+use Mctesting\Model\Service\UserService;
 
 /**
  * Description of Application
@@ -45,6 +46,14 @@ class Application extends AbstractFramework
 
         //load dispatcher
         $this->dispatcher = new Dispatcher($this);
+        
+        //initialize user
+        $user = null;
+        if (isset($_SESSION['user'])) {
+            $user = UserService::unserializeFromSession();
+        } 
+        $this->user = $user;
+        
     }
     
     public function getAppName()
