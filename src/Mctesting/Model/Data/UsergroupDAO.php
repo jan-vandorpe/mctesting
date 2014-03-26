@@ -8,7 +8,7 @@ use Mctesting\Exception\ApplicationException;
 /**
  * Description of UsergroupDAO
  *
- * @author cyber01
+ * @author Thomas Deserranno
  */
 class UsergroupDAO
 {
@@ -27,7 +27,7 @@ class UsergroupDAO
                 //create object(s) and return
                 $result = array();
                 foreach ($recordset as $record) {
-                    //create article object
+                    //create usergroup object
                     $usergroup = new Usergroup();
                     $usergroup->setId($record['typeid']);
                     $usergroup->setName($record['typenaam']);
@@ -55,7 +55,7 @@ class UsergroupDAO
             $record = $stmt->fetch();
             if (!empty($record)) {
                 //create object(s) and return
-                //create article object
+                //create usergroup object
                 $usergroup = new Usergroup();
                 $usergroup->setId($record['typeid']);
                 $usergroup->setName($record['typenaam']);
