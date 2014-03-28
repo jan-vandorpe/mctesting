@@ -1,0 +1,21 @@
+/* 
+    Document   : baselayout
+    Created on : 18-mrt-2014, 11:18:30
+    Author     : cyber04
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+body{
+    width:80%;
+    margin: 0 auto;
+}
+.maincontainer{
+    min-width: 850px;
+    background-color: rgba(0,0,0,0.1);
+    /* test only, to remove! */
+    margin: 0 0 1em 0;
+}
