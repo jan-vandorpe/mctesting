@@ -30,9 +30,8 @@ class LoginController extends AbstractController
     
     public function logout()
     {
-      unset($_SESSION["user"]); 
-       unset($_SESSION["ingelogd"]);
-       header("location: /mctesting/home/go");
+        unset($_SESSION["user"]); 
+        header("location: /mctesting/home/go");
 
     }
 

@@ -33,6 +33,7 @@ class HomeController extends AbstractController
           //  'message4' => $message4,
             ));
         //print_r($_SESSION);
+//        var_dump($this->app->getUser());
     }
 
     
