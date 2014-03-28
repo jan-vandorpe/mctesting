@@ -32,7 +32,7 @@ class HomeController extends AbstractController
           //  'message3' => $message3,
           //  'message4' => $message4,
             ));
-        print_r($_SESSION);
+        //print_r($_SESSION);
     }
 
     
