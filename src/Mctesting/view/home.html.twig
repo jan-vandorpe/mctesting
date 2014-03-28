@@ -13,8 +13,12 @@
 {%block content%}
 <div class="container-fluid maincontainer">
     <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
-</div> 
+</div>
 <div class="intropage">
+    {% if app.user is defined and app.user is not empty %}
+     <p> U bent ingelogd als {{app.user.group.name}}</p>
+     
+    {%else%}
     <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
     <p>
         Gelieve in te loggen met: <br>
@@ -29,4 +33,5 @@
         uw emailadres als Login  en uw eigen wachtwoord.
     </p>
 </div>
+    {%endif%}    
 {%endblock%}
