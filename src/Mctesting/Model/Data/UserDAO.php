@@ -7,15 +7,15 @@ use Mctesting\Exception\ApplicationException;
 
 class UserDAO
 {
-    public static function selectByEmail($id)
+    public static function selectByEmail($login, $password)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE email = :id';
+        $sql = 'SELECT * FROM gebruikers WHERE email = :login and wachtwoord = :password' ;
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':id' => $id))) {
+        if ($stmt->execute(array(':login' => $login, ':password' => $password))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
@@ -31,22 +31,22 @@ class UserDAO
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('gebruiker niet gevonden in databank');
+                throw new ApplicationException('Kon niet inloggen met deze gegevens, gelieve deze te controleren');
             }
         } else {
             throw new ApplicationException('gebruikers selectByEmail statement kan niet worden uitgevoerd');
         }
     }
     
-    public static function selectByRRNr($id)
+    public static function selectByRRNr($login)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE rijksregisternr = :id';
+        $sql = 'SELECT * FROM gebruikers WHERE rijksregisternr = :login';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':id' => $id))) {
+        if ($stmt->execute(array(':login' => $login))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
@@ -62,7 +62,7 @@ class UserDAO
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('gebruiker niet gevonden in databank');
+                throw new ApplicationException('Kon niet inloggen met deze gegevens, gelieve deze te controleren');
             }
         } else {
             throw new ApplicationException('gebruikers selectByRRNr statement kan niet worden uitgevoerd');
