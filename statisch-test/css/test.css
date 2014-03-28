@@ -15,7 +15,7 @@
 }
 
 body{
-    /*background-color: red;*/
+    /*background-color: rgba(255,255,0,0.9);*/
 }
 
 .antwoord{
@@ -92,7 +92,7 @@ body{
     float: right;
     margin-right: 1em;
 }
-.headertestupdates{
+.headerupdates{
     padding: 0.125em;
     text-align: center;
     font-weight: bold;
@@ -103,6 +103,37 @@ body{
     margin-left: 1.25em;
 }
 
-.rrnrgebrupdate, .fnaamgebrupdate , .vnaamgebrupdate, .gebrupdater{
+.rrnrgebrupdate, .fnaamgebrupdate , .vnaamgebrupdate, .gebrupdater, .rrnrgebrupdateheader, .fnaamgebrupdateheader, .vnaamgebrupdateheader{
     display: inline-block;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.vnaamgebrupdate{
+    background-color: rgba(0,0,0,0.05);
+}
+.fnaamgebrupdate, .vnaamgebrupdate, .rrnrgebrupdate{
+    width: 28%;
+}
+.gebrupdater{
+    text-align: left;
+    padding-left: 1em;
+    width: 14%;
+}
+.headergebroverzicht{
+    /*width:100%;*/
+    margin-left:1.25em;   
+}
+.onderheadertebewerken{
+    background-color: rgba(0,0,0,0.05);
+    padding-left:3em;
+    margin-top: 0.25em;
+}
+.fnaamgebrupdateheader, .vnaamgebrupdateheader, .rrnrgebrupdateheader{
+    text-align: center;
+    width: 28.5%;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: rgba(0,0,0,0.5);
 }
