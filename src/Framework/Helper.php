@@ -4,6 +4,7 @@ namespace Framework;
 
 use Framework\Exception\SecurityException;
 use Framework\Exception\FrameworkException;
+use Mctesting\Model\Service\UserService;
 
 /**
  * Description of helper
@@ -61,8 +62,8 @@ function check_access_control($requestedController)
      * of usercategory. This key represents the user security clearance level
      */     
      if (isset($_SESSION['user'])) {
-//         $user = UserService::getUserFromSession();
-//         $clearance = $user->getUserCategory();
+         $user = UserService::unserializeFromSession();
+         $clearance = $user->getGroup()->getId();
     } else {
         $clearance = 0;
     }
