@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Genereertijd: 07 apr 2014 om 08:27
+-- Genereertijd: 07 apr 2014 om 09:13
 -- Serverversie: 5.6.11
 -- PHP-versie: 5.5.1
 
@@ -31,10 +31,36 @@ USE `mctesting`;
 CREATE TABLE IF NOT EXISTS `antwoorden` (
   `vraagid` int(11) NOT NULL,
   `antwoordid` int(11) NOT NULL AUTO_INCREMENT,
-  `antwoordtekt` text NOT NULL,
+  `antwoordtekst` text NOT NULL,
   PRIMARY KEY (`antwoordid`),
   KEY `vraagid` (`vraagid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `antwoorden`
+--
+
+INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`) VALUES
+(1, 1, 'Rundskop'),
+(1, 2, 'In Darkness'),
+(1, 3, 'A Separation'),
+(1, 4, 'Footnote'),
+(2, 5, 'Nick Nuyens'),
+(2, 6, 'Tom Boonen'),
+(2, 7, 'Philippe Gilbert'),
+(2, 8, 'Fabian Cancellara'),
+(3, 9, '356'),
+(3, 10, '485'),
+(3, 11, '510'),
+(3, 12, '541'),
+(4, 13, '5'),
+(4, 14, '8'),
+(4, 15, '11'),
+(4, 16, '15'),
+(5, 17, 'Het varken'),
+(5, 18, 'De draak'),
+(5, 19, 'De slang'),
+(5, 20, 'De rat');
 
 -- --------------------------------------------------------
 
@@ -46,7 +72,14 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `catid` int(11) NOT NULL AUTO_INCREMENT,
   `catnaam` tinytext NOT NULL,
   PRIMARY KEY (`catid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `categorie`
+--
+
+INSERT INTO `categorie` (`catid`, `catnaam`) VALUES
+(1, 'testcategorie');
 
 -- --------------------------------------------------------
 
@@ -111,7 +144,15 @@ CREATE TABLE IF NOT EXISTS `media` (
   `filename` varchar(130) NOT NULL,
   PRIMARY KEY (`mediaid`),
   KEY `vraagid` (`vraagid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `media`
+--
+
+INSERT INTO `media` (`vraagid`, `mediaid`, `filename`) VALUES
+(3, 1, 'china.jpg'),
+(4, 2, 'ijs.jpg');
 
 -- --------------------------------------------------------
 
@@ -171,7 +212,17 @@ CREATE TABLE IF NOT EXISTS `subcategorie` (
   `catid` int(11) NOT NULL,
   PRIMARY KEY (`subcatid`),
   KEY `catid` (`catid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `subcategorie`
+--
+
+INSERT INTO `subcategorie` (`subcatid`, `subcatnaam`, `catid`) VALUES
+(1, 'film', 1),
+(2, 'sport', 1),
+(3, 'politiek', 1),
+(4, 'varia', 1);
 
 -- --------------------------------------------------------
 
@@ -231,7 +282,18 @@ CREATE TABLE IF NOT EXISTS `vraag` (
   `gewicht` int(11) NOT NULL,
   `correctantwoord` int(11) NOT NULL,
   PRIMARY KEY (`vraagid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `vraag`
+--
+
+INSERT INTO `vraag` (`vraagid`, `vraagtekst`, `subcatid`, `gewicht`, `correctantwoord`) VALUES
+(1, 'Welke film won in 2012 de Oscar voor beste buitenlandse film?', 1, 1, 3),
+(2, 'Wie won in 2011 de Ronde van Vlaanderen?', 2, 2, 5),
+(3, 'De Belgische regeringsformatie van 2012 brak alle vorige records qua duurtijd, na hoeveel dagen na de verkiezing was er een regering?', 3, 1, 12),
+(4, 'De winter 2011-2012 kende toch een lange vorstperiode met 14 opeenvolgende ijsdagen. De vorige winter, 2010-2011, kende in totaal hoeveel ijsdagen?', 4, 2, 16),
+(5, 'In China is 2012 het jaar van', 4, 1, 18);
 
 --
 -- Beperkingen voor gedumpte tabellen
