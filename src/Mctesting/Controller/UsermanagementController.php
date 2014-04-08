@@ -22,29 +22,34 @@ class UsermanagementController extends AbstractController
         parent::__construct($app);
     }
     
-    public function go()
+//    public function go()
+//    {
+//        
+//    }
+    public function newUserForm()
     {
-        //model
-        //$message1 = 'Landingspagina voor alles ivm de gebruikers';
-
-        //view
         $this->render('usermanagement.html.twig', array(
            // 'message1' => $message1,
 
-            ));
-        //print_r($_SESSION);
-        //var_dump($this->app->getUser());
+            ));   
     }
+    
     public function newUser()
     {
-       $firstName = $_POST["firstname"];
-       $lastName = $_POST["lastname"];
+       $firstName = $_POST["vnaam"];
+       $lastName = $_POST["fnaam"];
        $RRNr = $_POST["rrnr"];
        
-       UserService::newUser($firstName, $lastName, $RRNr);
-        
-        
+       if(UserService::newUser($firstName, $lastName, $RRNr)){
+           header("location: /mctesting/home/listusers");
+       }else{
+           header("location: /mctesting/home/newuserform");
+       }
     }
+    
+    
+    
+     
     
 
         //UserService::loginCheck($login, $password);
