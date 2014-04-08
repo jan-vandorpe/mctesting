@@ -2,15 +2,36 @@
 
 {%block stylesheets%}
     {{parent()}}
-    
+
 {%endblock%}
 
 {%block title%}
     {{parent()}}Home
 {%endblock%}
+
+
 {%block content%}
-    homepage
-    {{message1}}
-    {{message2}}
-    {{message3}}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="intropage">
+    {% if app.user is defined and app.user is not empty %}
+     <p> U bent ingelogd als {{app.user.group.name}}</p>
+     
+    {%else%}
+    <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
+    <p>
+        Gelieve in te loggen met: <br>
+        uw rijksregisternummer als Login en <br>
+        het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
+        <span class="smaller">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
+    </p>
+
+    <h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
+    <p>
+        Gelieve in te loggen met: <br>
+        uw emailadres als Login  en uw eigen wachtwoord.
+    </p>
+</div>
+    {%endif%}    
 {%endblock%}

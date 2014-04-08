@@ -1,0 +1,38 @@
+*******************
+*** INSTALLATIE ***
+*******************
+
+1. GIT CLONE
+
+	Kloon het project met behulp van GIT in de root folder van de webserver.
+	(vb. c:\xampp\htdocs; na klonen het je het project dus in de folder c:\xampp\htdocs\mctesting)
+
+
+2. DATABASE
+
+	Importeer SQL bestand in MySQL.
+
+	SQL bestand staat op de root van de project folder. (..\mctesting\mctesting.sql)
+
+3. CONFIGURATIE BESTAND
+
+	Pas in het configuratie bestand de waarden voor host, databasenaam, user en paswoord aan waar nodig.
+
+	Configuratie bestand: ..\mctesting\src\McTesting\Config\Config.php
+
+
+***************
+*** GEBRUIK ***
+***************
+
+1. Homepagina
+	
+	surf naar localhost/mctesting
+
+2. Aanmelden
+	
+	Aanmelden als gebruiker kan met de testgebruiker met RRnr 12345678900 en een willekeurig wachtwoord.
+
+	Aanmelden als beheerder kan met de testbeheerder met email beheerder@email.be en wachtwoord qsdf.
+
+	Aanmelden als admin kan oa. met email bram@email.be en wachtwoord wxcv.

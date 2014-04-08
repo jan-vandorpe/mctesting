@@ -9,7 +9,7 @@ use Mctesting\Exception\ApplicationException;
  * 
  * Controller that shows the application homepage.
  *
- * @author Thomas
+ * @author Bram & Thomas
  */
 class HomeController extends AbstractController
 {
@@ -21,17 +21,21 @@ class HomeController extends AbstractController
     public function go()
     {
         //model
-        $message1 = 'It works!';
-        $message2 = 'It REALLY works!';
-        $message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
-        
+        //$message1 = 'It works!';
+        //$message2 = 'It REALLY works!';
+        //$message3 = 'OMFG IT BLOODY WORKS! THAT\'S A-MAZE-ING! WOOT!';
+        //$message4 = '<b>help mij</b>';
         //view
         $this->render('home.html.twig', array(
-            'message1' => $message1,
-            'message2' => $message2,
-            'message3' => $message3,
+          //  'message1' => $message1,
+          //  'message2' => $message2,
+          //  'message3' => $message3,
+          //  'message4' => $message4,
             ));
+        //print_r($_SESSION);
+        //var_dump($this->app->getUser());
     }
+
     
     public function except()
     {

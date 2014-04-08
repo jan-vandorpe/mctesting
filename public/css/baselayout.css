@@ -1,0 +1,49 @@
+/* 
+    Document   : baselayout
+    Created on : 18-mrt-2014, 11:18:30
+    Author     : cyber04
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+body{
+    width:80%;
+    margin: 0 auto;
+}
+.maincontainer, .content{
+    min-width: 850px;
+    background-color: rgba(0,0,0,0.1);
+    /* test only, to remove! */
+    margin: 0 0 1em 0;
+    padding: 0.25em 0;
+}
+.smaller{
+    font-size: smaller;
+    margin: 0 0.25em;
+}
+
+h4.intro{
+    margin: 0.25em 20em 0.25em 0.125em;
+    padding: 0.25em 0;
+}
+p{
+    margin: 0 0.25em 1em 0.25em;;
+    padding-bottom: 0.25em;
+}
+
+.headerpage{
+    padding: 0.25em 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0.25em 0;
+}
+.intropage{
+    margin-left: 2em;
+}
+.darker{
+    background-color: rgba(0,0,0,0.1);
+}
