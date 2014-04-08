@@ -1,0 +1,31 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">file upload</h1>
+</div>
+<div class="intropage">
+    {% if app.user is defined and app.user is not empty %}
+     <p> U bent ingelogd als {{app.user.group.name}}</p>
+     
+    {%else%}
+    <h4 class="darker intro"><span class="">Uploadpagina</span></h4> 
+    <form action="upload_file.php" method="post"
+enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+</div>
+    {%endif%}    
+{%endblock%}
