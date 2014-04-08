@@ -1,0 +1,35 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="intropage">
+   
+    <p>Landingspagina voor alles ivm de gebruikers</p>
+    <FORM action="/mctesting/usermanagement/newuser" method="post">
+    <P>
+    <LABEL for="firstname">First name: </LABEL>
+              <INPUT type="text" id="firstname" name="firstname"><BR>
+    <LABEL for="lastname">Last name: </LABEL>
+              <INPUT type="text" id="lastname" required name="lastname"><BR>
+    <LABEL for="email">email: </LABEL>
+              <INPUT type="text" id="rrnr" name="rrnr"><BR>
+    <button type="submit" class="btn btn-default">Gebruiker aanmaken</button>
+    </P>
+ </FORM>
+    <p><a href="/mctesting/usermanagement/listusers">Klik hier om een lijst met gebruikers te bekijken</a></p>
+    
+</div>
+
+{%endblock%}

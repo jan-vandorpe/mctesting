@@ -98,6 +98,26 @@ class UserService
     
     
     
+    public function newUser($firstName, $lastName, $RRNr) {
+        //cleanup
+//        $user=UserDAO::selectByRRNr($RRNr);
+//        if ($user == true){
+//            return false; //bestaat al            
+//        }else{
+            if(UserDAO::createUser($firstName, $lastName, $RRNr)){
+                return true;
+            }else{
+                //exception
+            }
+//        }
+    }
+    
+    
+    
+    
+    
+    
+    
     
     
 //    public function getUser($email) {

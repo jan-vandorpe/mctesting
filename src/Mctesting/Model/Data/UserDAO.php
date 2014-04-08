@@ -68,4 +68,30 @@ class UserDAO
             throw new ApplicationException('gebruikers selectByRRNr statement kan niet worden uitgevoerd');
         }
     }
+    
+    
+    public static function createUser($firstName, $lastName, $RRNr)
+    {
+        //create db connection
+        $usergroup = 1; //basisgebruiker is groep 1
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :LastName , :group)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':LastName' => $lastName, ':group' => $usergroup ))) {
+            //test if statement succes
+            return true;
+        } else {
+            throw new ApplicationException('gebruikers createUser statement kan niet worden uitgevoerd');
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
