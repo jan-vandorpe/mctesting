@@ -30,7 +30,8 @@ class UserService
          //print("valid");
          if(UserService::isValidEmailFormat($login)){
              //print(" email");   
-             UserDAO::selectByEmail($login, $password);
+             $user = UserDAO::selectByEmail($login, $password);
+             UserService::serializeToSession($user);
              return true;
 //             $foundUser = UserService::getUser($login);
 //             if ($foundUser == true){
@@ -41,7 +42,8 @@ class UserService
 //             }
          }else{
              //print(" rijksregister");
-             USERDAO::selectByRRNr($login);
+             $user=UserDAO::selectByRRNr($login);
+             UserService::serializeToSession($user);
              return true;
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){

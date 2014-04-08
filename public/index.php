@@ -24,9 +24,11 @@ require_once '../src/Framework/Helper.php';
 $app = new Application('Mctesting');
 
 
-//add SESSION as Twig global to allow direct access from any twig template
+//add Twig globals to allow direct access from any twig template
 $app->getFrameworkEnvironment()->addGlobal('session', $_SESSION);
 $app->getAppEnvironment()->addGlobal('session', $_SESSION);
+$app->getFrameworkEnvironment()->addGlobal('app', $app);
+$app->getAppEnvironment()->addGlobal('app', $app);
 
 try {
     //dispatch requested controller

@@ -1,45 +1,66 @@
-{%extends "template/base.html.twig"%}
-{%block stylesheets%}
+{% extends "template/base.html.twig" %}
+{% block stylesheets %}
 <link rel="stylesheet" href="\mctesting\public\css\normalize.css" />
 <link rel="stylesheet" href="\mctesting\public\css\bootstrap.min.css" />
 <link rel="stylesheet" href="\mctesting\public\css\baselayout.css">
+{% endblock %}
 
+{% block title %}MC Testing - {% endblock %}
 
-{%endblock%}
-
-{%block title%}MC Testing - {%endblock%}
-
-{%block body%}
-    {%block login%}
+{% block body %}
+    {% block login %}
 <div class="container-fluid maincontainer">
     <nav>
         <div class="collapse navbar-collapse">
             {#{% set user = 'eric' %}
             {% set ingelogd = true %}#}
-                     {% if ( session.user ) and ( session.ingelogd ) %}
-                        <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
-                            Ingelogd als <a href="#" class="navbar-link">{{session.user}} Familienaam</a>
-                        <button type="submit" class="btn btn-default">Uitloggen</button>
-                        </form>                 
+                     {% if app.user is defined and app.user is not empty %}
+                        {% if app.user.group.name == 'admin' %}
+                <ul class="nav navbar-nav">
+                        <li><a>Tests</a></li>
+                        <li><a>Vragen</a></li>
+                        <li><a>Gebruikers</a></li>
+                        <li><a>Beheerders</a></li>
+                    </ul>
+                {%elseif app.user.group.name == 'beheerder' %}
+                 <ul class="nav navbar-nav">
+                        <li><a>Tests</a></li>
+                        <li><a>Vragen</a></li>
+                        <li><a>Gebruikers</a></li>
+                    </ul>
+                
+                {%else %}
+                <ul class="nav navbar-nav">
+                        <li><a>Test Beëindigen</a></li>
+                    </ul>
+                {%endif%}
+                
+            <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
+                Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
+                <button type="submit" class="btn btn-default">Uitloggen</button>
+            </form>                 
                     {%else%}
-                        <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Login" name="Login" required>
-                                <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
-                            </div>
-                        <button type="submit" class="btn btn-default">Inloggen</button>
-                        </form>
+            <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Login" name="Login" required>
+                    <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
+                </div>
+                <button type="submit" class="btn btn-default">Inloggen</button>
+            </form>
                     {%endif%}    
-            </div>
-        </nav>
-    </div> 
-<div class="container-fluid maincontainer">
-<h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
-    </div> 
-
-    {%endblock%}
-    <div class="content">
-    {%block content%}
-    {%endblock%}
         </div>
-{%endblock%}
+    </nav>
+</div> 
+    {% endblock %}
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+
+<div class="footer headerpage">
+    {% block footer %}
+        <p>&copy; vdab - 2014</p>
+{% endblock %}
+</div>
+{% endblock %}
+
