@@ -1,0 +1,260 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Multiple Choice HTML CSS</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/mc.css">
+
+    </head>
+
+    <body>
+        <div class="wrapper">
+            <h1>Multiple Choice Vragen HTML CSS</h1>
+            <!--start section vragen-->
+            <section class="quiz">
+                <!--wijzig naar POST en PHP script-->
+                <form id="frmVragen" name="frmVragen" method="get" action="js_form_ontvanger.html">
+                    <ol class="vragen">
+
+                        <!--vraag-->
+
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">Een webpagina vertoont een titel zoals</div>
+                            <figure>
+                                <h1>Titel</h1>
+                            </figure>
+                            <div class="vraagTekst">welk HTML element kan hiervoor gebruikt worden?</div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1"><pre>header</pre>
+                                </label>          
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2"><pre>head</pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3"><pre>hgroup</pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4"><pre>h1</pre>
+                                </label>
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">Gegeven de volgende HTML:</div>
+                            <figure>
+                                <pre>&lt;body&gt;
+&lt;p&gt;de eenzame herder&lt;/p&gt;
+&lt;div&gt;springt over
+&lt;div&gt;het gekke schaap&lt;/div&gt;
+&lt;/div&gt;<br>&lt;/body&gt;   </pre>
+                            </figure>
+                            <div class="vraagTekst">en volgende CSS</div>
+                            <figure>
+                                <pre>body {	font-size: 100%; }<br>div  { font-size: 1.25em;}	</pre>
+                            </figure>
+                            <div class="vraagTekst">dan heeft de tekst &quot;het gekke schaap&quot; in een standaardbrowser een lettergrootte van </div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+                                    <pre>20px</pre>
+                                </label>          
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+                                    <pre>22px</pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>24px</pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+                                    <pre>25px</pre>
+                                </label>
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">1.	Als Paul zijn naam doorstuurt via een webformulier, bemerkt hij in de adresbalk het url  <code>http://www.vdab.be/inschrijven.php?naam=Paul</code> <br>
+                                dit duidt erop dat het attribuut <code>method</code> van het <code>form</code> element van de formulierpagina de volgende waarde heeft: </div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+
+                                    <pre>GET</pre></label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+
+                                    <pre>POST</pre> </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+
+                                    <pre>PUT</pre> </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+
+                                    <pre>ACTION</pre></label>
+
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">gegeven onderstaande HTML</div>
+                            <figure>
+                                <pre>&lt;ul&gt;<br>  &lt;li&gt;dieren<br>    &lt;ul&gt;<br>      &lt;li&gt;koe&lt;/li&gt;<br>       &lt;li&gt;schaap&lt;/li&gt;<br>       &lt;li&gt;kip&lt;/li&gt;<br>    &lt;/ul&gt;<br>  &lt;/li&gt;<br>  &lt;li&gt;planten&lt;/li&gt;<br>&lt;/ul&gt;</pre>
+                            </figure>
+                            <div class="vraagTekst">welke CSS code kleurt het woord "dieren" zwart en het woord "kip" rood?</div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+                                    <pre>ul&gt;ul {color:red}</pre></label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+                                    <pre>ul+ul {color:red}</pre> </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>ul:ul {color:red}</pre> </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+                                    <pre>ul ul {color:red}</pre> </label>
+
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_789">
+                            <div class="vraagTekst">Welk twee sets HTML codes, zijn beide goed om een geldige SUBMIT knop te verkrijgen voor een formulier</div>
+                            <div class="antw vert">
+                                <!--checkboxes doorgeven als array vr php $_POST['v_789'] -->
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>&lt;input type=submit value=submit&gt;<br>&lt;button value=submit&gt;        </pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>&lt;input type=submit value=set&gt;<br>&lt;button type=submit value=set&gt;        </pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>&lt;input type=button value=submit&gt;<br>&lt;button type=button value=submit&gt;        </pre>
+                                </label>
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+                                    <pre>&lt;input value=submit&gt;<br>&lt;button value=submit&gt;        </pre>
+                                </label>
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">De juiste manier om een javascript te koppelen aan een HTML pagina is: </div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+
+                                    <pre>&lt;script src=&quot;mijnscript&quot;&gt;&lt;/script&gt;</pre>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+
+                                    <pre>&lt;script href=&quot;mijnscript&quot; /&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+
+                                    <pre>&lt;link src=&quot;mijnscript&quot;&gt;&lt;/link&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+
+                                    <pre>&lt;link href=&quot;mijnscript&quot; /&gt;</pre>
+                                </label>
+
+                            </div>
+                        </li>
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">Dezelfde webpagina bevat meerdere talen in hun eigen karakters, zoals Arabisch, Chinees en Engels. <br>
+                                Welk van onderstaande predikaten, elementen en attributen maakt dit mogelijk?</div>
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+
+                                    <pre>&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;</pre>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+
+                                    <pre>&lt;!DOCTYPE HTML&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+
+                                    <pre>&lt;html lang=&quot;ar ch en&quot;&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+
+                                    <pre>&lt;meta charset=&quot;utf-8&quot;&gt;</pre>
+                                </label>
+
+                            </div>
+                        </li>  
+                        <!--vraag-->
+                        <li id="vraag_456">
+                            <div class="vraagTekst">Een tabel op een webpagina ziet er als volgt uit:</div>
+                            <figure> <img src="img/tabel1.png" alt="een HTML tabel" title="een HTML tabel">
+                                <figcaption>een HTML tabel</figcaption>
+                            </figure>
+                            <div class="vraagTekst">Welke is de correct code om dit te bereiken?</div>
+
+                            <div class="antw vert">
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_1">
+
+                                    <pre>&lt;table border=&quot;1&quot;&gt;<br>&lt;tr&gt;&lt;th rowspan=&quot;2&quot;&gt;cel&lt;/th&gt;&lt;/tr&gt;<br>&lt;tr&gt;&lt;td&gt;cel&lt;/td&gt;&lt;td&gt;cel&lt;/td&gt;&lt;/tr&gt;<br>&lt;/table&gt;</pre>
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_2">
+
+                                    <pre>&lt;table border=&quot;1&quot;&gt;<br>&lt;tr&gt;&lt;th colspan=&quot;2&quot;&gt;cel&lt;/th&gt;&lt;/tr&gt;<br>&lt;tr&gt;&lt;td&gt;cel&lt;/td&gt;&lt;td&gt;cel&lt;/td&gt;&lt;/tr&gt;<br>&lt;/table&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_3">
+
+                                    <pre>&lt;table border=&quot;1&quot;&gt;<br>&lt;thead&gt;&lt;th span=&quot;2&quot;&gt;cel&lt;/th&gt;&lt;/thead&gt;<br>&lt;tr&gt;&lt;td&gt;cel&lt;/td&gt;&lt;td&gt;cel&lt;/td&gt;&lt;/tr&gt;<br>&lt;/table&gt;</pre> 
+                                </label>
+
+                                <label>
+                                    <input type="radio" name="v_456" value="a_456_4">
+
+                                    <pre>&lt;table border=&quot;1&quot;&gt;<br>&lt;thead&gt;&lt;tr span=&quot;2&quot;&gt;cel&lt;/tr&gt;&lt;/thead&gt;<br>&lt;tr&gt;&lt;td&gt;cel&lt;/td&gt;&lt;td&gt;cel&lt;/td&gt;&lt;/tr&gt;<br>&lt;/table&gt;</pre>
+                                </label>
+
+                            </div>
+                        </li>  
+                    </ol>
+                    <!--einde vragenlijst-->
+                    <div class="lijn">
+                        <input type="submit" value="Indienen">
+                    </div>
+                </form>
+            </section>
+            <!--einde section vragen-->
+        </div>
+    </body>
+</html>
