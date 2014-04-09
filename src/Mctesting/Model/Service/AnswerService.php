@@ -15,4 +15,14 @@ class AnswerService
     {
         return AnswerDAO::selectByQuestion($questionId);
     }
+    
+    public static function getSingleByQuestionAndId($questionId, $answerId)
+    {
+        return AnswerDAO::selectByQuestionAndId($questionId, $answerId);
+    }
+    
+    public static function create(/*$post*/)
+    {
+        
+    }
 }

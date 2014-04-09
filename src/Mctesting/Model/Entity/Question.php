@@ -52,10 +52,10 @@ class Question
         return $this->media;
     }
 
-//    public function setId($id)
-//    {
-//        $this->id = $id;
-//    }
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     public function setText($text)
     {
