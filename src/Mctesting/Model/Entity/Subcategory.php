@@ -22,10 +22,14 @@ class Subcategory {
         return $this->category;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+    }    
+    
     public function setCategory($category) {
         $this->category = $category;
     }
-
+    
     public function setSubcategory($subcategory) {
         $this->subcategory = $subcategory;
     }
