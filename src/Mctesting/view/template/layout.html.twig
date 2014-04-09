@@ -12,8 +12,6 @@
 <div class="container-fluid maincontainer">
     <nav>
         <div class="collapse navbar-collapse">
-            {#{% set user = 'eric' %}
-            {% set ingelogd = true %}#}
                      {% if app.user is defined and app.user is not empty %}
                         {% if app.user.group.name == 'admin' %}
                 <ul class="nav navbar-nav">
@@ -57,7 +55,7 @@
 </div>
 
 
-<div class="footer headerpage">
+<div class="footer headerpage maincontainer">
     {% block footer %}
         <p>&copy; vdab - 2014</p>
 {% endblock %}

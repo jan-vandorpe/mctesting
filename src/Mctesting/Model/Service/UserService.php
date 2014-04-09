@@ -24,6 +24,16 @@ class UserService
         return $user;
     }
     
+    public static function getAll()
+    {
+        return UserDAO::selectAll();
+    }
+    
+    public static function getAllUsers()
+    {
+        return UserDAO::selectAllBaseUsers();
+    }
+    
     public static function loginCheck($login, $password)
     {
         if(UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)){
@@ -108,6 +118,7 @@ class UserService
                 return true;
             }else{
                 //exception
+                return false;
             }
 //        }
     }

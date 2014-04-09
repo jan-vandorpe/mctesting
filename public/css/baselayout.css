@@ -1,49 +1,156 @@
 /* 
-    Document   : baselayout
-    Created on : 18-mrt-2014, 11:18:30
-    Author     : cyber04
+    Document   : newCascadeStyleSheet
+    Created on : 18-mrt-2014, 8:23:15
+    Author     : cyber05
     Description:
         Purpose of the stylesheet follows.
 */
 
-root { 
-    display: block;
-}
-body{
-    width:80%;
-    margin: 0 auto;
-}
-.maincontainer, .content{
+.maincontainer{
     min-width: 850px;
     background-color: rgba(0,0,0,0.1);
+    margin: 0 auto 1em auto;
     /* test only, to remove! */
-    margin: 0 0 1em 0;
-    padding: 0.25em 0;
-}
-.smaller{
-    font-size: smaller;
-    margin: 0 0.25em;
+    width: 85%;
 }
 
-h4.intro{
-    margin: 0.25em 20em 0.25em 0.125em;
-    padding: 0.25em 0;
-}
-p{
-    margin: 0 0.25em 1em 0.25em;;
-    padding-bottom: 0.25em;
+body{
+    /*background-color: rgba(255,255,0,0.9);*/
 }
 
-.headerpage{
-    padding: 0.25em 0;
+.antwoord{
+    height: auto;
+}
+.form-control{
+    height: auto;
+}
+.vraaggroep{
+    margin-bottom: 1.0em;
+    padding: 0.25em;
+    border-radius: 0.25em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0,0,0,0);
+}
+.vraaggroep:nth-of-type(even){
+    background-color: rgba(0,0,0,0.05);
+}
+.vraaggroep:nth-of-type(odd){
+    background-color: rgba(0,0,0,0.1);
+}
+.vraag .form-control{
+    background: rgba(0,0,0,0);
+}
+.antwoordmetradio{
+    margin: 0.5em 0 0 0.75em;
+}
+/*.antwoordmetradio:nth-of-type(even)>div>span{
+    background-color: rgba(0,0,0,0.1);
+}*/
+.vragencontainer{
+    background-color: rgba(0,0,0,0);
+}
+.vraag .input-group-addon{
+    vertical-align: top;
+}
+.imggroepbijvraag img{
+    float: left;
+    height: 18em;
+    
+    max-width: 18em;
+    margin: 0.5em;
+    
+    width: 30%;
+    
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.5em;
+    border-color: rgba(0,0,0,0.2);
+}
+.vraagteselecteren{
+    margin-left : 0.5em;
+    font-size: 1.25em;
+}
+
+.catomschrtestoverzicht{
+    margin: 0.25em 0;
+}
+
+.testtitel, .testaantalvragen, .testupdater{
+    display: inline-block;
+}
+.testtitel{
+    width: 80%;
+}
+.testaantalvragen{
+    width: 4%;
+    background-color: rgba(0,0,0,0.05);
+    text-align: right;
+    padding-right: 1%;
+}
+.testupdater{
+    float: right;
+    margin-right: 1em;
+}
+.headerupdates{
+    padding: 0.125em;
     text-align: center;
     font-weight: bold;
     font-size: 1.5em;
-    margin: 0.25em 0;
 }
-.intropage{
-    margin-left: 2em;
+
+.input-group{
+    margin-left: 1.25em;
 }
-.darker{
-    background-color: rgba(0,0,0,0.1);
+
+.rrnrgebrupdate, .fnaamgebrupdate , .vnaamgebrupdate, .gebrupdater, .rrnrgebrupdateheader, .fnaamgebrupdateheader, .vnaamgebrupdateheader{
+    display: inline-block;
+    text-align: right;
+    padding-right: 1em;
+}
+
+.vnaamgebrupdate{
+    background-color: rgba(0,0,0,0.05);
+}
+.fnaamgebrupdate, .vnaamgebrupdate, .rrnrgebrupdate{
+    width: 28%;
+}
+.gebrupdater{
+    text-align: left;
+    padding-left: 1em;
+    width: 14%;
+}
+.headergebroverzicht{
+    /*width:100%;*/
+    margin-left:1.25em;   
+}
+.onderheadertebewerken{
+    background-color: rgba(0,0,0,0.05);
+    padding-left:3em;
+    margin-top: 0.25em;
+}
+.fnaamgebrupdateheader, .vnaamgebrupdateheader, .rrnrgebrupdateheader{
+    text-align: center;
+    width: 28.5%;
+    font-weight: bold;
+    border-style: solid;
+    border-width: 0 1px 0 0;
+    border-color: rgba(0,0,0,0.5);
+}
+
+.vraaginput:nth-of-type(n){
+    height: 10em;
+}
+.nieuwantwoord, .nieuwimg{
+    margin-top: 0.25em;
+}
+.catbijvraag:nth-of-type(n){
+    width:10em;
+}
+.centeren{
+    text-align: center;
+    margin: 0 auto;
+}
+.meerboven-onder{
+    padding: 0.75em 0;
 }

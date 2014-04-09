@@ -22,13 +22,17 @@ class UsermanagementController extends AbstractController
         parent::__construct($app);
     }
     
-//    public function go()
-//    {
-//        
-//    }
-    public function newUserForm()
+    public function go()
     {
         $this->render('usermanagement.html.twig', array(
+           // 'message1' => $message1,
+
+            ));   
+      
+    }
+    public function newUserForm()
+    {
+        $this->render('newuserform.html.twig', array(
            // 'message1' => $message1,
 
             ));   
@@ -40,11 +44,16 @@ class UsermanagementController extends AbstractController
        $lastName = $_POST["fnaam"];
        $RRNr = $_POST["rrnr"];
        
-       if(UserService::newUser($firstName, $lastName, $RRNr)){
-           header("location: /mctesting/home/listusers");
+       if($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true){
+            if(UserService::newUser($firstName, $lastName, $RRNr)){
+                header("location: /mctesting/usermanagement/listusers");
+            }else{
+                //header("location: /mctesting/home/newuserform");
+                //echo("lolz");
+            }           
        }else{
-           header("location: /mctesting/home/newuserform");
-       }
+          print ("Niet valid."); 
+       }       
     }
     
     
@@ -64,10 +73,13 @@ class UsermanagementController extends AbstractController
     {
         //model
         //$message1 = 'It works!';
-
+        $allUsers = UserService::getAllUsers();
+        
+        
         //view
-        $this->render('tests.html.twig', array(
+        $this->render('userlist.html.twig', array(
           //  'message1' => $message1,
+            'allUsers'=>$allUsers,
 
             ));
         //print_r($_SESSION);
