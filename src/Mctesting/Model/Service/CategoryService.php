@@ -17,4 +17,11 @@ class CategoryService
     {
         return CategoryDAO::selectById($id);
     }
+    
+    public static function newCategory($category)
+    {
+        CategoryDAO::createNewCategory($category);
+    }            
+    
+    
 }

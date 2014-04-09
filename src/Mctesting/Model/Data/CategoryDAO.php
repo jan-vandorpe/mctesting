@@ -5,6 +5,8 @@ namespace Mctesting\Model\Data;
 use Mctesting\Model\Entity\Category;
 use Mctesting\Exception\ApplicationException;
 
+/****** Author: Bert *******/
+
 class CategoryDAO {
 
     public static function selectById($catid) {
@@ -61,4 +63,23 @@ class CategoryDAO {
         }
     }
 
+    public static function createNewCategory($catnaam) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO categorie(catnaam) values(:catnaam)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catnaam' => $catnaam))) {
+           
+            } else {
+                throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');
+            }
+         
+    }    
+    
+    
+    
+    
+    
 }

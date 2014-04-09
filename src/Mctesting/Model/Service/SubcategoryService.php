@@ -11,12 +11,12 @@ class SubcategoryService
 {
     public static function getAll()
     {
-        return CategoryDAO::selectAll();
+        return SubcategoryDAO::selectAll();
     }
     
-    public static function getById($id)
+    public static function getById($catid,$subcatid)
     {
-        return SubcategoryDAO::selectById($id);
+        return SubcategoryDAO::selectById($catid,$subcatid);
     }
     
     public static function getByCategoryId($category)
@@ -24,5 +24,9 @@ class SubcategoryService
         return SubcategoryDAO::selectByCategoryId($category);
     }   
     
+    public static function newSubcategory($catid,$subcatid,$subcatnaam)
+    {
+        SubcategoryDAO::createNewSubcategory($catid,$subcatid,$subcatnaam);
+    }     
     
 }

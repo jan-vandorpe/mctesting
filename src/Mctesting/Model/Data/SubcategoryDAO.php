@@ -6,16 +6,19 @@ use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Exception\ApplicationException;
 
+
+/****** Author: Bert *******/
+
 class SubcategoryDAO {
 
-    public static function selectById($subcatid) {
+    public static function selectById($catid,$subcatid) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
+        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid AND catid = :catid limit 1';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':subcatid' => $subcatid))) {
+        if ($stmt->execute(array(':subcatid' => $subcatid, ':catid' => $catid))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
@@ -47,7 +50,7 @@ class SubcategoryDAO {
             $resultset = $stmt->fetchall();
             if (!empty($resultset)) {
                 //create array
-              $subcatarray = array();
+                $subcatarray = array();
                 //create object and return
                 $category = \Mctesting\Model\Service\CategoryService::getById($catid);
                 //create subcategory object(s)
@@ -66,12 +69,12 @@ class SubcategoryDAO {
             throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
         }
     }
-    
-public static function selectAll() {
+
+    public static function selectAll() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie';
+        $sql = 'SELECT * FROM subcategorie order by catid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -79,11 +82,11 @@ public static function selectAll() {
             $resultset = $stmt->fetchall();
             if (!empty($resultset)) {
                 //create array
-              $subcatarray = array();
-                //create object and return
-                $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
-                //create subcategory object(s)
+                $subcatarray = array();
                 foreach ($resultset as $record) {
+                    //create category object and return
+                    $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
+                //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
                     $subcat->setSubcategory($record['subcatnaam']);
@@ -98,4 +101,20 @@ public static function selectAll() {
             throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
         }
     }
+        public static function createNewSubcategory($catid,$subcatid,$subcatnaam) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO subcategorie(catid,subcatid,subcatnaam) values(:catid,:subcatid,:subcatnaam)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid,':subcatid' => $subcatid,':subcatnaam' => $subcatnaam))) {
+           
+            } else {
+                throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren');
+            }
+         
+    } 
+    
+
 }
