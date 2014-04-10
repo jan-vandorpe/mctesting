@@ -144,16 +144,15 @@ class UserDAO
     }
     
     
-    public static function createUser($firstName, $lastName, $RRNr)
+    public static function insert($firstName, $lastName, $RRNr, $userGroup)
     {
-        //create db connection
-        $usergroup = 1; //basisgebruiker is groep 1
+        //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :LastName , :group)';
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :lastName , :group)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':LastName' => $lastName, ':group' => $usergroup ))) {            
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup ))) {            
             //test if statement succes
             return true;
         } else {            

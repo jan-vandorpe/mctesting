@@ -108,13 +108,10 @@ class UserService
     
     
     
-    public function newUser($firstName, $lastName, $RRNr) {
+    public function createTestUser($firstName, $lastName, $RRNr) {
         //cleanup
-//        $user=UserDAO::selectByRRNr($RRNr);
-//        if ($user == true){
-//            return false; //bestaat al            
-//        }else{
-            if(UserDAO::createUser($firstName, $lastName, $RRNr)){
+        $userGroup = 1;
+            if(UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)){
                 return true;
             }else{
                 //exception

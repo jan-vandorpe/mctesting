@@ -45,7 +45,7 @@ class UsermanagementController extends AbstractController
        $RRNr = $_POST["rrnr"];
        
        if($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true){
-            if(UserService::newUser($firstName, $lastName, $RRNr)){
+            if(UserService::create($firstName, $lastName, $RRNr)){
                 header("location: /mctesting/usermanagement/listusers");
             }else{
                 //header("location: /mctesting/home/newuserform");

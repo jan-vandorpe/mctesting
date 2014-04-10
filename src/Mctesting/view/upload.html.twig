@@ -1,0 +1,65 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+{%endblock%}
+{%block scripts%}
+    {{parent()}}
+<script src="\mctesting\public\js\tinymce\tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea'});</script>
+    
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+      
+    
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="gebruikertoevoegen centeren maincontainer">
+    
+    {{message1}}
+    <p>{{message2}}</p>
+    <p>{{message3}}</p>
+                <form name="gebrtoev" class="form-horizontal meerboven-onder" action="/mctesting/upload/upload" method="post">
+                    <div class="form-group">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-5 centeren" style="width:900px;height:300px;" >
+                            <textarea class="form-control" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"></textarea>
+                        </div>
+                    </div>                    
+                    
+                    <div class="form-group">
+                        <div class="col-lg-3">
+                        </div>
+                        <div class="col-lg-4 centeren">
+                            <input type="submit" name="gebrknop" class="form-control">
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+    
+    <div class="resultaat maincontainer centeren">
+        
+        {% for upload in allUploads %}   
+                <div class="input-group">
+                    
+                    <span class="input-group-addon">
+                        <input type="checkbox" name="antwoord1" />
+                    </span>                                             
+                        <div class="col-lg-4 centeren">{{upload.nummer}}</div>
+                        <div class="col-lg-4 centeren">{{upload.code|raw}}</div>
+                </div>
+{% endfor %}
+        
+    <div class="results" id="">
+    </div>
+
+{%endblock%}
