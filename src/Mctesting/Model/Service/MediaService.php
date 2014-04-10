@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Data\MediaDAO;
+//use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of MediaService
@@ -16,8 +17,14 @@ class MediaService
         return MediaDAO::selectByQuestion($questionId);
     }
     
-    public static function create($questionId, $mediaId, $filename)
+    public static function create($questionId, $media)
     {
-        MediaDAO::insert($questionId, $mediaId, $filename);
+//        if (is_array($media)) {
+            foreach ($media as $id => $filename) {
+                MediaDAO::insert($questionId, $id, $filename);
+            }
+//        } else {
+//            throw new ApplicationException('Parameter die media bevat is geen array');
+//        }
     }
 }

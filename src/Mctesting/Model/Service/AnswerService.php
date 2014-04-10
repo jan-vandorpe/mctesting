@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Data\AnswerDAO;
+//use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of AnswerService
@@ -21,8 +22,14 @@ class AnswerService
         return AnswerDAO::selectByQuestionAndId($questionId, $answerId);
     }
     
-    public static function create($id, $questionId, $text)
+    public static function create($questionId, $answers)
     {
-        AnswerDAO::insert($id, $questionId, $text);
+//        if (is_array($answers)) {
+            foreach ($answers as $id => $text) {
+                AnswerDAO::insert($id, $questionId, $text);
+            }
+//        } else {
+//            throw new ApplicationException('Parameter die antwoorden bevat is geen array');
+//        }
     }
 }
