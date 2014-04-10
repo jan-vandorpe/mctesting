@@ -21,8 +21,8 @@ class AnswerService
         return AnswerDAO::selectByQuestionAndId($questionId, $answerId);
     }
     
-    public static function create(/*$post*/)
+    public static function create($id, $questionId, $text)
     {
-        
+        AnswerDAO::insert($id, $questionId, $text);
     }
 }

@@ -80,7 +80,7 @@ class AnswerDAO
         }
     }
     
-    public static function insert($answer)
+    public static function insert($id, $questionId, $text)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -91,9 +91,9 @@ class AnswerDAO
         $stmt = $db->prepare($sql);
         
         //test if statement can be executed
-        if ($stmt->execute(array(':vraagid' => $answer->getQuestionId(),
-                                ':antwoordid' => $answer->getId(),
-                                ':antwoordtekst' => $answer->getText(),
+        if ($stmt->execute(array(':vraagid' => $questionId,
+                                ':antwoordid' => $id,
+                                ':antwoordtekst' => $text,
                                 ))) {
         } else {
             $error = $stmt->errorInfo();

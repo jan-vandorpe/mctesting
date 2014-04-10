@@ -40,4 +40,9 @@ class MediaDAO
             throw new ApplicationException($errormsg);
         }
     }
+    
+    public static function insert()
+    {
+        
+    }
 }
