@@ -1,35 +1,50 @@
 <?php
 
 namespace Mctesting\Model\Entity;
+use Mctesting\Model\Service\SubcategoryService;
 
-/***** Author: Bert Mortier *****/
+/* * *** Author: Bert Mortier **** */
 
-class Category {
+class Category
+{
 
     private $id;
     private $catname;
     private $subcategories = array();
 
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
-    
-    public function getSubcategories() {
+
+    public function getSubcategories()
+    {
         return $this->subcategories;
     }
-    
-    public function getCatname() {
+
+    public function getCatname()
+    {
         return $this->catname;
     }
-    
-    public function setId($id) {
+
+    public function setId($id)
+    {
         $this->id = $id;
     }
-    public function setCatname($catname) {
+
+    public function setCatname($catname)
+    {
         $this->catname = $catname;
     }
 
- public function setSubcategories($subcategories) {
+    public function setSubcategories($subcategories)
+    {
         $this->subcategories = $subcategories;
-    }    
+    }
+
+    public function retrieveSubcategories()
+    {
+       $this->subcategories = SubcategoryService::getByCategoryId($this->id); 
+    }
+
 }

@@ -25,7 +25,7 @@
         //$result = \Mctesting\Model\Service\SubcategoryService::getAll(); 
               
         //alle subcategorieën voor één categorie
-        $result = \Mctesting\Model\Service\SubcategoryService::getByCategoryId(4);
+    //    $result = \Mctesting\Model\Service\SubcategoryService::getByCategory(4);
 
         //nieuwe subcategorie aanmaken
 //        $catid = 4;

@@ -1,7 +1,7 @@
 <?php
 
 namespace Mctesting\Model\Data;
-
+use Mctesting\Model\Entity\Category;
 use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Exception\ApplicationException;
@@ -57,8 +57,11 @@ class SubcategoryDAO {
                 foreach ($resultset as $record) {
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
-                    $subcat->setSubcategory($record['subcatnaam']);
-                    $subcat->setCategory($category);
+                    $subcat->setSubcatname($record['subcatnaam']);
+                    
+                //     don't set because subcategories are put into category object
+                //         $subcat->setCategory($category);
+                    
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;

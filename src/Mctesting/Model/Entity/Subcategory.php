@@ -8,7 +8,9 @@ class Subcategory {
 
     private $id;
     private $subcatname;
-    private $category;
+    
+    //category unused since subcategories are contained by category object(s)
+//    private $category;
 
     public function getId() {
         return $this->id;
@@ -18,17 +20,17 @@ class Subcategory {
         return $this->subcatname;
     }
 
-    public function getCategory() {
-        return $this->category;
-    }
+//    public function getCategory() {
+//        return $this->category;
+//    }
 
     public function setId($id) {
         $this->id = $id;
     }    
     
-    public function setCategory($category) {
-        $this->category = $category;
-    }
+//    public function setCategory($category) {
+//        $this->category = $category;
+//    }
     
     public function setSubcatname($subcatname) {
         $this->subcatname = $subcatname;

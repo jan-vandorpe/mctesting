@@ -24,7 +24,7 @@ class CategoryDAO {
 
                 $category = new Category();
                 $category->setId($record['catid']);
-                $category->setCategory($record['catnaam']);
+                $category->setCatname($record['catnaam']);
                 return $category;
             } else {
                 throw new ApplicationException('Kon geen categorie ophalen, gelieve dit te controleren');
@@ -51,7 +51,7 @@ class CategoryDAO {
                 foreach ($resultset as $record) {
                     $category = new Category();
                     $category->setId($record['catid']);
-                    $category->setCategory($record['catnaam']);
+                    $category->setCatname($record['catnaam']);
                     array_push($categories,$category);
                 }
                 return $categories;
@@ -64,14 +64,14 @@ class CategoryDAO {
     }
     
 
-    public static function insert($catnaam) {
+    public static function insert($catname) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'INSERT INTO categorie(catnaam) values(:catnaam)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':catnaam' => $catnaam))) {
+        if ($stmt->execute(array(':catnaam' => $catname))) {
            
             } else {
                 throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');
