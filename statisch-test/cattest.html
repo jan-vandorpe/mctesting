@@ -100,7 +100,64 @@ and open the template in the editor.
                     </nav>
                 </div>
             </form>
-        </div>
 
+            <!-- BLOCK VOOR CATS TE TONEN -->
+
+            <!-- idem hierboven, maar dan met categorienen ipv testen :) -->
+
+            <!-- BLOCK VOOR CATS AAN TE MAKEN -->
+
+            <div class="">nieuwe categorie toevoegen:</div>
+
+            <form name="cattoev" class="form-horizontal meerboven-onder">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <label for="catnaam" class="col-lg-2 control-label">Naam categorie</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="catnaam" id="catnaam" placeholder="Vul hier de categorienaam in." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-4 centeren">
+                        <input type="submit" name="catknop" class="form-control" >
+                    </div>
+                </div>
+            </form>
+
+            <!-- NIEUWE SUBCAT TOEVOEGEN -->
+            
+            <div class="">nieuwe subcategorie toevoegen:</div>
+
+            <form name="subcattoev" class="form-horizontal meerboven-onder">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <label for="catselect" class="col-lg-2 control-label">Bijhorende categorie</label>
+                    <div class="col-lg-5">
+                        <select class="form-control" name="catselect">
+                            <option value="">Selecteer een categorie</option>
+                            <option value="01">IT</option>
+                            <option value="02">schilderen</option>
+                            <option value="03">horeca</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <label for="subcatnaam" class="col-lg-2 control-label">Naam subcategorie</label>
+                    <div class="col-lg-5">
+                        <input type="text" class="form-control" name="subcatnaam" id="catnaam" placeholder="Vul hier de subcategorienaam in." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-4 centeren">
+                        <input type="submit" name="subcatknop" class="form-control" >
+                    </div>
+                </div>
+            </form>
+        </div>
     </body>
 </html>

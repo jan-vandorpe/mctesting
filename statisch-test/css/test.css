@@ -173,7 +173,9 @@ body{
 .naarlinks{
     float:left;
 }
-
+.align_rechts{
+    text-align: right;
+}
 
 
 
