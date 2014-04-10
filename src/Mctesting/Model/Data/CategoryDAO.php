@@ -62,8 +62,9 @@ class CategoryDAO {
             throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
         }
     }
+    
 
-    public static function createNewCategory($catnaam) {
+    public static function insert($catnaam) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement

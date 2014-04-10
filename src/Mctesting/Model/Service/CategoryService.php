@@ -18,10 +18,15 @@ class CategoryService
         return CategoryDAO::selectById($id);
     }
     
-    public static function newCategory($category)
+    public static function create($category)
     {
-        CategoryDAO::createNewCategory($category);
+        CategoryDAO::insert($category);
     }            
+    
+    public static function getWithSubcategories($category)
+    {
+        
+    }
     
     
 }

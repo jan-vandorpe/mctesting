@@ -22,7 +22,7 @@
         
         //categorie aanmaken
         $test = "test";
-        Mctesting\Model\Service\CategoryService::newCategory($test);
+        Mctesting\Model\Service\CategoryService::create($test);
         
         print('<pre>');
         print_r($result);

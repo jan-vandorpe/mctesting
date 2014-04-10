@@ -7,15 +7,15 @@ namespace Mctesting\Model\Entity;
 class Subcategory {
 
     private $id;
-    private $subcategory;
+    private $subcatname;
     private $category;
 
     public function getId() {
         return $this->id;
     }
 
-    public function getSubcategory() {
-        return $this->subcategory;
+    public function getSubcatname() {
+        return $this->subcatname;
     }
 
     public function getCategory() {
@@ -30,8 +30,8 @@ class Subcategory {
         $this->category = $category;
     }
     
-    public function setSubcategory($subcategory) {
-        $this->subcategory = $subcategory;
+    public function setSubcatname($subcatname) {
+        $this->subcatname = $subcatname;
     }
 
 }

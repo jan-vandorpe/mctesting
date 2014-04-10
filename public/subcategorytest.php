@@ -31,7 +31,7 @@
 //        $catid = 4;
 //        $subcatid = 2;
 //        $subcatnaam = "testsubcategorie2";
-//        Mctesting\Model\Service\SubcategoryService::newSubcategory($catid,$subcatid,$subcatnaam);
+//        Mctesting\Model\Service\SubcategoryService::create($catid,$subcatid,$subcatnaam);
         
         print('<pre>');
         print_r($result);

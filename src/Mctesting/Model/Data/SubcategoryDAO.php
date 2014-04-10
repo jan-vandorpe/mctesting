@@ -101,7 +101,7 @@ class SubcategoryDAO {
             throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
         }
     }
-        public static function createNewSubcategory($catid,$subcatid,$subcatnaam) {
+        public static function insert($catid,$subcatid,$subcatnaam) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement

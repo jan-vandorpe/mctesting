@@ -7,21 +7,29 @@ namespace Mctesting\Model\Entity;
 class Category {
 
     private $id;
-    private $category;
+    private $catname;
+    private $subcategories = array();
 
     public function getId() {
         return $this->id;
     }
     
-    public function getCategory() {
-        return $this->category;
+    public function getSubcategories() {
+        return $this->subcategories;
+    }
+    
+    public function getCatname() {
+        return $this->catname;
     }
     
     public function setId($id) {
         $this->id = $id;
     }
-    public function setCategory($category) {
-        $this->category = $category;
+    public function setCatname($catname) {
+        $this->catname = $catname;
     }
 
+ public function setSubcategories($subcategories) {
+        $this->subcategories = $subcategories;
+    }    
 }
