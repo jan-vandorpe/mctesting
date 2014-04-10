@@ -15,4 +15,9 @@ class MediaService
     {
         return MediaDAO::selectByQuestion($questionId);
     }
+    
+    public static function create($questionId, $mediaId, $filename)
+    {
+        MediaDAO::insert($questionId, $mediaId, $filename);
+    }
 }

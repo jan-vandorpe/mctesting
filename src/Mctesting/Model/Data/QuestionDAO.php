@@ -14,7 +14,7 @@ use Mctesting\Model\Service\MediaService;
  */
 class QuestionDAO 
 {
-    public static function selectById($questionId)
+    public static function selectById($id)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -22,7 +22,7 @@ class QuestionDAO
         $sql = 'SELECT * FROM vraag WHERE vraagid = :vraagid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':vraagid' => $questionId,))) {
+        if ($stmt->execute(array(':vraagid' => $id,))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
