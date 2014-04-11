@@ -48,7 +48,19 @@
                     {%endif%}    
             </div>
         </nav>
-    </div> 
+    </div>
+    {% endblock %}
+    {% block sidenav %}
+    <div class="maincontainer">
+    {% if app.user is defined and app.user is not empty %}
+        {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+            <div> MENU BEH  </div>
+            {% if app.user.group.name == 'admin' %}
+                <div> MENU ADMIN  </div>
+            {%endif%}
+        {%endif%}
+    {%endif%}
+                </div>
     {% endblock %}
     <div class="content">
     {% block content %}{% endblock %}
