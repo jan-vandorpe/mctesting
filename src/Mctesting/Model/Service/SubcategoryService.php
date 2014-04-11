@@ -14,9 +14,9 @@ class SubcategoryService
         return SubcategoryDAO::selectAll();
     }
     
-    public static function getById($catid,$subcatid)
+    public static function getById($subcatid)
     {
-        return SubcategoryDAO::selectById($catid,$subcatid);
+        return SubcategoryDAO::selectById($subcatid);
     }
     
     public static function getByCategoryId($catid)

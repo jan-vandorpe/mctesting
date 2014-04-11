@@ -11,14 +11,14 @@ use Mctesting\Exception\ApplicationException;
 
 class SubcategoryDAO {
 
-    public static function selectById($catid,$subcatid) {
+    public static function selectById($subcatid) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid AND catid = :catid limit 1';
+        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':subcatid' => $subcatid, ':catid' => $catid))) {
+        if ($stmt->execute(array(':subcatid' => $subcatid,))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
