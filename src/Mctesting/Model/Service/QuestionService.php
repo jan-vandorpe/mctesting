@@ -14,7 +14,7 @@ class QuestionService
 {
     public static function getById($id)
     {
-        return QuestionService::getById($id);
+        return QuestionDAO::selectById($id);
     }
     
     public static function getBySubcategory($subcategoryId)
