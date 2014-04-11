@@ -22,22 +22,24 @@ class TestsController extends AbstractController
     {
         //model
         $message1 = 'Landingspagina voor alles ivm de tests (hier zou je normaal niet moeten komen)';
+        $message2 = "";
 
         //view
         $this->render('tests.html.twig', array(
             'message1' => $message1,
+            'message2' => $message2,
 
             ));
         //print_r($_SESSION);
         //var_dump($this->app->getUser());
     }
-    public function lists()
+    public function testlink()
     {
         //model
         //$message1 = 'It works!';
 
         //view
-        $this->render('tests.html.twig', array(
+        $this->render('testlink.html.twig', array(
           //  'message1' => $message1,
 
             ));

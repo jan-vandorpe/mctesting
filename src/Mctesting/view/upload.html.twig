@@ -6,7 +6,7 @@
 {%block scripts%}
     {{parent()}}
 <script src="\mctesting\public\js\tinymce\tinymce.min.js"></script>
-<script>tinymce.init({selector:'textarea'});</script>
+<script>tinymce.init({selector:'textarea.allowcode', editor_deselector : "mceNoEditor"});</script>
     
 
 {%endblock%}
@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <div class="col-lg-1"></div>
                         <div class="col-lg-5 centeren" style="width:900px;height:300px;" >
-                            <textarea class="form-control" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"></textarea>
+                            <textarea class="form-control allowcode mceNoEditor" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"></textarea>
                         </div>
                     </div>                    
                     
