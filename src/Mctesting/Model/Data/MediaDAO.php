@@ -2,6 +2,8 @@
 
 namespace Mctesting\Model\Data;
 
+use Mctesting\Exception\ApplicationException;
+
 /**
  * Description of MediaDAO
  *
@@ -20,17 +22,19 @@ class MediaDAO
         if ($stmt->execute(array(':vraagid' => $questionId,))) {
             //test if statement retrieved something
             $recordset = $stmt->fetchAll();
+            $result = array();
             if (!empty($recordset)) {
                 //fill array with filename strings and return
-                $result = array();
+                
                 foreach ($recordset as $record) {
                     //create answer object
                     array_push($result, $record['filename']);
                 }
-                return $result;
-            } else {
-                throw new ApplicationException('Media selectByQuestion recordset is leeg');
+                
+//            } else {
+//                throw new ApplicationException('Media selectByQuestion recordset is leeg');
             }
+            return $result;
         } else {
             $error = $stmt->errorInfo();
             $errormsg = 'Media selectByQuestion statement kan niet worden uitgevoerd'

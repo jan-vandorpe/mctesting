@@ -15,12 +15,15 @@
             require_once '../src/Mctesting/Model/Service/SubcategoryService.php';
             require_once '../src/Mctesting/Model/Data/SubcategoryDAO.php';
             require_once '../src/Mctesting/Model/Entity/Subcategory.php';
+            require_once '../src/Mctesting/Model/Service/CategoryService.php';
+            require_once '../src/Mctesting/Model/Data/CategoryDAO.php';
+            require_once '../src/Mctesting/Model/Entity/Category.php';
             require_once '../src/Mctesting/Model/Service/MediaService.php';
             require_once '../src/Mctesting/Model/Data/MediaDAO.php';
             require_once '../src/Mctesting/Config/Config.php';
             require_once '../src/Mctesting/Exception/ApplicationException.php';
             
-            $question = Mctesting\Model\Service\QuestionService::getById(3);
+            $question = Mctesting\Model\Service\QuestionService::getById(1);
             
             print '<pre>';
             print_r($question);

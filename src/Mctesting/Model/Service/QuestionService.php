@@ -24,6 +24,14 @@ class QuestionService
     
     public static function create($post)
     {
+        //assign variables
+        $subcatId =  $post['subcat'];
+        $text = $post['vraag'];
+        $weight = $post['gewicht'];
+        $correctAnswerId = $post['correctant'];
+        $answers = $post['antwoord'];
+        $media = $post['media'];
+
         //test if answers not empty and is array
         if (!isset($post['answer']) || empty($post['answer']) || !is_array($post['answer'])) {
             throw new ApplicationException('answer variabele bestaat niet, is leeg of is geen array');
@@ -36,5 +44,10 @@ class QuestionService
         
         //create question
         QuestionDAO::insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media);
+    }
+    
+    public static function validateCreate()
+    {
+        
     }
 }
