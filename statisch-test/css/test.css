@@ -177,6 +177,14 @@ body{
     text-align: right;
 }
 
+.vnaamaantest{
+    display:inline-block;
+    width: 40%;
+}
+.ietssmaller{
+    width: 80%;
+    margin: 0 auto;
+}
 
 
 
