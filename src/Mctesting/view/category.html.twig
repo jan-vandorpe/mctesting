@@ -6,17 +6,33 @@
 {%endblock%}
 
 {%block title%}
-    {{parent()}}Home
+    {{parent()}}Category
 {%endblock%}
 
 
 {%block content%}
 <div class="container-fluid maincontainer">
-    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+    <h1 class="headerpage">Categoriepagina</h1>
 </div>
 <div class="intropage">
     {% if app.user is defined and app.user is not empty %}
      <p> U bent ingelogd als {{app.user.group.name}}</p>
+     <p> Op deze pagina kunt u categorieën en subcategorieën beheren</p> 
+     
+     <p>Voeg een categorie toe:</p>
+     
+     
+     
+     <br>
+     <p>Voeg een subcategorie toe bij een hoofdcategorie:</p>
+     <form action="/mctesting/category" method="post">
+ <select name="categorie">
+<option value="volvo">Volvo</option>
+<option value="saab">Saab</option>
+<option value="fiat">Fiat</option>
+<option value="audi">Audi</option>
+</select>        
+     </form>     
      
     {%else%}
     <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 

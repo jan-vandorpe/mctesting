@@ -24,9 +24,9 @@ class SubcategoryService
         return SubcategoryDAO::selectByCategoryId($catid);
     }   
     
-    public static function create($catid,$subcatid,$subcatnaam)
+    public static function create($catid,$subcatnaam)
     {
-        SubcategoryDAO::insert($catid,$subcatid,$subcatnaam);
+        SubcategoryDAO::insert($catid,$subcatnaam);
     }     
     
 }

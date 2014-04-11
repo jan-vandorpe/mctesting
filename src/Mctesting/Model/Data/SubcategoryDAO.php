@@ -27,8 +27,8 @@ class SubcategoryDAO {
                 //create  object
                 $subcat = new Subcategory();
                 $subcat->setId($record['subcatid']);
-                $subcat->setSubcategory($record['subcatnaam']);
-                $subcat->setCategory($category);
+                $subcat->setSubcatname($record['subcatnaam']);
+//                $subcat->setCategory($category);
                 return $subcat;
             } else {
                 throw new ApplicationException('Kon geen subcategorie ophalen, gelieve dit te controleren');
@@ -92,7 +92,7 @@ class SubcategoryDAO {
                 //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
-                    $subcat->setSubcategory($record['subcatnaam']);
+                    $subcat->setSubcatname($record['subcatnaam']);
                     $subcat->setCategory($category);
                     array_push($subcatarray, $subcat);
                 }
@@ -104,14 +104,14 @@ class SubcategoryDAO {
             throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
         }
     }
-        public static function insert($catid,$subcatid,$subcatnaam) {
+        public static function insert($catid,$subcatnaam) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO subcategorie(catid,subcatid,subcatnaam) values(:catid,:subcatid,:subcatnaam)';
+        $sql = 'INSERT INTO subcategorie(catid,subcatnaam) values(:catid,:subcatnaam)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':catid' => $catid,':subcatid' => $subcatid,':subcatnaam' => $subcatnaam))) {
+        if ($stmt->execute(array(':catid' => $catid,':subcatnaam' => $subcatnaam))) {
            
             } else {
                 throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren');
