@@ -69,21 +69,21 @@
                 <select class="form-control" name="testsetselect">
                     <option value="">Selecteer een test</option>
                             {% for test in allTest %}
-                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.aantalvragen}} vragen</option>
+                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
                             {% endfor %}
                 </select>
             </div>
         </div>
         <div class="form-group">
-            <label for="testsessieselect" class="col-lg-3 control-label">Selecteer de datum van de testsessie</label>
+            <label for="testsessieselect" class="col-lg-3 control-label">Datum van de testsessie</label>
             <div class="col-lg-5">
                 <input type="date" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
             </div>
                 </div>
              <div class="form-group">
-                 <label for="testsessieselect" class="col-lg-3 control-label">Bepaal het wachtwoord van de testsessie</label>
+                 <label for="testsessieselect" class="col-lg-3 control-label">Wachtwoord van de testsessie</label>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in dat de testafleggers moeten invullen." required/>
+                <input type="text" class="form-control" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in voor de testafleggers." required/>
             </div>
         </div>
    <!-- </form> -->
@@ -110,17 +110,20 @@
 
 
         <!-- TRY TWO -->
-
+{% for user in allUsers %} 
         <div class="input-group ietssmaller">
             <span class="input-group-addon">
                 <input type="checkbox" name="antwoord1" />
             </span>
             <div class=" form-control">
-                <div class="vnaamaantest">Jansens</div>
-                <div class="vnaamaantest">Korneel</div>
+                   
+                <div class="vnaamaantest">{{user.lastname}}</div>
+                <div class="vnaamaantest">{{user.firstname}}</div>
+                
             </div>
-
+                
         </div>
+        {% endfor %}
         <div class="form-group">
             <div class="ietssmaller">
                 <div class="col-lg-4">
