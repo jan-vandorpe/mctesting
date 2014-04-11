@@ -6,7 +6,7 @@
 {%block scripts%}
     {{parent()}}
 <script src="\mctesting\public\js\tinymce\tinymce.min.js"></script>
-<script>tinymce.init({selector:'textarea.allowcode', editor_deselector : "mceNoEditor"});</script>
+<script>tinymce.init({selector:'textarea.allowcode', paste_as_text: true});</script>
     
 
 {%endblock%}
@@ -58,7 +58,7 @@
                         <div class="col-lg-4 centeren">{{upload.code|raw}}</div>
                 </div>
 {% endfor %}
-        
+        </div>
     <div class="results" id="">
     </div>
 
