@@ -15,7 +15,7 @@
     <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
 </div>
 <div class="maincontainer">
-    <h1 class="headertestupdates centeren">Gebruikers aan test hangen</h1>
+    <h1 class="headertestupdates centeren">Test aanmaken</h1>
     <!-- selecteer een cat -->
     <!-- selecteer een testsessie -->
     <!-- voeg gebruikers toe aan de testsessie -->
@@ -43,47 +43,28 @@
      </form>
     -->
 
-    <div class="resultaat maincontainer centeren">
-
-        {% for upload in allUploads %}   
-        <div class="input-group">
-
-            <span class="input-group-addon">
-                <input type="checkbox" name="antwoord1" />
-            </span>                                             
-            <div class="col-lg-4 centeren">{{upload.nummer}}</div>
-            <div class="col-lg-4 centeren">{{upload.code|raw}}</div>
-        </div>
-{% endfor %}
-    </div>
 
 
 
 
 
     <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
-        <div class="form-group">            
-            <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
-            <div class="col-lg-5">                
-                <select class="form-control" name="testsetselect">
-                    <option value="0" >Selecteer een test</option>
-                            {% for test in allTest %}
-                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
-                            {% endfor %}
-                </select>
-                <p style="color:red;">{{errormsg}}</p>  
-            </div>
-        </div>
         <div class="form-group">
-            <label for="testsessieselect" class="col-lg-3 control-label">Datum van de testsessie</label>
+            <label for="testsessieselect" class="col-lg-3 control-label">Naam van test</label>
             <div class="col-lg-5">
-                <input type="date" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
+                <input type="text" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de naam in voor de dag van de test." required/>
             </div>
                 </div>
              <div class="form-group">
-                 <label for="testsessieselect" class="col-lg-3 control-label">Wachtwoord van de testsessie</label>
-            <div class="col-lg-5">
-                <input type="text" class="form-control" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in voor de testafleggers." required/>
+                 <label for="testsessieselect" class="col-lg-3 control-label">Categorie van test</label>
+            <div class="col-lg-5">                
+                <select class="form-control" name="testsetselect">
+                    <option value="0" >Selecteer een categorie</option>
+                            {% for category in allCategory %}
+                    <option value="{{category.categoryName}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                            {% endfor %}
+                </select>
+                <p style="color:red;">{{errormsg}}</p>  
             </div>
         </div>
    <!-- </form> -->
@@ -110,20 +91,7 @@
 
 
         <!-- TRY TWO -->
-{% for user in allUsers %} 
-        <div class="input-group ietssmaller">
-            <span class="input-group-addon">
-                <input type="checkbox" name='user[]' value='{{user.rrnr}}'/>
-            </span>
-            <div class=" form-control">
-                   
-                <div class="vnaamaantest">{{user.lastname}}</div>
-                <div class="vnaamaantest">{{user.firstname}}</div>
-                
-            </div>
-                
-        </div>
-        {% endfor %}
+
         <div class="form-group">
             <div class="ietssmaller">
                 <div class="col-lg-4">
