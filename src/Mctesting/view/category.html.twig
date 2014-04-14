@@ -20,9 +20,12 @@
      <p> Op deze pagina kunt u categorieën en subcategorieën beheren</p> 
      
      <p>Voeg een categorie toe:</p>
-     
-     
-     
+         {% if app.category is defined and app.category is not empty %}
+
+     {{app.category}}
+    {%else%}
+    {%endif%}    
+
      <br>
      <p>Voeg een subcategorie toe bij een hoofdcategorie:</p>
      <form action="/mctesting/category" method="post">

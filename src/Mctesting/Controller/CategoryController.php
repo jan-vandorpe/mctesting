@@ -4,6 +4,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Service\CategoryService;
 
 
 /**
@@ -22,7 +23,7 @@ class CategoryController extends AbstractController
     public function go()
     {
         
-        $this->render('category.html.twig', array(
+        $this->render('category.html.twig', array($category = \Mctesting\Model\Service\CategoryService::getAll()
             ));
     }
 
