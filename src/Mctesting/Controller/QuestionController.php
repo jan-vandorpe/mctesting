@@ -18,6 +18,10 @@ class QuestionController extends AbstractController
         parent::__construct($app);
     }
     
+    /**
+     * Controller action that shows the input form for a new question.
+     * Categories and subcategories are supplied to populate a select box
+     */
     public function create()
     {
         //build model
@@ -33,18 +37,12 @@ class QuestionController extends AbstractController
             'categories' => $categories,));
     }
     
+    /**
+     * Controller action that processes the input of a new question via the
+     * input form (see create() action)
+     */
     public function add()
     {
-//        print '<pre>';
-//        print $_POST['subcat'];
-//        print $_POST['vraag'];
-//        foreach ($_POST['antwoord'] as $antwoord) {
-//            print $antwoord;
-//        }
-//        foreach ($_POST['media'] as $media) {
-//            print $media;
-//        }
-//        print '</pre>';
         QuestionService::create($_POST);
     }
 }

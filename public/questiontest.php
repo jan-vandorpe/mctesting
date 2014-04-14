@@ -23,10 +23,10 @@
             require_once '../src/Mctesting/Config/Config.php';
             require_once '../src/Mctesting/Exception/ApplicationException.php';
             
-            $question = Mctesting\Model\Service\QuestionService::getById(1);
+            $questions = Mctesting\Model\Service\QuestionService::getByCategory(2);
             
             print '<pre>';
-            print_r($question);
+            print_r($questions);
             print '</pre>';
         
         ?>
