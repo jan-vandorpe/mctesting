@@ -61,7 +61,7 @@
 
 
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder">
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" action="POST">
         <div class="form-group">
 
             <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
@@ -113,7 +113,7 @@
 {% for user in allUsers %} 
         <div class="input-group ietssmaller">
             <span class="input-group-addon">
-                <input type="checkbox" name="antwoord1" />
+                <input type="checkbox" name="antwoord[]" />
             </span>
             <div class=" form-control">
                    

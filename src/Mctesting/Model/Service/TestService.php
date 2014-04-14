@@ -2,7 +2,7 @@
 
 namespace Mctesting\Model\Service;
 
-use Mctesting\Model\Entity\User;
+use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\TestDAO;
 
 /**
