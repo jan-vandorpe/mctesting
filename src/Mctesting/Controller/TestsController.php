@@ -5,6 +5,7 @@ use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\TestService;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Service\CategoryService;
 
 /**
  * Description of testscontroller
@@ -47,10 +48,13 @@ class TestsController extends AbstractController
         //model
         $allTest = TestService::getAll();
         $allUsers = UserService::getAllUsers();
+        $allCat = CategoryService::getAll();
         //view
         $this->render('testcreation.html.twig', array(
             'allTest'=>$allTest,
             'allUsers'=>$allUsers,
+            'allCat'=>$allCat,
+            
             ));
     }
     

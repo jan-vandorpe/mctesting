@@ -60,8 +60,8 @@
             <div class="col-lg-5">                
                 <select class="form-control" name="testsetselect">
                     <option value="0" >Selecteer een categorie</option>
-                            {% for category in allCategory %}
-                    <option value="{{category.categoryName}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                            {% for category in allCat %}
+                    <option value="{{category.id}}">{{category.catname}}</option>
                             {% endfor %}
                 </select>
                 <p style="color:red;">{{errormsg}}</p>  
