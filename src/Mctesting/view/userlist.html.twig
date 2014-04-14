@@ -1,0 +1,72 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="container-fluid maincontainer">
+            <form name="testtebewerken">
+
+
+                <div class="headergebroverzicht">
+                    <!-- header boven de gebr info-->
+                    <div class="onderheadertebewerken form-control">
+                        <div class="fnaamgebrupdateheader"><a>Familienaam</a></div>
+                        <div class="vnaamgebrupdateheader"><a>Voornaam</a></div>
+                        <div class="rrnrgebrupdateheader"><a>Rijksreg Nr</a></div>
+                        <div class="gebrupdaterheader"></div>
+                    </div>
+                </div>
+                
+                
+                <!-- gebr VOORBEELD IN OVERZICHT -->
+                {% for user in allUsers %}   
+                <div class="input-group">
+                    
+                    <span class="input-group-addon">
+                        <input type="checkbox" name="antwoord1" />
+                    </span>
+                        
+                    <div class="gebruiktebewerken form-control">
+                                             
+                        <div class="fnaamgebrupdate">{{user.lastname}}</div>
+                        <div class="vnaamgebrupdate">{{user.firstname}}</div>
+                        <div class="rrnrgebrupdate">{{user.rrnr}}</div>
+                        <div class="gebrupdater"><a>Update</a></div>
+                        
+                    </div>
+                </div>
+{% endfor %}
+
+                <!-- DE BEWERKINGSKNOPEN -->
+                <div>
+                    <nav>
+                        <div class="collapse navbar-collapse">
+                            <!-- knopen links -->
+                            <p class="navbar-text">Selectie: </p>
+                            <ul class="nav navbar-nav">
+                                <li><a>Maak inactief</a></li>
+                                <li><a>Maak actief</a></li>
+                                <li><a>Verwijder</a></li>
+                            </ul>
+                            <!-- knopen rechts -->
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="/mctesting/usermanagement/newuserform">Maak nieuwe gebruiker</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </form>
+        </div>
+   
+{%endblock%}
