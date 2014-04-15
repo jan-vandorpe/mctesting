@@ -11,47 +11,45 @@
 
 
 {%block content%}
-<div class="container-fluid maincontainer">
-    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
-</div>
-<div class="gebruikertoevoegen centeren maincontainer">
+
+<div class="gebruikertoevoegen container-fluid">
+    <h1 class="headerofpage">Welkom op de testing website van de VDAB</h1>
     <p>Maak hier een nieuwe basisgebruiker aan.</p>
     
-                <form name="gebrtoev" class="form-horizontal meerboven-onder" action="/mctesting/usermanagement/newUser" method="post">
-                    <div class="form-group">
-                        <div class="col-lg-1"></div>
-                        <label for="fnaam" class="col-lg-2 control-label">Familienaam</label>
-                        <div class="col-lg-5">
-                            <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="Vul hier de familienaam in." required/>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="col-lg-1"></div>
-                        <label for="vnaam" class="col-lg-2 control-label">Voornaam</label>
-                        <div class="col-lg-5">
-                            <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="Vul hier de voornaam in." required/>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="col-lg-1"></div>
-                        <label for="rrnr" class="col-lg-2 control-label">Rijksregisternummer</label>
-                        <div class="col-lg-5">
-                            
-                            <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="Vul hier het rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="col-lg-3">
-                        </div>
-                        <div class="col-lg-4 centeren">
-                            <input type="submit" name="gebrknop" class="form-control">
-                        </div>
-                    </div>
-                    
-                </form>
+    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="/mctesting/usermanagement/newUser" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="fnaam" class="col-lg-2 control-label">Familienaam</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="Vul hier de familienaam in." required/>
             </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="vnaam" class="col-lg-2 control-label">Voornaam</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="Vul hier de voornaam in." required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rrnr" class="col-lg-3 control-label">Rijksregisternummer</label>
+            <div class="col-lg-5">
+
+                <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="Vul hier het rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="gebrknop" class="form-control">
+            </div>
+        </div>
+
+    </form>
+</div>
 
 {%endblock%}

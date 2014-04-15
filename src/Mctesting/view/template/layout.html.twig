@@ -14,20 +14,26 @@
         <div class="collapse navbar-collapse">
                      {% if app.user is defined and app.user is not empty %}
                         {% if app.user.group.name == 'admin' %}
+                {#
+                
                 <ul class="nav navbar-nav">
                     <li><a href="/mctesting/tests/go">Tests</a></li>
                     <li><a>Vragen</a></li>
                     <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
                     <li><a>Beheerders</a></li>
                 </ul>
+                #}
                 {%elseif app.user.group.name == 'beheerder' %}
+                {#
                 <ul class="nav navbar-nav">
                     <li><a href="/mctesting/tests/go">Tests</a></li>
                     <li><a>Vragen</a></li>
                     <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
                 </ul>
+                #}
 
                 {%else %}
+                
                 <ul class="nav navbar-nav">
                     <li><a>Test Beëindigen</a></li>
                 </ul>
@@ -51,22 +57,40 @@
     </div>
     {% endblock %}
     {% block sidenav %}
-    <div class="maincontainer">
-    {% if app.user is defined and app.user is not empty %}
-        {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-            <div> MENU BEH  </div>
-            {% if app.user.group.name == 'admin' %}
-                <div> MENU ADMIN  </div>
+    <div class="container-fluid maincontainer clearFix">
+        {% if app.user is defined and app.user is not empty %}
+            {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+
+                <div class="menu_on_left">
+                    <nav>
+                        <div class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav nav-stacked">
+                                <li class="menuheader">Gebruikers</li>
+                                <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
+                                <li><a href="/mctesting/usermanagement/listusers">Beheren</a></li>
+                                <li class="menuheader">Tests</li>
+                                <li><a href="#">Aanmaken</a></li>
+                                <li><a href="#">Beheren</a></li>
+
+                                {% if app.user.group.name == 'admin' %}
+                                    <li class="menuheader">Beheerders</li>
+                                    <li><a href="#">Aanmaken</a></li>
+                                    <li><a href="#">Beheren</a></li>
+                                {%endif%}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
             {%endif%}
         {%endif%}
-    {%endif%}
+                
+        {% endblock %}
+                <div class="content clearFix">
+                    {% block content %}{% endblock %}
                 </div>
-    {% endblock %}
-    <div class="content">
-    {% block content %}{% endblock %}
-        </div>
-
-
+            </div>
+            
+            {#------ FOOTER ----------------#}
         <div class="footer headerpage maincontainer">
     {% block footer %}
                 <p>&copy; vdab - 2014</p>
