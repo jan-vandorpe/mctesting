@@ -195,6 +195,7 @@ body{
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    font-size: 2em;
 }
 .nav-stacked li a{
     padding: 0em;
@@ -212,6 +213,9 @@ body{
     font-size: 1.125em;
     font-weight: bolder;
     text-align: left;
+}
+.footer{
+    text-align: center;
 }
 
 

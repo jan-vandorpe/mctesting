@@ -187,6 +187,26 @@ body{
 }
 
 
+.omschrijving{
+    display: inline-block;
+    width: 50%;
+}
+
+.datum{
+    display: inline-block;
+    width: 40%;
+}
+
+.datumonly{
+    width: 20em;
+    text-align: center;
+}
+.datumonly td, .datumonly th{
+    width: 20em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(0,0,0,0.5);
+}
 
 /* CLEARFIX
 */
