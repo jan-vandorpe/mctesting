@@ -45,7 +45,6 @@ class TestDAO
        
     
     
-    
     public static function insert($codeTeUploaden)
     {
         //create db connection        

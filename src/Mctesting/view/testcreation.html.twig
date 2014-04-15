@@ -15,83 +15,26 @@
     <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
 </div>
 <div class="maincontainer">
+    {%if testname is not defined %}
     <h1 class="headertestupdates centeren">Test aanmaken</h1>
-    <!-- selecteer een cat -->
-    <!-- selecteer een testsessie -->
-    <!-- voeg gebruikers toe aan de testsessie -->
-
-    <!-- <form name="catsel" class="form-horizontal meerboven-onder">
-         <div class="form-group">
-             <div class="col-lg-1"></div>
-             <label for="catselect" class="col-lg-2 control-label">Bijhorende categorie</label>
-             <div class="col-lg-5">
-                 <select class="form-control" name="catselect">
-                     <option value="">Selecteer een categorie</option>
-                     <option value="01">IT</option>
-                     <option value="02">schilderen</option>
-                     <option value="03">horeca</option>
-                 </select>
-             </div>
-         </div>
-         <div class="form-group">
-             <div class="col-lg-3">
-             </div>
-             <div class="col-lg-4 centeren">
-                 <input type="submit" name="catknop" class="form-control" >
-             </div>
-         </div>
-     </form>
-    -->
-
-
-
-
-
-
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
+    <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step2">
         <div class="form-group">
-            <label for="testsessieselect" class="col-lg-3 control-label">Naam van test</label>
+            <label for="testname" class="col-lg-3 control-label">Naam van test</label>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de naam in voor de dag van de test." required/>
+                <input type="text" class="form-control" name="testname" id="testname" placeholder="Vul hier de naam in van de test." required/>
             </div>
                 </div>
              <div class="form-group">
-                 <label for="testsessieselect" class="col-lg-3 control-label">Categorie van test</label>
+                 <label for="testcatselect" class="col-lg-3 control-label">Categorie van test</label>
             <div class="col-lg-5">                
-                <select class="form-control" name="testsetselect">
+                <select class="form-control" name="testcatselect">
                     <option value="0" >Selecteer een categorie</option>
                             {% for category in allCat %}
                     <option value="{{category.id}}">{{category.catname}}</option>
                             {% endfor %}
                 </select>
-                <p style="color:red;">{{errormsg}}</p>  
             </div>
         </div>
-   <!-- </form> -->
-
-<!--
-    <h2 class="centeren">koppelen:</h2>
-    <form name="gebraantestsessie" class="form-horizontal meerboven-onder">
-        <div class="form-group">
-
-            <label for="testsessienaam" class="col-lg-3 control-label">Sessie:</label>
-            <div class="col-lg-5">
-                <input type="text" name="testsessienaam" class="form-control" value="PHP intake" disabled />
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="testsessiedatum" class="col-lg-3 control-label">Datum:</label>
-            <div class="col-lg-5">
-                <input type="text" name="testsessiedatum" class="form-control" value="21/08/2012" disabled />
-            </div>
-        </div>
--->
-        <!-- lijst gebruikers -->
-        <!-- checkbox/voornaam/familienaam -->
-
-
-        <!-- TRY TWO -->
-
         <div class="form-group">
             <div class="ietssmaller">
                 <div class="col-lg-4">
@@ -102,6 +45,60 @@
             </div>
         </div>
     </form>
+    {%elseif testduration is not defined %}
+    <h1 class="headertestupdates centeren">Test aanmaken stap 2</h1>
+    <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step3">
+        <div class="form-group">
+            <label for="testduration" class="col-lg-3 control-label">Duur van test(aantal minuten)</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in van de test." required/>
+            </div>
+                </div>
+             <div class="form-group">
+                 <label for="testcatselect" class="col-lg-3 control-label">Keuze van testvragen</label>
+            
+                    <!-- TEST VOORBEELD IN OVERZICHT -->
+                    {% for question in allQuest %}
+                    <div class="categorie">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="question[]" value='{{question.id}}' />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="questsubcat">{{question.subcategory.subcatname}}</div>
+                            <div class="questtitle">"{{question.text}}"</div>
+                            <div class="questweight"><a>{{question.weight}}</a></div>
+                        </div>
+                    </div>
+                            </div>
+                    {% endfor %}
+
+                
+        </div>
+        <div class="form-group">
+            <div class="ietssmaller">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="catknop" class="form-control" >
+                    <button>Annuleren</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {%else %}
+    <h1 class="headertestupdates centeren">Test aanmaken stap 3</h1>
+    <h1 class="headertestupdates centeren">Testweergave</h1>
+    <p>Titel: {{testname}}</p>
+    <p>Categorie: {{cat.catname}}</p>
+    {% set counter = 0%}
+    {%for q in questions %}
+    {% set counter = counter + 1 %}
+    {%endfor%}
+    <p>Aantal vragen: {{counter}}</p>
+    <p>Duurtijd: {{testduration}}</p>
+    <p></p>
+    {%endif%}
 </div>
 
 {%endblock%}

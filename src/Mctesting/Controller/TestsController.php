@@ -6,6 +6,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\TestService;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
+use Mctesting\Model\Service\QuestionService;
 
 /**
  * Description of testscontroller
@@ -46,17 +47,77 @@ class TestsController extends AbstractController
              */
     {
         //model
-        $allTest = TestService::getAll();
-        $allUsers = UserService::getAllUsers();
         $allCat = CategoryService::getAll();
         //view
         $this->render('testcreation.html.twig', array(
-            'allTest'=>$allTest,
-            'allUsers'=>$allUsers,
             'allCat'=>$allCat,
             
             ));
     }
+    
+    public function testCreation_step2()
+            /**
+             * 
+             */
+    {
+        //model
+        if(isset($_POST["testname"])&& isset($_POST["testcatselect"])){
+        $_SESSION["testcreation"]["testname"] = $_POST["testname"];        
+        $_SESSION["testcreation"]["catid"] = $_POST["testcatselect"];
+        
+        $testname = $_SESSION["testcreation"]["testname"];
+        $catid = $_SESSION["testcreation"]["catid"];
+        
+
+        $allQuest = QuestionService::getByCategory($catid);
+        
+        
+        //view
+        $this->render('testcreation.html.twig', array(
+            'allQuest'=>$allQuest,
+            'testname'=>$testname,
+            
+            ));
+        }else{
+         header("location: /mctesting/tests/testcreation");   
+           exit(0);   
+        }
+    }
+    
+    public function testCreation_step3()
+            /**
+             * 
+             */
+    {
+        //model
+        if(isset($_POST["testduration"])){
+        $_SESSION["testcreation"]["testduration"] = $_POST["testduration"];
+        $testname = $_SESSION["testcreation"]["testname"];
+        $testduration = $_SESSION["testcreation"]["testduration"];
+        //$catid = $_POST["testcatselect"];
+        
+        $questions = array();
+        if(isset($_POST["question"])){$questions = $_POST["question"];}
+
+        //$allQuest = QuestionService::getByCategory($catid);
+        $catid = $_SESSION["testcreation"]["catid"];
+        $cat = CategoryService::getById($catid);
+        
+        //view
+        $this->render('testcreation.html.twig', array(
+            //'allQuest'=>$allQuest,
+            'testduration'=>$testduration,
+            'testname'=>$testname,
+            'questions'=>$questions,
+            'cat'=>$cat,
+            
+            ));
+        }else{
+          header("location: /mctesting/tests/testcreation");   
+           exit(0);     
+        }
+    }
+    
     
     public function testlink()
             /**
