@@ -56,9 +56,10 @@ class CategoryController extends AbstractController
     public function newSubcategory()
     {
         $subcategory = $_POST["subcat"];
-        if ($category !== null and CategoryService::validateNewCategory($category) == true)
+        $category = $_POST["category"];
+        if ($subcategory !== null and CategoryService::getById($category) == true)
         {
-            CategoryService::create($category);
+            SubcategoryService::create($category,$subcategory);
             header("location: categorylist");
         } else
         {
