@@ -1,0 +1,25 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="intropage maincontainer">
+   
+   {{message1}}
+    {{message2}}
+    <a href = '/mctesting/tests/testlink'>Klik hier voor test links te maken.</a>
+    
+</div>
+
+{%endblock%}

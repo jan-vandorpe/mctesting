@@ -49,7 +49,7 @@ function check_access_control($requestedController)
     //access control array
     $access_control['anonymous'] = array('home','login');
     $access_control['user'] = array('acltest',);
-    $access_control['admin'] = array('question', 'scores');
+    $access_control['admin'] = array('question', 'scores', 'tests', 'usermanagement', 'upload');
     $access_control['superadmin'] = array();
 
     //Determine if requested controller is listed in access control array
