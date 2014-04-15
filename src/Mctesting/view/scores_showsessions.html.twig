@@ -1,0 +1,59 @@
+{% extends "template/layout.html.twig" %}
+
+{% block title %}
+{{ parent() }}Rapport scores - Select test
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="headerofpage">Overzicht testsessie</h1>
+    
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-4">
+            <div class="col-lg-1"></div>
+            <label class="col-lg-2 control-label">Test:</label>
+            <div class="col-lg-5">
+                {{ test.name }}Testnaam
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Datum sessie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for testsession in testsessions %}
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/{{testsession.id}}">{{testsession.date}}</a></td>
+                    </tr>
+                    {% endfor %}
+                    {#testvalues#}
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/">21/4/2013</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/">5/5/2013</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/">12/9/2013</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/">8/11/2013</a></td>
+                    </tr>
+                    <tr>
+                        <td><a href="/mctesting/scores/showsessiondetail/">5/1/2014</a></td>
+                    </tr>
+                    {#end testvalues#}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
