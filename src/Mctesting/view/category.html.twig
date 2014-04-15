@@ -14,43 +14,100 @@
 <div class="container-fluid maincontainer">
     <h1 class="headerpage">Categoriepagina</h1>
 </div>
-<div class="intropage">
+<div class="gebruikertoevoegen centeren maincontainer">
     {% if app.user is defined and app.user is not empty %}
-     <p> U bent ingelogd als {{app.user.group.name}}</p>
-     <p> Op deze pagina kunt u categorieën en subcategorieën beheren</p> 
-     
-     <p>Voeg een categorie toe:</p>
-         {% if app.category is defined and app.category is not empty %}
 
-     {{app.category}}
+
+    <h2>Voeg een Categorie toe:</h2>
+
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newCategory" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="cat" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="newcat" id="category" placeholder="Nieuwe categorie."/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="catknop" class="form-control">
+            </div>
+        </div>
+    </form> 
+
+
+
+    <h2>Voeg een subcategorie toe aan een hoofdcategorie:</h2>
+
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newSubcategory" method="post">
+
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="categorie" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <select name="categorie" class="form-control" id="category"/>
+{% for category in allcategories %}  
+                <option value="{{category.catid}}">{{category.catname}}</option>
+{% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="subcat" class="col-lg-2 control-label">Subcategorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="subcat" id="subcat" placeholder="Nieuwe subcategorie."/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="subcatknop" class="form-control">
+            </div>
+        </div>
+    </form>
+    <a href='/mctesting/categorycontroller/categorylist'>lijst van categorieën en subcategorieën</a>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {%else%}
-    {%endif%}    
+<h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
+<p>
+    Gelieve in te loggen met: <br>
+    uw rijksregisternummer als Login en <br>
+    het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
+    <span class="smaller">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
+</p>
 
-     <br>
-     <p>Voeg een subcategorie toe bij een hoofdcategorie:</p>
-     <form action="/mctesting/category" method="post">
- <select name="categorie">
-<option value="volvo">Volvo</option>
-<option value="saab">Saab</option>
-<option value="fiat">Fiat</option>
-<option value="audi">Audi</option>
-</select>        
-     </form>     
-     
-    {%else%}
-    <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
-    <p>
-        Gelieve in te loggen met: <br>
-        uw rijksregisternummer als Login en <br>
-        het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
-        <span class="smaller">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
-    </p>
-
-    <h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
-    <p>
-        Gelieve in te loggen met: <br>
-        uw emailadres als Login  en uw eigen wachtwoord.
-    </p>
+<h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
+<p>
+    Gelieve in te loggen met: <br>
+    uw emailadres als Login  en uw eigen wachtwoord.
+</p>
 </div>
     {%endif%}    
 {%endblock%}
