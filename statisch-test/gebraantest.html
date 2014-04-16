@@ -1,0 +1,124 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gebruikers aan test koppelen</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="bs/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/test.css" />
+    </head>
+    <body>
+        <!-- ingelogd als beheerder -->
+        <div class="container-fluid maincontainer">
+            <nav>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a>Uitloggen</a></li>
+                        <li><a>Tests</a></li>
+                        <li><a>Vragen</a></li>
+                        <li><a>Gebruikers</a></li>
+                    </ul>
+                    <p class="navbar-text navbar-right">Ingelogd als <a href="#" class="navbar-link">Voornaam Familienaam</a></p>
+                </div>
+            </nav>
+        </div>
+        <div class="maincontainer">
+            <h1 class="headertestupdates centeren">Gebruikers aan test hangen</h1>
+            <!-- selecteer een cat -->
+            <!-- selecteer een testsessie -->
+            <!-- voeg gebruikers toe aan de testsessie -->
+
+            <form name="catsel" class="form-horizontal meerboven-onder">
+                <div class="form-group">
+                    <div class="col-lg-1"></div>
+                    <label for="catselect" class="col-lg-2 control-label">Bijhorende categorie</label>
+                    <div class="col-lg-5">
+                        <select class="form-control" name="catselect">
+                            <option value="">Selecteer een categorie</option>
+                            <option value="01">IT</option>
+                            <option value="02">schilderen</option>
+                            <option value="03">horeca</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-4 centeren">
+                        <input type="submit" name="catknop" class="form-control" >
+                    </div>
+                </div>
+            </form>
+
+            <form name="testsessiesel" class="form-horizontal meerboven-onder">
+                <div class="form-group">
+
+                    <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een testsessie</label>
+                    <div class="col-lg-5">
+                        <select class="form-control" name="testsetselect">
+                            <option value="">Selecteer een testsessie</option>
+                            <option value="01">Orientatie php - 24/08/2012</option>
+                            <option value="02">Orientatie php - 31/08/2012</option>
+                            <option value="03">Orientatie php - 12/10/2013</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-3">
+                    </div>
+                    <div class="col-lg-4 centeren">
+                        <input type="submit" name="catknop" class="form-control" >
+                    </div>
+                </div>
+            </form>
+
+
+            <h2 class="centeren">koppelen:</h2>
+            <form name="gebraantestsessie" class="form-horizontal meerboven-onder">
+                <div class="form-group">
+
+                    <label for="testsessienaam" class="col-lg-3 control-label">Sessie:</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="testsessienaam" class="form-control" value="PHP intake" disabled />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="testsessiedatum" class="col-lg-3 control-label">Datum:</label>
+                    <div class="col-lg-5">
+                        <input type="text" name="testsessiedatum" class="form-control" value="21/08/2012" disabled />
+                    </div>
+                </div>
+                <!-- lijst gebruikers -->
+                <!-- checkbox/voornaam/familienaam -->
+
+
+                <!-- TRY TWO -->
+
+                <div class="input-group ietssmaller">
+                    <span class="input-group-addon">
+                        <input type="checkbox" name="antwoord1" />
+                    </span>
+                    <div class=" form-control">
+                        <div class="vnaamaantest">Jansens</div>
+                        <div class="vnaamaantest">Korneel</div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="ietssmaller">
+                    <div class="col-lg-4">
+                    </div>
+                    <div class="col-lg-4 centeren">
+                        <input type="submit" name="catknop" class="form-control" >
+                    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>
