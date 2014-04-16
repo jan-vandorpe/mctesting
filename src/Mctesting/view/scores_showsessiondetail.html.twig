@@ -1,0 +1,111 @@
+{% extends "template/layout.html.twig" %}
+
+{% block title %}
+{{ parent() }}Rapport Scores - Sessiedetail
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="headerofpage">Overzicht sessiescores</h1>
+    
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="col-lg-1"></div>
+            <label class="col-lg-2 control-label">Test:</label>
+            <div class="col-lg-5">
+                {{ test.name }}Testnaam
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="col-lg-1"></div>
+            <label class="col-lg-3 control-label">Sessiedatum:</label>
+            <div class="col-lg-5">
+                {{ testsession.date }}datum sessie
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Voornaam</th>
+                        <th>Familienaam</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Geslaagd</th>
+                        <th>Afgelegd</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sessionuser in testsessionusers %}
+                    <tr>
+                        <td>{{ sessionuser.user.firstname }}</td>
+                        <td>{{ sessionuser.user.lastname }}</td>
+                        <td>{{ sessionuser.score }} / {{ test.maxscore }}</td>
+                        <td>{{ sessionuser.percentage }}</td>
+                        <td>{{ sessionuser.testpassed }}</td>
+                        <td>{{ sessionuser.testtaken }}</td>
+                    </tr>
+                    {% endfor %}
+                    {#testvalues#}
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    <tr>
+                        <td>Thomas</td>
+                        <td>Deserranno</td>
+                        <td>68/83</td>
+                        <td>82%</td>
+                        <td>Ja</td>
+                        <td>Ja</td>
+                    </tr>
+                    {#end testvalues#}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
