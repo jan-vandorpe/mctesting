@@ -51,7 +51,7 @@ class CategoryController extends AbstractController
             header("location: categorylist");
         } else
         {
-            print ("");
+            throw new ApplicationException('Er is een fout gebeurd in het toevoegen van een nieuwe categorie');
         }
     }
 

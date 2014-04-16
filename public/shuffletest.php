@@ -6,36 +6,52 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        
+
     </head>
     <body>
         <?php
-    $natural_born_killers = array("lions", "tigers", "bears", "kittens");
-    shuffle($natural_born_killers);
+        require_once '../src/Mctesting/Model/Service/AnswerService.php';
+        require_once '../src/Mctesting/Model/Data/AnswerDAO.php';
+        require_once '../src/Mctesting/Model/Entity/Answer.php';
+        require_once '../src/Mctesting/Model/Service/QuestionService.php';
+        require_once '../src/Mctesting/Model/Data/QuestionDAO.php';
+        require_once '../src/Mctesting/Model/Entity/Question.php';
+        require_once '../src/Mctesting/Model/Service/SubcategoryService.php';
+        require_once '../src/Mctesting/Model/Data/SubcategoryDAO.php';
+        require_once '../src/Mctesting/Model/Entity/Subcategory.php';
+        require_once '../src/Mctesting/Model/Service/CategoryService.php';
+        require_once '../src/Mctesting/Model/Data/CategoryDAO.php';
+        require_once '../src/Mctesting/Model/Entity/Category.php';
+        require_once '../src/Mctesting/Model/Service/MediaService.php';
+        require_once '../src/Mctesting/Model/Data/MediaDAO.php';
+        require_once '../src/Mctesting/Config/Config.php';
+        require_once '../src/Mctesting/Exception/ApplicationException.php';
+
+
+
+
+
         print("<pre>");
-        print_r($natural_born_killers);
+        $question = Mctesting\Model\Service\QuestionService::getById(1);
+        $questiontext = $question->getText();
+        print("<h2>Vraag:<br></h2>");
+        print_r($questiontext);
+        $answers = $question->getAnswers();
+        shuffle($answers);
+        print("<h2>Antwoorden:<br></h2>");
+        print_r($answers);
         print("<br>");
 
-            shuffle($natural_born_killers);
-   print_r($natural_born_killers);
-        print("<br>");
-            shuffle($natural_born_killers);
-   print_r($natural_born_killers);
-        print("<br>");
-            shuffle($natural_born_killers);
-   print_r($natural_born_killers);
-        print("<br>");
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
         print("</pre>");
         ?>
-       
+
     </body>
 </html>
