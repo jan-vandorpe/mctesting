@@ -63,6 +63,8 @@ class CategoryDAO {
         }
     }
     
+  
+    
     public static function checkName($catname) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);

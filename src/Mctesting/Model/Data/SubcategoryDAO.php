@@ -83,7 +83,8 @@ class SubcategoryDAO
                 $subcat = new Subcategory();
                 $subcatname = "nog geen subcategorie aanwezig";
                 $subcat->setSubcatname($subcatname);
-                array_push($subcatarray,$subcat);
+                //push object to array
+                array_push($subcatarray, $subcat);
                 return $subcatarray;
             }
         } else
@@ -130,20 +131,49 @@ class SubcategoryDAO
         }
     }
 
-    public static function insert($catid, $subcatnaam)
+    public static function checkName($subcatname, $catid)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO subcategorie(catid,subcatnaam) values(:catid,:subcatnaam)';
+        $sql = 'SELECT * FROM subcategorie WHERE subcatnaam = :subcatname AND catid = :catid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':catid' => $catid, ':subcatnaam' => $subcatnaam)))
+        if ($stmt->execute(array(':subcatname' => $subcatname, ':catid' => $catid,)))
+        {
+            //test if statement retrieved something
+            $result = $stmt->fetchall();
+            if (!empty($result))
+            //if statement returned a value
+            {
+                return true;
+            } else
+            //if statement returns no value
+            {
+                return false;
+            }
+        } else
+        {
+            throw new ApplicationException('check voor naam subcategorie kan niet worden uitgevoerd');
+        }
+    }
+
+    public static function insert($catid, $subcatname)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO subcategorie(catid, subcatnaam) values(:catid, :subcatnaam)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array( ':subcatnaam' => $subcatname, ':catid' => $catid,)))
         {
             
         } else
         {
-            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            
+            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren'.$error[2]);
         }
     }
 

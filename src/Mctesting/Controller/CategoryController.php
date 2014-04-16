@@ -6,6 +6,7 @@ use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
+use Mctesting\Model\Service\SubcategoryService;
 
 /**
  * Description of Categoriecontroller
@@ -44,7 +45,7 @@ class CategoryController extends AbstractController
     public function newCategory()
     {
         $category = $_POST["newcat"];
-        if ($category !== null and CategoryService::validateNewCategory($category) == true)
+        if ($category !== null and CategoryService::validateCategory($category) == true)
         {
             CategoryService::create($category);
             header("location: categorylist");
@@ -53,18 +54,29 @@ class CategoryController extends AbstractController
             print ("");
         }
     }
+
     public function newSubcategory()
     {
-        $subcategory = $_POST["subcat"];
-        if ($category !== null and CategoryService::validateNewCategory($category) == true)
+        //check if variables are set
+        if (isset($_POST["subcat"]) && isset($_POST["category"]) && $_POST["category"] !== NULL)
         {
-            CategoryService::create($category);
+            $subcategory = $_POST["subcat"];
+            $categoryid = $_POST["category"];
+        } else
+        {
+            throw new ApplicationException('Nieuwe subcategorie en categorie zijn niet geldig ingevoerd');
+        }
+        //check if subcategory is filled in and doesn't yet exist within the category
+        if ($subcategory !== null && SubcategoryService::validateSubcategory($subcategory, $categoryid) == false)
+        {
+            SubcategoryService::create($categoryid, $subcategory);
             header("location: categorylist");
         } else
         {
-            print ("");
+            
         }
     }
+
     public function except()
     {
         throw new ApplicationException('Oh dear, controller says no.');
