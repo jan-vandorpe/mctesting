@@ -144,6 +144,7 @@ body{
 }
 .nieuwantwoord, .nieuwimg{
     margin-top: 0.25em;
+    width: 100%;
 }
 .catbijvraag:nth-of-type(n){
     width:10em;
@@ -195,6 +196,7 @@ body{
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    font-size: 2em;
 }
 .nav-stacked li a{
     padding: 0em;
@@ -212,6 +214,13 @@ body{
     font-size: 1.125em;
     font-weight: bolder;
     text-align: left;
+}
+.footer{
+    text-align: center;
+}
+.widthvraaginput{
+    width: 11em;
+    text-align: right;
 }
 
 
