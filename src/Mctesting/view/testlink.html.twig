@@ -61,17 +61,17 @@
 
 
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" action="POST">
-        <div class="form-group">
-
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
+        <div class="form-group">            
             <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
-            <div class="col-lg-5">
+            <div class="col-lg-5">                
                 <select class="form-control" name="testsetselect">
-                    <option value="">Selecteer een test</option>
+                    <option value="0" >Selecteer een test</option>
                             {% for test in allTest %}
                     <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
                             {% endfor %}
                 </select>
+                <p style="color:red;">{{errormsg}}</p>  
             </div>
         </div>
         <div class="form-group">
@@ -113,7 +113,7 @@
 {% for user in allUsers %} 
         <div class="input-group ietssmaller">
             <span class="input-group-addon">
-                <input type="checkbox" name="antwoord[]" />
+                <input type="checkbox" name='user[]' value='{{user.rrnr}}'/>
             </span>
             <div class=" form-control">
                    

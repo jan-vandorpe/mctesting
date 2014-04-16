@@ -7,33 +7,31 @@ use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Exception\ApplicationException;
 
+
+
 /* * **** Author: Bert ****** */
 
-class SubcategoryDAO
-{
+class SubcategoryDAO {
 
-    public static function selectById($subcatid)
-    {
-        //create db connection
-        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
-        //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
-        $stmt = $db->prepare($sql);
-        //test if statement can be executed
-        if ($stmt->execute(array(':subcatid' => $subcatid,)))
-        {
-            //test if statement retrieved something
-            $record = $stmt->fetch();
-            if (!empty($record))
-            {
-                //create object(s) and return
-                $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
-                //create  object
-                $subcat = new Subcategory();
-                $subcat->setId($record['subcatid']);
-                $subcat->setSubcatname($record['subcatnaam']);
+public static function selectById($subcatid) {
+//create db connection
+$db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+//prepare sql statement
+$sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
+$stmt = $db->prepare($sql);
+//test if statement can be executed
+if ($stmt->execute(array(':subcatid' => $subcatid, ))) {
+//test if statement retrieved something
+$record = $stmt->fetch();
+if (!empty($record)) {
+//create object(s) and return
+$category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
+//create  object
+$subcat = new Subcategory();
+$subcat->setId($record['subcatid']);
+$subcat->setSubcatname($record['subcatnaam']);
 //                $subcat->setCategory($category);
-                return $subcat;
+return $subcat;
             } else
             {
                 throw new ApplicationException('Kon geen subcategorie ophalen, gelieve dit te controleren');
@@ -44,6 +42,7 @@ class SubcategoryDAO
         }
     }
 
+    
     public static function selectByCategoryId($catid)
     {
         //create db connection
@@ -88,35 +87,31 @@ class SubcategoryDAO
                 return $subcatarray;
             }
         } else
-        {
+        {    
             throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
         }
     }
 
-    public static function selectAll()
-    {
+    public static function selectAll() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid asc';
+        $sql = 'SELECT * FROM subcategorie order by catid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute())
-        {
+        if ($stmt->execute()) {
             //test if statement retrieved something
             $resultset = $stmt->fetchall();
-            if (!empty($resultset))
-            {
+            if (!empty($resultset)) {
                 //create array
                 $subcatarray = array();
-                foreach ($resultset as $record)
-                {
+                foreach ($resultset as $record) {
                     //create category object and return
                     $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
-                    //create subcategory object(s)
+                //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
-                    $subcat->setSubcatname($record['subcatnaam']);
+                    $subcat->setSubcategory($record['subcatnaam']);
                     $subcat->setCategory($category);
                     array_push($subcatarray, $subcat);
                 }
@@ -176,5 +171,4 @@ class SubcategoryDAO
             throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren'.$error[2]);
         }
     }
-
 }

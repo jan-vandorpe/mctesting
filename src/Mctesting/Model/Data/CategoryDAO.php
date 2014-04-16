@@ -62,8 +62,7 @@ class CategoryDAO {
             throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
         }
     }
-    
-  
+      
     
     public static function checkName($catname) {
         //create db connection
@@ -86,6 +85,7 @@ class CategoryDAO {
         }
     }
 
+
     public static function insert($catname) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -94,15 +94,9 @@ class CategoryDAO {
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catname' => $catname))) {
-           
             } else {
                 throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');
             }
-         
     }    
-    
-    
-    
-    
-    
 }
+

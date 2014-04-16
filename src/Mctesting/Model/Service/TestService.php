@@ -8,7 +8,7 @@ use Mctesting\Model\Data\TestDAO;
 /**
  * Description of UserService
  *
- * @author Thomas Deserranno
+ * @author Bram Peters
  */
 class TestService
 {
@@ -18,5 +18,13 @@ class TestService
         return TestDAO::selectAll();
     }
     
+    public static function insertCreatedTestSessionIntoDB($datum, $testid, $sessieww, $actief, $users,$afgelegd)
+    {
+        
+        return TestDAO::insertSession($datum, $testid, $sessieww, $actief,$users,$afgelegd);
+    }
+
+    
+
     
 }

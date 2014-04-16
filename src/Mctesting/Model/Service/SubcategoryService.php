@@ -20,9 +20,9 @@ class SubcategoryService
         return SubcategoryDAO::selectById($subcatid);
     }
 
-    public static function validateSubcategory($subcategoryname,$categoryid)
+    public static function validateSubcategory($subcategoryname, $categoryid)
     {
-        return SubcategoryDAO::checkName($subcategoryname,$categoryid);
+        return SubcategoryDAO::checkName($subcategoryname, $categoryid);
     }
 
     public static function getByCategoryId($catid)
