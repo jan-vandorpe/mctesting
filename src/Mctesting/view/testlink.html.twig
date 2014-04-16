@@ -14,57 +14,126 @@
 <div class="container-fluid maincontainer">
     <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
 </div>
-<div class="container-fluid maincontainer">
-            <form name="testtebewerken">
-                <div class="headergebroverzicht">
-                    <!-- header boven de gebr info-->
-                    <div class="onderheadertebewerken form-control">
-                        <div class="fnaamgebrupdateheader"><a>Familienaam</a></div>
-                        <div class="vnaamgebrupdateheader"><a>Voornaam</a></div>
-                        <div class="rrnrgebrupdateheader"><a>Rijksreg Nr</a></div>
-                        <div class="gebrupdaterheader"></div>
-                    </div>
-                </div>
-                
-                
-                <!-- gebr VOORBEELD IN OVERZICHT -->
-                {% for user in allUsers %}   
-                <div class="input-group">
-                    
-                    <span class="input-group-addon">
-                        <input type="checkbox" name="antwoord1" />
-                    </span>
-                        
-                    <div class="gebruiktebewerken form-control">
-                                             
-                        <div class="fnaamgebrupdate">{{user.lastname}}</div>
-                        <div class="vnaamgebrupdate">{{user.firstname}}</div>
-                        <div class="rrnrgebrupdate">{{user.rrnr}}</div>
-                        <div class="gebrupdater"><a>Update</a></div>
-                        
-                    </div>
-                </div>
-{% endfor %}
+<div class="maincontainer">
+    <h1 class="headertestupdates centeren">Gebruikers aan test hangen</h1>
+    <!-- selecteer een cat -->
+    <!-- selecteer een testsessie -->
+    <!-- voeg gebruikers toe aan de testsessie -->
 
-                <!-- DE BEWERKINGSKNOPEN -->
-                <div>
-                    <nav>
-                        <div class="collapse navbar-collapse">
-                            <!-- knopen links -->
-                            <p class="navbar-text">Selectie: </p>
-                            <ul class="nav navbar-nav">
-                                <li><a>Maak inactief</a></li>
-                                <li><a>Maak actief</a></li>
-                                <li><a>Verwijder</a></li>
-                            </ul>
-                            <!-- knopen rechts -->
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/mctesting/usermanagement/newuserform">Maak nieuwe gebruiker</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </form>
+    <!-- <form name="catsel" class="form-horizontal meerboven-onder">
+         <div class="form-group">
+             <div class="col-lg-1"></div>
+             <label for="catselect" class="col-lg-2 control-label">Bijhorende categorie</label>
+             <div class="col-lg-5">
+                 <select class="form-control" name="catselect">
+                     <option value="">Selecteer een categorie</option>
+                     <option value="01">IT</option>
+                     <option value="02">schilderen</option>
+                     <option value="03">horeca</option>
+                 </select>
+             </div>
+         </div>
+         <div class="form-group">
+             <div class="col-lg-3">
+             </div>
+             <div class="col-lg-4 centeren">
+                 <input type="submit" name="catknop" class="form-control" >
+             </div>
+         </div>
+     </form>
+    -->
+
+    <div class="resultaat maincontainer centeren">
+
+        {% for upload in allUploads %}   
+        <div class="input-group">
+
+            <span class="input-group-addon">
+                <input type="checkbox" name="antwoord1" />
+            </span>                                             
+            <div class="col-lg-4 centeren">{{upload.nummer}}</div>
+            <div class="col-lg-4 centeren">{{upload.code|raw}}</div>
         </div>
-   
+{% endfor %}
+    </div>
+
+
+
+
+
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" action="POST">
+        <div class="form-group">
+
+            <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
+            <div class="col-lg-5">
+                <select class="form-control" name="testsetselect">
+                    <option value="">Selecteer een test</option>
+                            {% for test in allTest %}
+                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                            {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="testsessieselect" class="col-lg-3 control-label">Datum van de testsessie</label>
+            <div class="col-lg-5">
+                <input type="date" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
+            </div>
+                </div>
+             <div class="form-group">
+                 <label for="testsessieselect" class="col-lg-3 control-label">Wachtwoord van de testsessie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in voor de testafleggers." required/>
+            </div>
+        </div>
+   <!-- </form> -->
+
+<!--
+    <h2 class="centeren">koppelen:</h2>
+    <form name="gebraantestsessie" class="form-horizontal meerboven-onder">
+        <div class="form-group">
+
+            <label for="testsessienaam" class="col-lg-3 control-label">Sessie:</label>
+            <div class="col-lg-5">
+                <input type="text" name="testsessienaam" class="form-control" value="PHP intake" disabled />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="testsessiedatum" class="col-lg-3 control-label">Datum:</label>
+            <div class="col-lg-5">
+                <input type="text" name="testsessiedatum" class="form-control" value="21/08/2012" disabled />
+            </div>
+        </div>
+-->
+        <!-- lijst gebruikers -->
+        <!-- checkbox/voornaam/familienaam -->
+
+
+        <!-- TRY TWO -->
+{% for user in allUsers %} 
+        <div class="input-group ietssmaller">
+            <span class="input-group-addon">
+                <input type="checkbox" name="antwoord[]" />
+            </span>
+            <div class=" form-control">
+                   
+                <div class="vnaamaantest">{{user.lastname}}</div>
+                <div class="vnaamaantest">{{user.firstname}}</div>
+                
+            </div>
+                
+        </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="ietssmaller">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="catknop" class="form-control" >
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 {%endblock%}

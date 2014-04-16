@@ -3,6 +3,8 @@
 namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Service\TestService;
+use Mctesting\Model\Service\UserService;
 
 /**
  * Description of homecontroller
@@ -37,10 +39,14 @@ class TestsController extends AbstractController
     {
         //model
         //$message1 = 'It works!';
+        $allTest = TestService::getAll();
+        $allUsers = UserService::getAllUsers();
 
         //view
         $this->render('testlink.html.twig', array(
           //  'message1' => $message1,
+            'allTest'=>$allTest,
+            'allUsers'=>$allUsers,
 
             ));
         //print_r($_SESSION);

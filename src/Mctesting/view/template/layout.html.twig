@@ -8,98 +8,116 @@
 {% block title %}MC Testing - {% endblock %}
 
 {% block body %}
+    {#------ TOP MENU + LOGIN ---------------#}
     {% block login %}
-<div class="container-fluid maincontainer">
-    <nav>
-        <div class="collapse navbar-collapse">
-                     {% if app.user is defined and app.user is not empty %}
+        <div class="container-fluid maincontainer">
+            <nav>
+                <div class="collapse navbar-collapse">
+                    {% if app.user is defined and app.user is not empty %}
                         {% if app.user.group.name == 'admin' %}
-                {#
-                
-                <ul class="nav navbar-nav">
-                    <li><a href="/mctesting/tests/go">Tests</a></li>
-                    <li><a>Vragen</a></li>
-                    <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
-                    <li><a>Beheerders</a></li>
-                </ul>
-                #}
-                {%elseif app.user.group.name == 'beheerder' %}
-                {#
-                <ul class="nav navbar-nav">
-                    <li><a href="/mctesting/tests/go">Tests</a></li>
-                    <li><a>Vragen</a></li>
-                    <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
-                </ul>
-                #}
-
-                {%else %}
-                
-                <ul class="nav navbar-nav">
-                    <li><a>Test Beëindigen</a></li>
-                </ul>
-                {%endif%}
-
-                <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
-                    Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
-                    <button type="submit" class="btn btn-default">Uitloggen</button>
-                </form>                 
-                    {%else%}
-                <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Login" name="Login" required>
-                        <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
+                            {# Admin topnav menu #}
+                            {#
+                            <ul class="nav navbar-nav">
+                                <li><a href="/mctesting/tests/go">Tests</a></li>
+                                <li><a>Vragen</a></li>
+                                <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
+                                <li><a>Beheerders</a></li>
+                            </ul>
+                            #}
+                        {% elseif app.user.group.name == 'beheerder' %}
+                            {# Beheerder topnav menu #}
+                            {#
+                            <ul class="nav navbar-nav">
+                                <li><a href="/mctesting/tests/go">Tests</a></li>
+                                <li><a>Vragen</a></li>
+                                <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
+                            </ul>
+                            #}
+                        {% else %}
+                            {# Gebruiker topnav menu #}
+                            <ul class="nav navbar-nav">
+                                <li><a>Test Beëindigen</a></li>
+                            </ul>
+                        {% endif %}
+                        {# Login form #}
+                        <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
+                            Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
+                            <button type="submit" class="btn btn-default">Uitloggen</button>
+                        </form>                 
+                    {% else %}
+                        <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Login" name="Login" required>
+                                <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
+                            </div>
+                            <button type="submit" class="btn btn-default">Inloggen</button>
+                        </form>
+                    {% endif %}
                     </div>
-                    <button type="submit" class="btn btn-default">Inloggen</button>
-                </form>
-                    {%endif%}    
-            </div>
-        </nav>
-    </div>
-    {% endblock %}
-    {% block sidenav %}
-    <div class="container-fluid maincontainer clearFix">
-        {% if app.user is defined and app.user is not empty %}
-            {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+                </nav>
+        </div>
+    {% endblock login %}
 
-                <div class="menu_on_left">
-                    <nav>
-                        <div class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Gebruikers</li>
-                                <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
-                                <li><a href="/mctesting/usermanagement/listusers">Beheren</a></li>
-                                <li class="menuheader">Vragen</li>
-                                <li><a href="/mctesting/question/create/">Aanmaken</a></li>
-                                <li class="menuheader">Tests</li>
-                                <li><a href="#">Aanmaken</a></li>
-                                <li><a href="#">Beheren</a></li>
-                                <li class="menuheader">Scores</li>
-                                <li><a href="/mctesting/scores/selecttest">Bekijken</a></li>
-                                
+
+    {#------ SIDE MENU ---------------#}
+    <div class="container-fluid maincontainer clearFix">
+        {% block sidenav %}
+                {% if app.user is defined and app.user is not empty %}
+                    {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+                        <nav class="menu_on_left">
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Vragen</li>
+                                    <li><a href="/mctesting/question/create">Aanmaken</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Categorie&euml;n</li>
+                                    <li><a href="/mctesting/category">Aanmaken</a></li>
+                                    <li><a href="/mctesting/category/categorylist">Lijst</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Gebruikers</li>
+                                    <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
+                                    <li><a href="">Inschrijven voor test</a></li>
+                                    <li><a href="/mctesting/usermanagement/listusers">Beheren</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Tests</li>
+                                    <li><a href="#">Aanmaken</a></li>
+                                    <li><a href="#">Sessie plannen</a></li>
+                                    <li><a href="#">Beheren</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Rapporten</li>
+                                    <li><a href="#">Scores test</a></li>
+                                </ul>
+
 
                                 {% if app.user.group.name == 'admin' %}
+                                <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Beheerders</li>
                                     <li><a href="#">Aanmaken</a></li>
                                     <li><a href="#">Beheren</a></li>
+                                </ul>
                                 {%endif%}
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            {%endif%}
-        {%endif%}
-                
-        {% endblock %}
-                <div class="content clearFix">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
+                            </div>
+                        </nav>
+                    {% endif %}
+                {% endif %}
+        {% endblock sidenav %}
+
+        {#------ CONTENT ---------------#}
+        <div class="content clearFix">
+            {% block content %}{% endblock content%}
+        </div> 
+    </div>
             
-            {#------ FOOTER ----------------#}
-        <div class="footer maincontainer">
-    {% block footer %}
-                <p>&copy; vdab - 2014</p>
-{% endblock %}
-            </div>
+
+    {#------ FOOTER ----------------#}
+    <div class="footer headerpage maincontainer">
+        {% block footer %}
+            <p>&copy; vdab - 2014</p>
+        {% endblock %}
+    </div>
 {% endblock %}
 

@@ -63,15 +63,37 @@ class CategoryDAO {
         }
     }
     
+  
+    
+    public static function checkName($catname) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM categorie WHERE catnaam = :catname limit 1';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catname' => $catname))) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (empty($record)) {
+              
+                return true;
+            } else {
+                throw new ApplicationException('Deze categorie bestaat al');
+            }
+        } else {
+            throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd');
+        }
+    }
 
     public static function insert($catname) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO categorie(catnaam) values(:catnaam)';
+        $sql = 'INSERT INTO categorie(catnaam) values(:catname)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':catnaam' => $catname))) {
+        if ($stmt->execute(array(':catname' => $catname))) {
            
             } else {
                 throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');

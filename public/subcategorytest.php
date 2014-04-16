@@ -19,13 +19,13 @@
         /* Subcategoriegegevens opvragen */
         
         //individuele subcategorieën hebben zowel categorie- als subcategorieid nodig
-        //$result = \Mctesting\Model\Service\SubcategoryService::getById(2,3);
+        $result = \Mctesting\Model\Service\SubcategoryService::getById(7);
               
         //alle subcategorieën
-        //$result = \Mctesting\Model\Service\SubcategoryService::getAll(); 
+//        $result = \Mctesting\Model\Service\SubcategoryService::getAll(); 
               
-        //alle subcategorieën voor één categorie
-    //    $result = \Mctesting\Model\Service\SubcategoryService::getByCategory(4);
+//        alle subcategorieën voor één categorie
+//        $result = \Mctesting\Model\Service\SubcategoryService::getByCategoryId(4);
 
         //nieuwe subcategorie aanmaken
 //        $catid = 4;
