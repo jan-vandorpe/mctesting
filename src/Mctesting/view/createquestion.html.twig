@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="headerupdates maincontainer">
+<h1 class="headerupdates">
             Vraag Toevoegen
         </h1>
-        <div class="container-fluid maincontainer">
+        <div class="container-fluid">
             <form name="toevoegenvraag" method="post" action="/mctesting/question/add">
                 <div class="input-group nieuwimg">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Subcategorie:
                     </span>
                     <select class="form-control catbijvraag" name="subcat">
@@ -25,51 +25,51 @@
                     </select>
                 </div>
                 <div class="input-group nieuwimg">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Vraag:
                     </span>
                     <textarea name="vraag" class="form-control vraaginput">Vul hier uw vraag in</textarea>
                 </div>
             
                 <div class="input-group nieuwantwoord">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Moeilijkheidsgraad:
                     </span>
                     <input type="number" name="gewicht" class="form-control" value="1" />
                 </div>
                 <div class="input-group nieuwantwoord">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Antwoord 1:
                     </span>
                     <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
                 </div>
                 <div class="input-group nieuwantwoord">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Antwoord 2:
                     </span>
                     <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
                 </div>
                 <div class="input-group nieuwantwoord">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Antwoord 3:
                     </span>
                     <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
                 </div>
                 <div class="input-group nieuwantwoord">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Antwoord 4:
                     </span>
                     <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
                 </div>
             
                 <div class="input-group nieuwimg">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Afbeeldingen:
                     </span>
                     <input type="file" name="media[]" class="form-control" multiple="true" />
                 </div>
                 <div class="input-group nieuwimg">
-                    <span class="input-group-addon">
+                    <span class="input-group-addon widthvraaginput">
                         Correct antwoord:
                     </span>
                     <select class="form-control catbijvraag" name="correctant">
