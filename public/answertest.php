@@ -35,7 +35,7 @@
               print('<pre>');
 //              print_r($result);
 //              print_r($newAnswer);
-              print_r($answer);
+              print_r($newAnswer);
               print('</pre>');  
         ?>
     </body>
