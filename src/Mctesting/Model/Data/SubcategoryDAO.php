@@ -27,8 +27,8 @@ class SubcategoryDAO {
                 //create  object
                 $subcat = new Subcategory();
                 $subcat->setId($record['subcatid']);
-                $subcat->setSubcategory($record['subcatnaam']);
-                $subcat->setCategory($category);
+                $subcat->setSubcatname($record['subcatnaam']);
+//                $subcat->setCategory($category);
                 return $subcat;
             } else {
                 throw new ApplicationException('Kon geen subcategorie ophalen, gelieve dit te controleren');

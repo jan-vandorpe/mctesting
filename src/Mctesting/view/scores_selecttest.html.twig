@@ -1,0 +1,52 @@
+{% extends "template/layout.html.twig" %}
+
+{% block title %}
+{{ parent() }}Rapport scores - Select test
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="headerofpage">Selecteer een test</h1>
+    
+    <form name="" class="form-horizontal meerboven-onder" action="/mctesting/scores/showsessions/" method="post">
+        <div class="row">
+        <div class="col-lg-3">
+            
+        </div>
+        <div class="col-lg-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    Test:
+                </span>
+                <select class="form-control catbijvraag" name="subcat">
+                    {% for test in tests %}
+                        {#<optgroup label="{{category.catname}}">
+                        {% for subcategory in category.subcategories %}#}
+                            <option value="{{test.id}}">{{test.name}}</option>
+                        {#{% endfor %}
+                        </optgroup>#}
+                    {% endfor %}
+                            {#testvalues#}
+                            <option value="0">PHP</option>
+                            <option value="1">Schilderen</option>
+                            <option value="2">Prof. Schoonmaak technieken</option>
+                            <option value="3">Bouw</option>
+                            <option value="4">Horeca - kelner</option>
+                            <option value="5">Horeca - keuken</option>
+                            {#end testvalues#}
+                </select>
+            </div>
+        </div>
+            </div>
+        
+        <div class="form-group">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="gebrknop" class="form-control" value="Volgende">
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
