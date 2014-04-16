@@ -5,22 +5,22 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="headerupdates">
-            Vraag Toevoegen
-        </h1>
-        <div class="container-fluid">
-            <form name="toevoegenvraag" method="post" action="/mctesting/question/add">
-                <div class="input-group nieuwimg">
-                    <span class="input-group-addon widthvraaginput">
-                        Subcategorie:
-                    </span>
-                    <select class="form-control catbijvraag" name="subcat">
+<h1 class="headerofpage">
+    Vraag Toevoegen
+</h1>
+<div class="container-fluid">
+    <form name="toevoegenvraag" method="post" action="/mctesting/question/add">
+        <div class="input-group nieuwimg">
+            <span class="input-group-addon widthvraaginput">
+                Subcategorie:
+            </span>
+            <select class="form-control catbijvraag" name="subcat">
                         {% for category in categories %}
-                            <optgroup label="{{category.catname}}">
+                    <optgroup label="{{category.catname}}">
                             {% for subcategory in category.subcategories %}
-                                <option value="{{subcategory.id}}">{{subcategory.subcatname}}</option>
+                            <option value="{{subcategory.id}}">{{subcategory.subcatname}}</option>
                             {% endfor %}
-                            </optgroup>
+                        </optgroup>
                         {% endfor %}
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                     </span>
                     <textarea name="vraag" class="form-control vraaginput">Vul hier uw vraag in</textarea>
                 </div>
-            
+
                 <div class="input-group nieuwantwoord">
                     <span class="input-group-addon widthvraaginput">
                         Moeilijkheidsgraad:
@@ -61,7 +61,7 @@
                     </span>
                     <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
                 </div>
-            
+
                 <div class="input-group nieuwimg">
                     <span class="input-group-addon widthvraaginput">
                         Afbeeldingen:
@@ -79,7 +79,7 @@
                         <option value="3">Antwoord 4</option>
                     </select>
                 </div>
-                
+
                 <div class="input-group centeren">
                     <input type="submit" class="form-control" name="vrtoev" value="Vraag toevoegen" />
                 </div>

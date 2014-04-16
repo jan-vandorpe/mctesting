@@ -3,14 +3,14 @@
 <link rel="stylesheet" href="\mctesting\public\css\normalize.css" />
 <link rel="stylesheet" href="\mctesting\public\css\bootstrap.min.css" />
 <link rel="stylesheet" href="\mctesting\public\css\baselayout.css">
-{% endblock %}
+{% endblock stylesheets %}
 
-{% block title %}MC Testing - {% endblock %}
+{% block title %}MC Testing - {% endblock title %}
 
 {% block body %}
     {#------ TOP MENU + LOGIN ---------------#}
     {% block login %}
-        <div class="container-fluid maincontainer">
+        <div class="container-fluid maincontainer topmenu">
             <nav>
                 <div class="collapse navbar-collapse">
                     {% if app.user is defined and app.user is not empty %}
@@ -89,7 +89,7 @@
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Rapporten</li>
-                                    <li><a href="#">Scores test</a></li>
+                                    <li><a href="/mctesting/scores/selecttest/">Scores test</a></li>
                                 </ul>
 
 
@@ -117,7 +117,7 @@
     <div class="footer headerpage maincontainer">
         {% block footer %}
             <p>&copy; vdab - 2014</p>
-        {% endblock %}
+        {% endblock footer %}
     </div>
-{% endblock %}
+{% endblock body %}
 

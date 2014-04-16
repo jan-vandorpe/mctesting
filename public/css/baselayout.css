@@ -9,9 +9,19 @@
 .maincontainer{
     min-width: 850px;
     background-color: rgba(0,0,0,0.1);
-    margin: 0 auto 1em auto;
+    margin: 0.5em auto 0.5em auto;
     /* test only, to remove! */
-    width: 85%;
+    width: 80%;
+    padding-bottom: 0.5em;
+    /*padding-top: 0.25em;*/
+}
+
+.footer.maincontainer{
+    padding-bottom: 0em;
+    margin-top:0;
+}
+.topmenu.maincontainer{
+    margin-top:0;
 }
 
 body{
