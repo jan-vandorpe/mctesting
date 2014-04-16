@@ -45,11 +45,11 @@
 
         <div class="form-group">
             <div class="col-lg-1"></div>
-            <label for="categorie" class="col-lg-2 control-label">Categorie</label>
+            <label for="category" class="col-lg-2 control-label">Categorie</label>
             <div class="col-lg-5">
-                <select name="categorie" class="form-control" id="category"/>
+                <select name="category" class="form-control" id="category"/>
 {% for category in allcategories %}  
-                <option value="{{category.catid}}">{{category.catname}}</option>
+                <option value="{{category.id}}">{{category.catname}}</option>
 {% endfor %}
                 </select>
             </div>
