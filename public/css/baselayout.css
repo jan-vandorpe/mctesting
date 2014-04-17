@@ -232,6 +232,10 @@ body{
     width: 11em;
     text-align: right;
 }
+.subcathiding{
+    display:none;
+}
+
 
 
 /* CLEARFIX
