@@ -97,6 +97,62 @@ class TestsController extends AbstractController
         //$catid = $_POST["testcatselect"];
         
         $questions = array();
+        if(isset($_POST["question"])){
+            $questions = $_POST["question"];
+            $questioncount = 0;
+            foreach($questions as $question){
+                $questioncount++;                
+            }
+            
+            }
+        $_SESSION["testcreation"]["question"] = $questions;
+        $_SESSION["testcreation"]["questioncount"] = $questioncount;
+        
+        
+        //$allQuest = QuestionService::getByCategory($catid);
+        $catid = $_SESSION["testcreation"]["catid"];
+        $cat = CategoryService::getById($catid);
+        
+        //view
+        $this->render('testcreation.html.twig', array(
+            //'allQuest'=>$allQuest,
+            'testduration'=>$testduration,
+            'testname'=>$testname,
+            'questions'=>$questions,
+            'cat'=>$cat,
+            'questioncount'=>$questioncount,
+            
+            ));
+        }else{
+          header("location: /mctesting/tests/testcreation");   
+           exit(0);     
+        }
+    }
+    
+    public function testCreation_TestUpload()
+            /**
+             * 
+             */
+    {
+        //model
+        $testname = $_SESSION["testcreation"]["testname"];
+        $testduration = $_SESSION["testcreation"]["testduration"];
+        $questioncount = $_SESSION["testcreation"]["questioncount"];
+        $maxscore = $_SESSION["testcreation"]["questioncount"];
+        $admin = UserService::unserializeFromSession();
+        $adminId = $admin->getRRNr();
+        
+        
+            if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId)){
+                
+            
+            
+        //$_SESSION["testcreation"]["testduration"] = $_POST["testduration"];
+        $testname = $_SESSION["testcreation"]["testname"];
+        $testduration = $_SESSION["testcreation"]["testduration"];
+        //$catid = $_POST["testcatselect"];
+        
+        $questions = array();
         if(isset($_POST["question"])){$questions = $_POST["question"];}
 
         //$allQuest = QuestionService::getByCategory($catid);
@@ -117,6 +173,7 @@ class TestsController extends AbstractController
            exit(0);     
         }
     }
+    
     
     
     public function testlink()

@@ -23,12 +23,6 @@ class TestService
         
         return TestDAO::insertSession($datum, $testid, $sessieww, $actief,$users,$afgelegd);
     }
-    
-    public static function insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId)
-    {
-        
-        return TestDAO::insertTest($testname, $testduration, $questioncount, $maxscore, $adminId);
-    }
 
 
     

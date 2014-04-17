@@ -97,6 +97,37 @@ class TestDAO
     }
     
     
+    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId)
+    {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `bramtest`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':adminId' => $adminId))) {            
+            //test if statement succes
+//            $last_id = $db->lastInsertId();
+//            foreach($users as $user=>$RRNr){
+//               $sql = 'INSERT INTO `bramsessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
+//                                    VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
+//               $stmt = $db->prepare($sql);
+//                //test if statement can be executed
+//               if ($stmt->execute(array(':sessieid' => $last_id,':rrnr' => $RRNr,':afgelegd' => $afgelegd,':actief' => $actief ))) {
+//                   
+//               }              
+//            }
+            
+            
+            return true;
+        } else {            
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze test niet toevoegen: '.$error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
+    
     
     
     
