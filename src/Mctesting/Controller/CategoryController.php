@@ -48,7 +48,7 @@ class CategoryController extends AbstractController
         if ($category !== null and CategoryService::validateCategory($category) == true)
         {
             CategoryService::create($category);
-            header("location: categorylist");
+            header("location: go");
         } else
         {
             throw new ApplicationException('Er is een fout gebeurd in het toevoegen van een nieuwe categorie');
@@ -70,7 +70,7 @@ class CategoryController extends AbstractController
         if ($subcategory !== null && SubcategoryService::validateSubcategory($subcategory, $categoryid) == false)
         {
             SubcategoryService::create($categoryid, $subcategory);
-            header("location: categorylist");
+            header("location: go");
         } else
         {
             

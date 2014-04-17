@@ -15,32 +15,6 @@
                 <div class="collapse navbar-collapse">
                     {% if app.user is defined and app.user is not empty %}
                         {% if app.user.group.name == 'admin' %}
-<<<<<<< HEAD
-                {#
-                
-                <ul class="nav navbar-nav">
-                    <li><a href="/mctesting/tests/go">Tests</a></li>
-                    <li><a>Vragen</a></li>
-                    <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
-                    <li><a>Beheerders</a></li>
-                </ul>
-<<<<<<< HEAD
-                {%elseif app.user.group.name == 'beheerder' %}
-=======
-                #}
-                {%elseif app.user.group.name == 'beheerder' %}
-                {#
->>>>>>> thomas
-                <ul class="nav navbar-nav">
-                    <li><a href="/mctesting/tests/go">Tests</a></li>
-                    <li><a>Vragen</a></li>
-                    <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
-                </ul>
-<<<<<<< HEAD
-=======
-                #}
->>>>>>> thomas
-=======
                             {# Admin topnav menu #}
                             {#
                             <ul class="nav navbar-nav">
@@ -83,40 +57,7 @@
                 </nav>
         </div>
     {% endblock login %}
->>>>>>> 2adb168505576454cffdcf1a66472ae618653d6c
 
-
-<<<<<<< HEAD
-                <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
-                    Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
-                    <button type="submit" class="btn btn-default">Uitloggen</button>
-                </form>                 
-                    {%else%}
-                <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Login" name="Login" required>
-                        <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
-                    </div>
-                    <button type="submit" class="btn btn-default">Inloggen</button>
-                </form>
-                    {%endif%}    
-            </div>
-        </nav>
-<<<<<<< HEAD
-    </div> 
-    {% endblock %}
-    <div class="content">
-    {% block content %}{% endblock %}
-        </div>
-=======
-    </div>
-    {% endblock %}
-    {% block sidenav %}
-    <div class="container-fluid maincontainer clearFix">
-        {% if app.user is defined and app.user is not empty %}
-            {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
->>>>>>> thomas
-=======
     {#------ SIDE MENU ---------------#}
     <div class="container-fluid maincontainer clearFix">
         {% block sidenav %}
@@ -149,14 +90,7 @@
                                     <li class="menuheader">Rapporten</li>
                                     <li><a href="#">Scores test</a></li>
                                 </ul>
->>>>>>> 2adb168505576454cffdcf1a66472ae618653d6c
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 2adb168505576454cffdcf1a66472ae618653d6c
                                 {% if app.user.group.name == 'admin' %}
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Beheerders</li>
@@ -176,22 +110,11 @@
         </div> 
     </div>
             
-<<<<<<< HEAD
-            {#------ FOOTER ----------------#}
->>>>>>> thomas
-        <div class="footer headerpage maincontainer">
-    {% block footer %}
-                <p>&copy; vdab - 2014</p>
-{% endblock %}
-            </div>
-=======
-
     {#------ FOOTER ----------------#}
     <div class="footer headerpage maincontainer">
         {% block footer %}
             <p>&copy; vdab - 2014</p>
         {% endblock %}
     </div>
->>>>>>> 2adb168505576454cffdcf1a66472ae618653d6c
 {% endblock %}
 

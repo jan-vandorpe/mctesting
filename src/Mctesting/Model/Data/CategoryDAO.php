@@ -62,7 +62,34 @@ class CategoryDAO {
             throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
         }
     }
-      
+       public static function selectAllExceptEmpty() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $resultset = $stmt->fetchall();
+            if (!empty($resultset)) {
+                //create array
+              $categories = array();
+                //create category object(s)
+                foreach ($resultset as $record) {
+                    $category = new Category();
+                    $category->setId($record['catid']);
+                    $category->setCatname($record['catnaam']);
+                    array_push($categories,$category);
+                }
+                return $categories;
+            } else {
+                throw new ApplicationException('Kon geen categorieset ophalen, gelieve dit te controleren');
+            }
+        } else {
+            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
+        }
+    }   
     
     public static function checkName($catname) {
         //create db connection

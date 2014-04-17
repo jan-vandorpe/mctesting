@@ -14,6 +14,10 @@ class CategoryService {
         return CategoryDAO::selectAll();
     }
 
+    public static function getAllExceptEmpty() {
+        return CategoryDAO::selectAllExceptEmpty();
+    }    
+    
     public static function getById($id) {
         return CategoryDAO::selectById($id);
     }
