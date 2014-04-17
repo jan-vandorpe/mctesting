@@ -17,9 +17,8 @@ class ScoresController extends AbstractController
         //build model
         //retrieve tests
         $tests = TestService::getAll();
-        var_dump($tests);
         
-//render page
+        //render page
         $this->render('scores_selecttest.html.twig', array(
             'tests' => $tests,
         ));
