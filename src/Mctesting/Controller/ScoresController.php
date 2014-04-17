@@ -3,6 +3,7 @@
 namespace Mctesting\Controller;
 
 use Framework\AbstractController;
+use Mctesting\Model\Service\TestService;
 
 /**
  * Description of ScoresController
@@ -15,9 +16,13 @@ class ScoresController extends AbstractController
     {
         //build model
         //retrieve tests
+        $tests = TestService::getAll();
+        var_dump($tests);
         
-        //render page
-        $this->render('scores_selecttest.html.twig', array());
+//render page
+        $this->render('scores_selecttest.html.twig', array(
+            'tests' => $tests,
+        ));
         
     }
     

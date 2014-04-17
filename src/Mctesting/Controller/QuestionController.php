@@ -44,5 +44,7 @@ class QuestionController extends AbstractController
     public function add()
     {
         QuestionService::create($_POST);
+        header('location: /mctesting/question/create/');
+        exit();
     }
 }
