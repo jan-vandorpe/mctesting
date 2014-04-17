@@ -22,6 +22,11 @@ class CategoryService {
         CategoryDAO::insert($category);
     }
 
+    public static function validateCategory($categoryname)
+    {
+        return CategoryDAO::checkName($categoryname);
+    }
+
     public static function getSubcategories($category) {
 
         $subcategories = SubcategoryService::getByCategory($category);

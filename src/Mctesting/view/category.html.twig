@@ -1,0 +1,66 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Category
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid ">
+    <h1 class="headerofpage">Categoriepagina</h1>
+</div>
+<div class="gebruikertoevoegen">
+    <h4>Voeg een Categorie toe:</h4>
+
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newCategory" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="cat" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="newcat" id="category" placeholder="Nieuwe categorie."/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="catknop" class="form-control">
+            </div>
+        </div>
+    </form> 
+
+    <h4>Voeg een subcategorie toe aan een hoofdcategorie:</h4>
+
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newSubcategory" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="category" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <select name="category" class="form-control" id="category"/>
+                    {% for category in allcategories %}  
+                <option value="{{category.id}}">{{category.catname}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="subcat" class="col-lg-2 control-label">Subcategorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="subcat" id="subcat" placeholder="Nieuwe subcategorie."/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="subcatknop" class="form-control">
+            </div>
+        </div>
+    </form>
+</div>
+{%endblock content%}

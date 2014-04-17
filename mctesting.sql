@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Genereertijd: 07 apr 2014 om 09:13
+-- Genereertijd: 08 apr 2014 om 10:25
 -- Serverversie: 5.6.11
 -- PHP-versie: 5.5.1
 
@@ -30,37 +30,37 @@ USE `mctesting`;
 
 CREATE TABLE IF NOT EXISTS `antwoorden` (
   `vraagid` int(11) NOT NULL,
-  `antwoordid` int(11) NOT NULL AUTO_INCREMENT,
+  `antwoordid` int(11) NOT NULL,
   `antwoordtekst` text NOT NULL,
-  PRIMARY KEY (`antwoordid`),
+  PRIMARY KEY (`vraagid`,`antwoordid`),
   KEY `vraagid` (`vraagid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `antwoorden`
 --
 
 INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`) VALUES
-(1, 1, 'Rundskop'),
-(1, 2, 'In Darkness'),
-(1, 3, 'A Separation'),
-(1, 4, 'Footnote'),
-(2, 5, 'Nick Nuyens'),
-(2, 6, 'Tom Boonen'),
-(2, 7, 'Philippe Gilbert'),
-(2, 8, 'Fabian Cancellara'),
-(3, 9, '356'),
-(3, 10, '485'),
-(3, 11, '510'),
-(3, 12, '541'),
-(4, 13, '5'),
-(4, 14, '8'),
-(4, 15, '11'),
-(4, 16, '15'),
-(5, 17, 'Het varken'),
-(5, 18, 'De draak'),
-(5, 19, 'De slang'),
-(5, 20, 'De rat');
+(1, 0, 'Rundskop'),
+(1, 1, 'In Darkness'),
+(1, 2, 'A Separation'),
+(1, 3, 'Footnote'),
+(2, 0, 'Nick Nuyens'),
+(2, 1, 'Tom Boonen'),
+(2, 2, 'Philippe Gilbert'),
+(2, 3, 'Fabian Cancellara'),
+(3, 0, '356'),
+(3, 1, '485'),
+(3, 2, '510'),
+(3, 3, '541'),
+(4, 0, '5'),
+(4, 1, '8'),
+(4, 2, '11'),
+(4, 3, '15'),
+(5, 0, 'Het varken'),
+(5, 1, 'De draak'),
+(5, 2, 'De slang'),
+(5, 3, 'De rat');
 
 -- --------------------------------------------------------
 
@@ -140,19 +140,19 @@ INSERT INTO `gebruikerscategorie` (`typeid`, `typenaam`, `clearancelevel`) VALUE
 
 CREATE TABLE IF NOT EXISTS `media` (
   `vraagid` int(11) NOT NULL,
-  `mediaid` int(11) NOT NULL AUTO_INCREMENT,
+  `mediaid` int(11) NOT NULL,
   `filename` varchar(130) NOT NULL,
-  PRIMARY KEY (`mediaid`),
+  PRIMARY KEY (`vraagid`,`mediaid`),
   KEY `vraagid` (`vraagid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `media`
 --
 
 INSERT INTO `media` (`vraagid`, `mediaid`, `filename`) VALUES
-(3, 1, 'china.jpg'),
-(4, 2, 'ijs.jpg');
+(3, 0, 'china.jpg'),
+(4, 0, 'ijs.jpg');
 
 -- --------------------------------------------------------
 

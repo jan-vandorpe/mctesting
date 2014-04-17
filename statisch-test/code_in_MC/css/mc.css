@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document voor MC test */
+
+body {
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:100%;
+	margin: 0 1em;
+}
+.wrapper{
+	width:70%;
+	min-width:600px;
+	margin: 0 auto;
+	}
+
+.quiz {
+	border:1px solid silver;
+	width:100%;
+	min-width:600px;
+	padding:1em;
+}
+.quiz .vraagTekst {
+	margin:1em 0;
+}
+.quiz .antw {
+	/*background:#FFC;*/
+	margin:1em 0;
+}
+/*  antwoorden op een lijn */
+.quiz .antw.hor {
+	padding:0.4em 0 0.4em 0.2em;
+}
+.quiz .antw.hor label {
+	margin-right:1em;
+}
+/*  antwoorden onder elkaar */
+.quiz .antw.vert {
+	padding:0.4em 0 0.4em 0.2em;
+}
+.quiz .antw.vert label {
+	display:block;
+	margin:0.2em 0;
+}
+.quiz .antw.vert input[type=radio] {
+vertical-align:top;
+	}
+
+/* FIGURE */
+.quiz figure {
+}
+.quiz figcaption {
+	font-style:italic;
+	font-size:0.9em
+}
+.quiz img {
+	max-width:100%;
+}
+/* PRE CODE */
+.quiz pre, .quiz code {
+	font-family:"Courier New", Courier, monospace;
+	color:#990000;
+}
+.quiz pre{border:1px dotted #900;
+	padding:0.3em;
+	margin-top:0;}
+
+.quiz .antw pre {color:#009;background:#CCFFFF; margin-left:2em;display:inline-block;}
