@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Data;
 
 use Mctesting\Model\Entity\Test;
+use Mctesting\Model\Entity\User;
 use Mctesting\Exception\ApplicationException;
 
 class TestDAO
@@ -44,7 +45,6 @@ class TestDAO
        
     
     
-    
     public static function insert($codeTeUploaden)
     {
         //create db connection        
@@ -65,7 +65,68 @@ class TestDAO
     }
     
     
+    public static function insertSession($datum, $testid, $sessieww, $actief, $users, $afgelegd)
+    {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `bramsessie`(`datum`, `testid`, `sessieww`, `actief`) VALUES (:datum,:testid,:sessieww,:actief)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww,':actief' => $actief ))) {            
+            //test if statement succes
+            $last_id = $db->lastInsertId();
+            foreach($users as $user=>$RRNr){
+               $sql = 'INSERT INTO `bramsessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
+                                    VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
+               $stmt = $db->prepare($sql);
+                //test if statement can be executed
+               if ($stmt->execute(array(':sessieid' => $last_id,':rrnr' => $RRNr,':afgelegd' => $afgelegd,':actief' => $actief ))) {
+                   
+               }              
+            }
+            
+            
+            return true;
+        } else {            
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
     
+    
+    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId)
+    {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `bramtest`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':adminId' => $adminId))) {            
+            //test if statement succes
+//            $last_id = $db->lastInsertId();
+//            foreach($users as $user=>$RRNr){
+//               $sql = 'INSERT INTO `bramsessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
+//                                    VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
+//               $stmt = $db->prepare($sql);
+//                //test if statement can be executed
+//               if ($stmt->execute(array(':sessieid' => $last_id,':rrnr' => $RRNr,':afgelegd' => $afgelegd,':actief' => $actief ))) {
+//                   
+//               }              
+//            }
+            
+            
+            return true;
+        } else {            
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze test niet toevoegen: '.$error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
     
     
     

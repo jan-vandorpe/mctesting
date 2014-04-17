@@ -1,0 +1,100 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid maincontainer">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="maincontainer">
+    {%if testname is not defined %}
+    <h1 class="headertestupdates centeren">Test aanmaken</h1>
+    <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step2">
+        <div class="form-group">
+            <label for="testname" class="col-lg-3 control-label">Naam van test</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="testname" id="testname" placeholder="Vul hier de naam in van de test." required/>
+            </div>
+                </div>
+             <div class="form-group">
+                 <label for="testcatselect" class="col-lg-3 control-label">Categorie van test</label>
+            <div class="col-lg-5">                
+                <select class="form-control" name="testcatselect">
+                    <option value="0" >Selecteer een categorie</option>
+                            {% for category in allCat %}
+                    <option value="{{category.id}}">{{category.catname}}</option>
+                            {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="ietssmaller">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="catknop" class="form-control" >
+                </div>
+            </div>
+        </div>
+    </form>
+    {%elseif testduration is not defined %}
+    <h1 class="headertestupdates centeren">Test aanmaken stap 2</h1>
+    <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step3">
+        <div class="form-group">
+            <label for="testduration" class="col-lg-3 control-label">Duur van test(aantal minuten)</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in (minuten)" pattern="[0-9]{3}" maxlength='3' required/>
+            </div>
+                </div>
+             <div class="form-group">
+                 <label for="testcatselect" class="col-lg-3 control-label">Keuze van testvragen</label>
+            
+                    <!-- TEST VOORBEELD IN OVERZICHT -->
+                    {% for question in allQuest %}
+                    <div class="categorie">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name="question[]" value='{{question.id}}' />
+                        </span>
+                        <div class="testtebewerken form-control">
+                            <div class="questsubcat">{{question.subcategory.subcatname}}</div>
+                            <div class="questtitle">"{{question.text}}"</div>
+                            <div class="questweight"><a>{{question.weight}}</a></div>
+                        </div>
+                    </div>
+                            </div>
+                    {% endfor %}
+
+                
+        </div>
+        <div class="form-group">
+            <div class="ietssmaller">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="catknop" class="form-control" >
+                    <button>Annuleren</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    {%else %}
+    <h1 class="headertestupdates centeren">Test aanmaken stap 3</h1>
+    <h1 class="headertestupdates centeren">Testweergave</h1>
+    <p>Titel: {{testname}}</p>
+    <p>Categorie: {{cat.catname}}</p>
+    <p>Aantal vragen: {{questioncount}}</p>
+    <p>Duurtijd: {{testduration}}</p>
+    <p><a href="/mctesting/tests/testcreation_testupload">Aanmaken</a></p>
+    {%endif%}
+</div>
+
+{%endblock%}
