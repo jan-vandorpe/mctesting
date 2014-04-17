@@ -47,7 +47,7 @@ class TestsController extends AbstractController
              */
     {
         //model
-        $allCat = CategoryService::getAll();
+        $allCat = CategoryService::getAllExceptEmpty();
         //view
         $this->render('testcreation.html.twig', array(
             'allCat'=>$allCat,
