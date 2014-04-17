@@ -20,20 +20,8 @@
                 </span>
                 <select class="form-control catbijvraag" name="subcat">
                     {% for test in tests %}
-                        {#<optgroup label="{{category.catname}}">
-                        {% for subcategory in category.subcategories %}#}
-                            <option value="{{test.id}}">{{test.name}}</option>
-                        {#{% endfor %}
-                        </optgroup>#}
+                            <option value="{{test.testid}}">{{test.testnaam}}</option>
                     {% endfor %}
-                            {#testvalues#}
-                            <option value="0">PHP</option>
-                            <option value="1">Schilderen</option>
-                            <option value="2">Prof. Schoonmaak technieken</option>
-                            <option value="3">Bouw</option>
-                            <option value="4">Horeca - kelner</option>
-                            <option value="5">Horeca - keuken</option>
-                            {#end testvalues#}
                 </select>
             </div>
         </div>
