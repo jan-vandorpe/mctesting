@@ -113,6 +113,7 @@ class CategoryDAO {
     }
 
 
+
     public static function insert($catname) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);

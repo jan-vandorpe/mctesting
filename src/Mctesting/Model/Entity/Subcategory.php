@@ -28,11 +28,6 @@ class Subcategory {
         $this->id = $id;
     }    
     
-
-//    public function setCategory($category) {
-//        $this->category = $category;
-//    }
-    
     public function setSubcatname($subcatname) {
         $this->subcatname = $subcatname;
     }

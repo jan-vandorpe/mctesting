@@ -12,101 +12,55 @@
 
 {%block content%}
 <div class="container-fluid ">
-    <h1 class="headerpage">Categoriepagina</h1>
+    <h1 class="headerofpage">Categoriepagina</h1>
 </div>
-<div class="gebruikertoevoegen  ">
-    {% if app.user is defined and app.user is not empty %}
+<div class="gebruikertoevoegen">
+    <h4>Voeg een Categorie toe:</h4>
 
-
-        <h2>Voeg een Categorie toe:</h2>
-
-        <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newCategory" method="post">
-            <div class="form-group">
-                <div class="col-lg-1"></div>
-                <label for="cat" class="col-lg-2 control-label">Categorie</label>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control" name="newcat" id="category" placeholder="Nieuwe categorie."/>
-                </div>
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newCategory" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="cat" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="newcat" id="category" placeholder="Nieuwe categorie."/>
             </div>
-            <div class="form-group">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-4 centeren">
-                    <input type="submit" name="catknop" class="form-control">
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="catknop" class="form-control">
             </div>
-        </form> 
+        </div>
+    </form> 
 
+    <h4>Voeg een subcategorie toe aan een hoofdcategorie:</h4>
 
-
-        <h2>Voeg een subcategorie toe aan een hoofdcategorie:</h2>
-
-        <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newSubcategory" method="post">
-
-            <div class="form-group">
-                <div class="col-lg-1"></div>
-                <label for="category" class="col-lg-2 control-label">Categorie</label>
-                <div class="col-lg-5">
-                    <select name="category" class="form-control" id="category"/>
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newSubcategory" method="post">
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="category" class="col-lg-2 control-label">Categorie</label>
+            <div class="col-lg-5">
+                <select name="category" class="form-control" id="category"/>
                     {% for category in allcategories %}  
-                        <option value="{{category.id}}">{{category.catname}}</option>
+                <option value="{{category.id}}">{{category.catname}}</option>
                     {% endfor %}
-                    </select>
-                </div>
+                </select>
             </div>
-            <div class="form-group">
-                <div class="col-lg-1"></div>
-                <label for="subcat" class="col-lg-2 control-label">Subcategorie</label>
-                <div class="col-lg-5">
-                    <input type="text" class="form-control" name="subcat" id="subcat" placeholder="Nieuwe subcategorie."/>
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-1"></div>
+            <label for="subcat" class="col-lg-2 control-label">Subcategorie</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="subcat" id="subcat" placeholder="Nieuwe subcategorie."/>
             </div>
-            <div class="form-group">
-                <div class="col-lg-3">
-                </div>
-                <div class="col-lg-4 centeren">
-                    <input type="submit" name="subcatknop" class="form-control">
-                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3">
             </div>
-        </form>
-        <a href='/mctesting/categorycontroller/categorylist'>lijst van categorieën en subcategorieën</a>
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    {%else%}
-    <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
-    <p>
-        Gelieve in te loggen met: <br>
-        uw rijksregisternummer als Login en <br>
-        het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
-        <span class="smaller">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
-    </p>
-
-    <h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
-    <p>
-        Gelieve in te loggen met: <br>
-        uw emailadres als Login  en uw eigen wachtwoord.
-    </p>
+            <div class="col-lg-4 centeren">
+                <input type="submit" name="subcatknop" class="form-control">
+            </div>
+        </div>
+    </form>
 </div>
-    {%endif%}    
-{%endblock%}
+{%endblock content%}
