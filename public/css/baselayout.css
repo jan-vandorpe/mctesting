@@ -168,16 +168,18 @@ body{
 }
 .menu_on_left{
     width: 15%;
-    border-width: 0px;
+    border-width: 0 1px 0 0;
     border-style: solid;
     border-color: rgba(0,0,0,0.2);
     float:left;
     margin-top: 2em;
     margin-left: -2%;
+    /*margin-right: 0.125em;*/
 }
 .menu_on_left li{
     width: 100%;
-    text-align: center;
+    text-align: right;
+    padding-right: 0.125em;
     
     
 }
@@ -232,6 +234,33 @@ body{
     width: 11em;
     text-align: right;
 }
+.subcathiding{
+    display:block;
+    margin: 0.125em 0.25em 0.25em 0.25em;
+    padding: 0 ;
+    
+    
+}
+.subcathiding li{
+    display: inline-block;
+    width: 30%;
+    margin: 0.125em 0.25em 0.125em 0.25em;
+    
+}
+
+.catlijst{
+    margin-left: 4em;
+    width: 80%;
+
+}
+.catlijst h4{
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.3);
+    padding: 0.25em 0 0.125em 2em;
+    background-color: rgba(0,0,0,0.1);
+}
+
 
 
 /* CLEARFIX

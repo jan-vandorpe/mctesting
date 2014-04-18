@@ -78,20 +78,17 @@
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Gebruikers</li>
                                     <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
-                                    <li><a href="">Inschrijven voor test</a></li>
                                     <li><a href="/mctesting/usermanagement/listusers">Beheren</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Tests</li>
-                                    <li><a href="#">Aanmaken</a></li>
-                                    <li><a href="#">Sessie plannen</a></li>
-                                    <li><a href="#">Beheren</a></li>
+                                    <li><a href="/mctesting/tests/testcreation/">Aanmaken</a></li>
+                                    <li><a href="/mctesting/tests/testlink/">Sessie plannen</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Rapporten</li>
                                     <li><a href="/mctesting/scores/selecttest/">Scores test</a></li>
                                 </ul>
-
 
                                 {% if app.user.group.name == 'admin' %}
                                 <ul class="nav navbar-nav nav-stacked">
