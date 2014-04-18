@@ -16,6 +16,11 @@ class CategoryService
         return CategoryDAO::selectAll();
     }
 
+    public static function getAllActive()
+    {
+        return CategoryDAO::selectAllActive();
+    }
+
     public static function getAllExceptEmpty()
     {
         return CategoryDAO::selectAllExceptEmpty();

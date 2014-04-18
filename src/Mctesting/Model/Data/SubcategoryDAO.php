@@ -7,7 +7,7 @@ use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Exception\ApplicationException;
 
-/* * **** Author: Bert ****** */
+/* * **** Author: Bert Mortier ****** */
 
 class SubcategoryDAO
 {
@@ -94,12 +94,101 @@ class SubcategoryDAO
         }
     }
 
+    public static function selectActiveByCategoryId($catid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid AND actief = 1';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid)))
+        {
+            //test if statement retrieved something
+            $resultset = $stmt->fetchall();
+            if (!empty($resultset))
+            {
+                //create array
+                $subcatarray = array();
+                //create object and return
+                $category = \Mctesting\Model\Service\CategoryService::getById($catid);
+                //create subcategory object(s)
+                foreach ($resultset as $record)
+                {
+                    $subcat = new Subcategory();
+                    $subcat->setId($record['subcatid']);
+                    $subcat->setSubcatname($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
+
+                    //     don't set because subcategories are put into category object
+                    //         $subcat->setCategory($category);
+
+                    array_push($subcatarray, $subcat);
+                }
+                return $subcatarray;
+            } else
+            {
+                //create array
+                $subcatarray = array();
+                //create object
+                $subcat = new Subcategory();
+                $subcatname = "nog geen subcategorie aanwezig";
+                $subcat->setSubcatname($subcatname);
+                //push object to array
+                array_push($subcatarray, $subcat);
+                return $subcatarray;
+            }
+        } else
+        {
+            throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
+        }
+    }
+
     public static function selectAll()
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'SELECT * FROM subcategorie order by catid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute())
+        {
+            //test if statement retrieved something
+            $resultset = $stmt->fetchall();
+            if (!empty($resultset))
+            {
+                //create array
+                $subcatarray = array();
+                foreach ($resultset as $record)
+                {
+                    //create category object and return
+                    $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
+                    //create subcategory object(s)
+                    $subcat = new Subcategory();
+                    $subcat->setId($record['subcatid']);
+                    $subcat->setSubcategory($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
+
+                    array_push($subcatarray, $subcat);
+                }
+                return $subcatarray;
+            } else
+            {
+                throw new ApplicationException('Kon subcategorieën niet ophalen, gelieve dit te controleren');
+            }
+        } else
+        {
+            throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
+        }
+    }
+
+    public static function selectAllActive()
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie order by catid where actief = 1';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())

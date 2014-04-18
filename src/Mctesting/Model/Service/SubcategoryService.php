@@ -14,6 +14,11 @@ class SubcategoryService
         return SubcategoryDAO::selectAll();
     }
 
+    public static function getAllActive()
+    {
+        return SubcategoryDAO::selectAllActive();
+    }
+
     public static function getById($subcatid)
     {
         return SubcategoryDAO::selectById($subcatid);
@@ -29,10 +34,16 @@ class SubcategoryService
         return SubcategoryDAO::selectByCategoryId($catid);
     }
 
+    public static function getActiveByCategoryId($catid)
+    {
+        return SubcategoryDAO::selectActiveByCategoryId($catid);
+    }
+
     public static function create($catid, $subcatnaam)
     {
         SubcategoryDAO::insert($catid, $subcatnaam);
     }
+
     public static function activateSubcategory($id)
     {
         SubcategoryDAO::activateById($id);
@@ -42,4 +53,5 @@ class SubcategoryService
     {
         SubcategoryDAO::deactivateById($id);
     }
+
 }
