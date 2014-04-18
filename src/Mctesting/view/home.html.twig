@@ -11,39 +11,12 @@
 
 
 {%block content%}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<div class="intropage">
-    <h1 class="headerofpage">Welkom op de testing website van de VDAB</h1>
-        {% if app.user is defined and app.user is not empty %}
-=======
-<div class="intropage">
-    <h1 class="headerofpage">Welkom op de testing website van de VDAB</h1>
-        {% if app.user is defined and app.user is not empty %}
-<div class="intropage maincontainer">
-    {% if app.user is defined and app.user is not empty %}
-        <p> U bent ingelogd als {{app.user.group.name}}</p>
-=======
-<div class="container-fluid maincontainer">
-    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
-</div>
->>>>>>> branch 'bert' of https://github.com/jan-vandorpe/mctesting.git
-<div class="intropage maincontainer">
-    {% if app.user is defined and app.user is not empty %}
-        <p> U bent ingelogd als {{app.user.group.name}}</p>
-=======
-<div class="container-fluid maincontainer">
-=======
 <div class="container-fluid ">
->>>>>>> branch 'thomas' of https://github.com/jan-vandorpe/mctesting.git
     <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
 </div>
 <div class="intropage ">
     {% if app.user is defined and app.user is not empty %}
         <p> U bent ingelogd als {{app.user.group.name}}</p>
-
->>>>>>> bf6704abd6d0139031380cbad62dfc29ce7cc79b
     {%else%}
         <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
         <p>
@@ -52,26 +25,6 @@
             het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
             <span class="smaller">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
         </p>
-
-<<<<<<< HEAD
-    <h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
-    <p>
-        Gelieve in te loggen met: <br>
-        uw emailadres als Login  en uw eigen wachtwoord.
-    </p>
     {%endif%}    
-</div>
-        {%endif%}    
-    </div>
-    {%endblock%}
-=======
-        <h4 class="darker intro"><span class="">Admins en beheerders:</span></h4>
-        <p>
-            Gelieve in te loggen met: <br>
-            uw emailadres als Login  en uw eigen wachtwoord.
-        </p>
-        {%endif%}    
-    </div>
-    
+    </div>    
 {%endblock%}
->>>>>>> bf6704abd6d0139031380cbad62dfc29ce7cc79b
