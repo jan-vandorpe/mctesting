@@ -96,23 +96,45 @@ class TestsController extends AbstractController
         $testduration = $_SESSION["testcreation"]["testduration"];
         //$catid = $_POST["testcatselect"];
         
+        
         $questions = array();
         if(isset($_POST["question"])){
             $questions = $_POST["question"];
             $questioncount = 0;
+            $questionWeightCount = 0;
+            $_SESSION["subcatlist"]=array();
             foreach($questions as $question){
+                //selectbyid
+                $questionEntity=QuestionService::getById($question);
+                $questionWeight=$questionEntity->getWeight();
+                $questionSubcat=$questionEntity->getSubcategory();
+                $questionSubcat=$questionSubcat->getSubcatname();
+                //$_SESSION["subcatlist"][$questionSubcat]+=1;
+                if(isset($_SESSION["subcatlist"][$questionSubcat])){
+                    $_SESSION["subcatlist"][$questionSubcat]++;
+                    //$_SESSION["subcatlist"][$questionSubcat]["weight"]+=$questionWeight;
+                }else{
+                    $_SESSION["subcatlist"][$questionSubcat]=1;
+                    //$_SESSION["subcatlist"][$questionSubcat]["weight"]=$questionWeight;
+                    
+                }
+                $questionWeightCount=$questionWeightCount + $questionWeight;
                 $questioncount++;                
             }
             
             }
-        $_SESSION["testcreation"]["question"] = $questions;
+        $_SESSION["testcreation"]["questions"] = $questions;
         $_SESSION["testcreation"]["questioncount"] = $questioncount;
+        $_SESSION["testcreation"]["questionweightcount"] = $questionWeightCount;
         
         
         //$allQuest = QuestionService::getByCategory($catid);
+        $subcatlist=$_SESSION["subcatlist"];
         $catid = $_SESSION["testcreation"]["catid"];
         $cat = CategoryService::getById($catid);
-        
+        print('<pre>');
+        var_dump($subcatlist);
+         print('</pre>');
         //view
         $this->render('testcreation.html.twig', array(
             //'allQuest'=>$allQuest,
@@ -121,6 +143,8 @@ class TestsController extends AbstractController
             'questions'=>$questions,
             'cat'=>$cat,
             'questioncount'=>$questioncount,
+            'questionweightcount'=>$questionWeightCount,
+            'subcatlist' =>$subcatlist,
             
             ));
         }else{
@@ -138,12 +162,15 @@ class TestsController extends AbstractController
         $testname = $_SESSION["testcreation"]["testname"];
         $testduration = $_SESSION["testcreation"]["testduration"];
         $questioncount = $_SESSION["testcreation"]["questioncount"];
-        $maxscore = $_SESSION["testcreation"]["questioncount"];
+        $maxscore = $_SESSION["testcreation"]["questionweightcount"];
+        $questions = $_SESSION["testcreation"]["questions"];
+        $subcatlist=$_SESSION["subcatlist"];
+        
         $admin = UserService::unserializeFromSession();
         $adminId = $admin->getRRNr();
         
         
-            if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId)){
+            if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId, $questions)){
                 
             
             
@@ -166,6 +193,7 @@ class TestsController extends AbstractController
             'testname'=>$testname,
             'questions'=>$questions,
             'cat'=>$cat,
+            'subcatlist' =>$subcatlist,
             
             ));
         }else{

@@ -10,7 +10,7 @@ use Mctesting\Model\Data\TestDAO;
  *
  * @author Bram Peters
  */
-class TestService
+class TestQuestionService
 {
     
     public static function getAll()
