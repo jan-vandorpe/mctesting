@@ -24,7 +24,7 @@
             <div class="col-lg-1"></div>
             <label class="col-lg-3 control-label">Sessiedatum:</label>
             <div class="col-lg-5">
-                {{ testsession.date.date }}
+                {{ testsession.date.date|date('d/m/Y') }}
             </div>
         </div>
     </div>
