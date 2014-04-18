@@ -34,5 +34,13 @@ class SubcategoryService
     {
         SubcategoryDAO::insert($catid, $subcatnaam);
     }
+    public static function activateSubcategory($id)
+    {
+        SubcategoryDAO::activateById($id);
+    }
 
+    public static function deactivateSubcategory($id)
+    {
+        SubcategoryDAO::deactivateById($id);
+    }
 }

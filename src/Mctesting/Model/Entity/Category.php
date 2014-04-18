@@ -1,6 +1,7 @@
 <?php
 
 namespace Mctesting\Model\Entity;
+
 use Mctesting\Model\Service\SubcategoryService;
 
 /* * *** Author: Bert Mortier **** */
@@ -11,6 +12,7 @@ class Category
     private $id;
     private $catname;
     private $subcategories = array();
+    private $active;
 
     public function getId()
     {
@@ -25,6 +27,11 @@ class Category
     public function getCatname()
     {
         return $this->catname;
+    }
+
+    public function getActive()
+    {
+        return $this->active;
     }
 
     public function setId($id)
@@ -44,7 +51,12 @@ class Category
 
     public function retrieveSubcategories()
     {
-       $this->subcategories = SubcategoryService::getByCategoryId($this->id); 
+        $this->subcategories = SubcategoryService::getByCategoryId($this->id);
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
     }
 
 }

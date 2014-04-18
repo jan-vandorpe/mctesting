@@ -25,6 +25,7 @@ class CategoryDAO {
                 $category = new Category();
                 $category->setId($record['catid']);
                 $category->setCatname($record['catnaam']);
+                $category->setActive($record['actief']);
                 return $category;
             } else {
                 throw new ApplicationException('Kon geen categorie ophalen, gelieve dit te controleren');
@@ -52,6 +53,7 @@ class CategoryDAO {
                     $category = new Category();
                     $category->setId($record['catid']);
                     $category->setCatname($record['catnaam']);
+                    $category->setActive($record['actief']);
                     array_push($categories,$category);
                 }
                 return $categories;
@@ -66,7 +68,7 @@ class CategoryDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid';
+        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -80,6 +82,7 @@ class CategoryDAO {
                     $category = new Category();
                     $category->setId($record['catid']);
                     $category->setCatname($record['catnaam']);
+                    $category->setActive($record['actief']);
                     array_push($categories,$category);
                 }
                 return $categories;
@@ -102,7 +105,6 @@ class CategoryDAO {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (empty($record)) {
-              
                 return true;
             } else {
                 throw new ApplicationException('Deze categorie bestaat al');
@@ -111,8 +113,6 @@ class CategoryDAO {
             throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd');
         }
     }
-
-
 
     public static function insert($catname) {
         //create db connection
@@ -125,6 +125,32 @@ class CategoryDAO {
             } else {
                 throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');
             }
+    }
+    public static function activateById($catid) {
+     //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE categorie SET actief=1 WHERE catid = :catid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid))) {
+            } else {
+                throw new ApplicationException('Kon de categorie in de database niet op actief zetten, gelieve dit te controleren');
+            }
     }    
+    public static function deactivateById($catid) {
+     //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE categorie SET actief=0 WHERE catid = :catid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid))) {
+            } else {
+                throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren');
+            }
+    }     
+    
+    
 }
 
