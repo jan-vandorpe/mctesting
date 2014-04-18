@@ -72,8 +72,6 @@
                     </div>
                             </div>
                     {% endfor %}
-
-                
         </div>
         <div class="form-group">
             <div class="ietssmaller">
@@ -86,18 +84,50 @@
             </div>
         </div>
     </form>
+    
     {%else %}
     <h1 class="headertestupdates centeren">Test aanmaken stap 3</h1>
     <h1 class="headertestupdates centeren">Testweergave</h1>
     <p>Titel: {{testname}}</p>
     <p>Categorie: {{cat.catname}}</p>
-    {% set counter = 0%}
-    {%for q in questions %}
-    {% set counter = counter + 1 %}
-    {%endfor%}
-    <p>Aantal vragen: {{counter}}</p>
     <p>Duurtijd: {{testduration}}</p>
-    <p></p>
+    <p>Aantal vragen: {{questioncount}}</p>
+    <p>Gewicht vragen: {{questionweightcount}}</p>
+    {%for key, subcat in subcatlist%}
+    <p>Subcategorie '{{key}}' => aantal vragen: {{subcat.count}}=> Gewicht van de vragen: {{subcat.weight}}</p>       
+            {%endfor%}
+   
+
+    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testCreation_TestUpload">
+        <div class="form-group">
+            <label for="testpasspercentage" class="col-lg-5 control-label">Slaagpercentage voor de volledige test:</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
+            </div>
+                </div>
+
+    {%for key, subcat in subcatlist%}
+
+                <div class="form-group">
+     <label for="subcatpasspercentage[]" class="col-lg-5 control-label">Slaagpercentage voor '{{key}}':</label>
+            <div class="col-lg-5">
+                <input type="text" class="form-control" name="subcatpasspercentage" id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
+            </div>  
+          </div>
+        
+            {%endfor%}
+
+    
+    <div class="form-group">
+            <div class="ietssmaller">
+                <div class="col-lg-4">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="catknop" class="form-control" >
+                </div>
+            </div>
+        </div>
+    </form>
     {%endif%}
 </div>
 

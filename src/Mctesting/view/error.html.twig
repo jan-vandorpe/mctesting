@@ -1,6 +1,8 @@
 {% extends "template/layout.html.twig" %}
 
 {% block content %}
-<div class="headerupdates maincontainer">Application error</div>
-<div class="maincontainer">{{exception.message}}</div>
+<div class="page error">
+    <h1 class="errorhead">Fout</h1>
+    <div class="errorbody">{{exception.message}}</div>
+</div>
 {% endblock %}
