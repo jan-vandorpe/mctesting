@@ -31,26 +31,9 @@
                 <tbody>
                     {% for testsession in testsessions %}
                     <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/{{testsession.id}}">{{testsession.date}}</a></td>
+                        <td><a href="/mctesting/scores/showsessiondetail/{{testsession.id}}">{{ testsession.date.date|date('d/m/Y') }}</a></td>
                     </tr>
                     {% endfor %}
-                    {#testvalues#}
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/">21/4/2013</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/">5/5/2013</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/">12/9/2013</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/">8/11/2013</a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/">5/1/2014</a></td>
-                    </tr>
-                    {#end testvalues#}
                 </tbody>
             </table>
         </div>

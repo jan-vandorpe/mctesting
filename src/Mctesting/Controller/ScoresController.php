@@ -3,6 +3,9 @@
 namespace Mctesting\Controller;
 
 use Framework\AbstractController;
+use Mctesting\Model\Service\TestService;
+use Mctesting\Model\Service\TestSessionService;
+use Mctesting\Model\Service\UserSessionService;
 
 /**
  * Description of ScoresController
@@ -15,27 +18,42 @@ class ScoresController extends AbstractController
     {
         //build model
         //retrieve tests
+        $tests = TestService::getAll();
         
         //render page
-        $this->render('scores_selecttest.html.twig', array());
+        $this->render('scores_selecttest.html.twig', array(
+            'tests' => $tests,
+        ));
         
     }
     
-    public function showSessions($testId)
+    public function showSessions()
     {
         //build model
         //retrieve all testsessions before today for testId
+        $testsessions = TestSessionService::getSessionsByTest(1);
+        
         
         //render page
-        $this->render('scores_showsessions.html.twig', array());
+        $this->render('scores_showsessions.html.twig', array(
+            'testsessions' => $testsessions,
+        ));
     }
     
-    public function showSessionDetail($testsessionId)
+    public function showSessionDetail($arguments)
     {
+        $sessionId = $arguments[0];
         //build model
-        //retrieve testsession 
+        //retrieve testsession
+        $testSession = TestSessionService::getById($sessionId);
+        
+       //retrieve usersessions
+        $userSessions = UserSessionService::getBySession($sessionId);
         
         //render page
-        $this->render('scores_showsessiondetail.html.twig', array());
+        $this->render('scores_showsessiondetail.html.twig', array(
+            'testsession' => $testSession,
+            'usersessions' => $userSessions,
+        ));
     }
 }

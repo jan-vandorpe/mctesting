@@ -9,27 +9,27 @@
     <h1 class="headerofpage">Overzicht sessiescores</h1>
     
     <div class="row">
-        <div class="col-lg-3"></div>
+        <div class="col-lg-1"></div>
         <div class="col-lg-6">
             <div class="col-lg-1"></div>
             <label class="col-lg-2 control-label">Test:</label>
             <div class="col-lg-5">
-                {{ test.name }}Testnaam
+                {{ testsession.test.testnaam }}
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3"></div>
+        <div class="col-lg-1"></div>
         <div class="col-lg-6">
             <div class="col-lg-1"></div>
             <label class="col-lg-3 control-label">Sessiedatum:</label>
             <div class="col-lg-5">
-                {{ testsession.date }}datum sessie
+                {{ testsession.date.date|date('d/m/Y') }}
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3"></div>
+        
         <div class="col-lg-4">
             <table class="table">
                 <thead>
@@ -43,66 +43,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sessionuser in testsessionusers %}
+                    {% for usersession in usersessions %}
                     <tr>
-                        <td>{{ sessionuser.user.firstname }}</td>
-                        <td>{{ sessionuser.user.lastname }}</td>
-                        <td>{{ sessionuser.score }} / {{ test.maxscore }}</td>
-                        <td>{{ sessionuser.percentage }}</td>
-                        <td>{{ sessionuser.testpassed }}</td>
-                        <td>{{ sessionuser.testtaken }}</td>
+                        <td>{{ usersession.user.firstname }}</td>
+                        <td>{{ usersession.user.lastname }}</td>
+                        <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
+                        <td>{{ usersession.percentage }}</td>
+                        <td>{{ usersession.passed }}</td>
+                        <td>{{ usersession.participated }}</td>
                     </tr>
                     {% endfor %}
-                    {#testvalues#}
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    <tr>
-                        <td>Thomas</td>
-                        <td>Deserranno</td>
-                        <td>68/83</td>
-                        <td>82%</td>
-                        <td>Ja</td>
-                        <td>Ja</td>
-                    </tr>
-                    {#end testvalues#}
                 </tbody>
             </table>
         </div>

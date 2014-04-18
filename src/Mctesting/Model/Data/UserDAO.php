@@ -4,6 +4,7 @@ namespace Mctesting\Model\Data;
 
 use Mctesting\Model\Entity\User;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Service\UsergroupService;
 
 class UserDAO
 {
@@ -81,22 +82,22 @@ class UserDAO
     
     
     
-    public static function selectByEmail($login, $password)
+    public static function selectByEmail($email, $password)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE email = :login and wachtwoord = :password' ;
+        $sql = 'SELECT * FROM gebruikers WHERE email = :email and wachtwoord = :password' ;
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':login' => $login, ':password' => $password))) {
+        if ($stmt->execute(array(':email' => $email, ':password' => $password))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
                 //create object(s) and return
-                $group = \Mctesting\Model\Service\UsergroupService::getById($record['gebruikerstype']);
+                //create usergroup
+                $group = UsergroupService::getById($record['gebruikerstype']);
                 //create  object
-                
                 $user = new User();
                 $user->setRRnr($record['rijksregisternr']);
                 $user->setFirstName($record['voornaam']);
@@ -105,29 +106,29 @@ class UserDAO
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('Kon niet inloggen met deze gegevens, gelieve deze te controleren');
+                throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
             }
         } else {
-            throw new ApplicationException('gebruikers selectByEmail statement kan niet worden uitgevoerd.');
+            throw new ApplicationException('User selectByEmail statement kan niet worden uitgevoerd.');
         }
     }
     
-    public static function selectByRRNr($login)
+    public static function selectByRRNr($rrnr)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE rijksregisternr = :login';
+        $sql = 'SELECT * FROM gebruikers WHERE rijksregisternr = :rrnr';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':login' => $login))) {
+        if ($stmt->execute(array(':rrnr' => $rrnr))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
                 //create object(s) and return
-                $group = \Mctesting\Model\Service\UsergroupService::getById($record['gebruikerstype']);
-                //create  object
-                
+                //create usergroup
+                $group = UsergroupService::getById($record['gebruikerstype']);
+                //create  user
                 $user = new User();
                 $user->setRRnr($record['rijksregisternr']);
                 $user->setFirstName($record['voornaam']);
@@ -136,10 +137,10 @@ class UserDAO
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('Kon niet inloggen met deze gegevens, gelieve deze te controleren');
+                throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
             }
         } else {
-            throw new ApplicationException('gebruikers selectByRRNr statement kan niet worden uitgevoerd');
+            throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
         }
     }
     

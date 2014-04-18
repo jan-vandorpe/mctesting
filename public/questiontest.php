@@ -24,9 +24,15 @@
             require_once '../src/Mctesting/Exception/ApplicationException.php';
             
             $questions = Mctesting\Model\Service\QuestionService::getByCategory(2);
+            $activeQuestions = \Mctesting\Model\Service\QuestionService::getActiveByCategory(2);
             
+            print '<h1>ALL QUESTIONS</h1>';
             print '<pre>';
             print_r($questions);
+            print '</pre>';
+            print '<h1>ACTIVE QUESTIONS ONLY</h1>';
+            print '<pre>';
+            print_r($activeQuestions);
             print '</pre>';
         
         ?>
