@@ -3,7 +3,6 @@
 namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Data\SubcategoryDAO;
-use Mctesting\Model\Data\CategoryDAO;
 
 /* * *** Author: Bert Mortier **** */
 
