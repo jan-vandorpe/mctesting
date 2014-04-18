@@ -14,7 +14,7 @@ class TestDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM bramtest';
+        $sql = 'SELECT * FROM test';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -43,6 +43,40 @@ class TestDAO
         }
     }
        
+    public static function selectById($id)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $id,))) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //create object(s) and return
+                //retrieve subcategory object
+                $test = new Test();
+                $test->setTestId($record['testid']);
+                $test->setTestNaam($record['testnaam']);
+                $test->setTestMaxDuur($record['maxduur']);
+                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestMaxscore($record['maxscore']);
+                $test->setTestBeheerder($record['beheerder']);
+                return $test;
+            } else {
+                throw new ApplicationException('Test selectById record is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'Test selectById statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
     
     
     public static function insert($codeTeUploaden)

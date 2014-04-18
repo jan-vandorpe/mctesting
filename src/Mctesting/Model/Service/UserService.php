@@ -24,6 +24,11 @@ class UserService
         return $user;
     }
     
+    public static function getById($id)
+    {
+        return UserDAO::selectByRRNr($id);
+    }
+    
     public static function getAll()
     {
         return UserDAO::selectAll();
@@ -52,7 +57,7 @@ class UserService
 //             }
          }else{
              //print(" rijksregister");
-             $user=UserDAO::selectByRRNr($login);
+             $user = UserDAO::selectByRRNr($login);
              UserService::serializeToSession($user);
              return true;
 //             $foundTest = UserService::getTest($password);

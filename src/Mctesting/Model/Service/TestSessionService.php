@@ -16,4 +16,9 @@ class TestSessionService
     {
         return TestSessionDAO::selectByTest($testId);
     }
+    
+    public static function getById($id)
+    {
+        return TestSessionDAO::selectById($id);
+    }
 }
