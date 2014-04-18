@@ -97,19 +97,33 @@ class TestDAO
     }
     
     
-    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions)
+    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)
     {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `bramtest`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
+        $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':adminId' => $adminId))) {            
             //test if statement succes
             $last_id = $db->lastInsertId();
-            foreach($questions as $questionId){                
-               $sql = 'INSERT INTO `bramtestvragen`(`testid`, `vraagid`) 
+            foreach($subcatlist as $subcat){                 
+               $sql = 'INSERT INTO `testsubcat`(`testid`, `subcatid`, `aantal`, `totgewicht`, `tebehalenscore` ) 
+                                    VALUES (:testid,:subcatid,:aantal,:totgewicht,:tebehalenscore)';
+               $stmt = $db->prepare($sql);
+                //test if statement can be executed
+               if ($stmt->execute(array(':testid' => $last_id,':subcatid' => $subcat["id"] ,':aantal' => $subcat["count"] ,':totgewicht' => $subcat["weight"] ,':tebehalenscore' => '30'))) {                   
+               }else{
+                   $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze subcattest niet toevoegen: '.$error[2]);              
+            }
+            
+               }
+               foreach($questions as $questionId){      
+                          
+               $sql = 'INSERT INTO `testvragen`(`testid`, `vraagid`) 
                                     VALUES (:testid,:vraagid)';
                $stmt = $db->prepare($sql);
                 //test if statement can be executed
@@ -117,10 +131,10 @@ class TestDAO
                }else{
                    $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze test niet toevoegen: '.$error[2]);              
+            throw new ApplicationException('Kon deze testvraag niet toevoegen: '.$error[2]);              
             }
             
-               }
+               }    
             
             
             return true;

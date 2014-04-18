@@ -93,24 +93,29 @@
     <p>Duurtijd: {{testduration}}</p>
     <p>Aantal vragen: {{questioncount}}</p>
     <p>Gewicht vragen: {{questionweightcount}}</p>
+    {%for key, subcat in subcatlist%}
+    <p>Subcategorie '{{key}}' => aantal vragen: {{subcat.count}}=> Gewicht van de vragen: {{subcat.weight}}</p>       
+            {%endfor%}
    
 
-    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step4">
+    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testCreation_TestUpload">
         <div class="form-group">
-            <label for="testpasspercentage" class="col-lg-3 control-label">Slaagpercentage voor de volledige test:</label>
+            <label for="testpasspercentage" class="col-lg-5 control-label">Slaagpercentage voor de volledige test:</label>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="60%" pattern="^[0-9]+$" maxlength='3' required/>
+                <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
             </div>
                 </div>
 
-    {%for subcat,subcatcount in subcatlist%}
+    {%for key, subcat in subcatlist%}
+
                 <div class="form-group">
-     <label for="subcatpasspercentage" class="col-lg-3 control-label">Slaagpercentage voor de subcategorie '{{subcat}}' (aantal vragen: {{subcatcount}}):</label>
+     <label for="subcatpasspercentage[]" class="col-lg-5 control-label">Slaagpercentage voor '{{key}}':</label>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="subcatpasspercentage" id="subcatpasspercentage" value="50%" pattern="^[0-9]+$" maxlength='3' required/>
+                <input type="text" class="form-control" name="subcatpasspercentage" id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
             </div>  
           </div>
-        {%endfor%}
+        
+            {%endfor%}
 
     
     <div class="form-group">
