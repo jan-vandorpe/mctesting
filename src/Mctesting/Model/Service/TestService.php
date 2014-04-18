@@ -18,6 +18,11 @@ class TestService
         return TestDAO::selectAll();
     }
     
+    public static function getById($id)
+    {
+        return TestDAO::selectById($id);
+    }
+    
     public static function insertCreatedTestSessionIntoDB($datum, $testid, $sessieww, $actief, $users,$afgelegd)
     {
         

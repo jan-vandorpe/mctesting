@@ -9,6 +9,7 @@ namespace Mctesting\Model\Entity;
  */
 class Question
 {
+
     private $id;
     private $text;
     private $weight;
@@ -16,7 +17,8 @@ class Question
     private $correctAnswer;
     private $answers;
     private $media;
-    
+    private $active;
+
     public function getId()
     {
         return $this->id;
@@ -86,4 +88,15 @@ class Question
     {
         $this->media = $media;
     }
+
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
 }
