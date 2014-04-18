@@ -5,6 +5,7 @@ namespace Mctesting\Model\Data;
 use Mctesting\Model\Entity\UserSession;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\TestSessionService;
+use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of UserSessionDAO
