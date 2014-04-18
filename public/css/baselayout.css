@@ -260,7 +260,25 @@ body{
     padding: 0.25em 0 0.125em 2em;
     background-color: rgba(0,0,0,0.1);
 }
-
+.errorhead{
+    text-align: center;
+    margin: 0;
+    background-color: rgba(255,0,0,0.1);
+    color:red;
+}
+.page{
+    margin-left: 1em;
+    margin-top: 2em;
+}
+.error{
+    border: red solid 1px;
+}
+.errorbody{
+    color: red;
+    font-weight: 400;
+    
+    padding-left: 1em;
+}
 
 
 /* CLEARFIX
