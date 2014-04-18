@@ -20,9 +20,9 @@ class SubcategoryService
         return SubcategoryDAO::selectById($subcatid);
     }
 
-    public static function validateSubcategory($subcategoryname,$categoryid)
+    public static function validateSubcategory($subcategoryname, $categoryid)
     {
-        return SubcategoryDAO::checkName($subcategoryname,$categoryid);
+        return SubcategoryDAO::checkName($subcategoryname, $categoryid);
     }
 
     public static function getByCategoryId($catid)
@@ -34,5 +34,13 @@ class SubcategoryService
     {
         SubcategoryDAO::insert($catid, $subcatnaam);
     }
+    public static function activateSubcategory($id)
+    {
+        SubcategoryDAO::activateById($id);
+    }
 
+    public static function deactivateSubcategory($id)
+    {
+        SubcategoryDAO::deactivateById($id);
+    }
 }

@@ -9,7 +9,7 @@ use Mctesting\Model\Service\QuestionService;
 /**
  * Description of QuestionController
  *
- * @author cyber01
+ * @author Thomas Deserranno
  */
 class QuestionController extends AbstractController
 {
@@ -25,8 +25,8 @@ class QuestionController extends AbstractController
     public function create()
     {
         //build model
-        //get categories
-        $categories = CategoryService::getAll();
+        //get categories, but only the ones with subcategories
+        $categories = CategoryService::getAllExceptEmpty();
         //load subcategories
         foreach ($categories as $category) {
             $category->retrieveSubcategories();

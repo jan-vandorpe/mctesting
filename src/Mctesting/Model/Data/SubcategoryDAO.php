@@ -32,7 +32,7 @@ class SubcategoryDAO
                 $subcat = new Subcategory();
                 $subcat->setId($record['subcatid']);
                 $subcat->setSubcatname($record['subcatnaam']);
-//                $subcat->setCategory($category);
+                $subcat->setActive($record['actief']);
                 return $subcat;
             } else
             {
@@ -68,6 +68,7 @@ class SubcategoryDAO
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
                     $subcat->setSubcatname($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
@@ -98,7 +99,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid asc';
+        $sql = 'SELECT * FROM subcategorie order by catid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -116,8 +117,9 @@ class SubcategoryDAO
                     //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
-                    $subcat->setSubcatname($record['subcatnaam']);
-                    $subcat->setCategory($category);
+                    $subcat->setSubcategory($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
+
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
@@ -166,14 +168,48 @@ class SubcategoryDAO
         $sql = 'INSERT INTO subcategorie(catid, subcatnaam) values(:catid, :subcatnaam)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array( ':subcatnaam' => $subcatname, ':catid' => $catid,)))
+        if ($stmt->execute(array(':subcatnaam' => $subcatname, ':catid' => $catid,)))
         {
             
         } else
         {
             $error = $stmt->errorInfo();
+
+            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren' . $error[2]);
+        }
+    }
+
+    public static function activateById($subcatid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE subcategorie SET actief=1 WHERE subcatid = :subcatid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':subcatid' => $subcatid)))
+        {
             
-            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren'.$error[2]);
+        } else
+        {
+            throw new ApplicationException('Kon de subcategorie in de database niet op actief zetten, gelieve dit te controleren');
+        }
+    }
+
+    public static function deactivateById($subcatid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE subcategorie SET actief=0 WHERE subcatid = :subcatid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':subcatid' => $subcatid)))
+        {
+            
+        } else
+        {
+            throw new ApplicationException('Kon de subcategorie in de database niet passief zetten, gelieve dit te controleren');
         }
     }
 

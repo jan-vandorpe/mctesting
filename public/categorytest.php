@@ -20,6 +20,10 @@
         //alle categorieën opvragen
         //$result = \Mctesting\Model\Service\CategoryService::getAll();
         
+        \Mctesting\Model\Service\CategoryService::activateCategory(2);
+        
+        
+        
         //één categorie opvragen
         $result = \Mctesting\Model\Service\CategoryService::getById(2);
         

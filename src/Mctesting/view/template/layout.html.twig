@@ -58,7 +58,6 @@
         </div>
     {% endblock login %}
 
-
     {#------ SIDE MENU ---------------#}
     <div class="container-fluid maincontainer clearFix">
         {% block sidenav %}
@@ -92,7 +91,6 @@
                                     <li><a href="/mctesting/scores/selecttest/">Scores test</a></li>
                                 </ul>
 
-
                                 {% if app.user.group.name == 'admin' %}
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Beheerders</li>
@@ -112,7 +110,6 @@
         </div> 
     </div>
             
-
     {#------ FOOTER ----------------#}
     <div class="footer headerpage maincontainer">
         {% block footer %}
