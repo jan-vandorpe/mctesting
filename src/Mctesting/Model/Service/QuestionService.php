@@ -34,6 +34,17 @@ class QuestionService
     }
     
     /**
+     * Function returns an array of ACTIVE question objects corresponding to the given
+     * categoryId
+     * @param type $categoryId
+     * @return type array
+     */
+    public static function getActiveByCategory($categoryId)
+    {
+        return QuestionDAO::selectActiveByCategory($categoryId);
+    }
+    
+    /**
      * The function takes the post values and assigns them to indiviual variables
      * to pass on to validation and after that the DAO.
      * IDs and numbers are typecast into integers.
