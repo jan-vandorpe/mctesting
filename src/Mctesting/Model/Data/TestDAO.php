@@ -27,11 +27,11 @@ class TestDAO
                     //create usergroup object
                     $test = new Test();
                     $test->setTestId($record['testid']);
-                    $test->setTestNaam($record['testnaam']);
-                    $test->setTestMaxDuur($record['maxduur']);
-                    $test->setTestAantalvragen($record['aantalvragen']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
                     $test->setTestMaxscore($record['maxscore']);
-                    $test->setTestBeheerder($record['beheerder']);
+                    $test->setTestCreator($record['beheerder']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -59,11 +59,11 @@ class TestDAO
                 //retrieve subcategory object
                 $test = new Test();
                 $test->setTestId($record['testid']);
-                $test->setTestNaam($record['testnaam']);
-                $test->setTestMaxDuur($record['maxduur']);
-                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestName($record['testnaam']);
+                $test->setTestMaxDuration($record['maxduur']);
+                $test->setTestQuestionCount($record['aantalvragen']);
                 $test->setTestMaxscore($record['maxscore']);
-                $test->setTestBeheerder($record['beheerder']);
+                $test->setTestCreator($record['beheerder']);
                 return $test;
             } else {
                 throw new ApplicationException('Test selectById record is leeg');
@@ -79,24 +79,24 @@ class TestDAO
     }
     
     
-    public static function insert($codeTeUploaden)
-    {
-        //create db connection        
-        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
-        //prepare sql statement
-        $sql = 'INSERT INTO `bramupload`(`code`) VALUES (:code)';
-        $stmt = $db->prepare($sql);
-        //test if statement can be executed
-        if ($stmt->execute(array(':code' => $codeTeUploaden ))) {            
-            //test if statement succes
-            return true;
-        } else {            
-            $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze code niet toevoegen: '.$error[2]);
-            //header("location: /mctesting/agga/dagga");
-        }
-    }
+//    public static function insert($codeTeUploaden)
+//    {
+//        //create db connection        
+//        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+//        //prepare sql statement
+//        $sql = 'INSERT INTO `bramupload`(`code`) VALUES (:code)';
+//        $stmt = $db->prepare($sql);
+//        //test if statement can be executed
+//        if ($stmt->execute(array(':code' => $codeTeUploaden ))) {            
+//            //test if statement succes
+//            return true;
+//        } else {            
+//            $error = $stmt->errorInfo();
+//            //throw new ApplicationException($error[2]);
+//            throw new ApplicationException('Kon deze code niet toevoegen: '.$error[2]);
+//            //header("location: /mctesting/agga/dagga");
+//        }
+//    }
     
     
     public static function insertSession($datum, $testid, $sessieww, $actief, $users, $afgelegd)
@@ -104,14 +104,14 @@ class TestDAO
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `bramsessie`(`datum`, `testid`, `sessieww`, `actief`) VALUES (:datum,:testid,:sessieww,:actief)';
+        $sql = 'INSERT INTO `sessie`(`datum`, `testid`, `sessieww`, `actief`) VALUES (:datum,:testid,:sessieww,:actief)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww,':actief' => $actief ))) {            
             //test if statement succes
             $last_id = $db->lastInsertId();
             foreach($users as $user=>$RRNr){
-               $sql = 'INSERT INTO `bramsessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
+               $sql = 'INSERT INTO `sessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
                                     VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
                $stmt = $db->prepare($sql);
                 //test if statement can be executed
@@ -131,23 +131,23 @@ class TestDAO
     }
     
     
-    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)
+    public static function insertTest($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
     {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
+        $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `tebehalenscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:passpercentage,:adminId)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':adminId' => $adminId))) {            
+        if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':passpercentage' => $passpercentage ,':adminId' => $adminId))) {            
             //test if statement succes
             $last_id = $db->lastInsertId();
             foreach($subcatlist as $subcat){                 
                $sql = 'INSERT INTO `testsubcat`(`testid`, `subcatid`, `aantal`, `totgewicht`, `tebehalenscore` ) 
-                                    VALUES (:testid,:subcatid,:aantal,:totgewicht,:tebehalenscore)';
+                                    VALUES (:testid,:subcatid,:subcount,:subweight,:passpercentage)';
                $stmt = $db->prepare($sql);
                 //test if statement can be executed
-               if ($stmt->execute(array(':testid' => $last_id,':subcatid' => $subcat["id"] ,':aantal' => $subcat["count"] ,':totgewicht' => $subcat["weight"] ,':tebehalenscore' => '30'))) {                   
+               if ($stmt->execute(array(':testid' => $last_id,':subcatid' => $subcat["id"] ,':subcount' => $subcat["count"] ,':subweight' => $subcat["weight"] ,':passpercentage' => $subcat["passpercentage"]))) {                   
                }else{
                    $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);

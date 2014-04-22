@@ -15,7 +15,7 @@ use Mctesting\Model\Service\QuestionService;
  *
  * @author Bram
  */
-class TestsController extends AbstractController
+class TestadminController extends AbstractController
 {
     function __construct($app)
     {
@@ -32,7 +32,7 @@ class TestsController extends AbstractController
         $message2 = "";
 
         //view
-        $this->render('tests.html.twig', array(
+        $this->render('testadmin.html.twig', array(
             'message1' => $message1,
             'message2' => $message2,
 
@@ -79,7 +79,7 @@ class TestsController extends AbstractController
             
             ));
         }else{
-         header("location: /mctesting/tests/testcreation");   
+         header("location: /mctesting/testadmin/testcreation");   
            exit(0);   
         }
     }
@@ -150,7 +150,7 @@ class TestsController extends AbstractController
             
             ));
         }else{
-          header("location: /mctesting/tests/testcreation");   
+          header("location: /mctesting/testadmin/testcreation");   
            exit(0);     
         }
     }
@@ -160,11 +160,14 @@ class TestsController extends AbstractController
              * 
              */
     {
-//        foreach($_POST["subcatpasspercentage"] as $subcat){
-//           $_SESSION["subcatlist"][$subcat->id]["passpercentage"]= $_POST["subcatpasspercentage"];
-//        }
-        $_POST["subcatpasspercentage"];
+                foreach ($_POST["subcatpasspercentage"] as $key => $value) {
+                  $_SESSION["subcatlist"][$key]["passpercentage"]= $value;  
+                }
         //model
+        
+        $_SESSION["testcreation"]["passpercentage"]= $_POST["testpasspercentage"];
+        
+        $passpercentage = $_SESSION["testcreation"]["passpercentage"];        
         $testname = $_SESSION["testcreation"]["testname"];
         $testduration = $_SESSION["testcreation"]["testduration"];
         $questioncount = $_SESSION["testcreation"]["questioncount"];
@@ -176,25 +179,19 @@ class TestsController extends AbstractController
         $adminId = $admin->getRRNr();
         
         
-            if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)){
-            
-            
-        //$_SESSION["testcreation"]["testduration"] = $_POST["testduration"];
-        $testname = $_SESSION["testcreation"]["testname"];
-        $testduration = $_SESSION["testcreation"]["testduration"];
-        //$catid = $_POST["testcatselect"];
+           if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)){
         
+        $testname = $_SESSION["testcreation"]["testname"];
+        $testduration = $_SESSION["testcreation"]["testduration"];        
         $questions = array();
         if(isset($_POST["question"])){$questions = $_POST["question"];}
-
-        //$allQuest = QuestionService::getByCategory($catid);
-        $catid = $_SESSION["testcreation"]["catid"];
-        $cat = CategoryService::getById($catid);
         
+        $catid = $_SESSION["testcreation"]["catid"];
+        $cat = CategoryService::getById($catid);        
         //view
         $this->render('testcreation.html.twig', array(
             //'allQuest'=>$allQuest,
-            'testduration'=>$testduration,
+            'passpercentage'=>$passpercentage,
             'testname'=>$testname,
             'questions'=>$questions,
             'cat'=>$cat,
@@ -202,7 +199,7 @@ class TestsController extends AbstractController
             
             ));
         }else{
-          header("location: /mctesting/tests/testcreation");   
+          header("location: /mctesting/testadmin/testcreation");   
            exit(0);     
         }
     }
@@ -240,7 +237,7 @@ class TestsController extends AbstractController
         $testid=$_POST["testsetselect"];
         if($testid=="0"){
             $_SESSION["errormsg"] = "U moet een test selecteren";
-           header("location: /mctesting/tests/testlink");   
+           header("location: /mctesting/testadmin/testlink");   
            exit(0);
         }
         $datum=$_POST["testdatum"];

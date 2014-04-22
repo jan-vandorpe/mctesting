@@ -29,10 +29,10 @@ class TestService
         return TestDAO::insertSession($datum, $testid, $sessieww, $actief,$users,$afgelegd);
     }
     
-    public static function insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)
+    public static function insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
     {
         
-        return TestDAO::insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist);
+        return TestDAO::insertTest($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
     }
 
 

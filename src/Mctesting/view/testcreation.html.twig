@@ -17,7 +17,7 @@
 <div class="maincontainer">
     {%if testname is not defined %}
     <h1 class="headertestupdates centeren">Test aanmaken</h1>
-    <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step2">
+    <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testcreation_step2">
         <div class="form-group">
             <label for="testname" class="col-lg-3 control-label">Naam van test</label>
             <div class="col-lg-5">
@@ -47,7 +47,7 @@
     </form>
     {%elseif testduration is not defined %}
     <h1 class="headertestupdates centeren">Test aanmaken stap 2</h1>
-    <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testcreation_step3">
+    <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testcreation_step3">
         <div class="form-group">
             <label for="testduration" class="col-lg-3 control-label">Duur van test(aantal minuten)</label>
             <div class="col-lg-5">
@@ -85,7 +85,7 @@
         </div>
     </form>
     
-    {%else %}
+    {%elseif passpercentage is not defined %}
     <h1 class="headertestupdates centeren">Test aanmaken stap 3</h1>
     <h1 class="headertestupdates centeren">Testweergave</h1>
     <p>Titel: {{testname}}</p>
@@ -98,7 +98,7 @@
             {%endfor%}
    
 
-    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testCreation_TestUpload">
+    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testCreation_TestUpload">
         <div class="form-group">
             <label for="testpasspercentage" class="col-lg-5 control-label">Slaagpercentage voor de volledige test:</label>
             <div class="col-lg-5">
@@ -111,7 +111,7 @@
                 <div class="form-group">
      <label for="subcatpasspercentage[]" class="col-lg-5 control-label">Slaagpercentage voor '{{key}}':</label>
             <div class="col-lg-5">
-                <input type="text" class="form-control" name="subcatpasspercentage" id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
+                <input type="text" class="form-control" name='subcatpasspercentage[{{key}}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
             </div>  
           </div>
         
@@ -128,6 +128,11 @@
             </div>
         </div>
     </form>
+    {% else %}
+    <h1 class="headertestupdates centeren">Test aanmaken stap 4</h1>
+    <h1 class="headertestupdates centeren">Resultaat</h1>
+    <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
+
     {%endif%}
 </div>
 
