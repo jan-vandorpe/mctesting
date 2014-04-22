@@ -15,65 +15,49 @@
     <h1 class="headerofpage">Testsessie plannen</h1>
 </div>
 <div class="">
-    <h3>Stap1</h4>
-    <div class="resultaat  ">
-        {% for upload in allUploads %}   
-        <div class="input-group">
-            <span class="input-group-addon">
-                <input type="checkbox" name="antwoord1" />
-            </span>                                             
-            <div class="col-lg-4 centeren">{{upload.nummer}}</div>
-            <div class="col-lg-4 centeren">{{upload.code|raw}}</div>
-        </div>
-        {% endfor %}
-    </div>
+    <h3>Stap2</h3>
+    
 
     <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
-        <div class="form-group">            
-            <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
-            <div class="col-lg-5">                
-                <select class="form-control" name="testsetselect">
-                    <option value="0" >Selecteer een test</option>
-                    {% for test in allTest %}
-                        <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
-                    {% endfor %}
-                </select>
-                <p style="color:red;">{{errormsg}}</p>  
-            </div>
+        <div class="input-group">            
+            <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
+            <select class="form-control" name="testsetselect">
+                <option value="0" >Selecteer een test:</option>
+                {% for test in allTest %}
+                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                {% endfor %}
+            </select>
         </div>
-        <div class="form-group">
-            <label for="testsessieselect" class="col-lg-3 control-label">Datum van de testsessie</label>
-            <div class="col-lg-5">
-                <input type="date" class="form-control" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
-            </div>
+        <span class="error">{{errormsg}}</span>  
+        <div class="input-group">
+            <label for="testsessieselect" class="input-group-addon widthcatinput">Datum van de testsessie:</label>
+            <input type="date" class="form-control disableautoheight" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
         </div>
-        <div class="form-group">
-            <label for="testsessieselect" class="col-lg-3 control-label">Wachtwoord van de testsessie</label>
-            <div class="col-lg-5">
-                <input type="text" class="form-control" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in voor de testafleggers." required/>
-            </div>
+        <div class="input-group">
+            <label for="testsessieselect" class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
         </div>
+        
+        <div class="lighter gebrcollectie">
+            <div class="input-group gebraddon">
+                <div class="input-group-addon ">Gebruikers: </div>
+            </div>
 
-        {% for user in allUsers %} 
-            <div class="input-group ietssmaller">
-                <span class="input-group-addon">
-                    <input type="checkbox" name='user[]' value='{{user.rrnr}}'/>
-                </span>
-                <div class=" form-control">
-
-                    <div class="vnaamaantest">{{user.lastname}}</div>
-                    <div class="vnaamaantest">{{user.firstname}}</div>
-
+            {% for user in allUsers %} 
+                <div class="input-group ietssmaller">
+                    <span class="input-group-addon">
+                        <input type="checkbox" name='user[]' value='{{user.rrnr}}'/>
+                    </span>
+                    <div class=" form-control">
+                        <div class="vnaamaantest">{{user.lastname}}</div>
+                        <div class="vnaamaantest">{{user.firstname}}</div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-        <div class="form-group">
+            {% endfor %}
+        </div>
+        <div class="input-group">
             <div class="ietssmaller">
-                <div class="col-lg-4">
-                </div>
-                <div class="col-lg-4 centeren">
-                    <input type="submit" name="catknop" class="form-control" >
-                </div>
+                <input type="submit" name="catknop" class="form-control marginonbutton" >
             </div>
         </div>
     </form>
