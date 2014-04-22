@@ -21,4 +21,11 @@ class TestSessionService
     {
         return TestSessionDAO::selectById($id);
     }
+    
+    
+    public static function create($datum, $testid, $sessieww, $users)
+    {
+        
+        return TestSessionDAO::insert($datum, $testid, $sessieww,$users);
+    }
 }

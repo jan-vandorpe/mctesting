@@ -4,6 +4,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\TestService;
+use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
@@ -179,7 +180,7 @@ class TestadminController extends AbstractController
         $adminId = $admin->getRRNr();
         
         
-           if(TestService::insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)){
+           if(TestService::create($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)){
         
         $testname = $_SESSION["testcreation"]["testname"];
         $testduration = $_SESSION["testcreation"]["testduration"];        
@@ -252,7 +253,7 @@ class TestadminController extends AbstractController
         print("<pre>");
         var_dump($_POST);
         print("</pre>");
-            if(TestService::insertCreatedTestSessionIntoDB($datum, $testid, $sessieww, $actief, $users,$afgelegd)){
+            if(TestSessionService::create($datum, $testid, $sessieww, $users)){
                 //             
             }else{
                 //niet gelukt

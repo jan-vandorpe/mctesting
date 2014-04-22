@@ -2,8 +2,7 @@
 
 namespace Mctesting\Model\Service;
 
-use Mctesting\Model\Entity\Test;
-use Mctesting\Model\Data\TestDAO;
+use Mctesting\Model\Data\TestQuestionDAO;
 
 /**
  * Description of UserService
@@ -12,16 +11,12 @@ use Mctesting\Model\Data\TestDAO;
  */
 class TestQuestionService
 {
+
     
-    public static function getAll()
-    {
-        return TestDAO::selectAll();
-    }
-    
-    public static function insertCreatedTestSessionIntoDB($datum, $testid, $sessieww, $actief, $users,$afgelegd)
+    public static function create($testid, $questionId)
     {
         
-        return TestDAO::insertSession($datum, $testid, $sessieww, $actief,$users,$afgelegd);
+        return TestQuestionDAO::insert($testid, $questionId);
     }
 
 
