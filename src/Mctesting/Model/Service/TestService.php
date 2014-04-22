@@ -34,9 +34,9 @@ class TestService
         
         return TestDAO::insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist);
     }
-
-
     
-
-    
+    public static function getActiveFullTestById($id)
+    {
+        return TestDAO::selectActiveFullTestById($id);
+    }
 }

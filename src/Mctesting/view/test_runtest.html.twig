@@ -1,0 +1,62 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock stylesheets %}
+
+{% block title %}
+    {{parent()}}Test afleggen
+{% endblock title %}
+
+
+{% block content %}
+    <h1 class="headerofpage">{{ test.testnaam }}</h1>
+    <div class="">
+        <div>Totaal aantal vragen: {{ test.testaantalvragen }}</div>
+        <div>Maximum duurtijd: {{ test.testmaxduur }} minuten</div>
+    </div>
+    <form name="" action="">
+    {% for question in test.questions %}
+        {# Question #}
+        <div class="vraaggroep">
+            <div class="vraag row">
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            VRAAG {{ loop.index }}: 
+                        </div>
+                        <div class="form-control">
+                            {{ question.text }}
+                            {% if question.media is not empty %}
+                                {% for file in question.media%}
+                                <div class="imggroepbijvraag">
+                                        <img src="../images/{{ file }}" />
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# Answers #}
+            <div class="antwoorden row">
+                
+                    {% for answer in question.answers %}
+                        <div class="col-lg-11 antwoordmetradio">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="radio" name="answer[]" value="{{ answer.id }}" />
+                                </span>
+                                <div class="antwoord form-control">{{ answer.text }}</div>
+                            </div>
+                        </div>
+                   {% endfor %}
+               
+            </div>
+        </div>
+    {% endfor %}
+        <div class="input-group">
+            <input class="form-control" type="sumbit" value="Test voltooien">
+        </div>
+    </form>
+{% endblock content %}
