@@ -193,6 +193,7 @@ class TestadminController extends AbstractController
             //'allQuest'=>$allQuest,
             'passpercentage'=>$passpercentage,
             'testname'=>$testname,
+            'testduration'=>$testduration,
             'questions'=>$questions,
             'cat'=>$cat,
             'subcatlist' =>$subcatlist,
