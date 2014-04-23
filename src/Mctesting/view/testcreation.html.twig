@@ -55,7 +55,7 @@
                             </span>
                             <div class="form-control vraagsel">
                                 <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
-                                <div class="vraagzelf">"{{question.text}}"</div>
+                                <div class="vraagzelf">"{{question.text|raw}}"</div>
                                 <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
                             </div>
                         </div>
