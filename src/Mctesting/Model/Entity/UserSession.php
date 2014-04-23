@@ -23,6 +23,7 @@ class UserSession
     private $participated;
     private $active;
     private $testSession;
+    private $answers;
 
     public function getUser()
     {
@@ -93,4 +94,16 @@ class UserSession
     {
         $this->active = $active;
     }
+    
+    public function getAnswers()
+    {
+        return $this->answers;
+    }
+
+    public function setAnswers($answers)
+    {
+        $this->answers = $answers;
+    }
+
+
 }

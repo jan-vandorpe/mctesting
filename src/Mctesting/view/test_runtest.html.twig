@@ -12,10 +12,11 @@
 {% block content %}
     <h1 class="headerofpage">{{ test.testnaam }}</h1>
     <div class="">
+        <div>Categorie: <<< TODO >>> </div>
         <div>Totaal aantal vragen: {{ test.testaantalvragen }}</div>
         <div>Maximum duurtijd: {{ test.testmaxduur }} minuten</div>
     </div>
-    <form name="" action="">
+    <form name="" action="/mctesting/test/process/" method="post">
     {% for question in test.questions %}
         {# Question #}
         <div class="vraaggroep">
@@ -45,7 +46,7 @@
                         <div class="col-lg-11 antwoordmetradio">
                             <div class="input-group">
                                 <span class="input-group-addon">
-                                    <input type="radio" name="answer[]" value="{{ answer.id }}" />
+                                    <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" />
                                 </span>
                                 <div class="antwoord form-control">{{ answer.text }}</div>
                             </div>
@@ -56,7 +57,7 @@
         </div>
     {% endfor %}
         <div class="input-group">
-            <input class="form-control" type="sumbit" value="Test voltooien">
+            <input class="form-control" type="submit" value="Test voltooien">
         </div>
     </form>
 {% endblock content %}
