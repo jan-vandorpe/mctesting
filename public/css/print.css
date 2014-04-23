@@ -1,0 +1,10 @@
+/* 
+CSS for print version tests
+author: Bert
+*/
+@media print{
+    
+    @page{
+        margin: 3cm;
+    }
+}
