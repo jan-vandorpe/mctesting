@@ -5,12 +5,14 @@ namespace Mctesting\Model\Data;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Entity\User;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Service\TestSubcatService;
+use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Entity\FullTest;
+use Mctesting\Model\Service\QuestionService;
 
-class TestDAO
-{
-    
-    public static function selectAll()
-    {
+class TestDAO {
+
+    public static function selectAll() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -27,11 +29,11 @@ class TestDAO
                     //create usergroup object
                     $test = new Test();
                     $test->setTestId($record['testid']);
-                    $test->setTestNaam($record['testnaam']);
-                    $test->setTestMaxDuur($record['maxduur']);
-                    $test->setTestAantalvragen($record['aantalvragen']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
                     $test->setTestMaxscore($record['maxscore']);
-                    $test->setTestBeheerder($record['beheerder']);
+                    $test->setTestCreator($record['beheerder']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -42,9 +44,8 @@ class TestDAO
             throw new ApplicationException('users selectAll statement kon niet worden uitgevoerd');
         }
     }
-       
-    public static function selectById($id)
-    {
+
+    public static function selectById($id) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -59,11 +60,11 @@ class TestDAO
                 //retrieve subcategory object
                 $test = new Test();
                 $test->setTestId($record['testid']);
-                $test->setTestNaam($record['testnaam']);
-                $test->setTestMaxDuur($record['maxduur']);
-                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestName($record['testnaam']);
+                $test->setTestMaxDuration($record['maxduur']);
+                $test->setTestQuestionCount($record['aantalvragen']);
                 $test->setTestMaxscore($record['maxscore']);
-                $test->setTestBeheerder($record['beheerder']);
+                $test->setTestCreator($record['beheerder']);
                 return $test;
             } else {
                 throw new ApplicationException('Test selectById record is leeg');
@@ -77,111 +78,121 @@ class TestDAO
             throw new ApplicationException($errormsg);
         }
     }
-    
-    
-    public static function insert($codeTeUploaden)
-    {
+
+    public static function insert($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `bramupload`(`code`) VALUES (:code)';
+        $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `tebehalenscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:passpercentage,:adminId)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':code' => $codeTeUploaden ))) {            
+        if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId))) {
             //test if statement succes
+            $testid = $db->lastInsertId();
+            foreach ($subcatlist as $subcat) {
+                TestSubcatService::create($testid, $subcat);
+            }
+            foreach ($questions as $questionId) {
+                TestQuestionService::create($testid, $questionId);
+            }
+
+
             return true;
-        } else {            
+        } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze code niet toevoegen: '.$error[2]);
+            throw new ApplicationException('Kon deze test niet toevoegen: ' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
+
+//    public static function insert($codeTeUploaden)
+//    {
+//        //create db connection        
+//        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+//        //prepare sql statement
+//        $sql = 'INSERT INTO `bramupload`(`code`) VALUES (:code)';
+//        $stmt = $db->prepare($sql);
+//        //test if statement can be executed
+//        if ($stmt->execute(array(':code' => $codeTeUploaden ))) {            
+//            //test if statement succes
+//            return true;
+//        } else {            
+//            $error = $stmt->errorInfo();
+//            //throw new ApplicationException($error[2]);
+//            throw new ApplicationException('Kon deze code niet toevoegen: '.$error[2]);
+//            //header("location: /mctesting/agga/dagga");
+//        }
+//    }
+//    public static function insertSession($datum, $testid, $sessieww, $actief, $users, $afgelegd)
+//    {
+//        //create db connection        
+//        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+//        //prepare sql statement
+//        $sql = 'INSERT INTO `sessie`(`datum`, `testid`, `sessieww`, `actief`) VALUES (:datum,:testid,:sessieww,:actief)';
+//        $stmt = $db->prepare($sql);
+//        //test if statement can be executed
+//        if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww,':actief' => $actief ))) {            
+//            //test if statement succes
+//            $last_id = $db->lastInsertId();
+//            foreach($users as $user=>$RRNr){
+//               $sql = 'INSERT INTO `sessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
+//                                    VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
+//               $stmt = $db->prepare($sql);
+//                //test if statement can be executed
+//               if ($stmt->execute(array(':sessieid' => $last_id,':rrnr' => $RRNr,':afgelegd' => $afgelegd,':actief' => $actief ))) {
+//                   
+//               }              
+//            }
+//            
+//            
+//            return true;
+//        } else {            
+//            $error = $stmt->errorInfo();
+//            //throw new ApplicationException($error[2]);
+//            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
+//            //header("location: /mctesting/agga/dagga");
+//        }
+//    }
     
-    
-    public static function insertSession($datum, $testid, $sessieww, $actief, $users, $afgelegd)
+    public static function selectActiveFullTestById($id)
     {
-        //create db connection        
+        //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `bramsessie`(`datum`, `testid`, `sessieww`, `actief`) VALUES (:datum,:testid,:sessieww,:actief)';
+        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief';
         $stmt = $db->prepare($sql);
+        //bind statement parameters
+        $stmt->bindParam(':testid', $id);
+        $active = true;
+        $stmt->bindParam(':actief', $active);
         //test if statement can be executed
-        if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww,':actief' => $actief ))) {            
-            //test if statement succes
-            $last_id = $db->lastInsertId();
-            foreach($users as $user=>$RRNr){
-               $sql = 'INSERT INTO `bramsessiegebruiker`(`sessieid`, `rijksregisternr`,`afgelegd`, `actief`) 
-                                    VALUES (:sessieid,:rrnr,:afgelegd,:actief)';
-               $stmt = $db->prepare($sql);
-                //test if statement can be executed
-               if ($stmt->execute(array(':sessieid' => $last_id,':rrnr' => $RRNr,':afgelegd' => $afgelegd,':actief' => $actief ))) {
-                   
-               }              
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //create object(s) and return
+                //retrieve subcategory object
+                $test = new FullTest();
+                $test->setTestId($record['testid']);
+                $test->setTestNaam($record['testnaam']);
+                $test->setTestMaxDuur($record['maxduur']);
+                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestMaxscore($record['maxscore']);
+                $test->setTestBeheerder($record['beheerder']);
+                $questions = QuestionService::getActiveByTest($id);
+                $test->setQuestions($questions);
+                return $test;
+            } else {
+                throw new ApplicationException('Test selectActiveFullTestById record is leeg');
             }
-            
-            
-            return true;
-        } else {            
+        } else {
             $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
-            //header("location: /mctesting/agga/dagga");
+            $errormsg = 'Test selectActiveFullTestById statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
         }
     }
-    
-    
-    public static function insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)
-    {
-        //create db connection        
-        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
-        //prepare sql statement
-        $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:adminId)';
-        $stmt = $db->prepare($sql);
-        //test if statement can be executed
-        if ($stmt->execute(array(':testname' => $testname,':testduration' => $testduration,':questioncount' => $questioncount,':maxscore' => $maxscore ,':adminId' => $adminId))) {            
-            //test if statement succes
-            $last_id = $db->lastInsertId();
-            foreach($subcatlist as $subcat){                 
-               $sql = 'INSERT INTO `testsubcat`(`testid`, `subcatid`, `aantal`, `totgewicht`, `tebehalenscore` ) 
-                                    VALUES (:testid,:subcatid,:aantal,:totgewicht,:tebehalenscore)';
-               $stmt = $db->prepare($sql);
-                //test if statement can be executed
-               if ($stmt->execute(array(':testid' => $last_id,':subcatid' => $subcat["id"] ,':aantal' => $subcat["count"] ,':totgewicht' => $subcat["weight"] ,':tebehalenscore' => '30'))) {                   
-               }else{
-                   $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze subcattest niet toevoegen: '.$error[2]);              
-            }
-            
-               }
-               foreach($questions as $questionId){      
-                          
-               $sql = 'INSERT INTO `testvragen`(`testid`, `vraagid`) 
-                                    VALUES (:testid,:vraagid)';
-               $stmt = $db->prepare($sql);
-                //test if statement can be executed
-               if ($stmt->execute(array(':testid' => $last_id,':vraagid' => $questionId ))) {                   
-               }else{
-                   $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze testvraag niet toevoegen: '.$error[2]);              
-            }
-            
-               }    
-            
-            
-            return true;
-        } else {            
-            $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze test niet toevoegen: '.$error[2]);
-            //header("location: /mctesting/agga/dagga");
-        }
-    }
-    
-    
-    
-    
-    
 }

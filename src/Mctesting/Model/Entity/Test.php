@@ -10,30 +10,30 @@ namespace Mctesting\Model\Entity;
 class Test
 {
     private $testId;
-    private $TestNaam;
-    private $TestMaxDuur;
-    private $TestAantalvragen;
+    private $TestName;
+    private $TestMaxDuration;
+    private $TestQuestionCount;
     private $TestMaxscore;
-    private $TestBeheerder;
+    private $TestCreator;
     
     public function getTestId() {
         return $this->testId;
     }
 
-    public function getTestNaam() {
-        return $this->TestNaam;
+    public function getTestName() {
+        return $this->TestName;
     }
-    public function getTestMaxDuur() {
-        return $this->TestMaxDuur;
+    public function getTestMaxDuration() {
+        return $this->TestMaxDuration;
     }
-    public function getTestAantalvragen() {
-        return $this->TestAantalvragen;
+    public function getTestQuestionCount() {
+        return $this->TestQuestionCount;
     }
     public function getTestMaxscore() {
         return $this->TestMaxscore;
     }
     public function getTestBeheerder() {
-        return $this->TestBeheerder;
+        return $this->TestCreator;
     }
 
    
@@ -41,19 +41,19 @@ class Test
     public function setTestId($testId) {
         $this->testId = $testId;
     }
-    public function setTestNaam($TestNaam) {
-        $this->TestNaam = $TestNaam;
+    public function setTestName($TestName) {
+        $this->TestName = $TestName;
     }
-    public function setTestMaxDuur($TestMaxDuur) {
-        $this->TestMaxDuur = $TestMaxDuur;
+    public function setTestMaxDuration($TestMaxDuration) {
+        $this->TestMaxDuration = $TestMaxDuration;
     }
-    public function setTestAantalvragen($TestAantalvragen) {
-        $this->TestAantalvragen = $TestAantalvragen;
+    public function setTestQuestionCount($TestQuestionCount) {
+        $this->TestQuestionCount = $TestQuestionCount;
     }
     public function setTestMaxscore($TestMaxscore) {
         $this->TestMaxscore = $TestMaxscore;
     }
-    public function setTestBeheerder($TestBeheerder) {
-        $this->TestBeheerder = $TestBeheerder;
+    public function setTestCreator($TestCreator) {
+        $this->TestCreator = $TestCreator;
     }   
 }

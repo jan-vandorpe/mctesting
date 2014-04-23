@@ -4,6 +4,7 @@ namespace Mctesting\Model\Data;
 
 use Mctesting\Model\Entity\TestSession;
 use Mctesting\Model\Service\TestService;
+use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Exception\ApplicationException;
 
 /**
@@ -84,6 +85,30 @@ class TestSessionDAO
                     . '<br>'
                     . $error[2];
             throw new ApplicationException($errormsg);
+        }
+    }
+    
+    public static function insert($datum, $testid, $sessieww, $users)
+    {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `sessie`(`datum`, `testid`, `sessieww`) VALUES (:datum,:testid,:sessieww)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww))) {            
+            //test if statement succes
+            $sessionId = $db->lastInsertId();
+            foreach($users as $user=>$RRNr){
+                UserSessionService::create($sessionId, $RRNr);            
+            }           
+            
+            return true;
+        } else {            
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
+            //header("location: /mctesting/agga/dagga");
         }
     }
 }

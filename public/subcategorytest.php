@@ -22,7 +22,7 @@
         
         
         //activeren en deactiveren subcategorie
-                \Mctesting\Model\Service\SubcategoryService::deactivateSubcategory(7);
+                \Mctesting\Model\Service\SubcategoryService::activateSubcategory(7);
                 \Mctesting\Model\Service\CategoryService::deactivateCategory(7);
 
         //individuele subcategorieën hebben zowel categorie- als subcategorieid nodig

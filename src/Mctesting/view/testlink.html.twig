@@ -14,17 +14,17 @@
 <div class="container-fluid ">
     <h1 class="headerofpage">Testsessie plannen</h1>
 </div>
-<div class="">
-    <h3>Stap2</h3>
+<div class="testsessieplannen">
+    <h4>Het plannen van een testsessie</h4>
     
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testlinkadd">
         <div class="input-group">            
             <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
             <select class="form-control" name="testsetselect">
                 <option value="0" >Selecteer een test:</option>
                 {% for test in allTest %}
-                    <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                    <option value="{{test.testid}}">{{test.testname}} - vragen: {{test.testquestioncount}} vragen</option>
                 {% endfor %}
             </select>
         </div>

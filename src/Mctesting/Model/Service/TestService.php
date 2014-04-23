@@ -23,20 +23,14 @@ class TestService
         return TestDAO::selectById($id);
     }
     
-    public static function insertCreatedTestSessionIntoDB($datum, $testid, $sessieww, $actief, $users,$afgelegd)
+    public static function create($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
     {
         
-        return TestDAO::insertSession($datum, $testid, $sessieww, $actief,$users,$afgelegd);
+        return TestDAO::insert($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
     }
     
-    public static function insertCreatedTestIntoDB($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist)
+    public static function getActiveFullTestById($id)
     {
-        
-        return TestDAO::insertTest($testname, $testduration, $questioncount, $maxscore, $adminId, $questions, $subcatlist);
+        return TestDAO::selectActiveFullTestById($id);
     }
-
-
-    
-
-    
 }

@@ -158,8 +158,6 @@ body{
     width:10em;
 }
 
-
-
 .centeren{
     text-align: center;
     margin: 0 auto;
@@ -254,10 +252,11 @@ body{
     margin: 0.125em 0.25em 0.125em 0.25em;
 }
 
-.marginonbutton{
+.marginonbutton:nth-of-type(n){
     margin: 0.25em 0;
     width: 10em;
     margin-left: 15em;
+    width: 15em;
 }
 
 .catlijst{
@@ -317,6 +316,7 @@ span.error{
     border-radius: 4px;
     border: #ccc solid 1px;
     padding-bottom: 0.5em;
+    padding-right: 0.75em;
 }
 p code{
     font-family: Courier, monospace;
@@ -325,6 +325,24 @@ p code{
     display: inline-block;
     width: 20em;
     border-radius: 0;
+}
+.vraagsubcat{
+    text-decoration: underline;
+}
+.vraaggewicht{
+    margin-top: 0.125em;
+    font-style: italic;
+    font-size: 0.875em;
+    margin-left: 0.5em;
+}
+.vraagzelf{
+}
+.frmcontrolwidth-slaaginvoeg:nth-of-type(n){
+    width: 8em;
+}
+.widthslaaginput{
+    width: 20em;
+    text-align:right;
 }
 
 
