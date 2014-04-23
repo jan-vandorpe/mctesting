@@ -3,8 +3,65 @@ CSS for print version tests
 author: Bert
 */
 @media print{
-    
+
     @page{
-        margin: 3cm;
+        size:auto;
     }
+    @page:left{
+        margin-left:2cm;
+        margin-right:2cm;
+    }
+    @page:right{
+        margin-left:2cm;
+        margin-right:2cm;
+    }
+
+    body{
+        margin-top:0;
+        height:100%;
+    }
+    
+    .headerofpage{
+        font-size: 3em;
+        margin-bottom: 2em;
+    }
+    
+    .row{
+        width:100%;
+        float:left;
+    }
+
+    .content{
+        height:98%;
+        width:100%;
+    }
+    
+    nav{
+        display:none    
+    }
+
+    header{
+        display:none    
+    }
+
+    .footer .headerpage .maincontainer {
+        position: fixed;
+        display: block;
+    }
+    
+    .footer {
+        height:2%;
+        margin-bottom: 0;
+    }
+
+    .container-fluid .maincontainer .clearFix{
+        height:100%;
+    }
+    /*    body:after {
+       content: "I am the footer";
+       text-align: center;
+    }*/
+
+
+
 }
