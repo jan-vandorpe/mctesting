@@ -35,7 +35,7 @@
                 <select class="form-control" name="testsetselect">
                     <option value="0" >Selecteer een test</option>
                     {% for test in allTest %}
-                        <option value="{{test.testid}}">{{test.testnaam}} - {{test.testaantalvragen}} vragen</option>
+                        <option value="{{test.testid}}">{{test.testnaam}} - vragen: {{test.testaantalvragen}}</option>
                     {% endfor %}
                 </select>
                 <p style="color:red;">{{errormsg}}</p>  

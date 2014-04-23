@@ -1,5 +1,11 @@
 {% extends "template/layout.html.twig" %}
+{%block scripts%}
+    {{parent()}}
+<script src="\mctesting\public\js\tinymce\tinymce.min.js"></script>
+<script>tinymce.init({menubar : false, toolbar : "", statusbar : false,selector:'textarea.allowcode', paste_as_text: true});</script>
+    
 
+{%endblock%}
 {% block title %}
 {{ parent() }}Nieuwe vraag
 {% endblock %}
@@ -28,7 +34,7 @@
                     <span class="input-group-addon widthvraaginput">
                         Vraag:
                     </span>
-                    <textarea name="vraag" class="form-control vraaginput">Vul hier uw vraag in</textarea>
+                    <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in."></textarea>
                 </div>
 
                 <div class="input-group nieuwantwoord">
@@ -41,25 +47,25 @@
                     <span class="input-group-addon widthvraaginput">
                         Antwoord 1:
                     </span>
-                    <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
+                    <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                 </div>
                 <div class="input-group nieuwantwoord">
                     <span class="input-group-addon widthvraaginput">
                         Antwoord 2:
                     </span>
-                    <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
+                    <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                 </div>
                 <div class="input-group nieuwantwoord">
                     <span class="input-group-addon widthvraaginput">
                         Antwoord 3:
                     </span>
-                    <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
+                    <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                 </div>
                 <div class="input-group nieuwantwoord">
                     <span class="input-group-addon widthvraaginput">
                         Antwoord 4:
                     </span>
-                    <input type="text" name="antwoord[]" class="form-control" placeholder="vul hier een antwoord in." />
+                    <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                 </div>
 
                 <div class="input-group nieuwimg">
