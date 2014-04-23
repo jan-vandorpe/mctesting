@@ -18,9 +18,9 @@
                 <span class="input-group-addon">
                     Test:
                 </span>
-                <select class="form-control catbijvraag" name="subcat">
+                <select class="form-control catbijvraag" name="selecttest">
                     {% for test in tests %}
-                            <option value="{{test.testid}}">{{test.testnaam}}</option>
+                            <option value="{{test.testid}}">{{test.testname}}</option>
                     {% endfor %}
                 </select>
             </div>

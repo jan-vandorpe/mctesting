@@ -31,7 +31,7 @@ class ScoresController extends AbstractController
     {
         //build model
         //retrieve all testsessions before today for testId
-        $testsessions = TestSessionService::getSessionsByTest(1);
+        $testsessions = TestSessionService::getSessionsByTest($_POST["selecttest"]);
         
         
         //render page

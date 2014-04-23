@@ -7,6 +7,8 @@ use Mctesting\Model\Entity\User;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\TestSubcatService;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Entity\FullTest;
+use Mctesting\Model\Service\QuestionService;
 
 class TestDAO {
 
@@ -152,4 +154,45 @@ class TestDAO {
 //            //header("location: /mctesting/agga/dagga");
 //        }
 //    }
+    
+    public static function selectActiveFullTestById($id)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief';
+        $stmt = $db->prepare($sql);
+        //bind statement parameters
+        $stmt->bindParam(':testid', $id);
+        $active = true;
+        $stmt->bindParam(':actief', $active);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //create object(s) and return
+                //retrieve subcategory object
+                $test = new FullTest();
+                $test->setTestId($record['testid']);
+                $test->setTestNaam($record['testnaam']);
+                $test->setTestMaxDuur($record['maxduur']);
+                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestMaxscore($record['maxscore']);
+                $test->setTestBeheerder($record['beheerder']);
+                $questions = QuestionService::getActiveByTest($id);
+                $test->setQuestions($questions);
+                return $test;
+            } else {
+                throw new ApplicationException('Test selectActiveFullTestById record is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'Test selectActiveFullTestById statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
 }
