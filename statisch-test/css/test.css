@@ -208,6 +208,12 @@ body{
     border-color: rgba(0,0,0,0.5);
 }
 
+p code{
+    font-family: Courier, monospace;
+    background-color: rgba(0,0,255,0.1);
+    display: inline-block;
+}
+
 /* CLEARFIX
 */
 .cf {

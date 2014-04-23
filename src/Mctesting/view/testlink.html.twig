@@ -28,7 +28,9 @@
                 {% endfor %}
             </select>
         </div>
-        <span class="error">{{errormsg}}</span>  
+            {% if errormsg is defined and errormsg is not empty  %}
+        <span class="error">{{errormsg}}</span> 
+            {% endif %}
         <div class="input-group">
             <label for="testsessieselect" class="input-group-addon widthcatinput">Datum van de testsessie:</label>
             <input type="date" class="form-control disableautoheight" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
