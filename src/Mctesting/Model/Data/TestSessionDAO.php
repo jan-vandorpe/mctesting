@@ -78,8 +78,9 @@ class TestSessionDAO
                     
                     //push to result array
                     array_push($result, $testSession);
+                    
                 }
-                return $testSession;
+                return $result;
             } else {
                 throw new ApplicationException('TestSession selectByPW recordset is leeg');
             }

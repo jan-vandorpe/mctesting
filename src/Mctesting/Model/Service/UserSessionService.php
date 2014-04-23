@@ -16,7 +16,7 @@ class UserSessionService
         return UserSessionDAO::selectBySession($sessionId);
     }
     
-    public static function getUserSession($sessionId, $userId)
+    public static function getByUserANDSession($sessionId, $userId)
     {
         return UserSessionDAO::selectByUserAndSession($sessionId, $userId);
     }

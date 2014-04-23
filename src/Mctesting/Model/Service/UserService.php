@@ -59,12 +59,16 @@ class UserService
          }else{
              //print(" rijksregister");
              $user = UserDAO::selectByRRNr($login);
-             $session=(TestSessionService::getSessionByPW($password));
-             $sessionId=$session->getId();
-             if(UserSessionService::getUserSession($sessionId, $login)){
-                UserService::serializeToSession($user);
-                return true;
+             $sessions=(TestSessionService::getSessionByPW($password));
+             if($sessions === null ){
+                 $_SESSION["testsessions"]=$sessions;
+                 UserService::serializeToSession($user);
+                  return true;                 
+             }else{
+                 
+                 return false;
              }
+             
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);
