@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Entity\User;
+use Mctesting\Model\Entity\TestSession;
 use Mctesting\Model\Data\UserDAO;
 
 /**
@@ -58,8 +59,12 @@ class UserService
          }else{
              //print(" rijksregister");
              $user = UserDAO::selectByRRNr($login);
-             UserService::serializeToSession($user);
-             return true;
+             $session=(TestSessionService::getSessionByPW($password));
+             $sessionId=$session->getId();
+             if(UserSessionService::getUserSession($sessionId, $login)){
+                UserService::serializeToSession($user);
+                return true;
+             }
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);

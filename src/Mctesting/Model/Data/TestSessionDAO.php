@@ -54,6 +54,45 @@ class TestSessionDAO
         }
     }
     
+    public static function selectByPW($password)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM sessie WHERE sessieww = :sessionpw';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':sessionpw' => $password,))) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create object(s) and return
+                    $testSession = new TestSession();
+                    $testSession->setId($record['sessieid']);
+                    $testSession->setDate(new \DateTime($record['datum']));
+                    $testSession->setTest($record['testid']);
+                    $testSession->setPassword($record['sessieww']);
+                    $testSession->setActive((boolean)$record['actief']);
+                    
+                    //push to result array
+                    array_push($result, $testSession);
+                }
+                return $testSession;
+            } else {
+                throw new ApplicationException('TestSession selectByPW recordset is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'TestSession selectByPW statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
+    
     public static function selectById($id)
     {
         //create db connection
