@@ -28,14 +28,15 @@
         {% endfor %}
     </div>
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/tests/testlinkadd">
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testlinkadd">
         <div class="form-group">            
             <label for="testsessieselect" class="col-lg-3 control-label">Selecteer een test</label>
             <div class="col-lg-5">                
                 <select class="form-control" name="testsetselect">
                     <option value="0" >Selecteer een test</option>
                     {% for test in allTest %}
-                        <option value="{{test.testid}}">{{test.testnaam}} - vragen: {{test.testaantalvragen}}</option>
+
+                        <option value="{{test.testid}}">{{test.testname}} - vragen: {{test.testquestioncount}}</option>
                     {% endfor %}
                 </select>
                 <p style="color:red;">{{errormsg}}</p>  

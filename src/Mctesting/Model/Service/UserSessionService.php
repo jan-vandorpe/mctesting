@@ -15,4 +15,9 @@ class UserSessionService
     {
         return UserSessionDAO::selectBySession($sessionId);
     }
+    
+    public static function create($sessionId, $RRNr)
+    {
+        return UserSessionDAO::insert($sessionId, $RRNr);
+    }
 }

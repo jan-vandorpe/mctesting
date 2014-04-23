@@ -12,10 +12,9 @@ use Mctesting\Exception\ApplicationException;
  *
  * @author cyber01
  */
-class UserSessionDAO
-{
-    public static function selectBySession($sessionId)
-    {
+class UserSessionDAO {
+
+    public static function selectBySession($sessionId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -34,12 +33,12 @@ class UserSessionDAO
                     $userSession->setUser($user);
                     $userSession->setScore($record['score']);
                     $userSession->setPercentage($record['percentage']);
-                    $userSession->setPassed((boolean)$record['geslaagd']);
-                    $userSession->setParticipated((boolean)$record['afgelegd']);
+                    $userSession->setPassed((boolean) $record['geslaagd']);
+                    $userSession->setParticipated((boolean) $record['afgelegd']);
                     $testSession = TestSessionService::getById($record['sessieid']);
                     $userSession->setTestSession($testSession);
-                    $userSession->setActive((boolean)$record['actief']);
-                    
+                    $userSession->setActive((boolean) $record['actief']);
+
                     //push to result array
                     array_push($result, $userSession);
                 }
@@ -56,4 +55,24 @@ class UserSessionDAO
             throw new ApplicationException($errormsg);
         }
     }
+
+    public static function insert($sessionId, $RRNr) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+
+        $sql = 'INSERT INTO `sessiegebruiker`(`sessieid`, `rijksregisternr`) 
+                                    VALUES (:sessionid,:rrnr)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':sessionid' => $sessionId, ':rrnr' => $RRNr))) {
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze sessiegebruiker niet toevoegen: ' . $error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
+
 }
