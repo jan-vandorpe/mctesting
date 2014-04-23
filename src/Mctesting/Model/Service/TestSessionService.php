@@ -17,6 +17,11 @@ class TestSessionService
         return TestSessionDAO::selectByTest($testId);
     }
     
+    public static function getSessionByPW($password)
+    {
+        return TestSessionDAO::selectByPW($password);
+    }
+    
     public static function getById($id)
     {
         return TestSessionDAO::selectById($id);

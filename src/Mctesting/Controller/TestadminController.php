@@ -250,10 +250,12 @@ class TestadminController extends AbstractController
         if(isset($_POST["user"])){$users = $_POST["user"];}
         
         //print_r($_SESSION);
-        print("<pre>");
-        var_dump($_POST);
-        print("</pre>");
+//        print("<pre>");
+//        var_dump($_POST);
+//        print("</pre>");
             if(TestSessionService::create($datum, $testid, $sessieww, $users)){
+                 $this->render('testlinkconfirm.html.twig', array(
+            ));
                 //             
             }else{
                 //niet gelukt
