@@ -34,9 +34,7 @@ class HomeController extends AbstractController
             ));
         //print_r($_SESSION);
         //var_dump($this->app->getUser());
-    }
-
-    
+    }    
     public function except()
     {
         throw new ApplicationException('Oh dear, controller says no.');
