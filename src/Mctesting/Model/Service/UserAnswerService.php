@@ -22,10 +22,16 @@ class UserAnswerService
 //        return TestSessionDAO::selectById($id);
 //    }
     
-    
-    public static function create($user, $answers)
+    /** Adds a single row in the sessieGebruikerAntwoorden table
+     * 
+     * @param type $sessionId
+     * @param type $userId
+     * @param type $questionId
+     * @param type $correct
+     * @return type
+     */
+    public static function create($sessionId, $userId, $questionId, $correct)
     {
-        
-        return UserAnswerDAO::insert($user, $answers);
+        return UserAnswerDAO::insert($sessionId, $userId, $questionId, $correct);
     }
 }

@@ -6,6 +6,7 @@ use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\TestDAO;
 use Mctesting\Model\Entity\UserSession;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Service\UserSessionService;
 
 /**
  * Description of UserService
@@ -72,7 +73,8 @@ class TestService
         $userResult->setScore($score);
         
         //set percentage
-        $userResult->setPercentage($score / $maxScore * 100);
+        $percentage = $score / $maxScore * 100;
+        $userResult->setPercentage(round($percentage, 0));
 
         //set answers
         $userResult->setAnswers($answers);
@@ -80,8 +82,8 @@ class TestService
         //set participated
         $userResult->setParticipated(true);
         
-        //store result in session
-        $_SESSION['testresult'] = serialize($userResult);
+        //update + insert into DB
+//        UserSessionService::update($userResult);
         
         print '<pre>';
         print_r($userResult);
