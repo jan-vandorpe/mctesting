@@ -47,8 +47,8 @@ function check_access_control($requestedController)
     $requestedController = strtolower($requestedController);
 
     //access control array
-    $access_control['anonymous'] = array('home','login');
-    $access_control['user'] = array('test','acltest',);
+    $access_control['anonymous'] = array('home','login',);
+    $access_control['user'] = array('test','acltest','choosesession');
     $access_control['admin'] = array('question', 'scores', 'tests','testadmin','usermanagement', 'upload', 'category');
     $access_control['superadmin'] = array();
 
