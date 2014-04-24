@@ -18,19 +18,17 @@
     {% if app.user is defined and app.user is not empty %}
         <p> U wil een test afleggen als {{app.user.lastname}}, {{app.user.firstname}}</p>
         <h4 class="darker intro"><span class="">Kies een sessie:</span></h4> 
-        <form name="sessionselectform" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/choosesession/choosesession_step2">
+
             <div class="input-group">
-                <select class="form-control" name="sessionselect">
-                    <option value="0" >Selecteer een sessie</option>
-        {% for session in sessionlist %}
-                    <option value="{{session.id}}">{{session.test.testid}}</option>
+
+        {% for sessionid,test in session.sessionchoices %}
+                {% for testid, testname in test %}
+                <div><a href='/mctesting/test/runtest/{{testid}}/{{sessionid}}' value="{{sessionid}}">{{testname}}</a></div>
         {% endfor %}  
-                </select>
+        {% endfor %}  
+
             </div>
-            <div class="input-group">
-                <input type="submit" name="catknop" class="form-control marginonbutton" >
-            </div>
-        </form>
+
 
     {%endif%}    
     </div>    

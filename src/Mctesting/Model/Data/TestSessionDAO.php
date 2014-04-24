@@ -72,7 +72,8 @@ class TestSessionDAO
                     $testSession = new TestSession();
                     $testSession->setId($record['sessieid']);
                     $testSession->setDate(new \DateTime($record['datum']));
-                    $testSession->setTest($record['testid']);
+                    $test=  TestService::getById($record['testid']);
+                    $testSession->setTest($test);
                     $testSession->setPassword($record['sessieww']);
                     $testSession->setActive((boolean)$record['actief']);
                     
