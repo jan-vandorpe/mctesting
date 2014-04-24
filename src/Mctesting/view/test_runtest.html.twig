@@ -10,7 +10,8 @@
 
 
 {% block content %}
-    <h1 class="headerofpage">{{ test.testnaam }}</h1>
+    <div class="testafleggenpag">
+    <h1 class="headerofpage">{{ test.testnaam }} TEST</h1>
     <div class="">
         <div>Categorie: <<< TODO >>> </div>
         <div>Totaal aantal vragen: {{ test.testaantalvragen }}</div>
@@ -30,6 +31,18 @@
                             {{ question.text|raw }}
                             {% if question.media is not empty %}
                                 {% for file in question.media%}
+                                <div class="imggroepbijvraag">
+                                        <img src="../images/{{ file }}" />
+                                </div>
+                                <div class="imggroepbijvraag">
+                                        <img src="../images/{{ file }}" />
+                                </div>
+                                <div class="imggroepbijvraag">
+                                        <img src="../images/{{ file }}" />
+                                </div>
+                                <div class="imggroepbijvraag">
+                                        <img src="../images/{{ file }}" />
+                                </div>
                                 <div class="imggroepbijvraag">
                                         <img src="../images/{{ file }}" />
                                 </div>
@@ -57,7 +70,8 @@
         </div>
     {% endfor %}
         <div class="input-group">
-            <input class="form-control" type="submit" value="Test voltooien">
+            <input class="form-control marginonbutton testvoltooien" type="submit" value="Test voltooien">
         </div>
     </form>
+    </div>
 {% endblock content %}

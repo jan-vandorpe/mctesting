@@ -44,13 +44,16 @@ body{
     border-color: rgba(0,0,0,0);
 }
 .vraaggroep:nth-of-type(even){
-    background-color: rgba(0,0,0,0.05);
+    background-color: rgba(0,0,0,0.025);
 }
 .vraaggroep:nth-of-type(odd){
-    background-color: rgba(0,0,0,0.25);
+    background-color: rgba(0,0,0,0.05);
 }
 .vraag .form-control{
     background: rgba(0,0,0,0);
+}
+.vraag .input-group{
+    border-color: rgba(0,0,0,0);
 }
 .antwoordmetradio{
     margin: 0.5em 0 0 0.75em;
@@ -60,6 +63,7 @@ body{
 }*/
 .vraag .input-group-addon{
     vertical-align: top;
+    padding-top: 0.75em;
 }
 .imggroepbijvraag img{
     float: left;
@@ -358,6 +362,14 @@ p code{
 .centeren{
     text-align: center;
     margin: 0 auto;
+}
+.testvoltooien:nth-of-type(n){
+    margin-left: 20em;
+}
+.testafleggenpag{
+    /*correctie op margins, deze div zit moet wijd en heeft geen menu links*/
+    margin-right: -16%;
+    margin-left: 1%;
 }
 
 
