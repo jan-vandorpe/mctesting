@@ -42,17 +42,13 @@ class TestService
      * @param type $test Test object containing all the questions
      * @param type $userAnswers Array with questionId as keys and AnswerId as value
      */
-    public static function processAnswers($test, $userAnswers)
+    public static function processAnswers($test, $userAnswers, $userSession)
     {
-        print '<pre>';
-        print_r($userAnswers);
-        print '</pre>';
+//        print '<pre>';
+//        print_r($userAnswers);
+//        print '</pre>';
         //retrieve UserSession
-        //$userResult = unserialize($_SESSION['testsession']);
-        $userResult = new UserSession();
-        //set user
-        $userResult->setUser(UserService::unserializeFromSession());
-        //set testsession
+        $userResult = $userSession;
         
         //process answers
         $answers = array();
