@@ -23,10 +23,9 @@ class LoginController extends AbstractController
     public function login()
     {
         $login = $_POST["Login"];
-        $password = $_POST["Wachtwoord"];
-        UserService::loginCheck($login, $password);
-        if(testaflegger){
-            header("location: /mctesting/home/go");        
+        $password = $_POST["Wachtwoord"];        
+        if(UserService::loginCheck($login, $password)){
+            header("location: /mctesting/choosesession/choosesession");        
         }else{
             header("location: /mctesting/home/go");        
         }

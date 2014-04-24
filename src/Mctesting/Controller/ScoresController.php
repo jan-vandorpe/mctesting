@@ -32,12 +32,14 @@ class ScoresController extends AbstractController
         //build model
         //retrieve all testsessions before today for testId
         $testsessions = TestSessionService::getSessionsByTest($_POST["selecttest"]);
-        
+        print('<pre>');
+        print_r($testsessions);
+        print('</pre>');
         
         //render page
-        $this->render('scores_showsessions.html.twig', array(
-            'testsessions' => $testsessions,
-        ));
+//        $this->render('scores_showsessions.html.twig', array(
+//            'testsessions' => $testsessions,
+//        ));
     }
     
     public function showSessionDetail($arguments)

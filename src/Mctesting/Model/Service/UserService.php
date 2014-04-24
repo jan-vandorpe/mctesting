@@ -59,13 +59,12 @@ class UserService
          }else{
              //print(" rijksregister");
              $user = UserDAO::selectByRRNr($login);
-             $sessions=(TestSessionService::getSessionByPW($password));
-             if($sessions === null ){
+             $sessions=TestSessionService::getSessionByPW($password);
+             if($sessions !== null ){
                  $_SESSION["testsessions"]=$sessions;
                  UserService::serializeToSession($user);
-                  return true;                 
-             }else{
-                 
+                 return true;                 
+             }else{                 
                  return false;
              }
              
@@ -122,7 +121,7 @@ class UserService
     
     
     
-    public function createTestUser($firstName, $lastName, $RRNr) {
+    public function create($firstName, $lastName, $RRNr) {
         //cleanup
         $userGroup = 1;
             if(UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)){
