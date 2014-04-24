@@ -40,25 +40,16 @@ class ChooseSessionController extends AbstractController
     public function choosesession()
     {
         //model
-        $t = new TestSession();
-        $sessionlist=$_SESSION["testsessions"];
-        print('<pre>');
-        print_r($sessionlist);
-        print('</pre>');
+        //$sessionlist= $_SESSION["sessionchoices"];
+//        print('<pre>');
+//        print_r($sessionlist);
+//        print('</pre>');
         //view
         $this->render('choosesession.html.twig', array(
-            'sessionlist' => $sessionlist,
+//            'sessionlist' => $sessionlist,
             ));
     }
-    
-    public function choosesession_step2()
-    {
-        //model
-        $sessionlist=$_SESSION["testsessions"];
-        var_dump($sessionlist);
-        //view
-       
-    }
+
 
     
     public function except()
