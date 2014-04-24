@@ -175,11 +175,11 @@ class TestDAO {
                 //retrieve subcategory object
                 $test = new FullTest();
                 $test->setTestId($record['testid']);
-                $test->setTestNaam($record['testnaam']);
-                $test->setTestMaxDuur($record['maxduur']);
-                $test->setTestAantalvragen($record['aantalvragen']);
+                $test->setTestName($record['testnaam']);
+                $test->setTestMaxDuration($record['maxduur']);
+                $test->setTestQuestionCount($record['aantalvragen']);
                 $test->setTestMaxscore($record['maxscore']);
-                $test->setTestBeheerder($record['beheerder']);
+                $test->setTestCreator($record['beheerder']);
                 $questions = QuestionService::getActiveByTest($id);
                 $test->setQuestions($questions);
                 return $test;

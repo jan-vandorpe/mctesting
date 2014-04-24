@@ -26,8 +26,8 @@ class UserSessionService
         return UserSessionDAO::insert($sessionId, $RRNr);
     }
     
-        public static function update($user, $answers)
+    public static function update($userSession)
     {
-        return UserSessionDAO::update($user, $answers);
+        return UserSessionDAO::update($userSession);
     }
 }
