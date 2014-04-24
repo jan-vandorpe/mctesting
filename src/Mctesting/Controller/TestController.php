@@ -44,5 +44,8 @@ class TestController extends AbstractController
         $userSession = $userSessions[0];
         //process user answers
         TestService::processAnswers($test, $_POST['answer'], $userSession);
+        
+        //render confirm page
+        $this->render('test_confirm.html.twig', array());
     }
 }

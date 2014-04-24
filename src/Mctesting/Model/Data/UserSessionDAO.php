@@ -124,13 +124,13 @@ class UserSessionDAO {
         
         //prepare sql statement
         $sql = 'UPDATE sessiegebruiker SET score = :score, percentage = :percentage, afgelegd = :participated 
-                    WHERE rijksregisternr = :rrnr AND sessieid = :sessionid';
+                    WHERE rijksregisternr = :rrnr AND sessieid = :sessieid';
         $stmt = $db->prepare($sql);
         //bind parameters
         $stmt->bindParam(':score', $userSession->getScore());
         $stmt->bindParam(':percentage', $userSession->getPercentage());
         $stmt->bindParam(':participated', $userSession->getParticipated());
-        $stmt->bindParam(':rijksregisternr', $userSession->getUser()->getRRnr());
+        $stmt->bindParam(':rrnr', $userSession->getUser()->getRRnr());
         $stmt->bindParam(':sessieid', $userSession->getTestSession()->getId());
         
         //test if statement can be executed

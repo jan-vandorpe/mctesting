@@ -79,10 +79,11 @@ class TestService
         $userResult->setParticipated(true);
         
         //update + insert into DB
-//        UserSessionService::update($userResult);
+        UserSessionService::update($userResult);
         
-        print '<pre>';
-        print_r($userResult);
-        print '</pre>';
+//        print '<pre>';
+//        print_r($userResult);
+//        print '</pre>';
+        
     }
 }
