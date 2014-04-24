@@ -55,7 +55,7 @@
                             </span>
                             <div class="form-control vraagsel">
                                 <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
-                                <div class="vraagzelf">"{{question.text|raw}}"</div>
+                                <div class="vraagzelf">{{question.text|raw}}</div>
                                 <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
                             </div>
                         </div>
@@ -78,10 +78,46 @@
         <p>Duurtijd: {{testduration}}</p>
         <p>Aantal vragen: {{questioncount}}</p>
         <p>Gewicht vragen: {{questionweightcount}}</p>
-    {%for key, subcat in subcatlist%}
-        <p>Subcategorie '{{key}}' => aantal vragen: {{subcat.count}}=> Gewicht van de vragen: {{subcat.weight}}</p>       
-            {%endfor%}
-
+        
+        {%for key, subcat in subcatlist%}
+            <p>Subcategorie '{{key}}' => aantal vragen: {{subcat.count}}=> Gewicht van de vragen: {{subcat.weight}}</p>       
+        {%endfor%}
+        <div class="lighter gebrcollectie">
+            <div class="input-group gebraddon">
+                <div class="input-group-addon">{{testname}}:</div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon widthtestinput">Categorie: </span>
+                <div class="form-control frmcontrolwidth-testinvoeg">{{cat.catname}}</div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon widthtestinput">Duurtijd: </span>
+                <div class="form-control frmcontrolwidth-testinvoeg">{{testduration}}</div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon widthtestinput">Aantal vragen: </span>
+                <div class="form-control frmcontrolwidth-testinvoeg">{{questioncount}}</div>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon widthtestinput">Gewicht vragen: </span>
+                <div class="form-control frmcontrolwidth-testinvoeg">{{questionweightcount}}</div>
+            </div>
+            <div class="input-group gebraddon">
+                <div class="input-group-addon">Subcategorie&euml;n: </div>
+            </div>
+            <div class="input-group submargin">
+                <span class="input-group-addon widthtestinput centeren">Naam: </span>
+                <span class="input-group-addon widthtestinput centeren">Aantal vragen: </span>
+                <span class="input-group-addon widthtestinput centeren">Gewicht vragen: </span>
+            </div>
+            {%for key, subcat in subcatlist%}
+                <div class="input-group submargin">
+                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{key}}</div>
+                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.count}}</div>
+                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.weight}}</div>
+                </div>
+            {% endfor %}
+        </div>
 
         <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testCreation_TestUpload">
             <div class="input-group">
@@ -92,7 +128,7 @@
     {%for key, subcat in subcatlist%}
 
             <div class="input-group">
-                <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor '{{key}}':</label>
+                <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{key}}":</label>
                 <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{key}}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
             </div>
 
@@ -104,7 +140,7 @@
             </div>
         </form>
     {% else %}
-        <h1 class="headertestupdates centeren">Test aanmaken finish</h1>
+        <h4">Test aanmaken voltooid.</h4>
         <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
 
     {%endif%}
