@@ -50,27 +50,19 @@ class TestSubcatDAO {
             //test if statement retrieved something
             $recordset = $stmt->fetchAll();
             if (!empty($recordset)) {
-                $result = array();
 //                $result = array(
-//                    'tests' => array(
-//                        $testid => array(
-//                            $subcatid => array(
-//                                'questioncount' => 4,
-//                                'totalweight' => 18,
-//                                'passpercentage' => 50,
-//                            ),
-//                        ),
-//                    )
-//                );
+//                    'questioncount' => 4,
+//                    'totalweight' => 18,
+//                    'passpercentage' => 50,
+//                    );
                 
                 foreach ($recordset as $record) {
                     //
-                    $data = array(
+                    $result = array(
                         'questioncount' => $record['aantal'],
                         'totalweight' => $record['totgewicht'],
                         'passpercentage' => $record['tebehalenscore'],
                     );
-                    $result['tests'][$testId][$subcatId] = $data;
                 }
                 return $result;
             } else {
