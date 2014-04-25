@@ -79,6 +79,41 @@ class TestDAO {
         }
     }
 
+    
+    
+    
+    public static function getCatName($testId) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT DISTINCT cat.catnaam FROM categorie AS cat INNER JOIN (subcategorie AS sub INNER JOIN testsubcat AS testsub ON sub.subcatid = testsub.subcatid )ON cat.catid = sub.catid WHERE testsub.testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testId,))) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //create object(s) and return
+                //retrieve subcategory object
+                $testcatname = $record['catnaam'];
+                //$test->setTestCreator($record['beheerder']);
+                return $testcatname;
+            } else {
+                throw new ApplicationException('Test selectById record is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'Test selectById statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
+    
+    
+    
+    
     public static function insert($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);

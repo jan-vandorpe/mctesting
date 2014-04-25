@@ -80,8 +80,22 @@ class TestadminController extends AbstractController
             
             ));
         }else{
+            if(isset($_SESSION["testcreation"]["testname"])){
+                $testname = $_SESSION["testcreation"]["testname"];
+                $catid = $_SESSION["testcreation"]["catid"]; 
+                $allQuest = QuestionService::getByCategory($catid);
+        
+        
+                //view
+                $this->render('testcreation.html.twig', array(
+                'allQuest'=>$allQuest,
+                'testname'=>$testname,            
+                ));
+                
+            }else{
          header("location: /mctesting/testadmin/testcreation");   
            exit(0);   
+        }
         }
     }
     
@@ -125,6 +139,9 @@ class TestadminController extends AbstractController
                 $questioncount++;                
             }
             
+            }else{
+               header("location: /mctesting/testadmin/testcreation_step2");   
+               exit(0);    
             }
         $_SESSION["testcreation"]["questions"] = $questions;
         $_SESSION["testcreation"]["questioncount"] = $questioncount;

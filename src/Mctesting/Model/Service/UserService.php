@@ -61,6 +61,7 @@ class UserService
              //print(" rijksregister");
              $user = UserDAO::selectByRRNr($login);
              $sessions=TestSessionService::getSessionByPW($password);
+             unset($_SESSION["sessionchoices"]);
              if($sessions !== null ){
                  foreach ($sessions as $session) {
                      $id=$session->getId();
@@ -69,7 +70,7 @@ class UserService
                      $testid=$test->getTestId();
                      $_SESSION["sessionchoices"][$id]=array($testid=>$name);
                  }
-                 $_SESSION["testsessions"]=$sessions;
+                 //$_SESSION["testsessions"]=$sessions;  unused?
                  UserService::serializeToSession($user);
                  return true;                 
              }else{                 

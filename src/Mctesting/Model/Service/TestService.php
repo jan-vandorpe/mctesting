@@ -37,6 +37,11 @@ class TestService
         return TestDAO::selectActiveFullTestById($id);
     }
     
+    public static function getCatName($testId)
+    {
+        return TestDAO::getCatName($testId);
+    }
+    
     /**
      * Function 
      * @param type $test Test object containing all the questions
