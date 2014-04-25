@@ -75,11 +75,10 @@ class TestService
             //retrieve subcat maxscore
             if (!isset($result['subcatscores'][$question->getSubcategory()->getId()]['maxscore'])) {
 //                TO BE MODIFIED BASED ON CODE THAT DOES NOT EXIST YET
-//                $testSubCat = TestSubcatService::getByTestANDSubcategory($test->getId(), $question->getSubcategory()->getId());
+                $testSubCat = TestSubcatService::getByTestANDSubcategory($test->getTestId(), $question->getSubcategory()->getId());
 //                $result['subcatscores'][$question->getSubcategory()->getId()]['maxscore'] = $testSubCat->getTotalWeight();
 //                $result['subcatscores'][$question->getSubcategory()->getId()]['passpercentage'] = $testSubCat->getPassPercentage();
             }
-            
             
             //check if answer was correct
             $correct = false;
@@ -117,9 +116,11 @@ class TestService
         //persist into DB
 //        UserSessionService::update($userSession);
         
-//        print '<pre>';
+        print '<pre>';
 //        print_r($userSession);
-//        print '</pre>';
+        print_r($testSubCat);
+        print_r($result);
+        print '</pre>';
         
     }
 }

@@ -15,7 +15,11 @@ class TestSubcatService
     
     public static function create($testid, $subcat)
     {
-        
         return TestSubcatDAO::insert($testid, $subcat);
+    }
+    
+    public static function getByTestANDSubcategory($testId, $subcatId)
+    {
+        return TestSubcatDAO::selectByTestANDSubcategory($testId, $subcatId);
     }
 }
