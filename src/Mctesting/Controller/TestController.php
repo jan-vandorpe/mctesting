@@ -24,13 +24,16 @@ class TestController extends AbstractController
         //build model
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
+        //$catname = TestService::getCatName($testId);
         //store in session for process method
         $_SESSION['test'] = serialize($test);
         $_SESSION['testsessionid'] = $testSessionId;
+        $_SESSION['testid'] = $testId;
         
         //render page
         return $this->render('test_runtest.html.twig', array(
             'test' => $test,
+          //  'catname' => $catname,
         ));
     }
     
@@ -38,6 +41,8 @@ class TestController extends AbstractController
     {
         //retrieve test from session
         $test = unserialize($_SESSION['test']);
+        $testId=$_SESSION['testid'];
+        $testSessionId=$_SESSION['testsessionid'];
         //retrieve testsesion from DB
         $user = UserService::unserializeFromSession();
         $userSessions = UserSessionService::getByUserANDSession($_SESSION['testsessionid'], $user->getRRnr());
@@ -49,9 +54,7 @@ class TestController extends AbstractController
         //render confirm page
         $this->render('test_confirm.html.twig', array());
         }else{
-            return $this->render('test_runtest.html.twig', array(
-            'test' => $test,
-        ));
+            header("location: /mctesting/test/runTest/$testId/$testSessionId"); 
         }
     }
 }
