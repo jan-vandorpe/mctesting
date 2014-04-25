@@ -24,7 +24,7 @@ class TestController extends AbstractController
         //build model
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
-        //$catname = TestService::getCatName($testId);
+        $catname = TestService::getCatName($testId);
         //store in session for process method
         $_SESSION['test'] = serialize($test);
         $_SESSION['testsessionid'] = $testSessionId;
@@ -33,7 +33,7 @@ class TestController extends AbstractController
         //render page
         return $this->render('test_runtest.html.twig', array(
             'test' => $test,
-          //  'catname' => $catname,
+            'catname' => $catname,
         ));
     }
     

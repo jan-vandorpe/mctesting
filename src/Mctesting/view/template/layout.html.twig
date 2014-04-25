@@ -1,9 +1,9 @@
 {% extends "template/base.html.twig" %}
 {% block stylesheets %}
-<link rel="stylesheet" href="\mctesting\public\css\normalize.css" />
-<link rel="stylesheet" href="\mctesting\public\css\bootstrap.min.css" />
-<link rel="stylesheet" href="\mctesting\public\css\baselayout.css">
-<link rel="stylesheet" href="\mctesting\public\css\print.css">
+<link rel="stylesheet" href="/mctesting/public/css/normalize.css" />
+<link rel="stylesheet" href="/mctesting/public/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/mctesting/public/css/baselayout.css">
+<link rel="stylesheet" href="/mctesting/public/css/print.css">
 {% endblock stylesheets %}
 
 {% block title %}MC Testing - {% endblock title %}
@@ -36,9 +36,11 @@
                             #}
                         {% else %}
                             {# Gebruiker topnav menu #}
+                        {# overbodig geworden, knop onderaan nu
                             <ul class="nav navbar-nav">
                                 <li><a>Test Beëindigen</a></li>
                             </ul>
+                        #}
                         {% endif %}
                         {# Login form #}
                         <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
