@@ -43,9 +43,15 @@ class TestController extends AbstractController
         $userSessions = UserSessionService::getByUserANDSession($_SESSION['testsessionid'], $user->getRRnr());
         $userSession = $userSessions[0];
         //process user answers
+        if(isset($_POST['answer']) && $_POST['answer'] != null){
         TestService::processAnswers($test, $_POST['answer'], $userSession);
         
         //render confirm page
         $this->render('test_confirm.html.twig', array());
+        }else{
+            return $this->render('test_runtest.html.twig', array(
+            'test' => $test,
+        ));
+        }
     }
 }
