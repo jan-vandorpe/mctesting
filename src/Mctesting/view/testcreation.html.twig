@@ -73,15 +73,7 @@
 
     {%elseif passpercentage is not defined %}
         <h4>Test aanmaken stap 3</h4>
-        <p>Titel: {{testname}}</p>
-        <p>Categorie: {{cat.catname}}</p>
-        <p>Duurtijd: {{testduration}}</p>
-        <p>Aantal vragen: {{questioncount}}</p>
-        <p>Gewicht vragen: {{questionweightcount}}</p>
         
-        {%for key, subcat in subcatlist%}
-            <p>Subcategorie '{{key}}' => aantal vragen: {{subcat.count}}=> Gewicht van de vragen: {{subcat.weight}}</p>       
-        {%endfor%}
         <div class="lighter gebrcollectie">
             <div class="input-group gebraddon">
                 <div class="input-group-addon">{{testname}}:</div>
