@@ -38,6 +38,7 @@ body{
 .vraaggroep{
     margin-bottom: 1.0em;
     padding: 0.25em;
+    padding-top: 0.75em;
     border-radius: 0.25em;
     border-style: solid;
     border-width: 1px;
@@ -50,7 +51,8 @@ body{
     background-color: rgba(0,0,0,0.05);
 }
 .vraag .form-control{
-    background: rgba(0,0,0,0);
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(0,0,0,0.1);
 }
 .vraag .input-group{
     border-color: rgba(0,0,0,0);
@@ -370,6 +372,33 @@ p code{
     /*correctie op margins, deze div zit moet wijd en heeft geen menu links*/
     margin-right: -16%;
     margin-left: 1%;
+}
+.testinfotop{
+    width: 100%;
+    margin-bottom: 1em;
+    
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 4px;
+}
+.testinfotop div{
+    float: left;
+    width: 30%;
+    margin: 0 1%;
+    text-align: center;
+    padding: 0.5em 0;
+}
+.testinfotop div:nth-of-type(2){
+    border-color: rgba(0,0,0,0.1);
+    border-style: solid;
+    border-width: 0 1px 0 1px;
+}
+.testafleggenpag .voltooid{
+    width: 100%;
+    margin-left: 0;
+}
+.testafleggenpag .voltooid .form-control{
+    width: 15em;
+    margin: 0 39% 0 39%;
 }
 
 
