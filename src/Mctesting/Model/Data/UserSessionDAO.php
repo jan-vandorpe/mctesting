@@ -5,6 +5,7 @@ namespace Mctesting\Model\Data;
 use Mctesting\Model\Entity\UserSession;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\TestSessionService;
+use Mctesting\Model\Service\UserAnswerService;
 use Mctesting\Exception\ApplicationException;
 
 /**
@@ -117,20 +118,31 @@ class UserSessionDAO {
         }
     }
     
-    public static function update($user, $answers) {
+    public static function update($userSession) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        
         //prepare sql statement
-
-        $sql = "UPDATE `sessiegebruiker` SET `score`=':score', `percentage`=':percentage' , `afgelegd`=':participated' 
-                                    WHERE `rijksregisternr`=':rrnr'";
+        $sql = 'UPDATE sessiegebruiker SET score = :score, percentage = :percentage, afgelegd = :participated 
+                    WHERE rijksregisternr = :rrnr AND sessieid = :sessieid';
         $stmt = $db->prepare($sql);
+        //bind parameters
+        $stmt->bindParam(':score', $userSession->getScore());
+        $stmt->bindParam(':percentage', $userSession->getPercentage());
+        $stmt->bindParam(':participated', $userSession->getParticipated());
+        $stmt->bindParam(':rrnr', $userSession->getUser()->getRRnr());
+        $stmt->bindParam(':sessieid', $userSession->getTestSession()->getId());
+        
         //test if statement can be executed
-        if ($stmt->execute(array(':score' => $user->getScore,':percentage' => $user->getPercentage, ':participated' => $user->getParticipated, ':rijksregisternr' => $user->getRRNr))) {
-            
-            foreach($answers as $qId=>$aId){
-                UserAnswerService::create($sessionId, $RRNr);            
-            }  
+        if ($stmt->execute()) {
+            //add user answers to DB
+            foreach ($userSession->getAnswers() as $questionId => $correct) {
+                UserAnswerService::create(
+                        $userSession->getTestSession()->getId(),
+                        $userSession->getUser()->getRRnr(),
+                        $questionId,
+                        $correct);
+            }
             
             return true;
         } else {

@@ -6,6 +6,7 @@ use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\TestDAO;
 use Mctesting\Model\Entity\UserSession;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Service\UserSessionService;
 
 /**
  * Description of UserService
@@ -41,17 +42,13 @@ class TestService
      * @param type $test Test object containing all the questions
      * @param type $userAnswers Array with questionId as keys and AnswerId as value
      */
-    public static function processAnswers($test, $userAnswers)
+    public static function processAnswers($test, $userAnswers, $userSession)
     {
-        print '<pre>';
-        print_r($userAnswers);
-        print '</pre>';
+//        print '<pre>';
+//        print_r($userAnswers);
+//        print '</pre>';
         //retrieve UserSession
-        //$userResult = unserialize($_SESSION['testsession']);
-        $userResult = new UserSession();
-        //set user
-        $userResult->setUser(UserService::unserializeFromSession());
-        //set testsession
+        $userResult = $userSession;
         
         //process answers
         $answers = array();
@@ -72,7 +69,8 @@ class TestService
         $userResult->setScore($score);
         
         //set percentage
-        $userResult->setPercentage($score / $maxScore * 100);
+        $percentage = $score / $maxScore * 100;
+        $userResult->setPercentage(round($percentage, 0));
 
         //set answers
         $userResult->setAnswers($answers);
@@ -80,11 +78,12 @@ class TestService
         //set participated
         $userResult->setParticipated(true);
         
-        //store result in session
-        $_SESSION['testresult'] = serialize($userResult);
+        //update + insert into DB
+        UserSessionService::update($userResult);
         
-        print '<pre>';
-        print_r($userResult);
-        print '</pre>';
+//        print '<pre>';
+//        print_r($userResult);
+//        print '</pre>';
+        
     }
 }

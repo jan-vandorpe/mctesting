@@ -1,0 +1,36 @@
+{%extends "template/layout.html.twig"%}
+
+{%block stylesheets%}
+    {{parent()}}
+
+{%endblock%}
+
+{%block title%}
+    {{parent()}}Home
+{%endblock%}
+
+
+{%block content%}
+<div class="container-fluid ">
+    <h1 class="headerpage">Welkom op de testing website van de VDAB</h1>
+</div>
+<div class="intropage ">
+    {% if app.user is defined and app.user is not empty %}
+        <p> U wil een test afleggen als {{app.user.lastname}}, {{app.user.firstname}}</p>
+        <h4 class="darker intro"><span class="">Kies een sessie:</span></h4> 
+
+            <div class="input-group">
+
+        {% for sessionid,test in session.sessionchoices %}
+                {% for testid, testname in test %}
+                <div><a href='/mctesting/test/runtest/{{testid}}/{{sessionid}}' value="{{sessionid}}">{{testname}}</a></div>
+        {% endfor %}  
+        {% endfor %}  
+
+            </div>
+
+
+    {%endif%}    
+    </div>    
+{%endblock%}
+

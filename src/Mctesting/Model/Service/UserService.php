@@ -4,6 +4,7 @@ namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Entity\User;
 use Mctesting\Model\Entity\TestSession;
+use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\UserDAO;
 
 /**
@@ -59,13 +60,19 @@ class UserService
          }else{
              //print(" rijksregister");
              $user = UserDAO::selectByRRNr($login);
-             $sessions=(TestSessionService::getSessionByPW($password));
-             if($sessions === null ){
+             $sessions=TestSessionService::getSessionByPW($password);
+             if($sessions !== null ){
+                 foreach ($sessions as $session) {
+                     $id=$session->getId();
+                     $test=$session->getTest();
+                     $name=$test->getTestName();
+                     $testid=$test->getTestId();
+                     $_SESSION["sessionchoices"][$id]=array($testid=>$name);
+                 }
                  $_SESSION["testsessions"]=$sessions;
                  UserService::serializeToSession($user);
-                  return true;                 
-             }else{
-                 
+                 return true;                 
+             }else{                 
                  return false;
              }
              
@@ -122,7 +129,7 @@ class UserService
     
     
     
-    public function createTestUser($firstName, $lastName, $RRNr) {
+    public function create($firstName, $lastName, $RRNr) {
         //cleanup
         $userGroup = 1;
             if(UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)){
