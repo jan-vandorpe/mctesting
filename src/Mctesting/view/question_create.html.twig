@@ -9,7 +9,12 @@
     Vraag Toevoegen
 </h1>
 <div class="container-fluid">
-    <form name="toevoegenvraag" method="post" action="/mctesting/question/add">
+    {% if exception is defined %}
+        <div class="error">
+            {{ exception.message }}
+        </div>
+    {% endif %}
+    <form name="toevoegenvraag" method="post" action="">
         <div class="input-group nieuwimg">
             <span class="input-group-addon widthvraaginput">
                 Subcategorie:
@@ -81,7 +86,7 @@
                 </div>
 
                 <div class="input-group centeren">
-                    <input type="submit" class="form-control" name="vrtoev" value="Vraag toevoegen" />
+                    <input type="submit" class="form-control" name="questionform" value="Vraag toevoegen" />
                 </div>
             </form>
         </div>

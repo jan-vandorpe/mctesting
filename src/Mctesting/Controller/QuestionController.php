@@ -5,6 +5,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
+use Mctesting\Exception\FormException;
 
 /**
  * Description of QuestionController
@@ -19,7 +20,10 @@ class QuestionController extends AbstractController
     }
     
     /**
-     * Controller action that shows the input form for a new question.
+     * Controller action that handles the input form for a new question.
+     * If the form was submitted then it is validated and further actions are
+     * put in motion.
+     * If the form was not submitted an empty form is rendered.
      * Categories and subcategories are supplied to populate a select box
      */
     public function create()
@@ -31,20 +35,26 @@ class QuestionController extends AbstractController
         foreach ($categories as $category) {
             $category->retrieveSubcategories();
         }
-
-        //render page
-        $this->render('createquestion.html.twig', array(
-            'categories' => $categories,));
-    }
-    
-    /**
-     * Controller action that processes the input of a new question via the
-     * input form (see create() action)
-     */
-    public function add()
-    {
-        QuestionService::create($_POST);
-        header('location: /mctesting/question/create/');
-        exit();
+        //check if form was submitted
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['questionform'])) {
+            //handle form
+            try {
+                QuestionService::create($_POST);
+            } catch (FormException $exc) {
+                //render form with errors
+                $this->render(
+                        'question_create.html.twig',
+                        array(
+                            'categories' => $categories,
+                            'exception' => $exc,
+                            )
+                        );
+            }
+        } else {
+            //form was not submitted, render empty form for new question
+            //render page
+            $this->render('question_create.html.twig', array(
+                'categories' => $categories,));
+        }
     }
 }

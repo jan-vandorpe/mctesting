@@ -4,6 +4,7 @@ namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Data\QuestionDAO;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Exception\FormException;
 
 /**
  * Description of QuestionService
@@ -77,12 +78,6 @@ class QuestionService
         //validate values
         if (QuestionService::validateNewQuestion($subcatId, $text, $weight, $correctAnswerId, $answers, $media)) {
             //create question
-//            var_dump($subcatId);
-//            var_dump($text);
-//            var_dump($weight);
-//            var_dump($correctAnswerId);
-//            var_dump($answers);
-//            var_dump($media);
             QuestionDAO::insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media);
         }
     }
@@ -111,8 +106,8 @@ class QuestionService
         }
         
         //validate text
-        if (empty($text) || $text === '') {
-            array_push($errors, 'vraag tekst mag niet leeg zijn');
+        if (empty($text) || $text === '' || $text === 'Vul hier uw vraag in') {
+            array_push($errors, 'Vraagtekst niet ingevuld');
         }
         
         //validate weight
@@ -123,19 +118,19 @@ class QuestionService
         //validate answers
         if (is_array($answers)) {
             if (empty($answers)) {
-                array_push($errors, 'answers array is leeg');
+                array_push($errors, 'Geen antwoorden ingevuld');
             }
             //validate correctAnswerId
             if (!array_key_exists($correctAnswerId, $answers)) {
-                array_push($errors, 'correct antwoord kan niet gekoppeld worden aan een van de opgegeven antwoorden');
+                array_push($errors, 'Correct antwoord kan niet gekoppeld worden aan een van de opgegeven antwoorden');
             } 
         } else {
-            array_push($errors, 'answers variabele is geen array');
+            array_push($errors, 'Answers variabele is geen array');
         }
 
         //validate media
         if (!empty($media) && !is_array($media)) {
-            array_push($errors, 'media variabele is geen array');
+            array_push($errors, 'Media variabele is geen array');
         }
         
         //assess errors
@@ -145,11 +140,11 @@ class QuestionService
             $errormsg = '';
             foreach ($errors as $key => $value) {
                 if ($errormsg !== '') {
-                    $errormsg .= '<br>';
+                    $errormsg .= PHP_EOL;
                 }
                 $errormsg .= $value;
             }
-            throw new ApplicationException($errormsg);
+            throw new FormException($errormsg);
         }
     }
 }
