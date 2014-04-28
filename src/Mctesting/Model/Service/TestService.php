@@ -139,15 +139,14 @@ class TestService
         //set passed
         $userSession->setPassed(TestService::calculatePassFail($result));
         
-        
         //persist into DB
-//        UserSessionService::update($userSession);
+        UserSessionService::update($userSession);
         //persist subcat results into NON EXISTENT TABLE 
         
-        print '<pre>';
-        print_r($userSession);
-        print_r($result);
-        print '</pre>';
+//        print '<pre>';
+//        print_r($userSession);
+//        print_r($result);
+//        print '</pre>';
         
     }
     
