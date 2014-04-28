@@ -15,6 +15,20 @@ use Mctesting\Model\Service\UserSessionService;
 
 class TestController extends AbstractController
 {
+    
+        public function choosesession()
+    {
+        //model
+        //$sessionlist= $_SESSION["sessionchoices"];
+//        print('<pre>');
+//        print_r($sessionlist);
+//        print('</pre>');
+        //view
+        $this->render('choosesession.html.twig', array(
+//            'sessionlist' => $sessionlist,
+            ));
+    }
+    
     public function runTest($arguments)
     {
         //process arguments
