@@ -34,7 +34,7 @@ class Dispatcher
          */
         //explode url and shift elements until project folder is found
         $url = explode('/', $url);
-        while ($url[0] != 'mctesting') {
+        while ($url[0] != strtolower($this->app->getAppName())) {
             array_shift($url);
         }
         //shift project folder
