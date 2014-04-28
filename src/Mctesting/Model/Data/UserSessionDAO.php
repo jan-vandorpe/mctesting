@@ -123,13 +123,14 @@ class UserSessionDAO {
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         
         //prepare sql statement
-        $sql = 'UPDATE sessiegebruiker SET score = :score, percentage = :percentage, afgelegd = :participated 
+        $sql = 'UPDATE sessiegebruiker SET score = :score, percentage = :percentage, afgelegd = :participated, geslaagd = :passed 
                     WHERE rijksregisternr = :rrnr AND sessieid = :sessieid';
         $stmt = $db->prepare($sql);
         //bind parameters
         $stmt->bindParam(':score', $userSession->getScore());
         $stmt->bindParam(':percentage', $userSession->getPercentage());
         $stmt->bindParam(':participated', $userSession->getParticipated());
+        $stmt->bindParam(':passed', $userSession->getPassed());
         $stmt->bindParam(':rrnr', $userSession->getUser()->getRRnr());
         $stmt->bindParam(':sessieid', $userSession->getTestSession()->getId());
         

@@ -69,6 +69,7 @@ class QuestionService
         //assign and typecast variables
         $subcatId =  (integer)$post['subcat'];
         $text = $post['vraag'];
+        $text = ucfirst(strtolower($text));
         $weight = (integer)$post['gewicht'];
         $correctAnswerId = (integer)$post['correctant'];
         $answers = array_filter($post['antwoord']);
@@ -124,6 +125,8 @@ class QuestionService
         if (is_array($answers)) {
             if (empty($answers)) {
                 array_push($errors, 'answers array is leeg');
+            } elseif (count($answers) < 2) {
+                array_push($errors, 'U moet minimum 2 antwoorden ingeven.');
             }
             //validate correctAnswerId
             if (!array_key_exists($correctAnswerId, $answers)) {

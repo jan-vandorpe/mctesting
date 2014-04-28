@@ -46,7 +46,7 @@ class CategoryController extends AbstractController
     {
         $category = $_POST["newcat"];
         if ($category !== null and CategoryService::validateCategory($category) == true)
-        {
+        {            
             CategoryService::create($category);
             header("location: go");
         } else

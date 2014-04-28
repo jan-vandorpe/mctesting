@@ -17,6 +17,7 @@ class Test
     private $TestMaxscore;
     private $TestPassPercentage;
     private $TestCreator;
+    //private $TestCatName;
 
     public function getTestId()
     {
@@ -57,6 +58,10 @@ class Test
     {
         return $this->TestCreator;
     }
+//    public function getTestCatName()
+//    {
+//        return $this->TestCatName;
+//    }
 
     public function setTestId($testId)
     {
@@ -88,4 +93,8 @@ class Test
         $this->TestCreator = $TestCreator;
     }
 
+//    public function setTestCatName($TestCatName)
+//    {
+//        $this->TestCatName = $TestCatName;
+//    }
 }

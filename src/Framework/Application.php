@@ -1,4 +1,5 @@
 <?php
+
 namespace Framework;
 
 use Doctrine\Common\ClassLoader;
@@ -19,43 +20,55 @@ use Mctesting\Model\Service\UserService;
  */
 class Application extends AbstractFramework
 {
+
     protected $appName;
     protected $appLoader;
     protected $appEnvironment;
     protected $dispatcher;
     protected $user;
-            
-    function __construct($appName)
+    protected $root;
+
+    function __construct($appName, $appRoot)
     {
         //call framework constructor
         parent::__construct();
         $this->appName = $appName;
-        
+        $this->root = $appRoot;
+
         //initialize Doctrine classloader for application
         $this->appLoader = new ClassLoader($appName, '../src');
         $this->appLoader->register();
-        
+
         //Initialize Twig environment for application
         require_once '../vendor/Twig/Autoloader.php';
         Twig_Autoloader::register();
-        $twigLoader = new Twig_Loader_Filesystem('../src/'.$appName.'/view');
+        $twigLoader = new Twig_Loader_Filesystem('../src/' . $appName . '/view');
         $this->appEnvironment = new Twig_Environment($twigLoader);
-        
+
         //load application config file
-        require_once '../src/'.$appName.'/Config/Config.php';
+        require_once '../src/' . $appName . '/Config/Config.php';
 
         //load dispatcher
         $this->dispatcher = new Dispatcher($this);
-        
+
         //initialize user
         $user = null;
         if (isset($_SESSION['user'])) {
             $user = UserService::unserializeFromSession();
-        } 
+        }
         $this->user = $user;
-        
     }
-    
+
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    public function setRoot($root)
+    {
+        $this->root = $root;
+    }
+
     public function getAppName()
     {
         return $this->appName;
@@ -70,27 +83,30 @@ class Application extends AbstractFramework
     {
         return $this->dispatcher;
     }
-   
+
     public function getUrl()
     {
-        return '/'.$this->getAppName();
+        return '/' . $this->getAppName();
     }
-    
+
     public function getAppEnvironment()
     {
         return $this->appEnvironment;
     }
-    
+
     public function render($view, $model)
     {
         print($this->getFrameworkEnvironment()->render($view, $model));
     }
-    
-    public function getUser() {
+
+    public function getUser()
+    {
         return $this->user;
     }
 
-    public function setUser($user) {
+    public function setUser($user)
+    {
         $this->user = $user;
     }
+
 }
