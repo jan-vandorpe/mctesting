@@ -124,6 +124,8 @@ class QuestionService
         if (is_array($answers)) {
             if (empty($answers)) {
                 array_push($errors, 'answers array is leeg');
+            } elseif (count($answers) < 2) {
+                array_push($errors, 'U moet minimum 2 antwoorden ingeven.');
             }
             //validate correctAnswerId
             if (!array_key_exists($correctAnswerId, $answers)) {
