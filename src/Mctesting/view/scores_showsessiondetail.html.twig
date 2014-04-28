@@ -49,8 +49,8 @@
                         <td>{{ usersession.user.lastname }}</td>
                         <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
                         <td>{{ usersession.percentage }}</td>
-                        <td>{{ usersession.passed }}</td>
-                        <td>{{ usersession.participated }}</td>
+                        <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
+                        <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
