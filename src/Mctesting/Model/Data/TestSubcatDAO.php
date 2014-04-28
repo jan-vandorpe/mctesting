@@ -28,4 +28,53 @@ class TestSubcatDAO {
         }
     }
 
+    /**Function returns associative array containing data from DB for given test
+     * and subcategory
+     * 
+     * @param type $testId
+     * @param type $subcatId
+     * @return array
+     * @throws ApplicationException
+     */
+    public static function selectByTestANDSubcategory($testId, $subcatId)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM testsubcat WHERE testid = :testid AND subcatid = :subcatid';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':testid', $testId);
+        $stmt->bindParam(':subcatid', $subcatId);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+//                $result = array(
+//                    'questioncount' => 4,
+//                    'totalweight' => 18,
+//                    'passpercentage' => 50,
+//                    );
+                
+                foreach ($recordset as $record) {
+                    //
+                    $result = array(
+                        'questioncount' => $record['aantal'],
+                        'totalweight' => $record['totgewicht'],
+                        'passpercentage' => $record['tebehalenscore'],
+                    );
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('TestsubcatDAO selectByTestANDSubcategory recordset is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'TestsubcatDAO selectByTestANDSubcategory statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
 }

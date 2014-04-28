@@ -33,6 +33,7 @@ class TestDAO {
                     $test->setTestMaxDuration($record['maxduur']);
                     $test->setTestQuestionCount($record['aantalvragen']);
                     $test->setTestMaxscore($record['maxscore']);
+                    $test->setTestPassPercentage($record['tebehalenscore']);
                     $test->setTestCreator($record['beheerder']);
                     array_push($result, $test);
                 }
@@ -64,6 +65,7 @@ class TestDAO {
                 $test->setTestMaxDuration($record['maxduur']);
                 $test->setTestQuestionCount($record['aantalvragen']);
                 $test->setTestMaxscore($record['maxscore']);
+                $test->setTestPassPercentage($record['tebehalenscore']);
                 $test->setTestCreator($record['beheerder']);
                 return $test;
             } else {
@@ -214,6 +216,7 @@ class TestDAO {
                 $test->setTestMaxDuration($record['maxduur']);
                 $test->setTestQuestionCount($record['aantalvragen']);
                 $test->setTestMaxscore($record['maxscore']);
+                $test->setTestPassPercentage($record['tebehalenscore']);
                 $test->setTestCreator($record['beheerder']);
                 $questions = QuestionService::getActiveByTest($id);
                 $test->setQuestions($questions);
