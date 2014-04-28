@@ -32,7 +32,7 @@ class LoginController extends AbstractController
         }  
         }else{
            if(UserService::loginCheck($login, $password)){
-            header("location: /mctesting/choosesession/choosesession");        
+            header("location: /mctesting/test/choosesession");        
         }else{
             header("location: /mctesting/home/go");        
         }   
