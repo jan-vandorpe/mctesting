@@ -43,6 +43,7 @@ class CategoryService
 
     public static function create($category)
     {
+        $category = ucfirst(strtolower($category));
         CategoryDAO::insert($category);
     }
 

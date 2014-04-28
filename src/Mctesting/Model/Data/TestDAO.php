@@ -9,6 +9,7 @@ use Mctesting\Model\Service\TestSubcatService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Entity\FullTest;
 use Mctesting\Model\Service\QuestionService;
+use Mctesting\Model\Service\TestService;
 
 class TestDAO {
 
@@ -35,6 +36,7 @@ class TestDAO {
                     $test->setTestMaxscore($record['maxscore']);
                     $test->setTestPassPercentage($record['tebehalenscore']);
                     $test->setTestCreator($record['beheerder']);
+                    //$catname = TestService::getCatName($record['testid']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -67,6 +69,7 @@ class TestDAO {
                 $test->setTestMaxscore($record['maxscore']);
                 $test->setTestPassPercentage($record['tebehalenscore']);
                 $test->setTestCreator($record['beheerder']);
+                //$test->setTestCatName(TestService::getCatName($record['testid']));
                 return $test;
             } else {
                 throw new ApplicationException('Test selectById record is leeg');

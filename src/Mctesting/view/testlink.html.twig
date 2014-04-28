@@ -23,8 +23,13 @@
             <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
             <select class="form-control" name="testsetselect">
                 <option value="0" >Selecteer een test:</option>
-                {% for test in allTest %}
-                    <option value="{{test.testid}}">{{test.testname}} - vragen: {{test.testquestioncount}} vragen</option>
+                {% for key,value in allTest %}  
+                <optgroup label="{{key}}">
+                {% for test in value %}                
+                
+                    <option value="{{test.testid}}">{{test.testname}} - vragen: {{test.testquestioncount}}</option>
+                {% endfor %}
+                    </optgroup>
                 {% endfor %}
             </select>
         </div>
