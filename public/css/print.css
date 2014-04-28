@@ -81,7 +81,7 @@ author: Bert
     }
 
     .footer {
-        //   position:static;
+          position:relative;
         height:2%;
         margin-bottom: 0;
     }
@@ -92,4 +92,18 @@ author: Bert
         padding-bottom:0;
     }
 
+    
+    /* categorielijst */
+    .catlijst h4 {
+        padding-left: 0;
+    }
+        ul.subcathiding{
+        margin-left: 0;
+        padding-left: 0;
+    }
+    ul.subcathiding li{
+        margin-left: 0;
+        padding-left: 0;
+    }
 }
+
