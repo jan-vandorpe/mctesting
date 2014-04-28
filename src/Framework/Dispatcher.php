@@ -32,8 +32,12 @@ class Dispatcher
          * would not be present.
          * An array_shift simply shifts the project foldername out of the array
          */
-        //explode url and shift project foldername
+        //explode url and shift elements until project folder is found
         $url = explode('/', $url);
+        while ($url[0] != 'mctesting') {
+            array_shift($url);
+        }
+        //shift project folder
         array_shift($url);
         //get controller name, if empty use default
         $requestedController = (!empty($url[0])) ? ucfirst(strtolower($url[0])) : 'Home';
