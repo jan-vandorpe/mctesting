@@ -1,16 +1,16 @@
-{%extends "template/layout.html.twig"%}
+{% extends "template/layout.html.twig" %}
 
-{%block stylesheets%}
-    {{parent()}}
+{% block stylesheets %}
+    {{ parent() }}
 
-{%endblock%}
+{% endblock stylesheets %}
 
-{%block title%}
-    {{parent()}}Category
-{%endblock%}
+{% block title %}
+    {{ parent() }}Category
+{% endblock title%}
 
 
-{%block content%}
+{% block content %}
 <div class="container-fluid">
     <h1 class="headerofpage">Categorielijst</h1>
 </div>

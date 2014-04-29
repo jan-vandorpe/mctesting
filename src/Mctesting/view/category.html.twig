@@ -1,23 +1,23 @@
 {%extends "template/layout.html.twig"%}
 
-{%block stylesheets%}
+{% block stylesheets %}
     {{parent()}}
 
-{%endblock%}
+{% endblock %}
 
-{%block title%}
-    {{parent()}}Category
-{%endblock%}
+{% block title %}
+    {{ parent() }}Category
+{% endblock title %}
 
 
-{%block content%}
+{% block content %}
 <div class="container-fluid ">
     <h1 class="headerofpage">Categoriepagina</h1>
 </div>
 <div class="gebruikertoevoegen">
     <h4>Voeg een Categorie toe:</h4>
 
-    <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newCategory" method="post">
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newCategory" method="post">
         <div class="input-group">
             <label for="cat" class="input-group-addon widthcatinput">Categorie: </label>
             <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="newcat" id="category" placeholder="Nieuwe categorie."/>
@@ -29,7 +29,7 @@
 
             <h4>Voeg een subcategorie toe aan een hoofdcategorie:</h4>
 
-            <form name="subcattoev" class="form-horizontal meerboven-onder" action="/mctesting/category/newSubcategory" method="post">
+            <form name="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newSubcategory" method="post">
                 <div class="input-group">
                     <label for="category" class="input-group-addon widthcatinput">Categorie: </label>
                     <select name="category" class="form-control" id="category"/>
@@ -47,4 +47,4 @@
                 </div>
             </form>
         </div>
-{%endblock content%}
+{% endblock content %}
