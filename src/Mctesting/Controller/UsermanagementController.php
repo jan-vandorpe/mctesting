@@ -46,9 +46,9 @@ class UsermanagementController extends AbstractController
        
        if($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true){
             if(UserService::create($firstName, $lastName, $RRNr)){
-                header("location: /mctesting/usermanagement/listusers");
+                header("location: ".ROOT."/usermanagement/listusers");
             }else{
-                //header("location: /mctesting/home/newuserform");
+                //header("location: ".ROOT."/home/newuserform");
                 //echo("lolz");
             }           
        }else{
@@ -62,7 +62,7 @@ class UsermanagementController extends AbstractController
     
 
         //UserService::loginCheck($login, $password);
-        //header("location: /mctesting/home/go");        
+        //header("location: ".ROOT."/home/go");        
 
     
     

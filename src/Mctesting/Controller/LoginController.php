@@ -26,15 +26,15 @@ class LoginController extends AbstractController
         $password = $_POST["Wachtwoord"];   
         if(UserService::isValidEmailFormat($login)){
           if(UserService::loginCheck($login, $password)){
-            header("location: /mctesting/home/go");        
+            header("location: ".ROOT."/home/go");        
         }else{
-            header("location: /mctesting/home/go");        
+            header("location: ".ROOT."/home/go");        
         }  
         }else{
            if(UserService::loginCheck($login, $password)){
-            header("location: /mctesting/test/choosesession");        
+            header("location: ".ROOT."/test/choosesession");        
         }else{
-            header("location: /mctesting/home/go");        
+            header("location: ".ROOT."/home/go");        
         }   
         }
         
@@ -45,7 +45,7 @@ class LoginController extends AbstractController
     {
         unset($_SESSION["user"]); 
         unset($_SESSION["testsessions"]); 
-        header("location: /mctesting/home/go");
+        header("location: ".ROOT."/home/go");
 
     }
 

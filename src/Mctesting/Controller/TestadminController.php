@@ -86,7 +86,7 @@ class TestadminController extends AbstractController {
                     'testname' => $testname,
                 ));
             } else {
-                header("location: /mctesting/testadmin/testcreation");
+                header("location: ".ROOT."/testadmin/testcreation");
                 exit(0);
             }
         }
@@ -130,7 +130,7 @@ class TestadminController extends AbstractController {
                     $questioncount++;
                 }
             } else {
-                header("location: /mctesting/testadmin/testcreation_step2");
+                header("location: ".ROOT."/testadmin/testcreation_step2");
                 exit(0);
             }
             $_SESSION["testcreation"]["questions"] = $questions;
@@ -157,7 +157,7 @@ class TestadminController extends AbstractController {
                 'subcatlist' => $subcatlist,
             ));
         } else {
-            header("location: /mctesting/testadmin/testcreation");
+            header("location: ".ROOT."/testadmin/testcreation");
             exit(0);
         }
     }
@@ -207,7 +207,7 @@ class TestadminController extends AbstractController {
                 'subcatlist' => $subcatlist,
             ));
         } else {
-            header("location: /mctesting/testadmin/testcreation");
+            header("location: ".ROOT."/testadmin/testcreation");
             exit(0);
         }
     }
@@ -248,7 +248,7 @@ class TestadminController extends AbstractController {
         $testid = $_POST["testsetselect"];
         if ($testid == "0") {
             $_SESSION["errormsg"] = "U moet een test selecteren";
-            header("location: /mctesting/testadmin/testlink");
+            header("location: ".ROOT."/testadmin/testlink");
             exit(0);
         }
         $datum = $_POST["testdatum"];

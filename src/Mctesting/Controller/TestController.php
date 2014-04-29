@@ -39,6 +39,19 @@ class TestController extends AbstractController
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
         $catname = TestService::getCatName($testId);
+        
+        //shuffle questions
+        $questions = $test->getQuestions();
+        shuffle($questions);
+        $test->setQuestions($questions);
+        //shuffle answers
+        foreach ($test as $key => $question) {
+            $answers = $question->getAnswers();
+            shuffle($answers);
+//            $question->setAnswers($answers);
+            $test->getQuestions()[$key]->setAnswers($answers);
+        }
+        
         //store in session for process method
         $_SESSION['test'] = serialize($test);
         $_SESSION['testsessionid'] = $testSessionId;
@@ -68,7 +81,7 @@ class TestController extends AbstractController
         //render confirm page
         $this->render('test_confirm.html.twig', array());
         }else{
-            header("location: /mctesting/test/runTest/$testId/$testSessionId"); 
+            header("location: ".ROOT."/test/runTest/$testId/$testSessionId"); 
         }
     }
 }
