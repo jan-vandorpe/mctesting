@@ -1,11 +1,11 @@
 {% extends "template/layout.html.twig" %}
-{%block scripts%}
+{% block scripts %}
     {{parent()}}
 <script src="\mctesting\public\js\tinymce\tinymce.min.js"></script>
 <script>tinymce.init({menubar : false, toolbar : "", statusbar : false,selector:'textarea.allowcode', paste_as_text: true});</script>
     
 
-{%endblock%}
+{% endblock scripts %}
 {% block title %}
 {{ parent() }}Nieuwe vraag
 {% endblock %}
