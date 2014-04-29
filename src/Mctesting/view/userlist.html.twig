@@ -1,16 +1,16 @@
-{%extends "template/layout.html.twig"%}
+{% extends "template/layout.html.twig" %}
 
-{%block stylesheets%}
+{% block stylesheets %}
     {{parent()}}
 
-{%endblock%}
+{% endblock stylesheets %}
 
-{%block title%}
-    {{parent()}}Home
-{%endblock%}
+{% block title %}
+    {{ parent() }}Home
+{% endblock title %}
 
 
-{%block content%}
+{% block content %}
 <div class="container-fluid ">
     <h1 class="headerofpage">Beheer gebruikers</h1>
 </div>
@@ -61,7 +61,7 @@
                             </ul>
                             <!-- knopen rechts -->
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/mctesting/usermanagement/newuserform">Maak nieuwe gebruiker</a></li>
+                                <li><a href="{{app.root}}/usermanagement/newuserform">Maak nieuwe gebruiker</a></li>
                             </ul>
                         </div>
                     </nav>
@@ -69,4 +69,4 @@
             </form>
         </div>
    
-{%endblock%}
+{% endblock content %}
