@@ -1,16 +1,16 @@
-{%extends "template/layout.html.twig"%}
+{% extends "template/layout.html.twig" %}
 
-{%block stylesheets%}
-    {{parent()}}
+{% block stylesheets %}
+    {{ parent() }}
 
-{%endblock%}
+{% endblock stylesheets %}
 
-{%block title%}
-    {{parent()}}Home
-{%endblock%}
+{% block title %}
+    {{ parent() }}Home
+{% endblock title %}
 
 
-{%block content%}
+{% block content %}
 <div class="container-fluid ">
     <h1 class="headerofpage">Testsessie plannen</h1>
 </div>
@@ -18,23 +18,23 @@
     <h4>Het plannen van een testsessie</h4>
     
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="/mctesting/testadmin/testlinkadd">
+    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
         <div class="input-group">            
             <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
             <select class="form-control" name="testsetselect">
                 <option value="0" >Selecteer een test:</option>
                 {% for key,value in allTest %}  
-                <optgroup label="{{key}}">
+                <optgroup label="{{ key }}">
                 {% for test in value %}                
                 
-                    <option value="{{test.testid}}">{{test.testname}} - vragen: {{test.testquestioncount}}</option>
+                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
                 {% endfor %}
                     </optgroup>
                 {% endfor %}
             </select>
         </div>
             {% if errormsg is defined and errormsg is not empty  %}
-        <span class="error">{{errormsg}}</span> 
+        <span class="error">{{ errormsg }}</span> 
             {% endif %}
         <div class="input-group">
             <label for="testsessieselect" class="input-group-addon widthcatinput">Datum van de testsessie:</label>
@@ -53,11 +53,11 @@
             {% for user in allUsers %} 
                 <div class="input-group ietssmaller">
                     <span class="input-group-addon">
-                           <input type="checkbox" name='user[]' value='{{user.rrnr}}'/>
+                           <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
                     </span>
                     <div class=" form-control">
-                        <div class="vnaamaantest">{{user.lastname}}</div>
-                        <div class="vnaamaantest">{{user.firstname}}</div>
+                        <div class="vnaamaantest">{{ user.lastname }}</div>
+                        <div class="vnaamaantest">{{ user.firstname }}</div>
                     </div>
                 </div>
             {% endfor %}
@@ -71,4 +71,4 @@
 </div>
     
 
-{%endblock%}
+{% endblock content %}
