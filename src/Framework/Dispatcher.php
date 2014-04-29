@@ -26,18 +26,12 @@ class Dispatcher
     {
         //process url, trim any leading and trailing slashes
         $url = trim($_SERVER['REQUEST_URI'],'/');
-        /**
-         * In the current localhost environment the first part of the
-         * exploded url will be the project folder. In a publised app this
-         * would not be present.
-         * An array_shift simply shifts the project foldername out of the array
-         */
-        //explode url and shift elements until project folder is found
+        //explode url and shift elements out until application folder is found
         $url = explode('/', $url);
         while ($url[0] != strtolower($this->app->getAppName())) {
             array_shift($url);
         }
-        //shift project folder
+        //shift application folder out, it is not necessary for dispatching a controller
         array_shift($url);
         //get controller name, if empty use default
         $requestedController = (!empty($url[0])) ? ucfirst(strtolower($url[0])) : 'Home';
