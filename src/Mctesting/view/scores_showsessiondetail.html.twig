@@ -1,61 +1,59 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-{{ parent() }}Rapport Scores - Sessiedetail
-{% endblock %}
+    {{ parent() }}Rapport Scores - Sessiedetail
+{% endblock title %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="headerofpage">Overzicht sessiescores</h1>
-    
-    <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-6">
+    <div class="container-fluid">
+        <h1 class="headerofpage">Overzicht sessiescores</h1>
+        <div class="row">
             <div class="col-lg-1"></div>
-            <label class="col-lg-2 control-label">Test:</label>
-            <div class="col-lg-5">
-                {{ testsession.test.testname }}
+            <div class="col-lg-6">
+                <div class="col-lg-1"></div>
+                <label class="col-lg-2 control-label">Test:</label>
+                <div class="col-lg-5">
+                    {{ testsession.test.testname }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-6">
+                <div class="col-lg-1"></div>
+                <label class="col-lg-3 control-label">Sessiedatum:</label>
+                <div class="col-lg-5">
+                    {{ testsession.date.date|date('d/m/Y') }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Voornaam</th>
+                            <th>Familienaam</th>
+                            <th>Score</th>
+                            <th>Percentage</th>
+                            <th>Geslaagd</th>
+                            <th>Afgelegd</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usersession in usersessions %}
+                        <tr>
+                            <td>{{ usersession.user.firstname }}</td>
+                            <td>{{ usersession.user.lastname }}</td>
+                            <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
+                            <td>{{ usersession.percentage }}</td>
+                            <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
+                            <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-6">
-            <div class="col-lg-1"></div>
-            <label class="col-lg-3 control-label">Sessiedatum:</label>
-            <div class="col-lg-5">
-                {{ testsession.date.date|date('d/m/Y') }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        
-        <div class="col-lg-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Voornaam</th>
-                        <th>Familienaam</th>
-                        <th>Score</th>
-                        <th>Percentage</th>
-                        <th>Geslaagd</th>
-                        <th>Afgelegd</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for usersession in usersessions %}
-                    <tr>
-                        <td>{{ usersession.user.firstname }}</td>
-                        <td>{{ usersession.user.lastname }}</td>
-                        <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
-                        <td>{{ usersession.percentage }}</td>
-                        <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
-                        <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% endblock content %}

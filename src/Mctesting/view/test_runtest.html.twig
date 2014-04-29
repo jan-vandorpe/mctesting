@@ -1,26 +1,21 @@
 {% extends "template/layout.html.twig" %}
 
-{% block stylesheets %}
-    {{parent()}}
-{% endblock stylesheets %}
-
 {% block title %}
-    {{parent()}}Test afleggen
+    {{ parent() }}Test afleggen
 {% endblock title %}
-
 
 {% block content %}
 <div class="testafleggenpag">
     <h1 class="headerofpage">{{ test.testname }}</h1>
-        <div class="testinfotop clearFix">
-            <div>Categorie: {{catname}} </div>
-            <div>Totaal aantal vragen: {{ test.testquestioncount }}</div>
-            <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
-        </div>
-    <form name="" action="/mctesting/test/process/" method="post">
-    {% for question in test.questions %}
-        {# Question #}
+    <div class="testinfotop clearFix">
+        <div>Categorie: {{ catname }} </div>
+        <div>Totaal aantal vragen: {{ test.testquestioncount }}</div>
+        <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
+    </div>
+    <form name="" action="{{ app.root }}/test/process/" method="post">
+        {% for question in test.questions %}
             <div class="vraaggroep">
+                {# Question #}
                 <div class="vraag row">
                     <div class="col-lg-12">
                         <div class="input-group">
@@ -28,21 +23,20 @@
                                 VRAAG {{ loop.index }}: 
                             </div>
                             <div class="form-control">
-                            {{ question.text|raw }}
-                            {% if question.media is not empty %}
-                                {% for file in question.media%}
-                                    <div class="imggroepbijvraag">
-                                        <img src="../../../images/{{ file }}" />
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                                </div>
+                                {{ question.text|raw }}
+                                {% if question.media is not empty %}
+                                    {% for file in question.media %}
+                                        <div class="imggroepbijvraag">
+                                            <img src="../../../images/{{ file }}" />
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+                </div>
             {# Answers #}
-                    <div class="antwoorden row">
-
+                <div class="antwoorden row">
                     {% for answer in question.answers %}
                         <div class="col-lg-11 antwoordmetradio">
                             <div class="input-group">
@@ -52,14 +46,13 @@
                                 <div class="antwoord form-control">{{ answer.text|raw }}</div>
                             </div>
                         </div>
-                   {% endfor %}
-
-                    </div>
+                    {% endfor %}
                 </div>
-    {% endfor %}
-                <div class="input-group voltooid">
-                    <input class="form-control" type="submit" value="Test voltooien">
-                </div>
-            </form>
+            </div>
+        {% endfor %}
+        <div class="input-group voltooid">
+            <input class="form-control" type="submit" value="Test voltooien">
         </div>
+    </form>
+</div>
 {% endblock content %}

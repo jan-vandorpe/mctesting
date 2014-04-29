@@ -1,40 +1,37 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-{{ parent() }}Rapport scores - Select test
-{% endblock %}
+    {{ parent() }}Rapport scores - Select test
+{% endblock title %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="headerofpage">Selecteer een test</h1>
-    
-    <form name="" class="form-horizontal meerboven-onder" action="/mctesting/scores/showsessions/" method="post">
-        <div class="row">
-        <div class="col-lg-3">
-            
-        </div>
-        <div class="col-lg-4">
-            <div class="input-group">
-                <span class="input-group-addon">
-                    Test:
-                </span>
-                <select class="form-control catbijvraag" name="selecttest">
-                    {% for test in tests %}
-                            <option value="{{test.testid}}">{{test.testname}}</option>
-                    {% endfor %}
-                </select>
+    <div class="container-fluid">
+        <h1 class="headerofpage">Selecteer een test</h1>
+        <form name="" class="form-horizontal meerboven-onder" action="{{ app.root }}/scores/showsessions/" method="post">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            Test:
+                        </span>
+                        <select class="form-control catbijvraag" name="selecttest">
+                            {% for test in tests %}
+                                    <option value="{{ test.testid }}">{{ test.testname }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-            </div>
-        
-        <div class="form-group">
-            <div class="col-lg-3">
-            </div>
-            <div class="col-lg-4 centeren">
-                <input type="submit" name="gebrknop" class="form-control" value="Volgende">
-            </div>
-        </div>
 
-    </form>
-</div>
-{% endblock %}
+            <div class="form-group">
+                <div class="col-lg-3">
+                </div>
+                <div class="col-lg-4 centeren">
+                    <input type="submit" name="gebrknop" class="form-control" value="Volgende">
+                </div>
+            </div>
+
+        </form>
+    </div>
+{% endblock content %}

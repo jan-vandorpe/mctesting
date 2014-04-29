@@ -1,42 +1,41 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-{{ parent() }}Rapport scores - Select session
-{% endblock %}
+    {{ parent() }}Rapport scores - Select session
+{% endblock title %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="headerofpage">Overzicht sessies</h1>
-    
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-4">
-            <div class="col-lg-1"></div>
-            <label class="col-lg-2 control-label">Test:</label>
-            <div class="col-lg-5">
-                {{ test.name }}Testnaam
+    <div class="container-fluid">
+        <h1 class="headerofpage">Overzicht sessies</h1>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-4">
+                <div class="col-lg-1"></div>
+                <label class="col-lg-2 control-label">Test:</label>
+                <div class="col-lg-5">
+                    {{ test.testname }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-4">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Datum sessie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for testsession in testsessions %}
+                        <tr>
+                            <td><a href="{{ app.root }}/scores/showsessiondetail/{{testsession.id}}">{{ testsession.date.date|date('d/m/Y') }}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Datum sessie</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for testsession in testsessions %}
-                    <tr>
-                        <td><a href="/mctesting/scores/showsessiondetail/{{testsession.id}}">{{ testsession.date.date|date('d/m/Y') }}</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-{% endblock %}
+{% endblock content %}
