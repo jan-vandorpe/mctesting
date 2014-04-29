@@ -1,9 +1,9 @@
 {% extends "template/base.html.twig" %}
 {% block stylesheets %}
-<link rel="stylesheet" href="/mctesting/public/css/normalize.css" />
-<link rel="stylesheet" href="/mctesting/public/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/mctesting/public/css/baselayout.css">
-<link rel="stylesheet" href="/mctesting/public/css/print.css">
+<link rel="stylesheet" href="{{ app.root }}/public/css/normalize.css" />
+<link rel="stylesheet" href="{{ app.root }}/public/css/bootstrap.min.css" />
+<link rel="stylesheet" href="{{ app.root }}/public/css/baselayout.css">
+<link rel="stylesheet" href="{{ app.root }}/public/css/print.css">
 {% endblock stylesheets %}
 
 {% block title %}MC Testing - {% endblock title %}
@@ -19,9 +19,9 @@
                             {# Admin topnav menu #}
                             {#
                             <ul class="nav navbar-nav">
-                                <li><a href="/mctesting/tests/go">Tests</a></li>
+                                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
                                 <li><a>Vragen</a></li>
-                                <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
+                                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
                                 <li><a>Beheerders</a></li>
                             </ul>
                             #}
@@ -29,9 +29,9 @@
                             {# Beheerder topnav menu #}
                             {#
                             <ul class="nav navbar-nav">
-                                <li><a href="/mctesting/tests/go">Tests</a></li>
+                                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
                                 <li><a>Vragen</a></li>
-                                <li><a href="/mctesting/usermanagement/newuserform">Gebruikers</a></li>
+                                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
                             </ul>
                             #}
                         {% else %}
@@ -43,12 +43,12 @@
                         #}
                         {% endif %}
                         {# Login form #}
-                        <form class="navbar-form navbar-right" role="logout" action="{{app.root}}/login/logout" method="post">
+                        <form class="navbar-form navbar-right" role="logout" action="{{ app.root }}/login/logout" method="post">
                             Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
                             <button type="submit" class="btn btn-default">Afmelden</button>
                         </form>                 
                     {% else %}
-                        <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
+                        <form class="navbar-form navbar-right" role="login" action="{{ app.root }}/login/login" method="post">
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Login" name="Login" autofocus required>
                                 <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
@@ -70,26 +70,26 @@
                             <div class="collapse navbar-collapse">
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Vragen</li>
-                                    <li><a href="{{app.root}}/question/create">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Categorie&euml;n</li>
-                                    <li><a href="/mctesting/category">Aanmaken</a></li>
-                                    <li><a href="/mctesting/category/categorylist">Lijst</a></li>
+                                    <li><a href="{{ app.root }}/category">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Gebruikers</li>
-                                    <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
-                                    <li><a href="/mctesting/usermanagement/listusers">Lijst</a></li>
+                                    <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Tests</li>
-                                    <li><a href="/mctesting/testadmin/testcreation/">Aanmaken</a></li>
-                                    <li><a href="/mctesting/testadmin/testlink/">Plannen</a></li>
+                                    <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Rapporten</li>
-                                    <li><a href="/mctesting/scores/selecttest/">Scores</a></li>
+                                    <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
                                 </ul>
 
                                 {% if app.user.group.name == 'admin' %}
@@ -98,7 +98,7 @@
                                     <li><a href="#">Aanmaken</a></li>
                                     <li><a href="#">Lijst</a></li>
                                 </ul>
-                                {%endif%}
+                                {% endif %}
                             </div>
                         </nav>
                     {% endif %}
@@ -107,7 +107,7 @@
 
         {#------ CONTENT ---------------#}
         <div class="content clearFix">
-            {% block content %}{% endblock content%}
+            {% block content %}{% endblock content %}
         </div> 
     </div>
             
