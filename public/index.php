@@ -20,8 +20,15 @@ require_once '../src/Framework/Helper.php';
 //$app->getHelper()->sec_session_start();
 /*$app->getHelper()->*/\Framework\sec_session_start();
 
+//define approot
+//$approot = substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
+$appRoot = substr(dirname(__FILE__), strlen($_SERVER['DOCUMENT_ROOT']));
+$appRoot = str_replace('\\', '/', $appRoot);
+$appRoot = str_replace('/public', '', $appRoot);
+define('ROOT', $appRoot);
+
 //appname must be identical to the application folder in src folder(case sensitive)
-$app = new Application('Mctesting');
+$app = new Application('Mctesting', $appRoot);
 
 
 //add Twig globals to allow direct access from any twig template

@@ -43,9 +43,9 @@
                         #}
                         {% endif %}
                         {# Login form #}
-                        <form class="navbar-form navbar-right" role="logout" action="/mctesting/login/logout" method="post">
+                        <form class="navbar-form navbar-right" role="logout" action="{{app.root}}/login/logout" method="post">
                             Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
-                            <button type="submit" class="btn btn-default">Uitloggen</button>
+                            <button type="submit" class="btn btn-default">Afmelden</button>
                         </form>                 
                     {% else %}
                         <form class="navbar-form navbar-right" role="login" action="/mctesting/login/login" method="post">
@@ -70,7 +70,7 @@
                             <div class="collapse navbar-collapse">
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Vragen</li>
-                                    <li><a href="/mctesting/question/create">Aanmaken</a></li>
+                                    <li><a href="{{app.root}}/question/create">Aanmaken</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Categorie&euml;n</li>
@@ -80,23 +80,23 @@
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Gebruikers</li>
                                     <li><a href="/mctesting/usermanagement/newuserform">Aanmaken</a></li>
-                                    <li><a href="/mctesting/usermanagement/listusers">Beheren</a></li>
+                                    <li><a href="/mctesting/usermanagement/listusers">Lijst</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Tests</li>
                                     <li><a href="/mctesting/testadmin/testcreation/">Aanmaken</a></li>
-                                    <li><a href="/mctesting/testadmin/testlink/">Sessie plannen</a></li>
+                                    <li><a href="/mctesting/testadmin/testlink/">Plannen</a></li>
                                 </ul>
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Rapporten</li>
-                                    <li><a href="/mctesting/scores/selecttest/">Scores test</a></li>
+                                    <li><a href="/mctesting/scores/selecttest/">Scores</a></li>
                                 </ul>
 
                                 {% if app.user.group.name == 'admin' %}
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Beheerders</li>
                                     <li><a href="#">Aanmaken</a></li>
-                                    <li><a href="#">Beheren</a></li>
+                                    <li><a href="#">Lijst</a></li>
                                 </ul>
                                 {%endif%}
                             </div>
