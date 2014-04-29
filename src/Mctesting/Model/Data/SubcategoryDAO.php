@@ -134,7 +134,7 @@ class SubcategoryDAO
                 $subcat = new Subcategory();
                 $subcatname = "nog geen subcategorie aanwezig";
                 $subcat->setSubcatname($subcatname);
-                //push object to array
+                //push object to array and return
                 array_push($subcatarray, $subcat);
                 return $subcatarray;
             }
@@ -169,7 +169,7 @@ class SubcategoryDAO
                     $subcat->setId($record['subcatid']);
                     $subcat->setSubcategory($record['subcatnaam']);
                     $subcat->setActive($record['actief']);
-
+                //push object to array
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
@@ -208,7 +208,7 @@ class SubcategoryDAO
                     $subcat->setId($record['subcatid']);
                     $subcat->setSubcategory($record['subcatnaam']);
                     $subcat->setActive($record['actief']);
-
+//push object to array
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;

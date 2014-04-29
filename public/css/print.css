@@ -81,9 +81,7 @@ author: Bert
     }
 
     .footer {
-          position:relative;
-        height:2%;
-        margin-bottom: 0;
+        display:none;
     }
 
     div.container-fluid.maincontainer.clearFix{
@@ -92,12 +90,12 @@ author: Bert
         padding-bottom:0;
     }
 
-    
+
     /* categorielijst */
     .catlijst h4 {
         padding-left: 0;
     }
-        ul.subcathiding{
+    ul.subcathiding{
         margin-left: 0;
         padding-left: 0;
     }
@@ -106,4 +104,3 @@ author: Bert
         padding-left: 0;
     }
 }
-
