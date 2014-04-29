@@ -1,18 +1,18 @@
-{%extends "template/layout.html.twig"%}
+{% extends "template/layout.html.twig" %}
 
-{%block stylesheets%}
-    {{parent()}}
+{% block stylesheets %}
+    {{ parent() }}
 
-{%endblock%}
+{% endblock stylesheets %}
 
-{%block title%}
-    {{parent()}}Home
-{%endblock%}
+{% block title %}
+    {{parent() }}Home
+{% endblock title %}
 
 
-{%block content%}
+{% block content %}
 <div class="container-fluid ">
     <h4>Testsessie aangemaakt!</h4>
     <p>Er is een nieuwe testsessie aangemaakt. Gebruik het linkermenu om verder te werken. </p>
 </div>
-{%endblock%}
+{% endblock content %}

@@ -3,11 +3,11 @@
 {% block stylesheets %}
     {{ parent() }}
 
-{% endblock %}
+{% endblock stylesheets%}
 
 {% block title %}
     {{ parent() }}Home
-{% endblock stylesheets %}
+{% endblock  title %}
 
 
 {% block content %}
@@ -23,7 +23,7 @@
 
         {% for sessionid,test in session.sessionchoices %}
                 {% for testid, testname in test %}
-                <div><a href='/mctesting/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a></div>
+                <div><a href='{{ app.root }}/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a></div>
         {% endfor %}  
         {% endfor %}  
 
