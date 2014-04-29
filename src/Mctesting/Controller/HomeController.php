@@ -1,6 +1,7 @@
 <?php
 
 namespace Mctesting\Controller;
+
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 
@@ -13,14 +14,16 @@ use Mctesting\Exception\ApplicationException;
  */
 class HomeController extends AbstractController
 {
+
     function __construct($app)
     {
         parent::__construct($app);
     }
-    
+
     public function go()
     {
         //render page
         $this->render('home.html.twig', array());
-    }    
+    }
+
 }
