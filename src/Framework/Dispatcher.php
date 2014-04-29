@@ -15,8 +15,9 @@ use Mctesting\Exception\ApplicationException;
  */
 class Dispatcher
 {
+
     protected $app;
-    
+
     function __construct($app)
     {
         $this->app = $app;
@@ -25,7 +26,7 @@ class Dispatcher
     public function run()
     {
         //process url, trim any leading and trailing slashes
-        $url = trim($_SERVER['REQUEST_URI'],'/');
+        $url = trim($_SERVER['REQUEST_URI'], '/');
         //explode url and shift elements out until application folder is found
         $url = explode('/', $url);
         while ($url[0] != strtolower($this->app->getAppName())) {
@@ -42,9 +43,9 @@ class Dispatcher
         //get arguments, if empty set to null
         $arguments = (!empty($url)) ? $url : null;
         //set application controller namespace
-        $namespace = $this->app->getAppName().'\Controller\\';
+        $namespace = $this->app->getAppName() . '\Controller\\';
         //set fully qualified controller name
-        $controllerNameFQ = $namespace.$requestedController.'Controller';
+        $controllerNameFQ = $namespace . $requestedController . 'Controller';
         //test if dispatcher autoloader can load controller
         if ($this->app->getAppLoader()->canLoadClass($controllerNameFQ)) {
             //create controller and pass along the application object
@@ -53,28 +54,17 @@ class Dispatcher
             if (method_exists($controller, $methodName)) {
                 try {
                     try {
-                    //check if access is allowed to requested page(controller)
-//                    $this->app->getHelper()->check_access_control($requestedController);
+                        //check if access is allowed to requested page(controller)
                         \Framework\check_access_control($requestedController);
-                    
-                    //call method and pass arguments
-                    $controller->$methodName($arguments);
+                        //call method and pass arguments
+                        $controller->$methodName($arguments);
                     } catch (SecurityException $ex) {
                         switch ($ex->getCode()) {
-                            //user needs to be logged in to view requested controller
+                            //Access denied
                             case '1':
-                                //before redirecting to login page store requested page in SESSION to use
-                                //for redirecting after login
-                                $_SESSION['prev_req_page'] = $_SERVER['REQUEST_URI'];
-    //                            header('Location: '.$app->getUrl().'/auth/go');
-    //                            exit();
                                 throw new ApplicationException($ex->getMessage());
                                 break;
-                            //authentication errors on login page(username, password incorrect)
-    //                        case '2':
-    //                            print($app->getAppEnvironment()->render('login.html.twig', array('exception' => $ex)));
-    //                            break;
-                            default: 
+                            default:
                                 throw new ApplicationException('Oops, something went wrong. I know its cliché ...');
                                 break;
                         }
@@ -83,10 +73,10 @@ class Dispatcher
                     print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex)));
                 }
             } else {
-                throw new DispatcherException('Unknown method '.$methodName);
+                throw new DispatcherException('Unknown method ' . $methodName);
             }
         } else {
-            throw new DispatcherException('Unknown controller '.$requestedController);
+            throw new DispatcherException('Unknown controller ' . $requestedController);
         }
     }
 }
