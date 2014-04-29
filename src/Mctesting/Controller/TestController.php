@@ -62,12 +62,12 @@ class TestController extends AbstractController
         $test = unserialize($_SESSION['test']);
         $testId = $_SESSION['testid'];
         $testSessionId = $_SESSION['testsessionid'];
-        
+
         //retrieve testsesion from DB
         $user = UserService::unserializeFromSession();
         $userSessions = UserSessionService::getByUserANDSession($_SESSION['testsessionid'], $user->getRRnr());
         $userSession = $userSessions[0];
-        
+
         //process user answers
         if (isset($_POST['answer']) && $_POST['answer'] != null) {
             TestService::processAnswers($test, $_POST['answer'], $userSession);
