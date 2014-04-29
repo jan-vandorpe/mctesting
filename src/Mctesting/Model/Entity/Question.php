@@ -99,4 +99,9 @@ class Question
         $this->active = $active;
     }
 
+    public function shuffleAnswers()
+    {
+        shuffle($this->answers);
+    }
+
 }

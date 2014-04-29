@@ -41,16 +41,9 @@ class TestController extends AbstractController
         $catname = TestService::getCatName($testId);
         
         //shuffle questions
-        $questions = $test->getQuestions();
-        shuffle($questions);
-        $test->setQuestions($questions);
+        $test->shuffleQuestions();
         //shuffle answers
-        foreach ($test as $key => $question) {
-            $answers = $question->getAnswers();
-            shuffle($answers);
-//            $question->setAnswers($answers);
-            $test->getQuestions()[$key]->setAnswers($answers);
-        }
+        $test->shuffleAnswers();
         
         //store in session for process method
         $_SESSION['test'] = serialize($test);
