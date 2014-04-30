@@ -75,7 +75,7 @@ author: Bert
         display:none ;   
     }
 
-    .footer .headerpage .maincontainer {
+     .headerpage .maincontainer {
         // position: fixed;
         display: block;
     }
