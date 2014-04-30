@@ -28,7 +28,7 @@
                     <tbody>
                         {% for testsession in testsessions %}
                         <tr>
-                            <td><a href="{{ app.root }}/scores/showsessiondetail/{{testsession.id}}">{{ testsession.date.date|date('d/m/Y') }}</a></td>
+                            <td class="singlecolumn"><a href="{{ app.root }}/scores/showsessiondetail/{{testsession.id}}">{{ testsession.date.date|date('d/m/Y') }}</a></td>
                         </tr>
                         {% endfor %}
                     </tbody>

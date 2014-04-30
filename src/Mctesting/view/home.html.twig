@@ -16,7 +16,7 @@
 </div>
 <div class="intropage ">
     {% if app.user is defined and app.user is not empty %}
-        <p> U bent ingelogd als {{app.user.group.name}}</p>
+        <h4> U bent ingelogd als {{app.user.group.name}}</h4>
     {%else%}
         <h4 class="darker intro"><span class="">Mensen die een test willen afleggen:</span></h4> 
         <p>
