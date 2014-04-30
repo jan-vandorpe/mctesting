@@ -14,6 +14,11 @@
     width: 80%;
     padding-bottom: 0.5em;
 }
+input[type='text']:focus, input[type='password']:focus, select:nth-of-type(n):focus, input[type='submit']:focus{
+    border-color:rgba(0,0,0,0);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
 
 .footer.maincontainer{
     padding-bottom: 0em;
@@ -267,13 +272,42 @@ body{
     width: 80%;
 
 }
-.catlijst h4{
+.catlijst h4, .tableheaderscores{
     border-width: 0 0 2px 0;
     border-style: solid;
     border-color: rgba(0,0,0,0.3);
     border-radius: 4px 4px 0 0;
     padding: 0.25em 0 0.125em 2em;
     background-color: rgba(255,255,255,0.5);
+}
+
+table>tbody>tr>td:first-of-type{
+    border-style: solid;
+    border-color: rgba(0,0,0,0.1);
+    border-width: 0 0px 0px 2px;
+}
+table>tbody>tr>td:last-of-type{
+    border-style: solid;
+    border-color: rgba(0,0,0,0.1);
+    border-width: 0 2px 0px 0px;
+}
+table>tbody>tr:last-of-type>td{
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+table>tbody>tr:last-of-type>td:first-of-type{
+    border-radius: 0 0 0 4px;
+}
+table>tbody>tr:last-of-type>td:last-of-type{
+    border-radius: 0 0 4px 0;
+}
+.tableheaderscores>th:first-of-type{
+    border-radius: 4px 0px 0 0;
+}
+.tableheaderscores>th:last-of-type{
+    border-radius: 0px 4px 0 0;
+}
+.tableheaderscores .singleheader:nth-of-type(n){
+    border-radius: 4px 4px 0 0;
 }
 .errorhead{
     text-align: center;
