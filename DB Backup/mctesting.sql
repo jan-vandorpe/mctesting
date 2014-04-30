@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Genereertijd: 17 apr 2014 om 14:57
+-- Genereertijd: 30 apr 2014 om 12:53
 -- Serverversie: 5.6.11
 -- PHP-versie: 5.5.1
 
@@ -61,22 +61,16 @@ INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`) VALUES
 (5, 1, 'De draak'),
 (5, 2, 'De slang'),
 (5, 3, 'De rat'),
-(5, 99, 'Testantwoord'),
 (11, 0, 'BelgiÃ«'),
 (11, 1, 'China'),
 (11, 2, 'BraziliÃ«'),
 (11, 3, 'Rusland'),
-(12, 0, 'A'),
-(12, 1, '2'),
-(12, 2, 'Kleine friet met mayo'),
-(12, 3, 'Bram?'),
 (13, 0, '2 mei'),
 (13, 1, '17 juni'),
 (13, 2, '25 mei'),
 (13, 3, '5 november'),
-(14, 0, 'ja'),
-(14, 1, 'nee'),
-(14, 2, 'kweetnie'),
+(14, 1, 'antwoord 1'),
+(14, 2, 'antwoord 2'),
 (15, 0, 'Een stok'),
 (15, 1, 'Een bal'),
 (15, 2, 'Hoepels'),
@@ -85,218 +79,89 @@ INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`) VALUES
 (16, 1, 'Hendrik'),
 (16, 2, 'Jan'),
 (16, 3, 'Bert2'),
-(17, 0, 'a'),
-(17, 1, 'a'),
-(17, 2, 'a'),
-(17, 3, 'a'),
-(18, 0, 'a'),
-(18, 1, 'a'),
-(18, 2, 'a'),
-(18, 3, 'a'),
-(19, 0, 'a'),
-(19, 1, 'a'),
-(19, 2, 'a'),
-(19, 3, 'a'),
-(20, 0, 'Linker arm'),
-(20, 1, 'Rechter arm'),
-(20, 2, 'Beide benen'),
-(20, 3, 'Alle ledematen');
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bramsessie`
---
-
-CREATE TABLE IF NOT EXISTS `bramsessie` (
-  `sessieid` int(11) NOT NULL AUTO_INCREMENT,
-  `datum` date NOT NULL,
-  `testid` int(11) NOT NULL,
-  `sessieww` varchar(50) NOT NULL,
-  `actief` tinyint(1) NOT NULL,
-  PRIMARY KEY (`sessieid`),
-  KEY `testid` (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
-
---
--- Gegevens worden uitgevoerd voor tabel `bramsessie`
---
-
-INSERT INTO `bramsessie` (`sessieid`, `datum`, `testid`, `sessieww`, `actief`) VALUES
-(1, '2014-04-01', 1, '1', 0),
-(2, '2014-04-17', 0, 'hihiiiiiiiiiiiiiiiiiiiiiii', 1),
-(3, '2014-04-08', 3, 'testr', 1),
-(4, '2014-04-25', 5, 'thomas', 1),
-(5, '2014-04-25', 5, 'thomas', 1),
-(6, '2014-04-27', 4, 'thomas2', 1),
-(7, '2014-04-27', 4, 'thomas2', 1),
-(8, '2014-04-03', 0, '4', 1),
-(9, '2014-04-15', 0, '8', 1),
-(10, '2014-04-15', 0, '8', 1),
-(11, '2014-04-01', 0, '9', 1),
-(12, '2014-04-01', 0, '9', 1),
-(13, '2014-04-01', 0, '10', 1),
-(14, '2014-04-01', 0, '10', 1),
-(15, '2014-04-01', 0, '11', 1),
-(16, '2014-04-17', 0, 'testt10', 1),
-(17, '2014-04-16', 1, 'aze', 1),
-(18, '2012-02-01', 8, 'protprot', 1);
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bramsessiegebruiker`
---
-
-CREATE TABLE IF NOT EXISTS `bramsessiegebruiker` (
-  `sessieid` int(11) NOT NULL,
-  `rijksregisternr` varchar(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  `percentage` decimal(3,0) NOT NULL,
-  `geslaagd` tinyint(1) NOT NULL,
-  `afgelegd` tinyint(1) DEFAULT NULL,
-  `actief` tinyint(1) NOT NULL,
-  PRIMARY KEY (`sessieid`,`rijksregisternr`),
-  KEY `gebruikerid` (`rijksregisternr`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Gegevens worden uitgevoerd voor tabel `bramsessiegebruiker`
---
-
-INSERT INTO `bramsessiegebruiker` (`sessieid`, `rijksregisternr`, `score`, `percentage`, `geslaagd`, `afgelegd`, `actief`) VALUES
-(1, '12345678900', 1, '50', 1, 1, 0),
-(5, '12345678900', 0, '0', 0, 1, 1),
-(5, '44475888888', 0, '0', 0, 1, 1),
-(5, '46737215184', 0, '0', 0, 1, 1),
-(8, '12345678900', 0, '0', 0, 0, 1),
-(18, '32165498723', 0, '0', 0, 0, 1),
-(18, '44475888888', 0, '0', 0, 0, 1),
-(18, '46737215184', 0, '0', 0, 0, 1);
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bramtest`
---
-
-CREATE TABLE IF NOT EXISTS `bramtest` (
-  `testid` int(11) NOT NULL AUTO_INCREMENT,
-  `testnaam` tinytext NOT NULL,
-  `maxduur` int(3) NOT NULL,
-  `aantalvragen` int(11) NOT NULL,
-  `maxscore` int(11) NOT NULL,
-  `beheerder` varchar(11) NOT NULL,
-  `aanmaaktijdstip` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
-
---
--- Gegevens worden uitgevoerd voor tabel `bramtest`
---
-
-INSERT INTO `bramtest` (`testid`, `testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `beheerder`, `aanmaaktijdstip`) VALUES
-(1, 'PHP FOR BEGINNERS', 1, 4, 4, '3', '2014-04-15 07:08:26'),
-(3, 'PHP FOR EXPERTS', 4, 20, 20, '6', '2014-04-15 07:08:26'),
-(4, 'WORD FOR BEGINNERS', 4, 20, 20, '6', '2014-04-15 07:08:26'),
-(5, 'WORD FOR EXPERTS', 4, 20, 20, '6', '2014-04-15 07:08:26'),
-(6, 'azer', 100, 2, 2, '98765432100', '2014-04-17 07:21:50'),
-(7, 'testtest', 100, 2, 2, '98765432100', '2014-04-17 07:22:12'),
-(8, 'testertjes007', 30, 4, 4, '98765432100', '2014-04-17 08:47:18'),
-(9, 'testertjes007', 30, 4, 4, '98765432100', '2014-04-17 08:47:26'),
-(10, 'testmetVragenUpload', 100, 3, 3, '98765432100', '2014-04-17 09:16:49'),
-(11, 'testmetVragenUpload', 100, 3, 3, '98765432100', '2014-04-17 09:16:52'),
-(12, 'testmetVragenUpload', 100, 3, 3, '98765432100', '2014-04-17 09:16:54'),
-(13, 'testmetVragenUpload', 100, 3, 3, '98765432100', '2014-04-17 09:16:55'),
-(14, 'testmetvragenupload2', 100, 2, 5, '98765432100', '2014-04-17 09:17:24'),
-(15, 'testmetvragenupload2', 100, 2, 5, '98765432100', '2014-04-17 09:19:04'),
-(16, 'testmetvragenupload2', 100, 2, 5, '98765432100', '2014-04-17 09:19:07'),
-(17, 'testmetvragenupload3', 100, 3, 6, '98765432100', '2014-04-17 09:19:22'),
-(18, 'testmetvragenupload3', 100, 3, 6, '98765432100', '2014-04-17 09:20:05'),
-(19, 'bertje', 1, 1, 1, '98765432100', '2014-04-17 09:29:19'),
-(20, 'bertje', 2, 1, 1, '98765432100', '2014-04-17 09:31:32'),
-(21, 'bertje', 22, 2, 2, '98765432100', '2014-04-17 09:31:41'),
-(22, 'bertje', 333, 2, 2, '98765432100', '2014-04-17 09:31:52'),
-(23, 'bertje2', 1, 2, 2, '98765432100', '2014-04-17 09:32:30'),
-(24, 'bertje2', 1, 2, 2, '98765432100', '2014-04-17 09:47:01'),
-(25, 'bertje2', 1, 2, 2, '98765432100', '2014-04-17 09:47:02'),
-(26, 'bertje2', 1, 2, 2, '98765432100', '2014-04-17 09:48:11');
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bramtestvragen`
---
-
-CREATE TABLE IF NOT EXISTS `bramtestvragen` (
-  `testid` int(11) NOT NULL,
-  `vraagid` int(11) NOT NULL,
-  KEY `testid` (`testid`,`vraagid`),
-  KEY `vraagid` (`vraagid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Gegevens worden uitgevoerd voor tabel `bramtestvragen`
---
-
-INSERT INTO `bramtestvragen` (`testid`, `vraagid`) VALUES
-(15, 14),
-(15, 16),
-(16, 14),
-(16, 16),
-(17, 13),
-(17, 14),
-(17, 16),
-(18, 13),
-(18, 14),
-(18, 16),
-(19, 5),
-(20, 3),
-(21, 5),
-(21, 13),
-(22, 5),
-(22, 13),
-(23, 11),
-(23, 15),
-(24, 11),
-(24, 15),
-(25, 11),
-(25, 15),
-(26, 11),
-(26, 15);
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `bramupload`
---
-
-CREATE TABLE IF NOT EXISTS `bramupload` (
-  `nummer` int(11) NOT NULL AUTO_INCREMENT,
-  `code` text NOT NULL,
-  PRIMARY KEY (`nummer`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
-
---
--- Gegevens worden uitgevoerd voor tabel `bramupload`
---
-
-INSERT INTO `bramupload` (`nummer`, `code`) VALUES
-(2, '<p>aqZER TGRF</p>'),
-(27, '<p>test</p>\r\n<p>&lt;html&gt;testtest&lt;/html&gt;</p>\r\n<p>&lt;mistypeditisgeentag&gt;testinfaketag&lt;/stopfaketag&gt;</p>\r\n<p>&lt;faketag&gt;&lt;/faketag&gt;</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>'),
-(28, '<p style="box-sizing: border-box; margin: 0px 0px 10px; color: rgb(51, 51, 51); font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: center; background-color: rgba(0, 0, 0, 0.0980392);">test</p>\r\n<p style="box-sizing: border-box; margin: 0px 0px 10px; color: rgb(51, 51, 51); font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: center; background-color: rgba(0, 0, 0, 0.0980392);"><code>&lt;html&gt;testtest&lt;/html&gt;</code></p>\r\n<p style="box-sizing: border-box; margin: 0px 0px 10px; color: rgb(51, 51, 51); font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: center; background-color: rgba(0, 0, 0, 0.0980392);"><code>&lt;mistypeditisgeentag&gt;testinfaketag&lt;/stopfaketag&gt;</code></p>\r\n<p style="box-sizing: border-box; margin: 0px 0px 10px; color: rgb(51, 51, 51); font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; text-align: center; background-color: rgba(0, 0, 0, 0.0980392);"><code>&lt;faketag&gt;&lt;/faketag&gt;</code></p>'),
-(29, '<p>&lt;tag&gt;&lt;/tag&gt;</p>\r\n<p>&lt;code&gt;&lt;html&gt;Egad, a monster&lt;/html&gt;&lt;/code&gt;</p>\r\n<p>&lt;php&gt;if(){crashtime;}&lt;/php&gt;&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<p><code>&lt;php&gt;if(){crashtime v2.0;}&lt;/php&gt;&nbsp;</code></p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>'),
-(30, '<p>gewone zin</p>\r\n<p>&nbsp;</p>\r\n<p>&lt;php&gt;code&lt;/php&gt;</p>\r\n<p>&nbsp;</p>\r\n<p>&lt;code&gt;test&lt;/code&gt;</p>\r\n<p>&nbsp;</p>\r\n<p><code>&lt;code&gt;test&lt;/code&gt;</code></p>'),
-(31, '<div class="form-group">\r\n<div class="col-lg-1">&nbsp;</div>\r\n&lt;div class="dikke_brol"&gt;BRAM TOCH&lt;/div&gt;</div>\r\n<div class="form-group">&nbsp;</div>'),
-(32, '<div class="form-group">\r\n<div class="col-lg-1">&nbsp;</div>\r\n<code>&lt;div class="dikke_brol"&gt;BRAM TOCH&lt;/div&gt;</code></div>\r\n<div class="form-group">&nbsp;</div>'),
-(33, ''),
-(34, ''),
-(35, '<p><code>&lt;div class="test2"&gt;BRAM BRAM BRAM BRAM&lt;/div&gt;</code></p>'),
-(36, '<p>&nbsp; &nbsp;&lt;div class="col-lg-5 centeren" style="width:900px;height:300px;" &gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;textarea class="form-control allowcode mceNoEditor" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"&gt;&lt;/textarea&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="form-group"&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-3"&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-4 centeren"&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;input type="submit" name="gebrknop" class="form-control"&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</p>\r\n<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</p>'),
-(37, '<p><code>&lt;div class="col-lg-5 centeren" style="width:900px;height:300px;" &gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;textarea class="form-control allowcode mceNoEditor" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"&gt;&lt;/textarea&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="form-group"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-3"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-4 centeren"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;input type="submit" name="gebrknop" class="form-control"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p>&nbsp;</p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>'),
-(38, '<p><code>&lt;div class="col-lg-5 centeren" style="width:900px;height:300px;" &gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;textarea class="form-control allowcode mceNoEditor" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"&gt;&lt;/textarea&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="form-group"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-3"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-4 centeren"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;input type="submit" name="gebrknop" class="form-control"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p>&nbsp;</p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>'),
-(39, '<p><code>&lt;div class="col-lg-5 centeren" style="width:900px;height:300px;" &gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;textarea class="form-control allowcode mceNoEditor" name="codeTeUploaden" id="codeTeUploaden" placeholder="testme code" style="height:190px;"&gt;&lt;/textarea&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="form-group"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-3"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;div class="col-lg-4 centeren"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;input type="submit" name="gebrknop" class="form-control"&gt;</code></p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>\r\n<p>&nbsp;</p>\r\n<p><code>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</code></p>'),
-(40, '<p>&lt;div class="container-fluid maincontainer"&gt;</p>\r\n<p>&nbsp; &nbsp; &lt;h1 class="headerpage"&gt;Welkom op de testing website van de VDAB&lt;/h1&gt;</p>\r\n<p>&lt;/div&gt;</p>');
+(23, 0, '<p>20px</p>'),
+(23, 1, '<p>22px</p>'),
+(23, 2, '<p>24px</p>'),
+(23, 3, '<p>25px</p>'),
+(24, 0, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">ul&gt;ul {color:red}</span></p>'),
+(24, 1, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">ul+ul {color:red}</span></p>'),
+(24, 2, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">ul:ul {color:red}</span></p>'),
+(24, 3, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">ul ul {color:red}</span></p>'),
+(25, 0, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;script src="mijnscript"&gt;&lt;/script&gt;</span></p>'),
+(25, 1, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;script href="mijnscript" /&gt;</span></p>'),
+(25, 2, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;link src="mijnscript"&gt;&lt;/link&gt;</span></p>'),
+(25, 3, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;link href="mijnscript" /&gt;</span></p>'),
+(26, 0, '<p><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">ul&gt;ul {color:red};</span></code></p>'),
+(26, 1, '<p><code>ul+ul {color:red};</code></p>'),
+(26, 2, '<p><code>ul:ul {color:red};</code></p>'),
+(26, 3, '<p><code>ul ul {color:red}</code></p>'),
+(27, 0, '<p><span style="color: #252525; font-family: sans-serif; font-size: 14px; line-height: 22.399999618530273px;">Auguste Rodin</span></p>'),
+(27, 1, '<p><span style="color: rgb(37, 37, 37); font-family: sans-serif; font-size: 14px; line-height: 22.399999618530273px;">Auguste&nbsp;Gauguin</span></p>'),
+(27, 2, '<p><span style="color: rgb(37, 37, 37); font-family: sans-serif; font-size: 14px; line-height: 22.399999618530273px;">Auguste&nbsp;C&eacute;zanne</span></p>'),
+(28, 0, '<p>Apollo</p>'),
+(28, 1, '<p>Hermes</p>'),
+(28, 2, '<p>Zeus</p>'),
+(28, 3, '<p>Poseidon</p>'),
+(29, 0, '<p>Holland</p>'),
+(29, 1, '<p>Nederland</p>'),
+(29, 2, '<p>Frankrijk</p>'),
+(29, 3, '<p>Duitsland</p>'),
+(30, 0, '<p>bloem</p>'),
+(30, 1, '<p>melk</p>'),
+(30, 2, '<p>water</p>'),
+(30, 3, '<p>nootmuskaat</p>'),
+(31, 0, '<p>ja</p>'),
+(31, 1, '<p>nee</p>'),
+(32, 0, '<p>1, 2, 3</p>'),
+(32, 1, '<p>2, 2, 2</p>'),
+(32, 2, '<p>3, 1, 2</p>'),
+(33, 0, '<p>0,5 kg</p>'),
+(33, 1, '<p>0,75 kg</p>'),
+(33, 2, '<p>1,25kg</p>'),
+(33, 3, '<p>1,5kg</p>'),
+(34, 0, '<p>Verenigde Staten</p>'),
+(34, 1, '<p>Japan</p>'),
+(34, 2, '<p>Duitsland</p>'),
+(34, 3, '<p>Sovietunie</p>'),
+(35, 0, '<p>2</p>'),
+(35, 1, '<p>2</p>'),
+(35, 2, '<p>2</p>'),
+(35, 3, '<p>2</p>'),
+(36, 0, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>'),
+(36, 1, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>'),
+(36, 2, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>'),
+(36, 3, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</p>'),
+(37, 0, '<p>&nbsp; &nbsp;&nbsp;</p>'),
+(37, 1, '<p>&nbsp; &nbsp;</p>'),
+(38, 0, 'veel'),
+(38, 1, 'weining'),
+(39, 0, '<p>Een error.</p>'),
+(39, 1, '<p>niets.</p>'),
+(39, 2, '<p>de eerste rij, ongeacht de sortering.</p>'),
+(39, 3, '<p>de rij met <code>''id''=1.</code></p>'),
+(39, 4, '<p>alles.</p>'),
+(40, 0, '<p>Fabian Cancellara</p>'),
+(40, 1, '<p>Tom Boonen</p>'),
+(40, 2, '<p>Hendrik Debuck</p>'),
+(41, 0, '<p>foto 1</p>'),
+(41, 1, '<p>foto 2</p>'),
+(41, 2, '<p>foto 3</p>'),
+(41, 3, '<p>foto 4</p>'),
+(42, 0, '<p>foto 1</p>'),
+(42, 1, '<p>foto 2</p>'),
+(42, 2, '<p>foto 3</p>'),
+(43, 0, '<p>P-40 Warhawk</p>'),
+(43, 1, '<p>P-39 Airacobra</p>'),
+(43, 2, '<p>P-51 Mustang</p>'),
+(43, 3, '<p>P-38 Lightning</p>'),
+(43, 4, '<p>F4U Corsair</p>'),
+(44, 0, '<p>Blauw</p>'),
+(44, 1, '<p>Wit</p>'),
+(44, 2, '<p>Rood</p>'),
+(44, 3, '<p>Geel</p>'),
+(45, 0, '<p>Eiwit</p>'),
+(45, 1, '<p>Eigeel</p>'),
+(45, 2, '<p>Melk</p>');
 
 -- --------------------------------------------------------
 
@@ -309,18 +174,49 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `catnaam` tinytext CHARACTER SET utf8mb4 NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`catid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `categorie`
 --
 
 INSERT INTO `categorie` (`catid`, `catnaam`, `actief`) VALUES
-(1, 'cultuur', 1),
-(2, 'sport', 1),
-(3, 'programma', 1),
-(4, 'test', 1),
-(5, 'Lege testcategorie', 1);
+(1, 'Cultuur', 1),
+(2, 'Sport', 1),
+(3, 'Programma', 1),
+(4, 'Test', 1),
+(5, 'Lege testcategorie', 1),
+(6, 'Keuken', 1),
+(7, 'Bouw', 1),
+(8, 'Leetspeak', 1),
+(9, 'Luchtvaart', 1),
+(10, 'Horeca', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `categorie_backup`
+--
+
+CREATE TABLE IF NOT EXISTS `categorie_backup` (
+  `catid` int(11) NOT NULL AUTO_INCREMENT,
+  `catnaam` tinytext CHARACTER SET utf8mb4 NOT NULL,
+  `actief` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`catid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `categorie_backup`
+--
+
+INSERT INTO `categorie_backup` (`catid`, `catnaam`, `actief`) VALUES
+(1, 'Cultuur', 1),
+(2, 'Sport', 1),
+(3, 'Programma', 1),
+(4, 'Test', 1),
+(5, 'Lege testcategorie', 1),
+(6, 'Keuken', 1),
+(7, 'Bouw', 1);
 
 -- --------------------------------------------------------
 
@@ -345,17 +241,52 @@ CREATE TABLE IF NOT EXISTS `gebruikers` (
 --
 
 INSERT INTO `gebruikers` (`rijksregisternr`, `email`, `voornaam`, `familienaam`, `wachtwoord`, `gebruikerstype`, `actief`) VALUES
-('12345678900', 'gebruiker@email.be', 'gebruiker', 'gebruikerfnaam', 'qsdf', 1, 1),
+('11223344551', '', 'Marc', 'Verhaeghe', '', 1, 1),
+('12345678900', 'gebruiker@email.be', 'gebruiker', 'gebruikerfnaam', '', 1, 1),
+('12345678901', '', 'Kurt', 'Debruyn', '', 1, 1),
 ('12345678933', 'bert@email.be', 'Bert', 'Mortier', 'qsdf', 3, 1),
+('12345678987', '', 'TestVnaam', 'TestFnaam', '', 1, 1),
 ('32165498722', 'hendrik@email.be', 'Hendrik', 'De Buck', 'qsdf', 3, 1),
-('32165498723', '', 'nummerEEN', 'testgebruiker', '', 1, 1),
 ('32165498755', 'thomas@email.be', 'Thomas', 'Deserranno', 'azerty', 3, 1),
-('44475888888', '', 'p', 'o', '', 1, 1),
+('33333333333', '', 'qsdfgqer', 'eh', '', 1, 1),
+('44444444444', '', 'TesterVoornaam', 'TesterAchternaam', '', 1, 1),
 ('45678901230', 'beheerder@email.be', 'beheerder', 'beheerderfnaam', 'qsdf', 2, 1),
-('45781273864', '', 'tester', 'ulrich', '', 1, 1),
-('46737215184', '', 'retsr', 'testr', '', 1, 1),
-('78451545454', '', 'nummerTWEE', 'testgebruiker', '', 1, 1),
-('98765432100', 'bram@email.be', 'Bram', 'Peters', 'wxcv', 3, 1);
+('55544466633', '', 'qrfgqrfg', 'qsdfghqr', '', 1, 1),
+('88888888800', '', 'OverflowVN1', 'Overflow1', '', 1, 1),
+('88888888801', '', 'OFVN', 'OF', '', 1, 1),
+('88888888802', '', 'OFVN', 'OF', '', 1, 1),
+('88888888803', '', 'OFVN', 'OF', '', 1, 1),
+('88888888804', '', 'OFVN', 'OF', '', 1, 1),
+('88888888805', '', 'OFVN', 'OF', '', 1, 1),
+('88888888806', '', 'OFVN', 'OF', '', 1, 1),
+('88888888807', '', 'OFVN', 'OF', '', 1, 1),
+('88888888808', '', 'OFVN', 'OF', '', 1, 1),
+('88888888809', '', 'OFVN', 'OF', '', 1, 1),
+('88888888810', '', 'OFVN', 'OF', '', 1, 1),
+('88888888811', '', 'OFVN', 'OF', '', 1, 1),
+('88888888812', '', 'OFVN', 'OF', '', 1, 1),
+('88888888813', '', 'OFVN', 'OF', '', 1, 1),
+('88888888814', '', 'OFVN', 'OF', '', 1, 1),
+('88888888815', '', 'OFVN', 'OF', '', 1, 1),
+('88888888816', '', 'OFVN', 'OF', '', 1, 1),
+('88888888817', '', 'OFVN', 'OF', '', 1, 1),
+('88888888818', '', 'OFVN', 'OF', '', 1, 1),
+('88888888819', '', 'OFVN', 'OF', '', 1, 1),
+('88888888820', '', 'OFVN', 'OF', '', 1, 1),
+('88888888821', '', 'OFVN', 'OF', '', 1, 1),
+('88888888822', '', 'OFVN', 'OF', '', 1, 1),
+('88888888823', '', 'OFVN', 'OF', '', 1, 1),
+('88888888824', '', 'OFVN', 'OF', '', 1, 1),
+('88888888825', '', 'OFVN', 'OF', '', 1, 1),
+('88888888826', '', 'OFVN', 'OF', '', 1, 1),
+('88888888827', '', 'OFVN', 'OF', '', 1, 1),
+('88888888828', '', 'OFVN', 'OF', '', 1, 1),
+('88888888829', '', 'OFVN', 'OF', '', 1, 1),
+('88888888830', '', 'OFVN', 'Of', '', 1, 1),
+('88888888855', '', 'OFVN', 'OF', '', 1, 1),
+('98745632112', '', 'Annick', 'DeCorte', '', 1, 1),
+('98765432100', 'bram@email.be', 'Bram', 'Peters', 'wxcv', 3, 1),
+('99999999999', '', 'test', 'tester', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -401,7 +332,20 @@ INSERT INTO `media` (`vraagid`, `mediaid`, `filename`) VALUES
 (3, 0, 'china.jpg'),
 (4, 0, 'ijs.jpg'),
 (12, 0, 'Git-1.9.0-preview20140217.exe'),
-(12, 1, 'lazarus-1.0.14-fpc-2.6.2-win32.exe');
+(12, 1, 'lazarus-1.0.14-fpc-2.6.2-win32.exe'),
+(27, 0, 'DeDenker.jpg'),
+(31, 0, 'china.jpg'),
+(31, 1, 'DeDenker.jpg'),
+(31, 2, 'ijs.jpg'),
+(40, 0, 'boonen.jpg'),
+(41, 0, 'f4u.jpg'),
+(41, 1, 'f8f.jpg'),
+(41, 2, 'spitfire.jpg'),
+(41, 3, 'warbird.jpg'),
+(42, 0, 'f4u.jpg'),
+(42, 1, 'f8f.jpg'),
+(42, 2, 'spitfire.jpg'),
+(43, 0, 'formation.jpg');
 
 -- --------------------------------------------------------
 
@@ -417,16 +361,38 @@ CREATE TABLE IF NOT EXISTS `sessie` (
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`sessieid`),
   KEY `testid` (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `sessie`
 --
 
 INSERT INTO `sessie` (`sessieid`, `datum`, `testid`, `sessieww`, `actief`) VALUES
-(1, '2014-04-01', 1, '1', 0),
-(2, '2014-04-17', 1, 'domkalf', 1),
-(3, '2014-04-17', 1, 'koekoek', 0);
+(29, '2014-04-29', 33, 'lol', 1),
+(31, '2014-04-25', 34, 'cultuur1', 1),
+(32, '2014-04-25', 35, 'protprot', 1),
+(33, '2014-04-09', 34, 'cultuur 2', 1),
+(34, '2014-04-09', 34, 'cultuur 2', 1),
+(35, '2014-04-09', 34, 'cultuur 2', 1),
+(36, '2014-04-25', 36, 'protprot', 1),
+(37, '2014-04-17', 34, 'crashtest', 1),
+(38, '2014-04-26', 37, 'OF', 1),
+(39, '2014-04-30', 37, 'OF2', 1),
+(40, '2014-04-27', 37, 'ooo', 1),
+(41, '2014-04-01', 38, 'crash', 1),
+(42, '2014-04-24', 39, 'sport4', 1),
+(43, '2014-04-28', 40, 'koekoek', 1),
+(44, '2014-04-29', 40, 'abc', 1),
+(45, '2014-04-28', 40, 'protprot', 1),
+(46, '2014-04-25', 34, 'dddddddd', 1),
+(47, '2014-04-30', 41, 'Bouw32', 1),
+(48, '2014-04-29', 42, 'yolo', 1),
+(49, '2014-04-30', 43, 'bert', 1),
+(50, '2014-05-01', 44, 'PHP55', 1),
+(51, '2014-04-30', 45, 'sport3', 1),
+(52, '2014-04-30', 46, 'lucht', 1),
+(53, '2014-04-30', 46, 'lucht', 1),
+(54, '2014-04-30', 47, 'keuken1', 1);
 
 -- --------------------------------------------------------
 
@@ -440,8 +406,8 @@ CREATE TABLE IF NOT EXISTS `sessiegebruiker` (
   `score` int(11) NOT NULL,
   `percentage` decimal(3,0) NOT NULL,
   `geslaagd` tinyint(1) NOT NULL,
-  `afgelegd` tinyint(1) DEFAULT NULL,
-  `actief` tinyint(1) NOT NULL,
+  `afgelegd` tinyint(1) DEFAULT '0',
+  `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`sessieid`,`rijksregisternr`),
   KEY `gebruikerid` (`rijksregisternr`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -451,7 +417,138 @@ CREATE TABLE IF NOT EXISTS `sessiegebruiker` (
 --
 
 INSERT INTO `sessiegebruiker` (`sessieid`, `rijksregisternr`, `score`, `percentage`, `geslaagd`, `afgelegd`, `actief`) VALUES
-(1, '12345678900', 1, '50', 1, 1, 0);
+(29, '12345678900', 0, '0', 0, 0, 1),
+(29, '44444444444', 2, '67', 0, 1, 1),
+(29, '99999999999', 3, '100', 0, 1, 1),
+(31, '12345678900', 0, '0', 0, 0, 1),
+(31, '44444444444', 1, '17', 0, 1, 1),
+(31, '99999999999', 0, '0', 0, 1, 1),
+(32, '12345678900', 0, '0', 0, 0, 1),
+(32, '44444444444', 0, '0', 0, 0, 1),
+(32, '99999999999', 0, '0', 0, 0, 1),
+(35, '12345678900', 0, '0', 0, 0, 1),
+(36, '44444444444', 0, '0', 0, 1, 1),
+(38, '88888888800', 0, '0', 0, 1, 1),
+(38, '88888888801', 0, '0', 0, 0, 1),
+(38, '88888888802', 0, '0', 0, 0, 1),
+(38, '88888888803', 0, '0', 0, 0, 1),
+(38, '88888888804', 0, '0', 0, 0, 1),
+(38, '88888888805', 0, '0', 0, 0, 1),
+(38, '88888888806', 0, '0', 0, 0, 1),
+(38, '88888888807', 0, '0', 0, 0, 1),
+(38, '88888888808', 0, '0', 0, 0, 1),
+(38, '88888888809', 0, '0', 0, 0, 1),
+(38, '88888888810', 1, '100', 0, 1, 1),
+(38, '88888888811', 0, '0', 0, 0, 1),
+(38, '88888888812', 0, '0', 0, 0, 1),
+(38, '88888888813', 0, '0', 0, 0, 1),
+(38, '88888888814', 0, '0', 0, 0, 1),
+(38, '88888888815', 0, '0', 0, 0, 1),
+(38, '88888888816', 0, '0', 0, 0, 1),
+(38, '88888888817', 0, '0', 0, 0, 1),
+(38, '88888888818', 0, '0', 0, 0, 1),
+(38, '88888888819', 0, '0', 0, 0, 1),
+(39, '88888888800', 0, '0', 0, 1, 1),
+(39, '88888888801', 0, '0', 0, 0, 1),
+(39, '88888888802', 0, '0', 0, 0, 1),
+(39, '88888888803', 1, '100', 1, 1, 1),
+(39, '88888888804', 0, '0', 0, 0, 1),
+(39, '88888888805', 0, '0', 0, 0, 1),
+(39, '88888888806', 0, '0', 0, 0, 1),
+(39, '88888888807', 0, '0', 0, 0, 1),
+(39, '88888888808', 0, '0', 0, 0, 1),
+(39, '88888888809', 0, '0', 0, 0, 1),
+(39, '88888888810', 0, '0', 0, 0, 1),
+(39, '88888888811', 0, '0', 0, 0, 1),
+(39, '88888888812', 0, '0', 0, 0, 1),
+(39, '88888888813', 0, '0', 0, 0, 1),
+(39, '88888888814', 0, '0', 0, 0, 1),
+(39, '88888888815', 0, '0', 0, 0, 1),
+(39, '88888888816', 0, '0', 0, 0, 1),
+(39, '88888888817', 0, '0', 0, 0, 1),
+(39, '88888888818', 0, '0', 0, 0, 1),
+(39, '88888888819', 0, '0', 0, 0, 1),
+(39, '88888888820', 0, '0', 0, 0, 1),
+(39, '88888888821', 0, '0', 0, 0, 1),
+(39, '88888888822', 0, '0', 0, 0, 1),
+(39, '88888888823', 0, '0', 0, 0, 1),
+(39, '88888888824', 0, '0', 0, 0, 1),
+(39, '88888888825', 0, '0', 0, 0, 1),
+(39, '88888888826', 0, '0', 0, 0, 1),
+(39, '88888888827', 0, '0', 0, 0, 1),
+(39, '88888888828', 0, '0', 0, 0, 1),
+(39, '88888888829', 0, '0', 0, 0, 1),
+(39, '88888888830', 1, '100', 0, 1, 1),
+(39, '88888888855', 0, '0', 0, 0, 1),
+(40, '12345678900', 0, '0', 0, 0, 1),
+(40, '33333333333', 0, '0', 0, 0, 1),
+(40, '44444444444', 0, '0', 0, 0, 1),
+(40, '55544466633', 0, '0', 0, 0, 1),
+(40, '88888888800', 0, '0', 0, 0, 1),
+(40, '88888888801', 0, '0', 0, 0, 1),
+(40, '88888888802', 0, '0', 0, 0, 1),
+(40, '88888888803', 0, '0', 0, 0, 1),
+(40, '88888888804', 0, '0', 0, 0, 1),
+(40, '88888888805', 0, '0', 0, 0, 1),
+(40, '88888888806', 0, '0', 0, 0, 1),
+(40, '88888888807', 0, '0', 0, 0, 1),
+(40, '88888888808', 0, '0', 0, 0, 1),
+(40, '88888888809', 0, '0', 0, 0, 1),
+(40, '88888888810', 0, '0', 0, 0, 1),
+(40, '88888888811', 0, '0', 0, 0, 1),
+(40, '88888888812', 0, '0', 0, 0, 1),
+(40, '88888888813', 0, '0', 0, 0, 1),
+(40, '88888888814', 0, '0', 0, 0, 1),
+(40, '88888888815', 0, '0', 0, 0, 1),
+(40, '88888888816', 0, '0', 0, 0, 1),
+(40, '88888888817', 0, '0', 0, 0, 1),
+(40, '88888888818', 0, '0', 0, 0, 1),
+(40, '88888888819', 0, '0', 0, 0, 1),
+(40, '88888888820', 0, '0', 0, 0, 1),
+(40, '88888888821', 0, '0', 0, 0, 1),
+(40, '88888888822', 0, '0', 0, 0, 1),
+(40, '88888888823', 0, '0', 0, 0, 1),
+(40, '88888888824', 0, '0', 0, 0, 1),
+(40, '88888888825', 0, '0', 0, 0, 1),
+(40, '88888888826', 0, '0', 0, 0, 1),
+(40, '88888888827', 0, '0', 0, 0, 1),
+(40, '88888888828', 0, '0', 0, 0, 1),
+(40, '88888888829', 0, '0', 0, 0, 1),
+(40, '88888888830', 0, '0', 0, 0, 1),
+(40, '88888888855', 0, '0', 0, 0, 1),
+(40, '99999999999', 0, '0', 0, 0, 1),
+(41, '12345678900', 0, '0', 0, 0, 1),
+(41, '44444444444', 1, '25', 0, 1, 1),
+(41, '99999999999', 0, '0', 0, 0, 1),
+(42, '12345678900', 0, '0', 0, 0, 1),
+(42, '44444444444', 0, '0', 0, 0, 1),
+(42, '99999999999', 0, '0', 0, 0, 1),
+(43, '12345678900', 2, '100', 0, 1, 1),
+(43, '12345678901', 1, '50', 0, 1, 1),
+(44, '12345678900', 2, '100', 0, 1, 1),
+(44, '12345678901', 2, '100', 1, 1, 1),
+(45, '88888888811', 0, '0', 0, 0, 1),
+(45, '88888888812', 0, '0', 0, 0, 1),
+(45, '88888888823', 0, '0', 0, 0, 1),
+(45, '88888888824', 0, '0', 0, 0, 1),
+(47, '12345678900', 0, '0', 0, 0, 1),
+(48, '12345678900', 5, '100', 1, 1, 1),
+(48, '12345678901', 5, '100', 1, 1, 1),
+(49, '12345678901', 0, '0', 0, 0, 1),
+(50, '12345678900', 0, '0', 0, 0, 1),
+(50, '12345678901', 1, '17', 0, 1, 1),
+(50, '12345678987', 0, '0', 0, 0, 1),
+(50, '44444444444', 0, '0', 0, 0, 1),
+(50, '99999999999', 0, '0', 0, 0, 1),
+(51, '12345678900', 0, '0', 0, 0, 1),
+(51, '12345678901', 0, '0', 0, 0, 1),
+(52, '12345678900', 1, '25', 0, 1, 1),
+(52, '12345678901', 4, '100', 1, 1, 1),
+(53, '12345678900', 0, '0', 0, 0, 1),
+(53, '12345678901', 0, '0', 0, 0, 1),
+(54, '11223344551', 2, '67', 1, 1, 1),
+(54, '12345678900', 0, '0', 0, 0, 1),
+(54, '12345678901', 0, '0', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -461,12 +558,74 @@ INSERT INTO `sessiegebruiker` (`sessieid`, `rijksregisternr`, `score`, `percenta
 
 CREATE TABLE IF NOT EXISTS `sessiegebruikerantwoorden` (
   `sessieid` int(11) NOT NULL,
-  `gebruikerid` int(11) NOT NULL,
+  `gebruikerid` varchar(11) NOT NULL,
   `vraagid` int(11) NOT NULL,
   `correct` tinyint(1) NOT NULL,
   PRIMARY KEY (`sessieid`,`gebruikerid`,`vraagid`),
   KEY `vraagid` (`vraagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `sessiegebruikerantwoorden`
+--
+
+INSERT INTO `sessiegebruikerantwoorden` (`sessieid`, `gebruikerid`, `vraagid`, `correct`) VALUES
+(29, '2147483647', 2, 1),
+(29, '2147483647', 11, 0),
+(29, '2147483647', 15, 1),
+(29, '99999999999', 2, 1),
+(29, '99999999999', 11, 1),
+(29, '99999999999', 15, 1),
+(31, '44444444444', 1, 0),
+(31, '44444444444', 4, 0),
+(31, '44444444444', 5, 1),
+(31, '44444444444', 27, 0),
+(31, '44444444444', 28, 0),
+(31, '44444444444', 29, 0),
+(31, '99999999999', 1, 0),
+(31, '99999999999', 4, 0),
+(31, '99999999999', 5, 0),
+(31, '99999999999', 27, 0),
+(31, '99999999999', 28, 0),
+(31, '99999999999', 29, 0),
+(36, '44444444444', 1, 0),
+(38, '88888888800', 30, 1),
+(38, '88888888810', 30, 1),
+(39, '88888888800', 30, 0),
+(39, '88888888803', 30, 1),
+(39, '88888888830', 30, 1),
+(41, '44444444444', 27, 1),
+(41, '44444444444', 28, 0),
+(41, '44444444444', 29, 1),
+(41, '44444444444', 31, 1),
+(43, '12345678900', 32, 1),
+(43, '12345678900', 33, 1),
+(43, '12345678901', 32, 0),
+(43, '12345678901', 33, 1),
+(44, '12345678900', 32, 1),
+(44, '12345678900', 33, 1),
+(44, '12345678901', 32, 1),
+(44, '12345678901', 33, 1),
+(48, '12345678900', 4, 1),
+(48, '12345678900', 5, 1),
+(48, '12345678900', 29, 1),
+(48, '12345678900', 34, 1),
+(48, '12345678901', 4, 1),
+(48, '12345678901', 5, 1),
+(48, '12345678901', 29, 1),
+(48, '12345678901', 34, 1),
+(50, '12345678901', 23, 0),
+(50, '12345678901', 25, 1),
+(50, '12345678901', 26, 0),
+(50, '12345678901', 39, 0),
+(52, '12345678900', 41, 0),
+(52, '12345678900', 42, 1),
+(52, '12345678900', 43, 1),
+(52, '12345678901', 41, 1),
+(52, '12345678901', 42, 1),
+(52, '12345678901', 43, 1),
+(54, '11223344551', 44, 0),
+(54, '11223344551', 45, 1);
 
 -- --------------------------------------------------------
 
@@ -478,10 +637,10 @@ CREATE TABLE IF NOT EXISTS `subcategorie` (
   `subcatid` int(11) NOT NULL AUTO_INCREMENT,
   `catid` int(11) NOT NULL,
   `subcatnaam` tinytext NOT NULL,
-  `actief` tinyint(1) NOT NULL,
+  `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`subcatid`),
   KEY `catid` (`catid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `subcategorie`
@@ -494,7 +653,7 @@ INSERT INTO `subcategorie` (`subcatid`, `catid`, `subcatnaam`, `actief`) VALUES
 (4, 2, 'wielrennen', 1),
 (5, 2, 'voetbal', 1),
 (6, 2, 'andere', 1),
-(7, 3, 'htmlcss', 1),
+(7, 3, 'htmlcss', 0),
 (8, 3, 'javascript', 1),
 (9, 3, 'php', 1),
 (10, 3, 'sql', 1),
@@ -507,7 +666,13 @@ INSERT INTO `subcategorie` (`subcatid`, `catid`, `subcatnaam`, `actief`) VALUES
 (38, 4, '2', 0),
 (39, 4, '3', 0),
 (40, 4, 'testtestest4', 0),
-(41, 4, 'testtestest5', 0);
+(41, 4, 'testtestest5', 0),
+(42, 6, 'IngrediÃ«nten', 1),
+(43, 6, 'Potten en pannen', 1),
+(44, 7, 'Metselen', 1),
+(45, 1, '', 1),
+(46, 9, 'Ww2', 1),
+(47, 10, 'Keukenmedewerker', 1);
 
 -- --------------------------------------------------------
 
@@ -525,14 +690,29 @@ CREATE TABLE IF NOT EXISTS `test` (
   `beheerder` varchar(11) NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=48 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `test`
 --
 
 INSERT INTO `test` (`testid`, `testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `tebehalenscore`, `beheerder`, `actief`) VALUES
-(1, 'o', 1, 1, 1, 0, '1', 1);
+(32, 'GebruikDezeTestThomas', 123, 6, 9, 60, '98765432100', 1),
+(33, 'Sport 2', 120, 3, 3, 60, '32165498755', 1),
+(34, 'Cultuur 1', 350, 6, 6, 60, '98765432100', 1),
+(35, 'tester V2001', 200, 2, 5, 60, '98765432100', 1),
+(36, '1vraag', 200, 1, 1, 60, '98765432100', 1),
+(37, 'OverFlowCheck', 123, 1, 1, 60, '98765432100', 1),
+(38, 'crashtest', 123, 4, 4, 60, '98765432100', 1),
+(39, 'Sport 4', 43, 2, 2, 60, '98765432100', 1),
+(40, 'Bouw oriÃ«ntering eindtest', 10, 2, 2, 60, '98765432100', 1),
+(41, 'Bouw 32', 350, 1, 1, 60, '98765432100', 1),
+(42, 'Landen shuffletest', 15, 4, 5, 60, '98765432100', 1),
+(43, 'bertjewertje', 123, 1, 1, 60, '98765432100', 1),
+(44, 'PHP 55', 543, 4, 6, 60, '98765432100', 1),
+(45, 'Sport 3', 15, 4, 4, 60, '98765432100', 1),
+(46, 'Warbirds', 10, 3, 4, 60, '32165498755', 1),
+(47, 'Keuken 1', 15, 2, 3, 60, '32165498755', 1);
 
 -- --------------------------------------------------------
 
@@ -550,6 +730,41 @@ CREATE TABLE IF NOT EXISTS `testsubcat` (
   KEY `subcatid` (`subcatid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden uitgevoerd voor tabel `testsubcat`
+--
+
+INSERT INTO `testsubcat` (`testid`, `subcatid`, `aantal`, `totgewicht`, `tebehalenscore`) VALUES
+(32, 1, 3, 3, 50),
+(32, 2, 1, 1, 50),
+(32, 3, 2, 5, 50),
+(33, 4, 1, 1, 50),
+(33, 5, 1, 1, 50),
+(33, 36, 1, 1, 50),
+(34, 1, 1, 1, 50),
+(34, 2, 3, 3, 50),
+(34, 28, 2, 2, 50),
+(35, 3, 1, 4, 50),
+(35, 28, 1, 1, 50),
+(36, 1, 1, 1, 50),
+(37, 42, 1, 1, 50),
+(38, 2, 1, 1, 50),
+(38, 28, 3, 3, 50),
+(39, 5, 1, 1, 50),
+(39, 36, 1, 1, 50),
+(40, 44, 2, 2, 50),
+(41, 44, 1, 1, 50),
+(42, 2, 4, 5, 50),
+(43, 42, 1, 1, 50),
+(44, 7, 2, 4, 50),
+(44, 8, 1, 1, 50),
+(44, 10, 1, 1, 50),
+(45, 4, 2, 2, 50),
+(45, 5, 1, 1, 50),
+(45, 36, 1, 1, 50),
+(46, 46, 3, 4, 50),
+(47, 47, 2, 3, 50);
+
 -- --------------------------------------------------------
 
 --
@@ -559,9 +774,62 @@ CREATE TABLE IF NOT EXISTS `testsubcat` (
 CREATE TABLE IF NOT EXISTS `testvragen` (
   `testid` int(11) NOT NULL,
   `vraagid` int(11) NOT NULL,
+  PRIMARY KEY (`testid`,`vraagid`),
   KEY `testid` (`testid`,`vraagid`),
   KEY `vraagid` (`vraagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `testvragen`
+--
+
+INSERT INTO `testvragen` (`testid`, `vraagid`) VALUES
+(32, 1),
+(34, 1),
+(36, 1),
+(33, 2),
+(45, 2),
+(32, 3),
+(32, 4),
+(34, 4),
+(42, 4),
+(34, 5),
+(42, 5),
+(33, 11),
+(39, 11),
+(45, 11),
+(32, 13),
+(32, 14),
+(33, 15),
+(39, 15),
+(45, 15),
+(32, 16),
+(35, 16),
+(44, 23),
+(44, 25),
+(44, 26),
+(34, 27),
+(38, 27),
+(34, 28),
+(35, 28),
+(38, 28),
+(34, 29),
+(38, 29),
+(42, 29),
+(37, 30),
+(38, 31),
+(40, 32),
+(41, 32),
+(40, 33),
+(42, 34),
+(43, 38),
+(44, 39),
+(45, 40),
+(46, 41),
+(46, 42),
+(46, 43),
+(47, 44),
+(47, 45);
 
 -- --------------------------------------------------------
 
@@ -577,7 +845,7 @@ CREATE TABLE IF NOT EXISTS `vraag` (
   `correctantwoord` int(11) NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`vraagid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=46 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `vraag`
@@ -589,21 +857,35 @@ INSERT INTO `vraag` (`subcatid`, `vraagid`, `vraagtekst`, `gewicht`, `correctant
 (1, 3, 'De Belgische regeringsformatie van 2012 brak alle vorige records qua duurtijd, na hoeveel dagen na de verkiezing was er een regering?', 1, 3, 1),
 (2, 4, 'De winter 2011-2012 kende toch een lange vorstperiode met 14 opeenvolgende ijsdagen. De vorige winter, 2010-2011, kende in totaal hoeveel ijsdagen?', 1, 3, 1),
 (2, 5, 'In China is 2012 het jaar van', 1, 1, 1),
-(7, 6, 'als Paul zijn naam doorstuurt via een webformulier, bemerkt hij in de adresbalk het url http://www.vdab.be/inschrijven.php?naam=Paul. \r\ndit duidt erop dat het attribuut method van het form element van de formulierpagina de volgende waarde heeft:', 1, 0, 1),
-(7, 7, 'Gegeven de volgende HTML:\r\n<body>\r\n<p>de eenzame herder</p>\r\n<div>springt over\r\n<div>het gekke schaap</div>\r\n</div>\r\n</body>   \r\nen volgende CSS\r\nbody { font-size: 100%; }\r\ndiv  { font-size: 1.25em; }        \r\ndan heeft de tekst "het gekke schaap" in een standaardbrowser een lettergrootte van', 3, 3, 1),
-(7, 8, 'Gegeven de volgende HTML:\r\n<ul>\r\n  <li>dieren\r\n    <ul>\r\n      <li>koe</li>\r\n       <li>schaap</li>\r\n       <li>kip</li>\r\n    </ul>\r\n  </li>\r\n  <li>planten</li>\r\n</ul>\r\nwelke CSS code kleurt het woord "dieren" zwart en het woord "kip" rood?', 2, 3, 1),
-(7, 9, 'Dezelfde webpagina bevat meerdere talen in hun eigen karakters, zoals Arabisch, Chinees en Engels. \r\nWelk van onderstaande predikaten, elementen en attributen maakt dit mogelijk?', 2, 2, 1),
-(7, 10, 'De juiste manier om een javascript te koppelen aan een HTML pagina is:', 1, 0, 1),
 (5, 11, 'Wat is het gastland voor de wereldbeker voetbal in 2014?', 1, 2, 1),
 (11, 12, 'Testvraag 1130', 5, 2, 1),
 (1, 13, 'Wat is de datum van de volgende verkiezingen?', 1, 2, 1),
 (3, 14, 'kunst testvraag', 1, 0, 1),
 (36, 15, 'Welk(e) voorwerp(en) gebruik je bij fierljeppen', 1, 0, 1),
 (3, 16, 'Wie heeft de Rechtvaardige Rechters gestolen?', 4, 2, 1),
-(7, 17, 'Vul hier uw vraag in', 1, 0, 1),
-(7, 18, 'Vul hier uw vraag in', 1, 0, 1),
-(7, 19, 'Vul hier uw vraag in', 1, 0, 1),
-(35, 20, 'Indien je in een team tegen Thomas zou spelen, welk ledemaat bewerk je eerst?', 1, 2, 1);
+(7, 23, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">Gegeven de volgende HTML:</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;body&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;p&gt;de eenzame herder&lt;/p&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;div&gt;springt over</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;div&gt;het gekke schaap&lt;/div&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;/div&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;/body&gt; </span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">en volgende CSS</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">body { font-size: 100%; }</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">div { font-size: 1.25em; } </span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">dan heeft de tekst "het gekke schaap" in een standaardbrowser een lettergrootte van</span></p>', 3, 1, 1),
+(7, 24, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">Gegeven de volgende HTML:</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;ul&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;dieren</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;ul&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;koe&lt;/li&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;schaap&lt;/li&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;kip&lt;/li&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;/ul&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;/li&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;planten&lt;/li&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;/ul&gt;</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">welke CSS code kleurt het woord "dieren" zwart en het woord "kip" rood?</span></p>', 2, 2, 1),
+(8, 25, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">De juiste manier om een javascript te koppelen aan een HTML pagina is:</span></p>', 1, 0, 1),
+(7, 26, '<p><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">Gegeven de volgende HTML:</span><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;ul&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;dieren</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;ul&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;koe&lt;/li&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;schaap&lt;/li&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;kip&lt;/li&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;/ul&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;/li&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;"> &lt;li&gt;planten&lt;/li&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><code><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">&lt;/ul&gt;</span></code><br style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;" /><span style="font-family: arial, sans, sans-serif; font-size: 13px; white-space: pre-wrap;">welke CSS code kleurt het woord "dieren" zwart en het woord "kip" rood?</span></p>', 1, 0, 1),
+(28, 27, '<p>De denker is een bronzen kunstwerk van welke beeldhouwwerker?</p>', 1, 0, 1),
+(28, 28, '<p><strong style="color: #252525; font-family: sans-serif; font-size: 14px; line-height: 22.399999618530273px;">Kolossus van Rodos </strong>stelt welke god voor?</p>', 1, 0, 1),
+(2, 29, '<p>Wat is geen buurland van Belgi&euml;?</p>', 1, 0, 1),
+(42, 30, '<p>Wat hoort niet thuis in een<strong> witte saus</strong>?</p>', 1, 2, 1),
+(28, 31, '<p>Kan dit crashen ?</p>', 1, 0, 1),
+(44, 32, '<p>Wat is de juiste verhouding (in volgorde) van zand, cement en water om klassieke mortel te maken?</p>', 1, 2, 1),
+(44, 33, '<p>Wat is het gewicht van een rode baksteen type 765?</p>', 1, 1, 1),
+(2, 34, '<p>In welk land werd voor het eerst een atoombom tot ontploffing gebracht?</p>', 2, 0, 1),
+(1, 35, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>', 1, 0, 1),
+(1, 36, '<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>', 1, 0, 1),
+(1, 37, '<p>&nbsp; &nbsp; &nbsp;&nbsp;</p>', 1, 0, 1),
+(42, 38, '<p>hoe keukenprinses is bertje</p>', 1, 4, 1),
+(10, 39, '<p><code>select * from ''tabel'' where 1</code> geeft welk resultaat?</p>', 1, 4, 1),
+(4, 40, '<p>wie is dit?</p>', 1, 1, 1),
+(46, 41, '<p>wat hoort niet niet thuis in de rij van foto''s?</p>', 1, 0, 1),
+(46, 42, '<p>welk vliegtuig vloog niet voor de us navy?</p>', 2, 2, 1),
+(46, 43, '<p>identificeer het type waarmee de flight lead vliegt.</p>', 1, 1, 1),
+(47, 44, '<p>welke kleur hebben de snijplanken voor vis?</p>', 1, 1, 1),
+(47, 45, '<p>naast boter en bloem, wat moet je nog toevoegen om een bechamel saus te maken?</p>', 2, 2, 1);
 
 --
 -- Beperkingen voor gedumpte tabellen
