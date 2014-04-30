@@ -12,6 +12,7 @@ use Mctesting\Exception\ApplicationException;
  */
 class QuestionService
 {
+
     /**
      * Function returns a question object corresponding to the given id.
      * @param type $id
@@ -21,7 +22,7 @@ class QuestionService
     {
         return QuestionDAO::selectById($id);
     }
-    
+
     /**
      * Function returns an array of question objects corresponding to the given
      * categoryId
@@ -32,7 +33,7 @@ class QuestionService
     {
         return QuestionDAO::selectByCategory($categoryId);
     }
-    
+
     /**
      * Function returns an array of ACTIVE question objects corresponding to the given
      * categoryId
@@ -43,7 +44,7 @@ class QuestionService
     {
         return QuestionDAO::selectActiveByCategory($categoryId);
     }
-    
+
     /**
      * Function returns an array of ACTIVE question objects corresponding to the given
      * testId
@@ -54,7 +55,7 @@ class QuestionService
     {
         return QuestionDAO::selectActiveByTest($testId);
     }
-    
+
     /**
      * The function takes the post values and assigns them to indiviual variables
      * to pass on to validation and after that the DAO.
@@ -67,14 +68,14 @@ class QuestionService
     public static function create($post)
     {
         //assign and typecast variables
-        $subcatId =  (integer)$post['subcat'];
+        $subcatId = (integer) $post['subcat'];
         $text = $post['vraag'];
         $text = ucfirst(strtolower($text));
-        $weight = (integer)$post['gewicht'];
-        $correctAnswerId = (integer)$post['correctant'];
+        $weight = (integer) $post['gewicht'];
+        $correctAnswerId = (integer) $post['correctant'];
         $answers = array_filter($post['antwoord']);
         $media = (isset($post['media'])) ? $post['media'] : array();
-        
+
         //validate values
         if (QuestionService::validateNewQuestion($subcatId, $text, $weight, $correctAnswerId, $answers, $media)) {
             //create question
@@ -87,7 +88,7 @@ class QuestionService
             QuestionDAO::insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media);
         }
     }
-    
+
     /**
      * Validates given variables needed to insert a question in the DB.
      * If there are no validation issues the function returns true.
@@ -110,12 +111,12 @@ class QuestionService
         if ($subcatId === 0) {
             array_push($errors, 'subcatId mag niet 0 zijn');
         }
-        
+
         //validate text
         if (empty($text) || $text === '') {
             array_push($errors, 'vraag tekst mag niet leeg zijn');
         }
-        
+
         //validate weight
         if ($weight < 1) {
             array_push($errors, 'moeilijkheidsgraad moet groter dan 0 zijn');
@@ -131,7 +132,7 @@ class QuestionService
             //validate correctAnswerId
             if (!array_key_exists($correctAnswerId, $answers)) {
                 array_push($errors, 'correct antwoord kan niet gekoppeld worden aan een van de opgegeven antwoorden');
-            } 
+            }
         } else {
             array_push($errors, 'answers variabele is geen array');
         }
@@ -140,7 +141,7 @@ class QuestionService
         if (!empty($media) && !is_array($media)) {
             array_push($errors, 'media variabele is geen array');
         }
-        
+
         //assess errors
         if (empty($errors)) {
             return true;
@@ -155,4 +156,5 @@ class QuestionService
             throw new ApplicationException($errormsg);
         }
     }
+
 }

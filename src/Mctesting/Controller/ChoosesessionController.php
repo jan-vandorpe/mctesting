@@ -49,11 +49,4 @@ class ChooseSessionController extends AbstractController
 //            'sessionlist' => $sessionlist,
             ));
     }
-
-
-    
-    public function except()
-    {
-        throw new ApplicationException('Oh dear, controller says no.');
-    }
 }

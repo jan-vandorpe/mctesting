@@ -76,10 +76,4 @@ class CategoryController extends AbstractController
             
         }
     }
-
-    public function except()
-    {
-        throw new ApplicationException('Oh dear, controller says no.');
-    }
-
 }
