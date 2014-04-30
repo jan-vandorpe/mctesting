@@ -45,8 +45,10 @@ class CategoryController extends AbstractController
     public function newCategory()
     {
         $category = $_POST["newcat"];
+        //checks if the new category variable is set and if it isn't already in the DB
         if ($category !== null and CategoryService::validateCategory($category) == true)
-        {            
+        {     
+            //creates a new category
             CategoryService::create($category);
             header("location: go");
         } else
@@ -69,6 +71,7 @@ class CategoryController extends AbstractController
         //check if subcategory is filled in and doesn't yet exist within the category
         if ($subcategory !== null && SubcategoryService::validateSubcategory($subcategory, $categoryid) == false)
         {
+            //creates a new subcategory
             SubcategoryService::create($categoryid, $subcategory);
             header("location: go");
         } else
@@ -76,10 +79,4 @@ class CategoryController extends AbstractController
             
         }
     }
-
-    public function except()
-    {
-        throw new ApplicationException('Oh dear, controller says no.');
-    }
-
 }

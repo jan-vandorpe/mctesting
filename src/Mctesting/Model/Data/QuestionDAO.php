@@ -10,11 +10,17 @@ use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of QuestionDAO
+ * 
+ * Data Access Object for Question Entity/Table
  *
  * @author cyber01
  */
-class QuestionDAO 
+class QuestionDAO
 {
+    /*
+     * Returns a single question object with given id.
+     */
+
     public static function selectById($id)
     {
         //create db connection
@@ -44,7 +50,7 @@ class QuestionDAO
                 $question->setCorrectAnswer($record['correctantwoord']);
                 $question->setAnswers($answers);
                 $question->setMedia($media);
-                $question->setActive((boolean)$record['actief']);
+                $question->setActive((boolean) $record['actief']);
                 return $question;
             } else {
                 throw new ApplicationException('Vraag selectById record is leeg');
@@ -58,7 +64,11 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
-    
+
+    /*
+     * Returns an array of question objects based on given categoryid.
+     */
+
     public static function selectByCategory($categoryId)
     {
         //create db connection
@@ -90,7 +100,7 @@ class QuestionDAO
                     $question->setCorrectAnswer($record['correctantwoord']);
                     $question->setAnswers($answers);
                     $question->setMedia($media);
-                    $question->setActive((boolean)$record['actief']);
+                    $question->setActive((boolean) $record['actief']);
                     array_push($result, $question);
                 }
                 return $result;
@@ -106,7 +116,11 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
-    
+
+    /*
+     * Returns an array of ACTIVE question objects based on given categoryid.
+     */
+
     public static function selectActiveByCategory($categoryId)
     {
         //create db connection
@@ -140,7 +154,7 @@ class QuestionDAO
                     $question->setCorrectAnswer($record['correctantwoord']);
                     $question->setAnswers($answers);
                     $question->setMedia($media);
-                    $question->setActive((boolean)$record['actief']);
+                    $question->setActive((boolean) $record['actief']);
                     array_push($result, $question);
                 }
                 return $result;
@@ -156,7 +170,11 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
-    
+
+    /*
+     * Returns an array of ACTIVE question objects based on given testid.
+     */
+
     public static function selectActiveByTest($testId)
     {
         //create db connection
@@ -190,7 +208,7 @@ class QuestionDAO
                     $question->setCorrectAnswer($record['correctantwoord']);
                     $question->setAnswers($answers);
                     $question->setMedia($media);
-                    $question->setActive((boolean)$record['actief']);
+                    $question->setActive((boolean) $record['actief']);
                     array_push($result, $question);
                 }
                 return $result;
@@ -206,7 +224,11 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
-    
+
+    /*
+     * Inserts a new question in the database.
+     */
+
     public static function insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media)
     {
         //create db connection
@@ -234,4 +256,5 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
+
 }

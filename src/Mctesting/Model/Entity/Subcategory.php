@@ -11,9 +11,6 @@ class Subcategory
     private $subcatname;
     private $active;
 
-    //category unused since subcategories are contained by category object(s)
-//    private $category;
-
     public function getId()
     {
         return $this->id;
@@ -28,10 +25,6 @@ class Subcategory
     {
         return $this->subcatname;
     }
-
-//    public function getCategory() {
-//        return $this->category;
-//    }
 
     public function setId($id)
     {

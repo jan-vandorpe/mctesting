@@ -52,7 +52,7 @@ class UserService
              return true;
 //             $foundUser = UserService::getUser($login);
 //             if ($foundUser == true){
-//                header("location: /mctesting/home/go");
+//                header("location: ".ROOT."/home/go");
 //             }else{
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
@@ -81,7 +81,7 @@ class UserService
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);
 //                         if ($magAfleggen == true){
-//                             header("location: /mctesting/home/go");
+//                             header("location: ".ROOT."/home/go");
 //                         }else{
 //                         print "U heeft geen toegang tot deze test";    
 //                         }

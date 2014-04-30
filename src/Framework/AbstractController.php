@@ -1,6 +1,7 @@
 <?php
 
 namespace Framework;
+
 /**
  * Description of controller
  * 
@@ -13,15 +14,17 @@ namespace Framework;
  */
 abstract class AbstractController
 {
+
     protected $app;
-    
+
     function __construct($app)
     {
         $this->app = $app;
     }
-    
+
     public function render($view, $model)
     {
         print($this->app->getAppEnvironment()->render($view, $model));
     }
+
 }

@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <title>Testpagina scores</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="css/normalize.css" />
+        <link rel="stylesheet" href="bs/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/test.css" />
+        
+        
+<script src="js/lib/jquery-1.11.0.min.js"></script>
+<script src="js/lib/tinymce/tinymce.min.js"></script>
+<script>
+        tinymce.init({menubar: false, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true});
+</script>
+<script src="js/addrows.js"></script>
+    </head>
+    <body>
+        
+
+
+<h1 class="headerofpage">
+    Vraag Toevoegen
+</h1>
+<div class="container-fluid">
+    <form name="toevoegenvraag" method="post" action="question/add">
+        <div class="input-group nieuwimg">
+            <span class="input-group-addon widthvraaginput">
+                Subcategorie:
+            </span>
+            <select class="form-control catbijvraag" name="subcat">
+                    </select>
+                </div>
+                <div class="input-group nieuwimg">
+                    <span class="input-group-addon widthvraaginput">
+                        Vraag:
+                    </span>
+                    <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in."></textarea>
+                </div>
+
+                <div id="HENDRIK">
+                    <div class="input-group nieuwantwoord">
+                        <span class="input-group-addon widthvraaginput">
+                            Moeilijkheidsgraad:
+                        </span>
+                        <select class="form-control catbijvraag" name="gewicht">
+                            </select>
+                        </div>
+
+                        <div class="input-group nieuwantwoord">
+                            <span class="input-group-addon widthvraaginput">
+                                Antwoord 1:
+                            </span>
+                            <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                        </div>
+                        <div class="input-group nieuwantwoord">
+                            <span class="input-group-addon widthvraaginput">
+                                Antwoord 2:
+                            </span>
+                            <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                        </div>
+
+                    </div>
+                    <span class="small"><a href="#AddAnswer" id="AddAnswer" class="btn btn-info">Extra antwoord toevoegen</a></span>
+
+
+
+                    <div class="input-group nieuwimg">
+                        <span class="input-group-addon widthvraaginput">
+                            Afbeeldingen:
+                        </span>
+                        <input type="file" name="media[]" class="form-control" multiple="true" />
+                    </div>
+                    <div class="input-group nieuwimg">
+                        <span class="input-group-addon widthvraaginput">
+                            Correct antwoord:
+                        </span>
+                        <select class="form-control catbijvraag" id="HENDRIK2" name="correctant">
+                            <option value="0">Antwoord 1</option>
+                            <option value="1">Antwoord 2</option>
+                        </select>
+                    </div>
+                    <div class="input-group centeren">
+                        <input type="submit" class="form-control" name="vrtoev" value="Vraag toevoegen" />
+                    </div>
+                </form>
+            </div>
+
+    
+    
+        </body>
+</html>

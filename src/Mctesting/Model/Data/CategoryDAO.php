@@ -25,7 +25,6 @@ class CategoryDAO
             if (!empty($record))
             {
                 //create and return object
-
                 $category = new Category();
                 $category->setId($record['catid']);
                 $category->setCatname($record['catnaam']);

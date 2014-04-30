@@ -10,154 +10,55 @@ and open the template in the editor.
         <link rel="stylesheet" href="css/normalize.css" />
         <link rel="stylesheet" href="bs/bootstrap.min.css" />
         <link rel="stylesheet" href="css/test.css" />
+        <script src="js/jquery-1.11.0.min.js"></script>
+        <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+        
+        
+                <script>$(document).ready(function() {
+
+var MaxInputs       = 8; //maximum input boxes allowed
+var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
+var AddButton       = $("#AddMoreFileBox"); //Add button ID
+
+var x = InputsWrapper.length; //initial text box count
+var FieldCount=1; //to keep track of text box added
+
+$(AddButton).click(function (e)  //on add input button click
+{
+        if(x <= MaxInputs) //max input box allowed
+        {
+            FieldCount++; //text box added increment
+            //add input box
+            $(InputsWrapper).append('<div><input type="text" name="mytext[]" id="field_'+ FieldCount +'" value="Text '+ FieldCount +'"/>'+//<a href="#" class="removeclass">Verwijder</a>+
+            '</div>');
+            x++; //text box increment
+        }
+return false;
+});
+
+//$("body").on("click",".removeclass", function(e){ //user click on remove text
+//        if( x > 1 ) {
+//                $(this).parent('div').remove(); //remove text box
+//                x--; //decrement textbox
+//        }
+//return false;
+//}) 
+
+});
+</script>
     </head>
     <body>
-        <!-- ingelogd als beheerder -->
-        <div class="container-fluid maincontainer">
-            <nav>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a>Uitloggen</a></li>
-                        <li><a>Tests</a></li>
-                        <li><a>Vragen</a></li>
-                        <li><a>Gebruikers</a></li>
-                    </ul>
-                    <p class="navbar-text navbar-right">Ingelogd als <a href="#" class="navbar-link">Voornaam Familienaam</a></p>
-                </div>
-            </nav>
+   
+       
+       
+       <p>We start with single Input field and a &#8220;Add more Field&#8221; button to allow user to add more fields. The text input field is wrapped in <em>div</em> element, as explained above, on delete button click, it finds parent element, which is <em>div</em> and removes it.<br />
+</p>
+<div id="InputsWrapper">
+<div><input type="text" name="mytext[]" id="field_1" value="Text 1"/><!-- <a href="#" class="removeclass">Verwijder</a></div> -->
+</div>
         </div>
-        <div class="headertestupdates maincontainer">
-            Overzicht testen
-        </div>
-        <div class="container-fluid maincontainer">
-            <form name="testtebewerken">
+    <span class="small"><a href="#" id="AddMoreFileBox" class="btn btn-info">Add More Field</a></span>
 
-                <div class="categorie">
-                    <div class="catomschrtestoverzicht">CATEGORIEOMSCHRIJVING(bv IT)</div>
-                    <!-- TEST VOORBEELD IN OVERZICHT -->
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <input type="checkbox" name="antwoord1" />
-                        </span>
-                        <div class="testtebewerken form-control">
-                            <div class="testtitel">TestTitel</div>
-                            <div class="testaantalvragen">25</div>
-                            <div class="testupdater"><a>Update</a></div>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <input type="checkbox" name="antwoord1" />
-                        </span>
-                        <div class="testtebewerken form-control">
-                            <div class="testtitel">TestTitel</div>
-                            <div class="testaantalvragen">25</div>
-                            <div class="testupdater"><a>Update</a></div>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <input type="checkbox" name="antwoord1" />
-                        </span>
-                        <div class="testtebewerken form-control">
-                            <div class="testtitel">TestTitel</div>
-                            <div class="testaantalvragen">50</div>
-                            <div class="testupdater"><a>Update</a></div>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <span class="input-group-addon">
-                            <input type="checkbox" name="antwoord1" />
-                        </span>
-                        <div class="testtebewerken form-control">
-                            <div class="testtitel">TestTitel</div>
-                            <div class="testaantalvragen">20</div>
-                            <div class="testupdater"><a>Update</a></div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- DE BEWERKINGSKNOPEN -->
-                <div>
-                    <nav>
-                        <div class="collapse navbar-collapse">
-                            <!-- knopen links -->
-                            <p class="navbar-text">Selectie: </p>
-                            <ul class="nav navbar-nav">
-                                <li><a>Maak inactief</a></li>
-                                <li><a>Maak actief</a></li>
-                                <li><a>Verwijder</a></li>
-                            </ul>
-                            <!-- knopen rechts -->
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a>Maak nieuwe test</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-            </form>
-
-            <!-- BLOCK VOOR CATS TE TONEN -->
-
-            <!-- idem hierboven, maar dan met categorienen ipv testen :) -->
-
-            <!-- BLOCK VOOR CATS AAN TE MAKEN -->
-
-            <div class="">nieuwe categorie toevoegen:</div>
-
-            <form name="cattoev" class="form-horizontal meerboven-onder">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <label for="catnaam" class="col-lg-2 control-label">Naam categorie</label>
-                    <div class="col-lg-5">
-                        <input type="text" class="form-control" name="catnaam" id="catnaam" placeholder="Vul hier de categorienaam in." />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-3">
-                    </div>
-                    <div class="col-lg-4 centeren">
-                        <input type="submit" name="catknop" class="form-control" >
-                    </div>
-                </div>
-            </form>
-
-            <!-- NIEUWE SUBCAT TOEVOEGEN -->
-            
-            <div class="">nieuwe subcategorie toevoegen:</div>
-
-            <form name="subcattoev" class="form-horizontal meerboven-onder">
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <label for="catselect" class="col-lg-2 control-label">Bijhorende categorie</label>
-                    <div class="col-lg-5">
-                        <select class="form-control" name="catselect">
-                            <option value="">Selecteer een categorie</option>
-                            <option value="01">IT</option>
-                            <option value="02">schilderen</option>
-                            <option value="03">horeca</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-1"></div>
-                    <label for="subcatnaam" class="col-lg-2 control-label">Naam subcategorie</label>
-                    <div class="col-lg-5">
-                        <input type="text" class="form-control" name="subcatnaam" id="catnaam" placeholder="Vul hier de subcategorienaam in." />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-lg-3">
-                    </div>
-                    <div class="col-lg-4 centeren">
-                        <input type="submit" name="subcatknop" class="form-control" >
-                    </div>
-                </div>
-            </form>
-        </div>
+        
     </body>
 </html>
