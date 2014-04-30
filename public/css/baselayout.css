@@ -14,7 +14,7 @@
     width: 80%;
     padding-bottom: 0.5em;
 }
-input[type='text']:focus, input[type='password']:focus, select:nth-of-type(n):focus, input[type='submit']:focus{
+input[type='text']:focus, input[type='password']:focus, select:nth-of-type(n):focus, input[type='submit']:focus, button:focus, button:active{
     border-color:rgba(0,0,0,0);
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -283,16 +283,22 @@ h4{
     padding: 0.25em 0 0.125em 2em;
     background-color: rgba(255,255,255,0.5);
 }
-
+table>tbody td{
+    border-color: rgba(0,0,0,0.1);
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-left: none;
+    border-right: none;
+}
 table>tbody>tr>td:first-of-type{
     border-style: solid;
     border-color: rgba(0,0,0,0.1);
-    border-width: 0 0px 0px 2px;
+    border-width: 0 0px 1px 2px;
 }
 table>tbody>tr>td:last-of-type{
     border-style: solid;
     border-color: rgba(0,0,0,0.1);
-    border-width: 0 2px 0px 0px;
+    border-width: 0 2px 1px 0px;
 }
 table .singlecolumn:nth-of-type(n){
     border-style: solid;
@@ -445,6 +451,7 @@ p code{
     width: 15em;
     margin: 0 39% 0 39%;
 }
+
 
 
 /* CLEARFIX
