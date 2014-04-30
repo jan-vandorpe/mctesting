@@ -3,9 +3,8 @@
 {% block scripts %}
     {{ parent() }}
 <script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
-<script>tinymce.init({menubar: false, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true});</script>
 <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
-<script src="{{ app.root }}/public/js/addrows.js"></script>
+<script src="{{ app.root }}/public/js/addanswers.js"></script>
 {% endblock scripts %}
 
 {% block title %}
@@ -39,7 +38,7 @@
                     <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in."></textarea>
                 </div>
 
-                <div id="HENDRIK">
+                <div class="answers">
                     <div class="input-group nieuwantwoord">
                         <span class="input-group-addon widthvraaginput">
                             Moeilijkheidsgraad:
@@ -55,13 +54,13 @@
                             <span class="input-group-addon widthvraaginput">
                                 Antwoord 1:
                             </span>
-                            <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                            <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                         </div>
                         <div class="input-group nieuwantwoord">
                             <span class="input-group-addon widthvraaginput">
                                 Antwoord 2:
                             </span>
-                            <textarea name="antwoord[]" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                            <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                         </div>
 
                     </div>
@@ -85,7 +84,7 @@
                         <span class="input-group-addon widthvraaginput">
                             Correct antwoord:
                         </span>
-                        <select class="form-control catbijvraag" id="HENDRIK2" name="correctant">
+                        <select class="form-control catbijvraag" id="correctant" name="correctant">
                             <option value="0">Antwoord 1</option>
                             <option value="1">Antwoord 2</option>
                         </select>
