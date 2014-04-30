@@ -70,7 +70,7 @@ class QuestionService
         //assign and typecast variables
         $subcatId = (integer) $post['subcat'];
         $text = $post['vraag'];
-        $text = ucfirst(strtolower($text));
+        $text = ucfirst($text);
         $weight = (integer) $post['gewicht'];
         $correctAnswerId = (integer) $post['correctant'];
         $answers = array_filter($post['antwoord']);

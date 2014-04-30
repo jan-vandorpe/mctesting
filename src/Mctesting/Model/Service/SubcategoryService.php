@@ -47,7 +47,7 @@ class SubcategoryService
     //function creates a new subcategory
     public static function create($catid, $subcatnaam)
     {
-        $subcatnaam = ucfirst(strtolower($subcatnaam));
+        $subcatnaam = ucfirst($subcatnaam);
         SubcategoryDAO::insert($catid, $subcatnaam);
     }
 
