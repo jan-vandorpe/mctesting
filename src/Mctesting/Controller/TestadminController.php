@@ -223,16 +223,21 @@ class TestadminController extends AbstractController {
             $message = "";
         }
         $allTest = TestService::getAll();
+        //var_dump($allTest);
         $result = array();
         foreach ($allTest as $test) {
+            
             $catname = TestService::getCatName($test->getTestId());
+            
             if (!isset($result[$catname])) {
                 $result[$catname] = array();
             }
             array_push($result[$catname], $test);
         }
+        
         $allUsers = UserService::getAllUsers();
         //view
+        
         $this->render('testlink.html.twig', array(
             'allTest' => $result,
             'allUsers' => $allUsers,
