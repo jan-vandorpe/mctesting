@@ -8,7 +8,7 @@
 define('DB_USER', 'usermctesting');
 define('DB_PASS', 'qsdf');
 
-$dbhost = 'sat01';
+$dbhost = 'sat07';
 $dbname = 'mctesting';
 $dsn = 'mysql:host='.$dbhost.';dbname='.$dbname;
 define('DB_DSN', $dsn);
