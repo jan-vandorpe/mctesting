@@ -1,0 +1,39 @@
+{%extends "template/layout.html.twig"%}
+
+{% block stylesheets %}
+    {{parent()}}
+
+{% endblock %}
+
+{% block title %}
+    {{parent()}}Home
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid ">
+        <h1 class="headerpage">Registreer</h1>
+    </div>
+    <div class="intropage ">
+       
+        <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/home/registerUser" method="post">
+            <div class="input-group">
+                <label for="fnaam" class="input-group-addon widthcatinput">Familienaam</label>
+                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="fnaam" id="fnaam" placeholder="Vul hier de familienaam in." required/>
+            </div>
+            <div class="input-group">
+                <label for="vnaam" class="input-group-addon widthcatinput">Voornaam</label>
+                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="vnaam" id="vnaam" placeholder="Vul hier de voornaam in." required/>
+            </div>
+            <div class="input-group">
+                <label for="rrnr" class="input-group-addon widthcatinput">Rijksregisternummer:</label>
+                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="rrnr" id="rrnr" placeholder="Vul hier het rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
+            </div>
+
+            <div class="input-group">
+                <input type="submit" name="gebrknop" class="form-control marginonbutton">
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
