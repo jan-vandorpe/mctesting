@@ -84,8 +84,39 @@ class TestDAO {
         }
     }
 
-    
-    
+    public static function selectByBeheerder($adminId) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE beheerder = :adminId';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':adminId' => $adminId,))) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $test = new Test();
+                    $test->setTestId($record['testid']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
+                    $test->setTestMaxscore($record['maxscore']);
+                    $test->setTestPassPercentage($record['tebehalenscore']);
+                    $test->setTestCreator($record['beheerder']);
+                    array_push($result, $test);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('users selectByBeheerder recordset is leeg');
+            }
+        } else {
+            throw new ApplicationException('users selectByBeheerder statement kon niet worden uitgevoerd');
+        }
+    }
     
     public static function getCatName($testId) {
         //create db connection
@@ -115,9 +146,6 @@ class TestDAO {
             throw new ApplicationException($errormsg);
         }
     }
-    
-    
-    
     
     public static function insert($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
         //create db connection        

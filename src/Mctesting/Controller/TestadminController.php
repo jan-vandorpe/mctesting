@@ -280,8 +280,11 @@ class TestadminController extends AbstractController {
     public function testlist()
     
     {
-        $tests = TestService::getAll();
+        $admin = UserService::unserializeFromSession();
+        $adminId = $admin->getRRNr();
         
+        $tests = TestService::getByAdminId($adminId);
+        //var_dump($adminId);
         $this->render('testlist.html.twig', array(
             'tests' => $tests,
         ));
