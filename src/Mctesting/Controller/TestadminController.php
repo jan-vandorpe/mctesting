@@ -273,6 +273,19 @@ class TestadminController extends AbstractController {
             //niet gelukt
         }
     }
+    
+    /**
+     * Overzicht gemaakte testen weergeven
+     */
+    public function testlist()
+    
+    {
+        $tests = TestService::getAll();
+        
+        $this->render('testlist.html.twig', array(
+            'tests' => $tests,
+        ));
+    }
 
     public function except() {
         throw new ApplicationException('Oh dear, controller says no.');

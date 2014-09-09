@@ -1,0 +1,74 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+{% endblock stylesheets %}
+
+{% block title %}
+    {{ parent() }}Tests
+{% endblock title%}
+
+
+{% block content %}
+<div class="container-fluid ">
+    <h1 class="headerofpage">Testlijst</h1>
+</div>
+<div class="container-fluid ">
+    <form name="testtebewerken">
+
+
+        <div class="headergebroverzicht">
+            <!-- header boven de gebr info-->
+            <div class="onderheadertebewerken form-control">
+                <div class="fnaamgebrupdateheader">Test naam</div>
+                <div class="vnaamgebrupdateheader">maxduur</div>
+                <div class="rrnrgebrupdateheader">aantal vragen</div>
+                <div class="gebrupdaterheader">dummytest</div>
+            </div>
+        </div>
+
+
+
+        {% for test in tests %}   
+        <div class="input-group">                    
+            <span class="input-group-addon">
+                <input type="checkbox" name="antwoord1" />
+            </span>
+
+            <div class="gebruiktebewerken form-control">
+
+                <div class="fnaamgebrupdate">{{test.TestName}}</div>
+                <div class="vnaamgebrupdate">{{test.TestMaxDuration}}</div>
+                <div class="rrnrgebrupdate">{{test.TestQuestionCount}}</div>
+                <div class="gebrupdater">
+                    <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+
+        <!-- DE BEWERKINGSKNOPEN -->
+        <div>
+            <nav>
+                <div class="collapse navbar-collapse">
+                    <!-- knopen links -->
+                    <p class="navbar-text">Selectie: </p>
+                    <ul class="nav navbar-nav">
+                        <li><a>Maak inactief</a></li>
+                        <li><a>Maak actief</a></li>
+                    </ul>
+                    <!-- knopen rechts -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock content %}
