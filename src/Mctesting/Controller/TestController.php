@@ -23,8 +23,8 @@ class TestController extends AbstractController
 //        print_r($sessionlist);
 //        print('</pre>');
         //view
-        var_dump($_SESSION['sessionchoices']);
-        print '<br>';
+        //var_dump($_SESSION['sessionchoices']);
+        //print '<br>';
         //var_dump($_SESSION['sessionParticipation']);
         $this->render('choosesession.html.twig', array(
 //            'sessionlist' => $sessionlist,
