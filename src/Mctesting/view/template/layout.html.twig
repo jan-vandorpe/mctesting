@@ -67,7 +67,7 @@
                 {% if app.user is defined and app.user is not empty %}
                     {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
                         <nav class="menu_on_left">
-                            <div class="navbar-collapse enforce-max-height">
+                            <div class="navbar">
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Vragen</li>
                                     <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
