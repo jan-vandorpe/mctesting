@@ -5,12 +5,12 @@
 {% endblock title %}
 
 {% block content %}
-    <div class="container-fluid">
-        <h1 class="headerofpage">Overzicht sessiescores</h1>
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-6">
-                <h3>
+<div class="container-fluid">
+    <h1 class="headerofpage">Overzicht sessiescores</h1>
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <h3>
                     {{ testsession.test.testname }}
                 </h3>
             </div>
@@ -31,22 +31,24 @@
                             <th>Percentage</th>
                             <th>Geslaagd</th>
                             <th>Afgelegd</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for usersession in usersessions %}
-                        <tr>
-                            <td>{{ usersession.user.firstname }}</td>
-                            <td>{{ usersession.user.lastname }}</td>
-                            <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
-                            <td>{{ usersession.percentage }}</td>
-                            <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
-                            <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
-                        </tr>
+                            <tr>
+                                <td>{{ usersession.user.firstname }}</td>
+                                <td>{{ usersession.user.lastname }}</td>
+                                <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
+                                <td>{{ usersession.percentage }}</td>
+                                <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
+                                <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
+                                <td><a href="">details</a></td>
+                                </tr>
                         {% endfor %}
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 {% endblock content %}
