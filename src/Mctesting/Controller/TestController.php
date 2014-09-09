@@ -23,6 +23,9 @@ class TestController extends AbstractController
 //        print_r($sessionlist);
 //        print('</pre>');
         //view
+        //var_dump($_SESSION['sessionchoices']);
+        //print '<br>';
+        //var_dump($_SESSION['sessionParticipation']);
         $this->render('choosesession.html.twig', array(
 //            'sessionlist' => $sessionlist,
         ));
@@ -33,6 +36,14 @@ class TestController extends AbstractController
         //process arguments
         $testId = $arguments[0];
         $testSessionId = $arguments[1];
+        
+        //if user already took test, redirect to homepage
+      $user = UserService::unserializeFromSession();
+      $sessionuser = UserSessionService::getByUserANDSession($testSessionId, $user->getRRnr());
+      if($sessionuser[0]->getParticipated() === 1){
+        header("location: " . ROOT . "/home");
+      }
+      
 
         //build model
         //retrieve full test (test info + all questions and answers
