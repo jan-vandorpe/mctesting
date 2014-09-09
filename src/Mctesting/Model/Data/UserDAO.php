@@ -6,11 +6,9 @@ use Mctesting\Model\Entity\User;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UsergroupService;
 
-class UserDAO
-{
-    
-    public static function selectAll()
-    {
+class UserDAO {
+
+    public static function selectAll() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -31,8 +29,8 @@ class UserDAO
                     $user->setLastName($record['voornaam']);
                     $user->setEmail($record['familienaam']);
                     $user->setGroup($record['wachtwoord']);
-                    $user->setGroup($record['gebruikerstype']);  
-                    
+                    $user->setGroup($record['gebruikerstype']);
+
                     array_push($result, $user);
                 }
                 return $result;
@@ -43,10 +41,8 @@ class UserDAO
             throw new ApplicationException('users selectAll statement kon niet worden uitgevoerd');
         }
     }
-    
-    
-    public static function selectAllBaseUsers()
-    {
+
+    public static function selectAllBaseUsers() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -67,7 +63,7 @@ class UserDAO
                     $user->setLastName($record['familienaam']);
                     $user->setEmail($record['email']);
                     $user->setGroup($record['gebruikerstype']);
-                    
+
                     array_push($result, $user);
                 }
                 return $result;
@@ -78,33 +74,34 @@ class UserDAO
             throw new ApplicationException('users selectAllgebruikers statement kon niet worden uitgevoerd');
         }
     }
-    
-    
-    
-    
-    public static function selectByEmail($email, $password)
-    {
+
+    public static function selectByEmail($email, $password) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE email = :email and wachtwoord = :password' ;
+        $sql = 'SELECT * FROM gebruikers WHERE email = :email';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':email' => $email, ':password' => $password))) {
+        if ($stmt->execute(array(':email' => $email))) {
             //test if statement retrieved something
             $record = $stmt->fetch();
             if (!empty($record)) {
-                //create object(s) and return
-                //create usergroup
-                $group = UsergroupService::getById($record['gebruikerstype']);
-                //create  object
-                $user = new User();
-                $user->setRRnr($record['rijksregisternr']);
-                $user->setFirstName($record['voornaam']);
-                $user->setLastName($record['familienaam']);
-                $user->setEmail($record['email']);
-                $user->setGroup($group);
-                return $user;
+                //test if password matches encrypted hash
+                if (crypt($password, $record['wachtwoord']) == $record['wachtwoord']) {
+                    //create object(s) and return
+                    //create usergroup
+                    $group = UsergroupService::getById($record['gebruikerstype']);
+                    //create  object
+                    $user = new User();
+                    $user->setRRnr($record['rijksregisternr']);
+                    $user->setFirstName($record['voornaam']);
+                    $user->setLastName($record['familienaam']);
+                    $user->setEmail($record['email']);
+                    $user->setGroup($group);
+                    return $user;
+                } else {
+                    throw new ApplicationException('Wachtwoord is incorrect');
+                }
             } else {
                 throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
             }
@@ -112,9 +109,8 @@ class UserDAO
             throw new ApplicationException('User selectByEmail statement kan niet worden uitgevoerd.');
         }
     }
-    
-    public static function selectByRRNr($rrnr)
-    {
+
+    public static function selectByRRNr($rrnr) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -143,32 +139,23 @@ class UserDAO
             throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
         }
     }
-    
-    
-    public static function insert($firstName, $lastName, $RRNr, $userGroup)
-    {
+
+    public static function insert($firstName, $lastName, $RRNr, $userGroup) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :lastName , :group)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup ))) {            
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup))) {
             //test if statement succes
             return true;
-        } else {            
+        } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze gebruiker niet toevoegen: '.$error[2]);
+            throw new ApplicationException('Kon deze gebruiker niet toevoegen: ' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
 }

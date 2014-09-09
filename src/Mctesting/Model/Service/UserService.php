@@ -12,44 +12,40 @@ use Mctesting\Model\Data\UserDAO;
  *
  * @author Thomas Deserranno
  */
-class UserService
-{
-    public static function serializeToSession($user)
-    {
+class UserService {
+
+    public static function serializeToSession($user) {
         $_SESSION['user'] = serialize($user);
     }
-    
-    public static function unserializeFromSession()
-    {
+
+    public static function unserializeFromSession() {
         $user = unserialize($_SESSION['user']);
-        
+
         return $user;
     }
-    
-    public static function getById($id)
-    {
+
+    public static function getById($id) {
         return UserDAO::selectByRRNr($id);
     }
-    
-    public static function getAll()
-    {
+
+    public static function getAll() {
         return UserDAO::selectAll();
     }
-    
-    public static function getAllUsers()
-    {
+
+    public static function getAllUsers() {
         return UserDAO::selectAllBaseUsers();
     }
-    
-    public static function loginCheck($login, $password)
-    {
-        if(UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)){
-         //print("valid");
-         if(UserService::isValidEmailFormat($login)){
-             //print(" email");   
-             $user = UserDAO::selectByEmail($login, $password);
-             UserService::serializeToSession($user);
-             return true;
+
+    public static function loginCheck($login, $password) {
+        if (UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)) {
+            //print("valid");
+            if (UserService::isValidEmailFormat($login)) {
+                //print(" email");
+                //$encryptedPassword = UserService::encryptPassword($password);
+
+                $user = UserDAO::selectByEmail($login, $password);
+                UserService::serializeToSession($user);
+                return true;
 //             $foundUser = UserService::getUser($login);
 //             if ($foundUser == true){
 //                header("location: ".ROOT."/home/go");
@@ -57,26 +53,26 @@ class UserService
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
 //             }
-         }else{
-             //print(" rijksregister");
-             $user = UserDAO::selectByRRNr($login);
-             $sessions=TestSessionService::getSessionByPW($password);
-             unset($_SESSION["sessionchoices"]);
-             if($sessions !== null ){
-                 foreach ($sessions as $session) {
-                     $id=$session->getId();
-                     $test=$session->getTest();
-                     $name=$test->getTestName();
-                     $testid=$test->getTestId();
-                     $_SESSION["sessionchoices"][$id]=array($testid=>$name);
-                 }
-                 //$_SESSION["testsessions"]=$sessions;  unused?
-                 UserService::serializeToSession($user);
-                 return true;                 
-             }else{                 
-                 return false;
-             }
-             
+            } else {
+                //print(" rijksregister");
+                $user = UserDAO::selectByRRNr($login);
+                $sessions = TestSessionService::getSessionByPW($password);
+                unset($_SESSION["sessionchoices"]);
+                if ($sessions !== null) {
+                    foreach ($sessions as $session) {
+                        $id = $session->getId();
+                        $test = $session->getTest();
+                        $name = $test->getTestName();
+                        $testid = $test->getTestId();
+                        $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                    }
+                    //$_SESSION["testsessions"]=$sessions;  unused?
+                    UserService::serializeToSession($user);
+                    return true;
+                } else {
+                    return false;
+                }
+
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);
@@ -88,16 +84,13 @@ class UserService
 //             }else{
 //                 print "No test with these credentials";
 //             }
-         }
-     }else{
-         print("Geen valid login");
-         return false;
-     }
+            }
+        } else {
+            print("Geen valid login");
+            return false;
+        }
     }
-    
-    
-    
-    
+
 //    public static function getUser($login, $password) {
 //        if (isValidEmail($login)) {
 //            selectByEmail($login, $password);
@@ -127,29 +120,40 @@ class UserService
         }
         return $result;
     }
-    
-    
-    
+
+    public function encryptPassword($password) {
+
+        //beveilig wachtwoord
+
+        $cost = 10;  //hoe hoger de cost, hoe meer secure maar hoe meer processing power nodig is
+        //random salt maken
+        $salt = strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+
+
+        // Het wachtwoord prefixen zodat php weet hoe het te verifyen later
+        // Beveiliging tegen rainbow tables
+        // "$2a$"  betekent dat het blowfish algorithm gebruikt worden
+        $salt = sprintf("$2a$%02d$", $cost) . $salt;
+
+        //het wachtwoord hashen met de salt
+
+        $hash = crypt($password, $salt);
+
+        return $hash;
+    }
+
     public function create($firstName, $lastName, $RRNr) {
         //cleanup
         $userGroup = 1;
-            if(UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)){
-                return true;
-            }else{
-                //exception
-                return false;
-            }
+        if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)) {
+            return true;
+        } else {
+            //exception
+            return false;
+        }
 //        }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 //    public function getUser($email) {
 //
 //        $sql = "select * from gebruikers where email='".$email."'";
@@ -195,6 +199,4 @@ class UserService
 //        $dbh = null;
 //        return $test;
 //    }
-    
-    
 }
