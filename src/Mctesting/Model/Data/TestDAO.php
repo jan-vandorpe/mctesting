@@ -137,7 +137,7 @@ class TestDAO {
             }
 
 
-            return true;
+            return $testid;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);

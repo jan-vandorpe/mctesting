@@ -135,7 +135,7 @@
         <h4>Test aanmaken voltooid.</h4>
         <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
         <h4>Dummytest afleggen</h4>
-        <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/6"> 
+        <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}"> 
             <p>Klik hier om een dummytest af te leggen:</p>
             <input type="submit" name="catknop" value="Test afleggen" class="form-control marginonbutton" >
         </form>
