@@ -55,7 +55,37 @@ class TestController extends AbstractController
                     'catname' => $catname,
         ));
     }
+    
+    public function runDummy($arguments)
+    {
+        //process arguments
+        $testId = $arguments[0];
 
+        //build model
+        //retrieve full test (test info + all questions and answers
+        $test = TestService::getActiveFullTestById($testId);
+        $catname = TestService::getCatName($testId);
+
+        //shuffle questions
+        $test->shuffleQuestions();
+        //shuffle answers
+        $test->shuffleAnswers();
+
+        //store in session for process method
+        $_SESSION['test'] = serialize($test);
+        $_SESSION['testid'] = $testId;
+
+        //render page
+        return $this->render('test_rundummy.html.twig', array(
+                    'test' => $test,
+                    'catname' => $catname,
+        ));
+    }
+    
+    public function processDummy(){
+        $this->render('testcreation.html.twig', array());
+    }
+    
     public function process()
     {
         //retrieve test from session
