@@ -64,7 +64,9 @@ class UserService {
                         $test = $session->getTest();
                         $name = $test->getTestName();
                         $testid = $test->getTestId();
+                        $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
                         $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                        $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
                     }
                     //$_SESSION["testsessions"]=$sessions;  unused?
                     UserService::serializeToSession($user);

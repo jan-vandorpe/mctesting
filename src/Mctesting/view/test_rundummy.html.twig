@@ -1,19 +1,18 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-    {{ parent() }}Test afleggen
+    {{ parent() }}Dummytest afleggen
 {% endblock title %}
 
 {% block content %}
-<div class="testafleggenpag">
+<div class="testafleggenpag maincontainer">
     <h1 class="headerofpage">{{ test.testname }}</h1>
     <div class="testinfotop clearFix">
         <div>Categorie: {{ catname }} </div>
         <div>Totaal aantal vragen: {{ test.testquestioncount }}</div>
         <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
     </div>
-    <h1 class="headerofpage">Per vraag is maar 1 correct antwoord mogelijk</h1>
-    <form name="" action="{{ app.root }}/test/process/" method="post">
+    <form name="" action="{{ app.root }}" method="post">
         {% for question in test.questions %}
             <div class="vraaggroep">
                 {# Question #}

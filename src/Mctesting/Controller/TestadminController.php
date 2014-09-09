@@ -185,31 +185,27 @@ class TestadminController extends AbstractController {
         $adminId = $admin->getRRNr();
 
 
-        if (TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist)) {
-
-            $testname = $_SESSION["testcreation"]["testname"];
-            $testduration = $_SESSION["testcreation"]["testduration"];
-            $questions = array();
-            if (isset($_POST["question"])) {
-                $questions = $_POST["question"];
-            }
-
-            $catid = $_SESSION["testcreation"]["catid"];
-            $cat = CategoryService::getById($catid);
-            //view
-            $this->render('testcreation.html.twig', array(
-                //'allQuest'=>$allQuest,
-                'passpercentage' => $passpercentage,
-                'testname' => $testname,
-                'testduration' => $testduration,
-                'questions' => $questions,
-                'cat' => $cat,
-                'subcatlist' => $subcatlist,
-            ));
-        } else {
-            header("location: ".ROOT."/testadmin/testcreation");
-            exit(0);
+        $testid = TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
+        $testname = $_SESSION["testcreation"]["testname"];
+        $testduration = $_SESSION["testcreation"]["testduration"];
+        $questions = array();
+        if (isset($_POST["question"])) {
+            $questions = $_POST["question"];
         }
+
+        $catid = $_SESSION["testcreation"]["catid"];
+        $cat = CategoryService::getById($catid);
+        //view
+        $this->render('testcreation.html.twig', array(
+            //'allQuest'=>$allQuest,
+            'passpercentage' => $passpercentage,
+            'testid' => $testid,
+            'testname' => $testname,
+            'testduration' => $testduration,
+            'questions' => $questions,
+            'cat' => $cat,
+            'subcatlist' => $subcatlist,
+        ));        
     }
 
     public function testlink()
@@ -276,6 +272,22 @@ class TestadminController extends AbstractController {
         } else {
             //niet gelukt
         }
+    }
+    
+    /**
+     * Overzicht gemaakte testen weergeven
+     */
+    public function testlist()
+    
+    {
+        $admin = UserService::unserializeFromSession();
+        $adminId = $admin->getRRNr();
+        
+        $tests = TestService::getByAdminId($adminId);
+        //var_dump($adminId);
+        $this->render('testlist.html.twig', array(
+            'tests' => $tests,
+        ));
     }
 
     public function except() {

@@ -28,6 +28,11 @@ class TestService
         return TestDAO::selectById($id);
     }
     
+    public static function getByAdminId($adminId)
+    {
+        return TestDAO::selectByBeheerder($adminId);
+    }
+    
     public static function create($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
     {
         
