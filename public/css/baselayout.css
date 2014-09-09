@@ -457,6 +457,12 @@ p code{
   float: right;
 }
 
+/* overschrijven van max-height @media (min-width: 768px) */
+// voorlopig enkel bij sidenav
+.enforce-max-height {
+  max-height: 100%;
+}
+
 /* CLEARFIX
 */
 .cf {
