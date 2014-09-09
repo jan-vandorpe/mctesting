@@ -20,11 +20,13 @@
         <h4 class="darker intro"><span class="">Kies een sessie:</span></h4> 
 
             <div class="input-group">
-
         {% for sessionid,test in session.sessionchoices %}
+          {% if session.sessionParticipation[sessionid].participated != 1 %}
                 {% for testid, testname in test %}
+                  {# If app user hasn't taken test yet, print it #}
                 <div><a href='{{ app.root }}/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a></div>
         {% endfor %}  
+                {% endif %}
         {% endfor %}  
 
             </div>
