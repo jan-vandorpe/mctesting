@@ -180,7 +180,6 @@ body{
     border-color: rgba(0,0,0,0.2);
     float:left;
     margin-top: 2em;
-    margin-left: -2%;
     /*margin-right: 0.125em;*/
 }
 .menu_on_left li{
@@ -457,11 +456,7 @@ p code{
   float: right;
 }
 
-/* overschrijven van max-height @media (min-width: 768px) */
-// voorlopig enkel bij sidenav
-.enforce-max-height {
-  max-height: 100%;
-}
+
 
 /* CLEARFIX
 */
