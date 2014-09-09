@@ -1,0 +1,87 @@
+{%extends "template/layout.html.twig"%}
+
+{% block stylesheets %}
+    {{parent()}}
+
+{% endblock %}
+
+{% block title %}
+    {{parent()}}Home
+{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid ">
+        <h1 class="headerpage">Registreer</h1>
+    </div>
+    <br>
+    <div class="intropage ">
+
+        {#        
+        
+        **** Originele form met rare CSS gefoefel gecopied van newuserform.html.twig ******
+        
+        <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/home/registerUser" method="post">
+                    <div class="input-group">
+                        <label for="fnaam" class="input-group-addon widthcatinput">Familienaam</label>
+                        <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="fnaam" id="fnaam" placeholder="Vul hier uw familienaam in." required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="vnaam" class="input-group-addon widthcatinput">Voornaam</label>
+                        <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="vnaam" id="vnaam" placeholder="Vul hier uw voornaam in." required/>
+                    </div>
+                    <div class="input-group">
+                        <label for="rrnr" class="input-group-addon widthcatinput">Rijksregisternummer:</label>
+                        <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="rrnr" id="rrnr" placeholder="Vul hier uw rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
+                    </div>
+        
+                    <div class="input-group">
+                        <input type="submit" name="gebrknop" class="form-control marginonbutton">
+                    </div>
+                </form>#}
+
+        {# ***** Form met basic bootstrap structure / layout ****** #}
+        <div class="row">
+            
+            <div class="col-sm-7">
+                <p>
+                    Registreer hier als u wilt in aanmerking komen om bepaalde tests af te leggen.
+                    Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.
+                </p>
+            </div>
+        </div>
+        <br>
+
+        <form name="gebrtoev" class="form-horizontal" action="{{ app.root }}/home/registerUser" method="post">
+            <div class="form-group">
+                <label for="fnaam" class="col-sm-3 control-label">Familienaam:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="Vul hier uw familienaam in." required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="vnaam" class="col-sm-3 control-label">Voornaam:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="Vul hier uw voornaam in." required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rrnr" class="col-sm-3 control-label">Rijksregisternummer:</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="Vul hier uw rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-4">
+                    <input type="submit" name="gebrknop" class="btn btn-default" value="Registreren">
+                </div>
+            </div>
+
+
+        </form>
+
+
+
+
+    </div>
+{% endblock %}
