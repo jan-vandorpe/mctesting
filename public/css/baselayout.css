@@ -452,7 +452,10 @@ p code{
     margin: 0 39% 0 39%;
 }
 
-
+/* loginmenu/header rechtsbovenaan bij smal scherm */
+.login-top-right {
+  float: right;
+}
 
 /* CLEARFIX
 */
