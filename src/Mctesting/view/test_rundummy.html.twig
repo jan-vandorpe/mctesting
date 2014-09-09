@@ -12,7 +12,7 @@
         <div>Totaal aantal vragen: {{ test.testquestioncount }}</div>
         <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
     </div>
-    <form name="" action="{{ app.root }}" method="post">
+    <form name="" action="{{ app.root }}/testadmin/testlist/" method="post">
         {% for question in test.questions %}
             <div class="vraaggroep">
                 {# Question #}
