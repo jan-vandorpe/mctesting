@@ -1,5 +1,11 @@
 {% extends "template/layout.html.twig" %}
 
+{% block scripts %}
+    {{ parent() }}
+<script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
+<script src="{{ app.root }}/public/js/answeredCounter.js"></script>
+{% endblock scripts %}
+
 {% block title %}
     {{ parent() }}Test afleggen
 {% endblock title %}
@@ -9,7 +15,7 @@
     <h1 class="headerofpage">{{ test.testname }}</h1>
     <div class="testinfotop clearFix">
         <div>Categorie: {{ catname }} </div>
-        <div>Totaal aantal vragen: {{ test.testquestioncount }}</div>
+        <div >Nog te beantwoorden vragen: <span id="questioncount">{{ test.testquestioncount }}</span></div>
         <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
     </div>
     <h1 class="headerofpage">Per vraag is maar 1 correct antwoord mogelijk</h1>
