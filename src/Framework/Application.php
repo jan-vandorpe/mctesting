@@ -43,7 +43,8 @@ class Application extends AbstractFramework
         require_once '../vendor/Twig/Autoloader.php';
         Twig_Autoloader::register();
         $twigLoader = new Twig_Loader_Filesystem('../src/' . $appName . '/view');
-        $this->appEnvironment = new Twig_Environment($twigLoader);
+        $this->appEnvironment = new Twig_Environment($twigLoader, array('debug' => true));
+        $this->appEnvironment->addExtension(new \Twig_Extension_Debug());
 
         //load application config file
         require_once '../src/' . $appName . '/Config/Config.php';
