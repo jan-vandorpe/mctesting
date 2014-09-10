@@ -18,9 +18,9 @@ class TestQuestionService
         
         return TestQuestionDAO::insert($testid, $questionId);
     }
-
-
     
-
-    
+    public static function getAnsweredCats($sessieid, $userid)
+    {        
+        return TestQuestionDAO::selectCategoriesAnsweredQuestions($sessieid, $userid);
+    }
 }

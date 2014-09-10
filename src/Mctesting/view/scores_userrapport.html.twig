@@ -42,12 +42,44 @@
             <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
         </div>
         
+        
+        <h4>Test details </h4>
+        {% for category in subcats %}
+            <div class="input-group-addon "><h5>{{category.Subcatname}}</h5></div>     
+            {% for question in category.questions %}
+            <div class="vraaggroep">
+                {# Question #}
+                <div class="vraag row">
+                    <div class="col-lg-12">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                {% if question.correct %}
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                {% endif %}
+                            </div>
+                            <div class="form-control">
+                                {{ question.text|raw }}
+                                {% if question.media is not empty %}
+                                    {% for file in question.media %}
+                                        <div class="imggroepbijvraag">
+                                            <img src="../../../images/{{ file }}" />
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}  
         <div class="input-group">
             <input type="submit" name="gebrknop" value="terug" class="form-control marginonbutton">
         </div>
     </form>
     
-    <h4>Test details </h4>
     
     
 </div>
