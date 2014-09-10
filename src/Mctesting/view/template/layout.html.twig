@@ -65,7 +65,7 @@
                 {% if app.user is defined and app.user is not empty %}
                     {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
                         <aside class="menu_on_left">
-                            <div class="navbar">
+                            <nav class="navbar">
                                 <ul class="nav navbar-nav nav-stacked">
                                     <li class="menuheader">Vragen</li>
                                     <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
@@ -98,7 +98,7 @@
                                     <li><a href="#">Lijst</a></li>
                                 </ul>
                                 {% endif %}
-                            </div>
+                            </nav>
                         </aside>
                     {% endif %}
                 {% endif %}
