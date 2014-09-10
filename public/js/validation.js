@@ -7,27 +7,19 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            inputVoornaam: {
+            Login: {
                 message: 'The username is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Voornaam is verplicht'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z]+$/,
-                        message: 'Voornaam kan alleen bestaan uit letters van het alfabet'
-                    },
                 }
             },
-            inputNaam: {
+            Wachtwoord: {
                 message: 'The username is not valid',
                 validators: {
                     notEmpty: {
-                        message: 'Naam is verplicht'
-                    },
-                    regexp: {
-                        regexp: /^[a-zA-Z]+$/,
-                        message: 'Naam kan alleen bestaan uit letters van het alfabet'
+                        message: 'Wachtwoord is verplicht'
                     },
                 }
             },
