@@ -16,7 +16,7 @@
     Vraag Toevoegen
 </h1>
 <div class="container-fluid">
-    <form name="toevoegenvraag" method="post" action="{{ app.root }}/question/add">
+    <form name="toevoegenvraag" method="post" action="{{ app.root }}/question/add" enctype="multipart/form-data">
         <div class="input-group nieuwimg">
             <span class="input-group-addon widthvraaginput">
                 Subcategorie:
@@ -56,6 +56,18 @@
                             </span>
                             <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                         </div>
+                            <div class="input-group nieuwimg">
+                        <span class="input-group-addon widthvraaginput">
+                            Afbeeldingen:
+                        </span>
+                        <input type="file" name="answerMedia[]" class="form-control" />
+                    </div>
+                            <div class="input-group nieuwimg">
+                        <span class="input-group-addon widthvraaginput">
+                            Afbeeldingen:
+                        </span>
+                        <input type="file" name="answerMedia[]" class="form-control" />
+                    </div>
                         <div class="input-group nieuwantwoord">
                             <span class="input-group-addon widthvraaginput">
                                 Antwoord 2:

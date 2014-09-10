@@ -5,6 +5,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
+use Mctesting\Model\Includes\UploadManager;
 
 /**
  * Description of QuestionController
@@ -43,8 +44,40 @@ class QuestionController extends AbstractController
      */
     public function add()
     {
-        QuestionService::create($_POST);
-        header('location: '.ROOT.'/question/create/');
-        exit();
+      $i = 0;
+      foreach ($_FILES['media']['name'] as $value) {
+        list($file,$error) = UploadManager::upload('media','../public/images/','jpg,jpeg,gif,png',$i);
+        if($error) print $error;
+        $i++;
+      }
+      
+      $i = 0;
+      foreach ($_FILES['answerMedia']['name'] as $value) {
+        list($file,$error) = UploadManager::upload('answerMedia','../public/images/','jpg,jpeg,gif,png',$i);
+        if($error) print $error;
+        $i++;
+      }
+      
+      
+      
+      
+        //QuestionService::create($_POST);
+        //header('location: '.ROOT.'/question/create/');
+        //exit();
     }
+    
+    private function reArrayFiles(&$file_post) {
+
+    $file_ary = array();
+    $file_count = count($file_post['name']);
+    $file_keys = array_keys($file_post);
+
+    for ($i=0; $i<$file_count; $i++) {
+        foreach ($file_keys as $key) {
+            $file_ary[$i][$key] = $file_post[$key][$i];
+        }
+    }
+
+    return $file_ary;
+}
 }
