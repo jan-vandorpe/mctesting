@@ -18,6 +18,7 @@ class Test
     private $TestPassPercentage;
     private $TestCreator;
     //private $TestCatName;
+    private $status;
 
     public function getTestId()
     {
@@ -62,6 +63,10 @@ class Test
 //    {
 //        return $this->TestCatName;
 //    }
+    
+    public function getStatus() {
+        return $this->status;
+    }
 
     public function setTestId($testId)
     {
@@ -97,4 +102,8 @@ class Test
 //    {
 //        $this->TestCatName = $TestCatName;
 //    }
+    
+    public function setStatus($status) {
+        $this->status = $status;
+    }
 }

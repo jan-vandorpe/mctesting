@@ -37,6 +37,7 @@ class TestDAO {
                     $test->setTestPassPercentage($record['tebehalenscore']);
                     $test->setTestCreator($record['beheerder']);
                     //$catname = TestService::getCatName($record['testid']);
+                    $test->setStatus($record['actief']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -70,6 +71,7 @@ class TestDAO {
                 $test->setTestPassPercentage($record['tebehalenscore']);
                 $test->setTestCreator($record['beheerder']);
                 //$test->setTestCatName(TestService::getCatName($record['testid']));
+                $test->setStatus($record['actief']);
                 return $test;
             } else {
                 throw new ApplicationException('Test selectById record is leeg');
@@ -107,6 +109,7 @@ class TestDAO {
                     $test->setTestMaxscore($record['maxscore']);
                     $test->setTestPassPercentage($record['tebehalenscore']);
                     $test->setTestCreator($record['beheerder']);
+                    $test->setStatus($record['actief']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -252,6 +255,7 @@ class TestDAO {
                 $test->setTestCreator($record['beheerder']);
                 $questions = QuestionService::getActiveByTest($id);
                 $test->setQuestions($questions);
+                $test->setStatus($record['actief']);
                 return $test;
             } else {
                 throw new ApplicationException('Test selectActiveFullTestById record is leeg');
@@ -263,6 +267,23 @@ class TestDAO {
                     . '<br>'
                     . $error[2];
             throw new ApplicationException($errormsg);
+        }
+    }
+    
+    public static function updateStatus($testid, $status) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE test SET actief = :status WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':status' => $status, ':testid' => $testid))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de status van deze test niet aanpassen: ' . $error[2]);
+            
         }
     }
 }

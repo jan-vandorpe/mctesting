@@ -15,7 +15,7 @@
     <h1 class="headerofpage">Testlijst</h1>
 </div>
 <div class="container-fluid ">
-    <form name="testtebewerken">
+    <form name="testtebewerken" action="{{app.root}}/testadmin/changeuserstatus" method="post" id="testForm">
 
 
         <div class="headergebroverzicht">
@@ -34,7 +34,7 @@
             {% for test in tests %}   
             <div class="input-group">                    
                 <span class="input-group-addon">
-                    <input type="checkbox" name="antwoord1" />
+                    <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
                 </span>
 
                 <div class="gebruiktebewerken form-control">
@@ -42,6 +42,11 @@
                     <div class="fnaamgebrupdate">{{test.TestName}}</div>
                     <div class="vnaamgebrupdate">{{test.TestMaxDuration}}</div>
                     <div class="rrnrgebrupdate">{{test.TestQuestionCount}}</div>
+                    {% if test.status == 1 %}
+                            <div class="gebrupdater">Actief</div>
+                        {% else %}
+                            <div class="gebrupdater">Inactief</div>
+                        {% endif %}
                     <div class="gebrupdater">
                         <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
                     </div>
@@ -59,8 +64,8 @@
                     <!-- knopen links -->
                     <p class="navbar-text">Selectie: </p>
                     <ul class="nav navbar-nav">
-                        <li><a>Maak inactief</a></li>
-                        <li><a>Maak actief</a></li>
+                        <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
+                        <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
                     </ul>
                     <!-- knopen rechts -->
                     <ul class="nav navbar-nav navbar-right">
