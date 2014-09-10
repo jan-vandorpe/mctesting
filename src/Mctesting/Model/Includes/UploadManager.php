@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace VDAB\project\Includes;
+namespace Mctesting\Model\Includes;
 
 class UploadManager {
 
