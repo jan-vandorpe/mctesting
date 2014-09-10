@@ -1,0 +1,55 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}Home
+{% endblock %}
+
+
+{%block content%}
+
+<div class="gebruikertoevoegen container-fluid">
+    <h1 class="headerofpage">Scores rapport</h1>    
+    <h4>Gebruiker overzicht</h4>
+    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/scores/showsessiondetail/{{usersession[0].testsession.id}}" method="post">
+        
+        <div class="input-group">
+            <label for="fnaam" class="input-group-addon widthcatinput">Familienaam</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="fnaam" id="fnaam" placeholder="{{ usersession[0].user.lastname }}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="vnaam" class="input-group-addon widthcatinput">Voornaam</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="vnaam" id="vnaam" placeholder="{{ usersession[0].user.firstname }}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="rrnr" class="input-group-addon widthcatinput">Rijksregisternummer:</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="rrnr" id="rrnr" placeholder="{{usersession[0].user.RRnr}}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="score" class="input-group-addon widthcatinput">Score:</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="score" id="score" placeholder="{{usersession[0].score}}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="percentage" class="input-group-addon widthcatinput">Percentage:</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="passes" class="input-group-addon widthcatinput">Geslaagd:</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
+        </div>
+        
+        <div class="input-group">
+            <input type="submit" name="gebrknop" value="terug" class="form-control marginonbutton">
+        </div>
+    </form>
+    
+    <h4>Test details </h4>
+    
+    
+</div>
+
+{% endblock %}

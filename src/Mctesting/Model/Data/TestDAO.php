@@ -111,7 +111,8 @@ class TestDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectByBeheerder recordset is leeg');
+                return false;
+                //throw new ApplicationException('users selectByBeheerder recordset is leeg');
             }
         } else {
             throw new ApplicationException('users selectByBeheerder statement kon niet worden uitgevoerd');

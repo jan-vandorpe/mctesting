@@ -43,7 +43,7 @@
                                 <td>{{ usersession.percentage }}</td>
                                 <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
                                 <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
-                                <td><a href="">details</a></td>
+                                <td><a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a></td>
                                 </tr>
                         {% endfor %}
                             </tbody>

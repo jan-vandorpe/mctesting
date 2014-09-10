@@ -26,5 +26,4 @@ class TestQuestionDAO {
             throw new ApplicationException('Kon deze testvraag niet toevoegen: '.$error[2]);              
             }
     }
-
 }

@@ -61,5 +61,27 @@ class ScoresController extends AbstractController
             'usersessions' => $userSessions,
         ));
     }
+    
+    public function showScoresRapport($arguments)
+    {
+        /**
+         * Scores per gebruiker tonen
+         */
+        
+        $sessionId = $arguments[0];
+        $userId = $arguments[1];
+        
+        //build model
+        //retrieve usersessions
+        $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
+        
+        //var_dump($userSession);
+       
+        
+        //render page
+        $this->render('scores_userrapport.html.twig', array(
+            'usersession' => $userSession,
+        ));
+    }
 
 }

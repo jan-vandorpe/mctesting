@@ -28,25 +28,29 @@
         </div>
 
 
+        {% if tests is empty %}
+            <p>U heeft nog geen testen  aangemaakt.</p>
+        {% else %}
+            {% for test in tests %}   
+            <div class="input-group">                    
+                <span class="input-group-addon">
+                    <input type="checkbox" name="antwoord1" />
+                </span>
 
-        {% for test in tests %}   
-        <div class="input-group">                    
-            <span class="input-group-addon">
-                <input type="checkbox" name="antwoord1" />
-            </span>
+                <div class="gebruiktebewerken form-control">
 
-            <div class="gebruiktebewerken form-control">
+                    <div class="fnaamgebrupdate">{{test.TestName}}</div>
+                    <div class="vnaamgebrupdate">{{test.TestMaxDuration}}</div>
+                    <div class="rrnrgebrupdate">{{test.TestQuestionCount}}</div>
+                    <div class="gebrupdater">
+                        <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
+                    </div>
 
-                <div class="fnaamgebrupdate">{{test.TestName}}</div>
-                <div class="vnaamgebrupdate">{{test.TestMaxDuration}}</div>
-                <div class="rrnrgebrupdate">{{test.TestQuestionCount}}</div>
-                <div class="gebrupdater">
-                    <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
                 </div>
-
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
+        
 
         <!-- DE BEWERKINGSKNOPEN -->
         <div>
