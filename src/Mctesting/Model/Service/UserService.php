@@ -53,27 +53,27 @@ class UserService {
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
 //             }
-         }else{
-             //print(" rijksregister");
-             $user = UserDAO::selectByRRNr($login);
-             $sessions=TestSessionService::getSessionByPW($password);
-             unset($_SESSION["sessionchoices"]);
-             if($sessions !== null ){
-                 foreach ($sessions as $session) {
-                     $id=$session->getId();
-                     $test=$session->getTest();
-                     $name=$test->getTestName();
-                     $testid=$test->getTestId();
-                     $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
-                     $_SESSION["sessionchoices"][$id]=array($testid=>$name);
-                     $_SESSION["sessionParticipation"][$id]=array("participated" => $sessionUser[0]->getParticipated());
-                 }
-                 //$_SESSION["testsessions"]=$sessions;  unused?
-                 UserService::serializeToSession($user);
-                 return true;                 
-             }else{                 
-                 return false;
-             }
+            } else {
+                //print(" rijksregister");
+                $user = UserDAO::selectByRRNr($login);
+                $sessions = TestSessionService::getSessionByPW($password);
+                unset($_SESSION["sessionchoices"]);
+                if ($sessions !== null) {
+                    foreach ($sessions as $session) {
+                        $id = $session->getId();
+                        $test = $session->getTest();
+                        $name = $test->getTestName();
+                        $testid = $test->getTestId();
+                        $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
+                        $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                        $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
+                    }
+                    //$_SESSION["testsessions"]=$sessions;  unused?
+                    UserService::serializeToSession($user);
+                    return true;
+                } else {
+                    return false;
+                }
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);
@@ -153,6 +153,14 @@ class UserService {
             return false;
         }
 //        }
+    }
+
+    public function updateStatus($RRNr, $status) {
+        if (UserDAO::updateStatus($RRNr, $status)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 //    public function getUser($email) {

@@ -33,9 +33,9 @@ class HomeController extends AbstractController {
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
-
+        $status = 0;
         if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
+            if (UserService::create($firstName, $lastName, $RRNr, $status)) {
                 header("location: " . ROOT . "/home/go");
             } else {
                 //header("location: ".ROOT."/home/newuserform");

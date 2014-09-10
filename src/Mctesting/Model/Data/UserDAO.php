@@ -63,6 +63,7 @@ class UserDAO {
                     $user->setLastName($record['familienaam']);
                     $user->setEmail($record['email']);
                     $user->setGroup($record['gebruikerstype']);
+                    $user->setStatus($record['actief']);
 
                     array_push($result, $user);
                 }
@@ -154,6 +155,24 @@ class UserDAO {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon deze gebruiker niet toevoegen: ' . $error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
+
+    public static function updateStatus($RRNr, $status) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE gebruikers SET actief = :status WHERE rijksregisternr = :RRNr';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':status' => $status, ':RRNr' => $RRNr))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen ' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }

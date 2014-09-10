@@ -7,14 +7,15 @@ namespace Mctesting\Model\Entity;
  *
  * @author Thomas Deserranno
  */
-class User
-{
+class User {
+
     private $RRnr;
     private $firstName;
     private $lastName;
     private $email;
     private $group;
-    
+    private $status;
+
     public function getRRnr() {
         return $this->RRnr;
     }
@@ -33,6 +34,10 @@ class User
 
     public function getGroup() {
         return $this->group;
+    }
+
+    public function getStatus() {
+        return $this->status;
     }
 
     public function setRRnr($RRnr) {
@@ -54,4 +59,9 @@ class User
     public function setGroup($group) {
         $this->group = $group;
     }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
+
 }
