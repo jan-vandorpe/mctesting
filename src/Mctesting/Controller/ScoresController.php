@@ -78,7 +78,7 @@ class ScoresController extends AbstractController
         $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId);
         //var_dump($userSession);
         //var_dump($subcategories);
-        var_dump($userId);
+        //var_dump($userId);
         
         //render page
         $this->render('scores_userrapport.html.twig', array(
