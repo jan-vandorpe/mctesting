@@ -10,7 +10,8 @@ class Subcategory
     private $id;
     private $subcatname;
     private $active;
-
+    private $questions = array();
+    
     public function getId()
     {
         return $this->id;
@@ -39,6 +40,18 @@ class Subcategory
     public function setSubcatname($subcatname)
     {
         $this->subcatname = $subcatname;
+    }
+    
+    
+    /**
+     * Questions gebruikt om beantwoorde vragen per cat op te halen
+     */
+    public function getQuestions() {
+        return $this->questions;
+    }
+
+    public function setQuestions($questions) {
+        $this->questions = $questions;
     }
 
 }
