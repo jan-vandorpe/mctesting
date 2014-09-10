@@ -68,6 +68,33 @@ class UsermanagementController extends AbstractController {
         }
     }
 
+    //make user inactive
+    public function inactive() {
+        foreach ($_POST['userCheckbox'] as $check) {
+            UserService::updateStatus($check, 0);
+            // array_push($RRNrs, $check);
+            header("location: " . ROOT . "/usermanagement/listusers");
+        }
+    }
+
+    //make user active
+    public function active() {
+        foreach ($_POST['userCheckbox'] as $check) {
+            UserService::updateStatus($check, 1);
+            // array_push($RRNrs, $check);
+            header("location: " . ROOT . "/usermanagement/listusers");
+        }
+    }
+
+    //delete user
+    public function delete() {
+        foreach ($_POST['userCheckbox'] as $check) {
+            UserService::deleteUser($check);
+            // array_push($RRNrs, $check);
+            header("location: " . ROOT . "/usermanagement/listusers");
+        }
+    }
+
     //UserService::loginCheck($login, $password);
     //header("location: ".ROOT."/home/go");        
 

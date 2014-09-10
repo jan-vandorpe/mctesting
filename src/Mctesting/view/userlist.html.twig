@@ -15,7 +15,7 @@
         <h1 class="headerofpage">Beheer gebruikers</h1>
     </div>
     <div class="container-fluid ">
-        <form name="testtebewerken">
+        <form name="testtebewerken" action="{{app.root}}/usermanagement/changeuserstatus" method="post" id="userForm">
 
 
             <div class="headergebroverzicht">
@@ -34,7 +34,7 @@
                 <div class="input-group">
 
                     <span class="input-group-addon">
-                        <input type="checkbox" name="antwoord1" />
+                        <input type="checkbox" name="userCheckbox[]" value="{{user.rrnr}}" />
                     </span>
 
                     <div class="gebruiktebewerken form-control">
@@ -45,12 +45,13 @@
                         {% if user.status == 1 %}
                             <div class="gebrupdater">Actief</div>
                         {% else %}
-                            <div class="gebrupdater">Passief</div>
+                            <div class="gebrupdater">Inactief</div>
                         {% endif %}
 
                     </div>
                 </div>
             {% endfor %}
+
 
             <!-- DE BEWERKINGSKNOPEN -->
             <div>
@@ -59,9 +60,9 @@
                         <!-- knopen links -->
                         <p class="navbar-text">Selectie: </p>
                         <ul class="nav navbar-nav">
-                            <li><a>Maak inactief</a></li>
-                            <li><a>Maak actief</a></li>
-                            <li><a>Verwijder</a></li>
+                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/inactive">Maak Inactief</button></li>
+                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/active">Maak Actief</button></li>
+                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/delete">Verwijder</button></li>
                         </ul>
                         <!-- knopen rechts -->
                         <ul class="nav navbar-nav navbar-right">

@@ -172,8 +172,26 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen ' . $error[2]);
-            //header("location: /mctesting/agga/dagga");
+            throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen: ' . $error[2]);
+            
+        }
+    }
+
+    public static function deleteUser($RRNr) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'DELETE from GEBRUIKERS where rijksregisternr = :RRNr';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':RRNr' => $RRNr))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze gebruiker niet verwijderen: ' . $error[2]);
+            
         }
     }
 

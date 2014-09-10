@@ -155,8 +155,16 @@ class UserService {
 //        }
     }
 
-    public function updateStatus($RRNr, $status) {
+    public static function updateStatus($RRNr, $status) {
         if (UserDAO::updateStatus($RRNr, $status)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function deleteUser($RRNr) {
+        if (UserDAO::deleteUser($RRNr)) {
             return true;
         } else {
             return false;
