@@ -12,7 +12,17 @@ class Answer
     private $id;
     private $questionId;
     private $text;
+    private $media;
     
+    public function getMedia() {
+      return $this->media;
+    }
+
+    public function setMedia($media) {
+      $this->media = $media;
+    }
+
+        
     public function getId()
     {
         return $this->id;

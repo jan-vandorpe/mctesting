@@ -21,11 +21,11 @@ class UploadManager {
    *                The first element is randomly generated filename to which the file was uploaded to.
    *                The second element is the status - if the upload failed, it will be 'Error : Cannot upload the file 'name.txt'.' or something like that
    */
-  public function upload($file_id, $folder = "", $types = "") {
+  public function upload($file_id, $folder = "", $types = "",$i) {
     if (!$_FILES[$file_id]['name'])
       return array('', 'No file specified');
 
-    $file_title = $_FILES[$file_id]['name'];
+    $file_title = $_FILES[$file_id]['name'][$i];
     //Get file extension
     $ext_arr = split("\.", basename($file_title));
     $ext = strtolower($ext_arr[count($ext_arr) - 1]); //Get the last extension
@@ -38,7 +38,7 @@ class UploadManager {
       if (in_array($ext, $all_types))
         ;
       else {
-        $result = "'" . $_FILES[$file_id]['name'] . "' is not a valid file."; //Show error if any.
+        $result = "'" . $_FILES[$file_id]['name'][$i] . "' is not a valid file."; //Show error if any.
         return array('', $result);
       }
     }
@@ -50,8 +50,8 @@ class UploadManager {
 
     $result = '';
     //Move the file from the stored location to the new location
-    if (!move_uploaded_file($_FILES[$file_id]['tmp_name'], $uploadfile)) {
-      $result = "Cannot upload the file '" . $_FILES[$file_id]['name'] . "'"; //Show error if any.
+    if (!move_uploaded_file($_FILES[$file_id]['tmp_name'][$i], $uploadfile)) {
+      $result = "Cannot upload the file '" . $_FILES[$file_id]['name'][$i] . "'"; //Show error if any.
       if (!file_exists($folder)) {
         $result .= " : Folder don't exist.";
       } elseif (!is_writable($folder)) {
@@ -61,7 +61,7 @@ class UploadManager {
       }
       $file_name = '';
     } else {
-      if (!$_FILES[$file_id]['size']) { //Check if the file is made
+      if (!$_FILES[$file_id]['size'][$i]) { //Check if the file is made
         @unlink($uploadfile); //Delete the Empty file
         $file_name = '';
         $result = "Empty file found - please use a valid file."; //Show the error message

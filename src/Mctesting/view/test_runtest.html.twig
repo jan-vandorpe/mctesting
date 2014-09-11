@@ -19,7 +19,7 @@
         <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
     </div>
     <h1 class="headerofpage">Per vraag is maar 1 correct antwoord mogelijk</h1>
-    <form name="" action="{{ app.root }}/test/process/" method="post">
+    <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post">
         {% for question in test.questions %}
             <div class="vraaggroep">
                 {# Question #}
@@ -34,7 +34,7 @@
                                 {% if question.media is not empty %}
                                     {% for file in question.media %}
                                         <div class="imggroepbijvraag">
-                                            <img src="../../../images/{{ file }}" />
+                                            <img src="{{ app.root }}/public/images/{{ file }}" />
                                         </div>
                                     {% endfor %}
                                 {% endif %}
@@ -51,6 +51,11 @@
                                     <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" />
                                 </span>
                                 <div class="antwoord form-control">{{ answer.text|raw }}</div>
+                                {% if answer.media is not empty %}
+                                  <div class="imggroepbijvraag">
+                                            <img src="{{ app.root }}/public/images/{{ answer.media }}" />
+                                  </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endfor %}
