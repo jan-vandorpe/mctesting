@@ -21,35 +21,35 @@
         <div class="headergebroverzicht">
             <!-- header boven de gebr info-->
             <div class="row onderheadertebewerken form-control">
-                <div class="col-md-4">Test naam</div>
-                <div class="col-md-2">maxduur</div>
-                <div class="col-md-2">aantal vragen</div>
-                <div class="col-md-2"></div>
-                <div class="col-md-2"></div>
+                <div class="col-xs-4">Test naam</div>
+                <div class="col-xs-2">maxduur</div>
+                <div class="col-xs-2">aantal vragen</div>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-2"></div>
             </div>
         </div>
 
-
+        <!-- OVERZICHT TESTEN -->
         {% if tests is empty %}
-            <p>U heeft nog geen testen  aangemaakt.</p>
+            <p class="info-tekst">U heeft nog geen testen  aangemaakt.</p>
         {% else %}
             {% for test in tests %}   
-            <div class="input-group">                    
+            <div class="input-group volle-breedte">                    
                 <span class="input-group-addon">
                     <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
                 </span>
 
-                <div class="row gebruiktebewerken form-control">
+                <div class="row gebruiktebewerken form-control volle-breedte">
 
-                    <div class="col-md-4">{{test.TestName}}</div>
-                    <div class="col-md-2">{{test.TestMaxDuration}}</div>
-                    <div class="col-md-2">{{test.TestQuestionCount}}</div>
+                    <div class="col-xs-4">{{test.TestName}}</div>
+                    <div class="col-xs-2">{{test.TestMaxDuration}}</div>
+                    <div class="col-xs-2">{{test.TestQuestionCount}}</div>
                     {% if test.status == 1 %}
-                            <div class="col-md-2">Actief</div>
+                            <div class="col-xs-2">Actief</div>
                         {% else %}
-                            <div class="col-md-2">Inactief</div>
+                            <div class="col-xs-2">Inactief</div>
                         {% endif %}
-                    <div class="col-md-2">
+                    <div class="col-xs-2">
                         <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
                     </div>
 
@@ -60,21 +60,17 @@
         
 
         <!-- DE BEWERKINGSKNOPEN -->
-        <div>
-            <nav>
-                <div class="collapse navbar-collapse">
+                <nav class="row pull-down">
                     <!-- knopen links -->
-                    <p class="navbar-text">Selectie: </p>
-                    <ul class="nav navbar-nav">
-                        <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
-                        <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
+                    <p class="col-xs-1 navbar-text">Selectie: </p>
+                    <div class="col-xs-10">
+                    <ul class=" row nav navbar-nav">
+                        <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
+                        <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
+                        <li class="col-xs-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</button></li>
                     </ul>
-                    <!-- knopen rechts -->
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</a></li>
-                    </ul>
-                </div>
-            </nav>
+                    </div>
+                </nav>
         </div>
     </form>
 </div>
