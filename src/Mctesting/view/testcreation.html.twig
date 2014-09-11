@@ -11,135 +11,156 @@
 
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="headerofpage">Aanmaken van een test</h1>
-</div>
-<div class="testaanmaken">
-    {% if testname is not defined %}
-        <h4>Test aanmaken: stap 1</h4>
-        <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
-            <div class="input-group">
-                <label for="testname" class="input-group-addon widthcatinput">Naam van test</label>
-                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testname" id="testname" placeholder="Vul hier de naam in van de test." autofocus required/>
-            </div>
-            <div class="input-group">
-                <label for="testcatselect" class="input-group-addon widthcatinput">Categorie van test</label>
-                <select class="form-control" name="testcatselect">
-                    <option value="0" >Selecteer een categorie</option>
-                    {% for category in allCat %}
-                        <option value="{{ category.id }}">{{ category.catname }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="input-group">
-                <input type="submit" name="catknop" class="form-control marginonbutton" >
-            </div>
-        </form>
-    {% elseif testduration is not defined %}
-        <h4>Test aanmaken: stap 2</h4>
-        <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3">
-            <div class="input-group">
-                <label for="testduration" class="input-group-addon widthcatinput">Duur van test(aantal minuten)</label>
-                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in van de test." required/>
-            </div>
-            
+    <div class="container-fluid">
+        <h1 class="headerofpage">Aanmaken van een test</h1>
+    </div>
+    <div class="testaanmaken">
+        {% if testname is not defined %}
+            <h4>Test aanmaken: stap 1</h4>
+            <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
+                <div class="input-group">
+                    <label for="testname" class="input-group-addon widthcatinput">Naam van test</label>
+                    <input type="text" class="form-control frmcontrolwidth-catinvoeg" title="hallo" name="testname" id="testname" placeholder="Vul hier de naam in van de test." autofocus required/>
+                </div>
+                <div class="input-group">
+                    <label for="testcatselect" class="input-group-addon widthcatinput">Categorie van test</label>
+                    <select class="form-control" name="testcatselect">
+                        <option value="0" >Selecteer een categorie</option>
+                        {% for category in allCat %}
+                            <option value="{{ category.id }}">{{ category.catname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="submit" name="catknop" class="form-control marginonbutton" >
+                </div>
+            </form>
+        {% elseif testduration is not defined %}
+            <h4>Test aanmaken: stap 2</h4>
+            <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
+
+                <!-- Oude form met boeltje CSS -->
+                {#                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="testduration" class="input-group-addon widthcatinput">Duur van test(aantal minuten)</label>
+                                        <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in van de test." required/>
+                                    </div>
+                                </div>#}
+                <!-- -->
+
+                <!-- Nieuw opgecleanede FORM -->
+
+                <div class="form-group">
+                    <label for="testduration" class="col-sm-2 control-label">Duur van test:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" name="testduration" id="testduration" placeholder="Tijdsduur in minuten" required/>
+                    </div>
+                    <label for="testduration" class="control-label">Minuten</label>
+                </div>
+
+                <div class="well">
+                    <div class="input-group gebraddon">
+                        <div class="input-group-addon ">Vragen: </div>
+                    </div>
+                    <div class="form-group">
+                        {% for question in allQuest %}
+                            <div class="categorie">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+
+                                        <input type="checkbox" class="control-label" name="question[]" value='{{question.id}}' />
+
+                                    </span>
+                                    <div class="form-control vraagsel">
+                                        <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
+                                        <div class="vraagzelf">{{question.text|raw}}</div>
+                                        <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <input type="submit" name="catknop" class="form-control marginonbutton" />
+                </div>
+                <div class="input-group">
+                    <input type="reset" name="annknop" class="form-control marginonbutton" />
+                </div>
+            </form>
+
+        {% elseif passpercentage is not defined %}
+            <h4>Test aanmaken stap 3</h4>
+
             <div class="lighter gebrcollectie">
                 <div class="input-group gebraddon">
-                    <div class="input-group-addon ">Vragen: </div>
+                    <div class="input-group-addon">{{testname}}:</div>
                 </div>
-                {% for question in allQuest %}
-                    <div class="categorie">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <input type="checkbox" name="question[]" value='{{question.id}}' />
-                            </span>
-                            <div class="form-control vraagsel">
-                                <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
-                                <div class="vraagzelf">{{question.text|raw}}</div>
-                                <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
-                            </div>
-                        </div>
+                <div class="input-group">
+                    <span class="input-group-addon widthtestinput">Categorie: </span>
+                    <div class="form-control frmcontrolwidth-testinvoeg">{{cat.catname}}</div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon widthtestinput">Duurtijd: </span>
+                    <div class="form-control frmcontrolwidth-testinvoeg">{{testduration}}</div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon widthtestinput">Aantal vragen: </span>
+                    <div class="form-control frmcontrolwidth-testinvoeg">{{questioncount}}</div>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon widthtestinput">Gewicht vragen: </span>
+                    <div class="form-control frmcontrolwidth-testinvoeg">{{questionweightcount}}</div>
+                </div>
+                <div class="input-group gebraddon">
+                    <div class="input-group-addon">Subcategorie&euml;n: </div>
+                </div>
+                <div class="input-group submargin">
+                    <span class="input-group-addon widthtestinput centeren">Naam: </span>
+                    <span class="input-group-addon widthtestinput centeren">Aantal vragen: </span>
+                    <span class="input-group-addon widthtestinput centeren">Gewicht vragen: </span>
+                </div>
+                {% for key, subcat in subcatlist %}
+                    <div class="input-group submargin">
+                        <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{key}}</div>
+                        <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.count}}</div>
+                        <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.weight}}</div>
                     </div>
                 {% endfor %}
             </div>
-                
-            <div class="input-group">
-                <input type="submit" name="catknop" class="form-control marginonbutton" />
-            </div>
-            <div class="input-group">
-                <input type="reset" name="annknop" class="form-control marginonbutton" />
-            </div>
-        </form>
 
-    {% elseif passpercentage is not defined %}
-        <h4>Test aanmaken stap 3</h4>
-        
-        <div class="lighter gebrcollectie">
-            <div class="input-group gebraddon">
-                <div class="input-group-addon">{{testname}}:</div>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon widthtestinput">Categorie: </span>
-                <div class="form-control frmcontrolwidth-testinvoeg">{{cat.catname}}</div>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon widthtestinput">Duurtijd: </span>
-                <div class="form-control frmcontrolwidth-testinvoeg">{{testduration}}</div>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon widthtestinput">Aantal vragen: </span>
-                <div class="form-control frmcontrolwidth-testinvoeg">{{questioncount}}</div>
-            </div>
-            <div class="input-group">
-                <span class="input-group-addon widthtestinput">Gewicht vragen: </span>
-                <div class="form-control frmcontrolwidth-testinvoeg">{{questionweightcount}}</div>
-            </div>
-            <div class="input-group gebraddon">
-                <div class="input-group-addon">Subcategorie&euml;n: </div>
-            </div>
-            <div class="input-group submargin">
-                <span class="input-group-addon widthtestinput centeren">Naam: </span>
-                <span class="input-group-addon widthtestinput centeren">Aantal vragen: </span>
-                <span class="input-group-addon widthtestinput centeren">Gewicht vragen: </span>
-            </div>
-            {% for key, subcat in subcatlist %}
-                <div class="input-group submargin">
-                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{key}}</div>
-                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.count}}</div>
-                    <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.weight}}</div>
+            <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload">
+                <div class="input-group">
+                    <label for="testpasspercentage" class="input-group-addon widthslaaginput">Slaagpercentage voor de volledige test:</label>
+                    <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
                 </div>
-            {% endfor %}
-        </div>
 
-        <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload">
-            <div class="input-group">
-                <label for="testpasspercentage" class="input-group-addon widthslaaginput">Slaagpercentage voor de volledige test:</label>
-                <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
-            </div>
+                {% for key, subcat in subcatlist %}
 
-    {% for key, subcat in subcatlist %}
+                    <div class="input-group">
+                        <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{ key }}":</label>
+                        <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
+                    </div>
 
-            <div class="input-group">
-                <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{ key }}":</label>
-                <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
-            </div>
-
-            {% endfor %}
+                {% endfor %}
 
 
-            <div class="input-group">
-                <input type="submit" name="catknop" class="form-control marginonbutton" >
-            </div>
-        </form>
-    {% else %}
-        <h4>Test aanmaken voltooid.</h4>
-        <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
-        <h4>Dummytest afleggen</h4>
-        <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}"> 
-            <p>Klik hier om een dummytest af te leggen:</p>
-            <input type="submit" name="catknop" value="Test afleggen" class="form-control marginonbutton" >
-        </form>
-    {% endif %}
+                <div class="input-group">
+                    <input type="submit" name="catknop" class="form-control marginonbutton" >
+                </div>
+            </form>
+        {% else %}
+            <h4>Test aanmaken voltooid.</h4>
+            <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
+            <h4>Dummytest afleggen</h4>
+            <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}"> 
+                <p>Klik hier om een dummytest af te leggen:</p>
+                <input type="submit" name="catknop" value="Test afleggen" class="form-control marginonbutton" >
+            </form>
+        {% endif %}
     </div>
 
 {% endblock content %}

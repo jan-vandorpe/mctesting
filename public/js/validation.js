@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     $('#frmLogin').bootstrapValidator({
+        container: 'tooltip',
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -24,6 +25,37 @@ $(document).ready(function() {
                 }
             },
         }});
+
+    $('#testcreation2').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            testduration: {
+                message: 'Voer duur van de test in minuten in',
+                validators: {
+                    digits: {
+                        message: 'Voer de tijd in minuten in'
+                    },
+                    notEmpty: {
+                        message: 'Voer de tijd in minuten in'
+                    }
+                }
+            },
+            'question[]': {
+                feedbackIcons: false,
+                validators: {
+                    choice: {
+                        min: 1,
+                        message: 'Selecteer tenminste 1 vraag'
+                    }
+                },
+            }
+
+        }});
+
 });
 
 

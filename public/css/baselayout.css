@@ -26,6 +26,8 @@ input[type='text']:focus, input[type='password']:focus, select:nth-of-type(n):fo
 }
 .topmenu.maincontainer{
     margin-top:0;
+    min-height:67px;
+
 }
 
 body{
@@ -74,12 +76,12 @@ body{
 .imggroepbijvraag img{
     float: left;
     height: 18em;
-    
+
     max-width: 18em;
     margin: 0.5em;
-    
+
     width: 30%;
-    
+
     border-style: solid;
     border-width: 1px;
     border-radius: 0.5em;
@@ -196,8 +198,8 @@ body{
     width: 100%;
     text-align: right;
     padding-right: 0.125em;
-    
-    
+
+
 }
 .naarlinks{
     float:left;
@@ -256,7 +258,7 @@ body{
 }
 .frmcontrolwidth-catinvoeg:nth-of-type(n){
     width: 20em;
-    
+
 }
 .subcathiding{
     display:block;
@@ -355,7 +357,7 @@ span.error{
 .errorbody{
     color: red;
     font-weight: 400;
-    
+
     padding-left: 1em;
 }
 .disableautoheight{
@@ -436,7 +438,7 @@ p code{
 .testinfotop{
     width: 100%;
     margin-bottom: 1em;
-    
+
     background-color: rgba(255,255,255,0.4);
     border-radius: 4px;
 }
