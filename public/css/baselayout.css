@@ -294,7 +294,10 @@ h4{
     padding: 0.25em 0 0.125em 2em;
     background-color: rgba(255,255,255,0.5);
 }
-table>tbody td{
+
+/****** Table border colors dat lijk nergens gebruikt worden en m'n datepicker upfuckt ******/
+
+/*table>tbody td{
     border-color: rgba(0,0,0,0.1);
     border-style: solid;
     border-bottom-width: 1px;
@@ -336,7 +339,10 @@ table>tbody>tr:last-of-type>td:last-of-type{
 }
 .tableheaderscores .singleheader:nth-of-type(n){
     border-radius: 4px 4px 0 0;
-}
+}*/
+
+
+
 .errorhead{
     text-align: center;
     margin: 0;

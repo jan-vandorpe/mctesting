@@ -5,7 +5,7 @@ $(document).ready(function() {
         startDate: "today",
         language: "nl-BE",
         todayHighlight: true,
-        orientation: "bottom auto",
+        autoclose: true,
     });
 
 });
