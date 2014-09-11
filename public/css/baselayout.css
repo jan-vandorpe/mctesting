@@ -180,7 +180,6 @@ body{
     border-color: rgba(0,0,0,0.2);
     float:left;
     margin-top: 2em;
-    margin-left: -2%;
     /*margin-right: 0.125em;*/
 }
 .menu_on_left li{
@@ -450,6 +449,11 @@ p code{
 .testafleggenpag .voltooid .form-control{
     width: 15em;
     margin: 0 39% 0 39%;
+}
+
+/* loginmenu/header rechtsbovenaan bij smal scherm */
+.login-top-right {
+  float: right;
 }
 
 
