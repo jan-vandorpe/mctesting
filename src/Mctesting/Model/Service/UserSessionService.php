@@ -30,4 +30,9 @@ class UserSessionService
     {
         return UserSessionDAO::update($userSession);
     }
+    
+    public static function delibereer($sessionId, $userId)
+    {
+        return UserSessionDAO::delibereer($sessionId, $userId);
+    }
 }
