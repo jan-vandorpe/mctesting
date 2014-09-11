@@ -43,11 +43,10 @@
             {% if errormsg is defined and errormsg is not empty  %}
                 <span class="error">{{ errormsg }}</span> 
             {% endif %}
-            <div class="input-group">
-                <label for="testsessieselect" class="input-group-addon widthcatinput">Datum van de testsessie:</label>
-                <div class="input-group date" id="ctrlDatePicker">
-                    <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                </div>
+            <div class="input-group date" id="ctrlDatePicker">
+                <span class="input-group-addon">Datum van de testsessie:</span>
+
+                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
             </div>
             <div class="input-group">
                 <label for="testsessieselect" class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</label>

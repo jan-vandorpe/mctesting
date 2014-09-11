@@ -4,7 +4,8 @@ $(document).ready(function() {
         format: "dd/mm/yyyy",
         startDate: "today",
         language: "nl-BE",
-        todayHighlight: true
+        todayHighlight: true,
+        orientation: "bottom auto",
     });
 
 });
