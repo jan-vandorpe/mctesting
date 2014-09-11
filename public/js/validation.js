@@ -62,13 +62,21 @@ $(document).ready(function() {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-        fiels: {
-            
+        fields: {
+            testdatum: {
+                feedbackIcons: false,
+                validators: {
+                    date: {
+                        format: 'DD/MM/YYYY',
+                        message: 'The value is not a valid date'
+                    },
+                    notEmpty: {
+                        message: 'Voer een datum in'
+                    }
+                }
+            }
         }
-
-
-
-    })
+    });
 
 });
 

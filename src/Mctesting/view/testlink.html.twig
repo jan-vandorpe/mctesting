@@ -26,30 +26,37 @@
 
 
         <form name="testsessiesel" id="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
-            <div class="input-group col-md-7">            
-                <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
-                <select class="form-control" name="testsetselect">
-                    <option value="0" >Selecteer een test:</option>
-                    {% for key,value in allTest %}  
-                        <optgroup label="{{ key }}">
-                            {% for test in value %}                
+            <div class="form-group col-md-7">
+                <div class="input-group">            
+                    
+                    <span class="input-group-addon widthcatinput">Selecteer een test:</span>
+                    <select class="form-control" name="testsetselect">
+                        <option value="0" >Selecteer een test:</option>
+                        {% for key,value in allTest %}  
+                            <optgroup label="{{ key }}">
+                                {% for test in value %}                
 
-                                <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
-                            {% endfor %}
-                        </optgroup>
-                    {% endfor %}
-                </select>
+                                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
             </div>
             {% if errormsg is defined and errormsg is not empty  %}
                 <span class="error">{{ errormsg }}</span> 
             {% endif %}
+            <div class="form-group col-md-7">
+                <div class="input-group date">
+                    <span class="input-group-addon widthcatinput">Datum van de testsessie:</span>
 
-            <div class="input-group date col-md-7">
-                <span class="input-group-addon widthcatinput">Datum van de testsessie:</span>
+                    <input type="text" class="form-control" id="ctrlDatePicker" name="testdatum" id="testdatum" placeholder="dd/mm/yyyy">
 
-                <input type="text" class="form-control col-md-4" id="ctrlDatePicker" placeholder="dd/mm/yyyy"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></i>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+
+                </div>
+
             </div>
-
             <div class="input-group col-md-7">
                 <span class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</span>
 
