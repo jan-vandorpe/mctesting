@@ -20,10 +20,12 @@
 
         <div class="headergebroverzicht">
             <!-- header boven de gebr info-->
-            <div class="onderheadertebewerken form-control">
-                <div class="fnaamgebrupdateheader">Test naam</div>
-                <div class="vnaamgebrupdateheader">maxduur</div>
-                <div class="rrnrgebrupdateheader">aantal vragen</div>
+            <div class="row onderheadertebewerken form-control">
+                <div class="col-md-4">Test naam</div>
+                <div class="col-md-2">maxduur</div>
+                <div class="col-md-2">aantal vragen</div>
+                <div class="col-md-2"></div>
+                <div class="col-md-2"></div>
             </div>
         </div>
 
@@ -37,17 +39,17 @@
                     <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
                 </span>
 
-                <div class="gebruiktebewerken form-control">
+                <div class="row gebruiktebewerken form-control">
 
-                    <div class="fnaamgebrupdate">{{test.TestName}}</div>
-                    <div class="vnaamgebrupdate">{{test.TestMaxDuration}}</div>
-                    <div class="rrnrgebrupdate">{{test.TestQuestionCount}}</div>
+                    <div class="col-md-4">{{test.TestName}}</div>
+                    <div class="col-md-2">{{test.TestMaxDuration}}</div>
+                    <div class="col-md-2">{{test.TestQuestionCount}}</div>
                     {% if test.status == 1 %}
-                            <div class="gebrupdater">Actief</div>
+                            <div class="col-md-2">Actief</div>
                         {% else %}
-                            <div class="gebrupdater">Inactief</div>
+                            <div class="col-md-2">Inactief</div>
                         {% endif %}
-                    <div class="gebrupdater">
+                    <div class="col-md-2">
                         <a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a>
                     </div>
 

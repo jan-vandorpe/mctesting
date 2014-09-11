@@ -20,11 +20,11 @@
 
             <div class="headergebroverzicht">
                 <!-- header boven de gebr info-->
-                <div class="onderheadertebewerken form-control">
-                    <div class="fnaamgebrupdateheader">Familienaam</div>
-                    <div class="vnaamgebrupdateheader">Voornaam</div>
-                    <div class="rrnrgebrupdateheader">Rijksreg Nr</div>
-
+                <div class="row onderheadertebewerken form-control">
+                    <div class="col-md-3">Familienaam</div>
+                    <div class="col-md-3">Voornaam</div>
+                    <div class="col-md-3">Rijksreg Nr</div>
+                    <div class="col-md-2"></div>
                 </div>
             </div>
 
@@ -32,20 +32,18 @@
             <!-- gebr VOORBEELD IN OVERZICHT -->
             {% for user in allUsers %}   
                 <div class="input-group">
-
                     <span class="input-group-addon">
                         <input type="checkbox" name="userCheckbox[]" value="{{user.rrnr}}" />
                     </span>
+                    <div class="row gebruiktebewerken form-control">
 
-                    <div class="gebruiktebewerken form-control">
-
-                        <div class="fnaamgebrupdate">{{user.lastname}}</div>
-                        <div class="vnaamgebrupdate">{{user.firstname}}</div>
-                        <div class="rrnrgebrupdate">{{user.rrnr}}</div>
+                        <div class="col-md-3">{{user.lastname}}</div>
+                        <div class="col-md-3">{{user.firstname}}</div>
+                        <div class="col-md-3">{{user.rrnr}}</div>
                         {% if user.status == 1 %}
-                            <div class="gebrupdater">Actief</div>
+                            <div class="col-md-2">Actief</div>
                         {% else %}
-                            <div class="gebrupdater">Inactief</div>
+                            <div class="col-md-2">Inactief</div>
                         {% endif %}
 
                     </div>
