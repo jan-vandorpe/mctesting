@@ -88,7 +88,7 @@ class QuestionController extends AbstractController
       //assign and typecast variables
         $subcatId = (integer) $_POST['subcat'];
         $questionText = $_POST['vraag'];
-        $questionText = ucfirst($text);
+        $questionText = ucfirst($questionText);
         $weight = (integer) $_POST['gewicht'];
         $correctAnswerId = (integer) $_POST['correctant'];
 

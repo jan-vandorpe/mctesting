@@ -65,19 +65,11 @@ class QuestionService
      * 
      * @param type $post : $_POST values
      */
-    public static function create($post)
+    public static function create($subcatId,$questionText,$weight,$correctAnswerId,$answersArray,$questionMediaFileNames)
     {
-        //assign and typecast variables
-        $subcatId = (integer) $post['subcat'];
-        $text = $post['vraag'];
-        $text = ucfirst($text);
-        $weight = (integer) $post['gewicht'];
-        $correctAnswerId = (integer) $post['correctant'];
-        $answers = array_filter($post['antwoord']);
-        $media = (isset($post['media'])) ? $post['media'] : array();
-
+        
         //validate values
-        if (QuestionService::validateNewQuestion($subcatId, $text, $weight, $correctAnswerId, $answers, $media)) {
+        if (QuestionService::validateNewQuestion($subcatId, $questionText, $weight, $correctAnswerId, $answersArray, $questionMediaFileNames)) {
             //create question
 //            var_dump($subcatId);
 //            var_dump($text);
@@ -85,7 +77,7 @@ class QuestionService
 //            var_dump($correctAnswerId);
 //            var_dump($answers);
 //            var_dump($media);
-            QuestionDAO::insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media);
+            QuestionDAO::insert($questionText, $subcatId, $weight, $correctAnswerId, $answersArray, $questionMediaFileNames);
         }
     }
 

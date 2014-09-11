@@ -229,7 +229,7 @@ class QuestionDAO
      * Inserts a new question in the database.
      */
 
-    public static function insert($text, $subcatId, $weight, $correctAnswerId, $answers, $media)
+    public static function insert($questionText, $subcatId, $weight, $correctAnswerId, $answersArray, $questionMediaFileNames)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -239,14 +239,14 @@ class QuestionDAO
         $sql .= ' VALUES (:subcatid, :vraagtekst, :gewicht, :correctantwoord)';
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':subcatid', $subcatId);
-        $stmt->bindParam(':vraagtekst', $text);
+        $stmt->bindParam(':vraagtekst', $questionText);
         $stmt->bindParam(':gewicht', $weight);
         $stmt->bindParam(':correctantwoord', $correctAnswerId);
         //test if statement can be executed
         if ($stmt->execute()) {
             $questionId = $db->lastInsertId();
-            AnswerService::create($questionId, $answers);
-            MediaService::create($questionId, $media);
+            AnswerService::create($questionId, $answersArray);
+            MediaService::create($questionId, $questionMediaFileNames);
         } else {
             $error = $stmt->errorInfo();
             $errormsg = 'Antwoord insert statement kan niet worden uitgevoerd'
