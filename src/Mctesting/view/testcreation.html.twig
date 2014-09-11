@@ -37,7 +37,7 @@
         </form>
     {% elseif testduration is not defined %}
         <h4>Test aanmaken: stap 2</h4>
-        <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3">
+        <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
             <div class="input-group">
                 <label for="testduration" class="input-group-addon widthcatinput">Duur van test(aantal minuten)</label>
                 <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in van de test." required/>
