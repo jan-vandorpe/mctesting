@@ -2,7 +2,6 @@
 
 {% block stylesheets %}
     {{parent()}}
-
 {% endblock %}
 
 {% block title %}
@@ -15,7 +14,7 @@
 <div class="gebruikertoevoegen container-fluid">
     <h1 class="headerofpage">Scores rapport</h1>    
     <h4>Gebruiker overzicht</h4>
-    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/scores/showsessiondetail/{{usersession[0].testsession.id}}" method="post">
+    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="" method="post">
         
         <div class="input-group">
             <label for="fnaam" class="input-group-addon widthcatinput">Familienaam</label>
@@ -40,6 +39,9 @@
         <div class="input-group">
             <label for="passes" class="input-group-addon widthcatinput">Geslaagd:</label>
             <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
+            {% if not usersession[0].passed %}
+                <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+            {% endif %}
         </div>
         
         
@@ -76,7 +78,7 @@
             {% endfor %}
         {% endfor %}  
         <div class="input-group">
-            <input type="submit" name="gebrknop" value="terug" class="form-control marginonbutton">
+            <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/showsessiondetail/{{usersession[0].testsession.id}}"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
         </div>
     </form>
     

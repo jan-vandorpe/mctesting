@@ -153,5 +153,21 @@ class UserSessionDAO {
             //header("location: /mctesting/agga/dagga");
         }
     }
+    
+    public static function delibereer($sessionId, $userId) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE sessiegebruiker SET geslaagd = 1 WHERE sessieid = :sessieid and rijksregisternr = :userid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':sessieid' => $sessionId, ':userid' => $userId))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('kan de gebruiker niet delibereren: ' . $error[2]);
+        }
+    }
 
 }

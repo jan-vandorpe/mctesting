@@ -142,14 +142,20 @@ body{
     width: 14%;
 }
 .headergebroverzicht{
-    /*width:100%;*/
-    margin-left:1.25em;   
+    width:100%;
+    margin-left:1.25em; 
+    padding-left: 1em;
 }
 .onderheadertebewerken{
     background-color: rgba(255,255,255,0.50);
     padding-left:3em;
     margin-top: 0.25em;
 }
+.input-group-addon {
+  width: 3em;
+  padding-right: 1.5em;
+}
+
 .fnaamgebrupdateheader, .vnaamgebrupdateheader, .rrnrgebrupdateheader{
     text-align: center;
     width: 28.5%;
@@ -182,7 +188,6 @@ body{
     border-color: rgba(0,0,0,0.2);
     float:left;
     margin-top: 2em;
-    margin-left: -2%;
     /*margin-right: 0.125em;*/
 }
 .menu_on_left li{
@@ -452,6 +457,17 @@ p code{
 .testafleggenpag .voltooid .form-control{
     width: 15em;
     margin: 0 39% 0 39%;
+}
+
+/* loginmenu/header rechtsbovenaan bij smal scherm */
+.login-top-right {
+  float: right;
+}
+.pull-down {
+  padding-top: 1%;
+}
+.volle-breedte {
+  width: 100%;
 }
 
 

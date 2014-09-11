@@ -19,9 +19,8 @@
 {% block body %}
     {#------ TOP MENU + LOGIN ---------------#}
     {% block login %}
-        <div class="container-fluid maincontainer topmenu">
-            <nav>
-                <div class="collapse navbar-collapse">
+        <header class="container-fluid maincontainer topmenu">
+                <div class="navbar-collapse">
                     {% if app.user is defined and app.user is not empty %}
                         {% if app.user.group.name == 'admin' %}
                             {# Admin topnav menu #}
@@ -51,7 +50,7 @@
                             #}
                         {% endif %}
                         {# Login form #}
-                        <form class="navbar-form navbar-right" role="logout" action="{{ app.root }}/login/logout" method="post">
+                        <form class="navbar-form navbar-right login-top-right" role="logout" action="{{ app.root }}/login/logout" method="post">
                             Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
                             <button type="submit" class="btn btn-default">Afmelden</button>
                         </form>                 
@@ -73,42 +72,41 @@
                             </div>
                         </form>
                     {% endif %}
-                </div>
-            </nav>
-        </div>
+                    </div>
+        </header>
     {% endblock login %}
 
     {#------ SIDE MENU ---------------#}
     <div class="container-fluid maincontainer clearFix">
         {% block sidenav %}
-            {% if app.user is defined and app.user is not empty %}
-                {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-                    <nav class="menu_on_left">
-                        <div class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Vragen</li>
-                                <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
-                            </ul>
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Categorie&euml;n</li>
-                                <li><a href="{{ app.root }}/category">Aanmaken</a></li>
-                                <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
-                            </ul>
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Gebruikers</li>
-                                <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
-                                <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
-                            </ul>
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Tests</li>
-                                <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
-                                <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
-                                <li><a href="{{ app.root }}/testadmin/testlist/">Lijst</a></li>
-                            </ul>
-                            <ul class="nav navbar-nav nav-stacked">
-                                <li class="menuheader">Rapporten</li>
-                                <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
-                            </ul>
+                {% if app.user is defined and app.user is not empty %}
+                    {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+                        <aside class="menu_on_left">
+                            <nav class="navbar">
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Vragen</li>
+                                    <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Categorie&euml;n</li>
+                                    <li><a href="{{ app.root }}/category">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Gebruikers</li>
+                                    <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Tests</li>
+                                    <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
+                                    <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
+                                    <li><a href="{{ app.root }}/testadmin/testlist/">Lijst</a></li>
+                                </ul>
+                                <ul class="nav navbar-nav nav-stacked">
+                                    <li class="menuheader">Rapporten</li>
+                                    <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
+                                </ul>
 
                             {% if app.user.group.name == 'admin' %}
                                 <ul class="nav navbar-nav nav-stacked">
@@ -116,24 +114,24 @@
                                     <li><a href="#">Aanmaken</a></li>
                                     <li><a href="#">Lijst</a></li>
                                 </ul>
-                            {% endif %}
-                        </div>
-                    </nav>
+                                {% endif %}
+                            </nav>
+                        </aside>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
         {% endblock sidenav %}
 
         {#------ CONTENT ---------------#}
-        <div class="content clearFix">
-        {% block content %}{% endblock content %}
-    </div> 
-</div>
-
-{#------ FOOTER ----------------#}
-<div class="footer headerpage maincontainer">
-    {% block footer %}
-        <p>&copy; vdab - 2014</p>
-    {% endblock footer %}
-</div>
+        <main class="content clearFix">
+            {% block content %}{% endblock content %}
+        </main> 
+    </div>
+            
+    {#------ FOOTER ----------------#}
+    <footer class="footer headerpage maincontainer">
+        {% block footer %}
+            <p>&copy; vdab - 2014</p>
+        {% endblock footer %}
+    </footer>
 {% endblock body %}
 

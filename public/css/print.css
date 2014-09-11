@@ -54,34 +54,23 @@ author: Bert
         padding-left: 0;
     }
 
-    table.table thead tr th {
+    table.table thead tr th, table.table tbody tr td{
         padding-left: 0;
         margin-left: 0;
     }
-    table.table tbody tr td {
-        padding-left: 0;
-        margin-left: 0;
-    } 
+     
     div.content{
         height:98%;
         width:100%;
     }
 
-    nav{
+    header, .footer, nav, .no-print{
         display:none    
     }
 
-    header{
-        display:none ;   
-    }
-
     .footer .headerpage .maincontainer {
-        // position: fixed;
+        position: fixed;
         display: block;
-    }
-
-    .footer {
-        display:none;
     }
 
     div.container-fluid.maincontainer.clearFix{
@@ -94,12 +83,8 @@ author: Bert
     /* categorielijst */
     .catlijst h4 {
         padding-left: 0;
-    }
-    ul.subcathiding{
-        margin-left: 0;
-        padding-left: 0;
-    }
-    ul.subcathiding li{
+    }    
+    ul.subcathiding li, ul.subcathiding{
         margin-left: 0;
         padding-left: 0;
     }
