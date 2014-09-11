@@ -32,6 +32,7 @@ class AnswerDAO
                     $answer->setId($record['antwoordid']);
                     $answer->setQuestionId($record['vraagid']);
                     $answer->setText($record['antwoordtekst']);
+                    $answer->setMedia($record['media']);
                     array_push($result, $answer);
                 }
                 return $result;
@@ -66,6 +67,7 @@ class AnswerDAO
                 $answer->setId($record['antwoordid']);
                 $answer->setQuestionId($record['vraagid']);
                 $answer->setText($record['antwoordtekst']);
+                $answer->setMedia($record['media']);
                 return $answer;
             } else {
                 throw new ApplicationException('Antwoorden selectByQuestionAndId record is leeg');
