@@ -17,10 +17,10 @@ class MediaService
         return MediaDAO::selectByQuestion($questionId);
     }
     
-    public static function create($questionId, $media)
+    public static function create($questionId, $mediaFileNames)
     {
 //        if (is_array($media)) {
-            foreach ($media as $id => $filename) {
+            foreach ($mediaFileNames as $id => $filename) {
                 MediaDAO::insert($questionId, $id, $filename);
             }
 //        } else {
