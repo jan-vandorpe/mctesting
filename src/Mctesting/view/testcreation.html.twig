@@ -58,24 +58,30 @@
                     <label for="testduration" class="control-label">Minuten</label>
                 </div>
 
-                <div class="lighter gebrcollectie">
+                <div class="well">
                     <div class="input-group gebraddon">
                         <div class="input-group-addon ">Vragen: </div>
                     </div>
-                    {% for question in allQuest %}
-                        <div class="categorie">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="checkbox" name="question[]" value='{{question.id}}' />
-                                </span>
-                                <div class="form-control vraagsel">
-                                    <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
-                                    <div class="vraagzelf">{{question.text|raw}}</div>
-                                    <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
+                    <div class="form-group">
+                        {% for question in allQuest %}
+                            <div class="categorie">
+
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+
+                                        <input type="checkbox" class="control-label" name="question[]" value='{{question.id}}' />
+
+                                    </span>
+                                    <div class="form-control vraagsel">
+                                        <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
+                                        <div class="vraagzelf">{{question.text|raw}}</div>
+                                        <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+
+                        {% endfor %}
+                    </div>
                 </div>
 
                 <div class="input-group">

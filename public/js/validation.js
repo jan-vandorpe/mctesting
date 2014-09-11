@@ -27,7 +27,6 @@ $(document).ready(function() {
         }});
 
     $('#testcreation2').bootstrapValidator({
-        
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -45,6 +44,16 @@ $(document).ready(function() {
                     }
                 }
             },
+            'question[]': {
+                feedbackIcons: false,
+                validators: {
+                    choice: {
+                        min: 1,
+                        message: 'Selecteer tenminste 1 vraag'
+                    }
+                },
+            }
+
         }});
 
 });
