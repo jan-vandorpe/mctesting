@@ -24,18 +24,18 @@
                     <div class="col-xs-3">Familienaam</div>
                     <div class="col-xs-3">Voornaam</div>
                     <div class="col-xs-3">Rijksreg Nr</div>
-                    <div class="col-xs-2"></div>
+                    <div class="col-xs-2">Status</div>
                 </div>
             </div>
 
 
             <!-- gebr VOORBEELD IN OVERZICHT -->
             {% for user in allUsers %}   
-                <div class="input-group">
+                <div class="input-group volle-breedte">
                     <span class="input-group-addon">
                         <input type="checkbox" name="userCheckbox[]" value="{{user.rrnr}}" />
                     </span>
-                    <div class="row gebruiktebewerken form-control">
+                    <div class="row gebruiktebewerken form-control volle-breedte">
 
                         <div class="col-xs-3">{{user.lastname}}</div>
                         <div class="col-xs-3">{{user.firstname}}</div>
@@ -52,23 +52,18 @@
 
 
             <!-- DE BEWERKINGSKNOPEN -->
-            <div>
-                <nav>
-                    <div>
+                <nav class="row pull-down">
                         <!-- knopen links -->
-                        <p class="navbar-text">Selectie: </p>
-                        <ul class="nav navbar-nav">
-                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/inactive">Maak Inactief</button></li>
-                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/active">Maak Actief</button></li>
-                            <li><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/delete">Verwijder</button></li>
-                        </ul>
-                        <!-- knopen rechts -->
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{{app.root}}/usermanagement/newuserform">Maak nieuwe gebruiker</a></li>
-                        </ul>
-                    </div>
+                        <p class="col-xs-1 navbar-text">Selectie: </p>
+                        <div class="col-xs-10">
+                          <ul class="row nav navbar-nav pull-right">
+                              <li class="col-xs-3"><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/inactive">Maak Inactief</button></li>
+                              <li class="col-xs-3"><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/active">Maak Actief</button></li>
+                              <li class="col-xs-3"><button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/delete">Verwijder</button></li>
+                              <li class="col-xs-3"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/usermanagement/newuserform">Maak nieuwe gebruiker</button></li>
+                          </ul>
+                        </div>
                 </nav>
-            </div>
         </form>
     </div>
 
