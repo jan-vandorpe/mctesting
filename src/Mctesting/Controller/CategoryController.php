@@ -79,4 +79,29 @@ class CategoryController extends AbstractController
             
         }
     }
+    
+    public function subcatvragen($arguments)
+    {
+        $subCatId = $arguments[0];
+        
+        $subcategory = SubcategoryService::getById($subCatId);
+        
+        $this->render('category_subcatvragen.html.twig', array(
+            'subcategorie' => $subcategory,
+        ));
+    }
+    
+    public function inactive() {
+        foreach ($_POST['subcatCheckbox'] as $check) {
+            SubcategoryService::deactivateSubcategory($check);
+            header("location: " . ROOT . "/category/categorylist");
+        }
+    }
+
+    public function active() {
+        foreach ($_POST['subcatCheckbox'] as $check) {
+            SubcategoryService::activateSubcategory($check);
+            header("location: " . ROOT . "/category/categorylist");
+        }
+    }
 }

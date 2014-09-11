@@ -116,7 +116,56 @@ class QuestionDAO
             throw new ApplicationException($errormsg);
         }
     }
-
+    
+    public static function selectBySubCategory($subCatId)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM vraag WHERE subcatid = :subCatId';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':subCatId', $subCatId);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create object(s) and return
+                    //retrieve subcategory object
+                    //$subcategory = SubcategoryService::getById($record['subcatid']);
+                    //retrieve answers for question
+                    $answers = AnswerService::getByQuestion($record['vraagid']);
+                    //retrieve media filename array for question
+                    $media = MediaService::getByQuestion($record['vraagid']);
+                    //create question object
+                    $question = new Question();
+                    $question->setId($record['vraagid']);
+                    $question->setText($record['vraagtekst']);
+                    $question->setWeight($record['gewicht']);
+                    //$question->setSubcategory($subcategory);
+                    $question->setCorrectAnswer($record['correctantwoord']);
+                    $question->setAnswers($answers);
+                    $question->setMedia($media);
+                    $question->setActive((boolean) $record['actief']);
+                    array_push($result, $question);
+                }
+                return $result;
+            } else {
+                return false;
+                //throw new ApplicationException('Vraag selectBySubCategory record is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'Vraag selectByCategory statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
+    
     /*
      * Returns an array of ACTIVE question objects based on given categoryid.
      */
