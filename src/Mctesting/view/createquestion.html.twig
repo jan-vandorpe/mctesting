@@ -1,116 +1,108 @@
 {% extends "template/layout.html.twig" %}
 
 {% block scripts %}
-    {{ parent() }}
-<script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
-<script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
-<script src="{{ app.root }}/public/js/addanswers.js"></script>
+  {{ parent() }}
+  <script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
+  <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
+  <script src="{{ app.root }}/public/js/addanswers.js"></script>
 {% endblock scripts %}
 
 {% block title %}
-    {{ parent() }}Nieuwe vraag
+  {{ parent() }}Nieuwe vraag
 {% endblock title %}
 
 {% block content %}
-<h1 class="headerofpage">
+  <h1 class="headerofpage">
     Vraag Toevoegen
-</h1>
-<div class="container-fluid">
+  </h1>
+  <div class="container-fluid">
     <form name="toevoegenvraag" method="post" action="{{ app.root }}/question/add" enctype="multipart/form-data">
+      {#   Subcategory   #}
+      <div class="input-group nieuwimg">
+        <span class="input-group-addon widthvraaginput">
+          Subcategorie:
+        </span>
+        <select class="form-control catbijvraag" name="subcat">
+          {% for category in categories %}
+            <optgroup label="{{category.catname}}">
+              {% for subcategory in category.subcategories %}
+                <option value="{{ subcategory.id }}">{{ subcategory.subcatname }}</option>
+              {% endfor %}
+            </optgroup>
+          {% endfor %}
+        </select>
+      </div>
+      {#   Weight     #}
+      <div class="input-group nieuwimg">
+        <span class="input-group-addon widthvraaginput">
+          Moeilijkheidsgraad:
+        </span>
+        <select class="form-control catbijvraag" name="gewicht">
+          {% for difficulty in 1..3 %}
+            <option value="{{ difficulty }}">{{ difficulty }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {#    Question    #}
+      <div class="input-group nieuwimg">
+        <span class="input-group-addon widthvraaginput">
+          Vraag:
+        </span>
+        <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in."></textarea>
+      </div>
+      {#  Question Images    #}
+      <div class="input-group nieuwimg">
+        <span class="input-group-addon widthvraaginput">
+          Afbeeldingen:
+        </span>
+        <input type="file" name="media[]" class="form-control" multiple="true" />
+      </div>
+      {# Answers #}
+      <div class="answers">
+        <div class="input-group nieuwantwoord">
+          <span class="input-group-addon widthvraaginput">
+            Antwoord 1:
+          </span>
+          <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+        </div>
         <div class="input-group nieuwimg">
-            <span class="input-group-addon widthvraaginput">
-                Subcategorie:
-            </span>
-            <select class="form-control catbijvraag" name="subcat">
-                    {% for category in categories %}
-                    <optgroup label="{{category.catname}}">
-                            {% for subcategory in category.subcategories %}
-                            <option value="{{ subcategory.id }}">{{ subcategory.subcatname }}</option>
-                            {% endfor %}
-                        </optgroup>
-                    {% endfor %}
-                    </select>
-                </div>
-                <div class="input-group nieuwimg">
-                    <span class="input-group-addon widthvraaginput">
-                        Vraag:
-                    </span>
-                    <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in."></textarea>
-                </div>
-
-                <div class="answers">
-                    <div class="input-group nieuwantwoord">
-                        <span class="input-group-addon widthvraaginput">
-                            Moeilijkheidsgraad:
-                        </span>
-                        <select class="form-control catbijvraag" name="gewicht">
-                    {% for difficulty in 1..3 %}
-                                <option value="{{ difficulty }}">{{ difficulty }}</option>
-                    {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="input-group nieuwantwoord">
-                            <span class="input-group-addon widthvraaginput">
-                                Antwoord 1:
-                            </span>
-                            <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
-                        </div>
-                            <div class="input-group nieuwimg">
-                        <span class="input-group-addon widthvraaginput">
-                            Afbeeldingen:
-                        </span>
-                        <input type="file" name="answerMedia[]" class="form-control" />
-                    </div>
-                            <div class="input-group nieuwimg">
-                        <span class="input-group-addon widthvraaginput">
-                            Afbeeldingen:
-                        </span>
-                        <input type="file" name="answerMedia[]" class="form-control" />
-                    </div>
-                        <div class="input-group nieuwantwoord">
-                            <span class="input-group-addon widthvraaginput">
-                                Antwoord 2:
-                            </span>
-                            <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
-                        </div>
-
-                    </div>
-
-                    <!-- <div id="azertyu">
-                        <div><input type="text" name="mytext[]" id="field_1" value="Text 1"/><!-- <a href="#" class="removeclass">Verwijder</a></div> 
-                        </div>
-                    </div> 
-                    -->
-                    <div class="input-group"><a href="#button" id="button"><button form="" id="AddAnswer" class="form-control">Extra antwoord toevoegen</button></a></div>
-                    
-                    {# origineel van Jan
-                    <span class="small"><a href="#AddAnswer" id="AddAnswer" class="btn btn-info">Extra antwoord toevoegen</a></span>
-                    #}
-
-
-                    <div class="input-group nieuwimg">
-                        <span class="input-group-addon widthvraaginput">
-                            Afbeeldingen:
-                        </span>
-                        <input type="file" name="media[]" class="form-control" multiple="true" />
-                    </div>
-                    <div class="input-group nieuwimg">
-                        <span class="input-group-addon widthvraaginput">
-                            Correct antwoord:
-                        </span>
-                        <select class="form-control catbijvraag" id="correctant" name="correctant">
-                            <option value="0">Antwoord 1</option>
-                            <option value="1">Antwoord 2</option>
-                        </select>
-                    </div>
-                    <div class="input-group centeren">
-                        <input type="submit" class="form-control" name="vrtoev" value="Vraag toevoegen" />
-                    </div>
-                </form>
-            </div>
+          <span class="input-group-addon widthvraaginput">
+            Afbeelding:
+          </span>
+          <input type="file" name="answerMedia[]" class="form-control" />
+        </div>
+        <div class="input-group nieuwantwoord">
+          <span class="input-group-addon widthvraaginput">
+            Antwoord 2:
+          </span>
+          <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+        </div>
+        <div class="input-group nieuwimg">
+          <span class="input-group-addon widthvraaginput">
+            Afbeelding:
+          </span>
+          <input type="file" name="answerMedia[]" class="form-control" />
+        </div>
+      </div>
+      {#   Add extra answer, triggers addanswer.js   #}
+      <div class="input-group"><a href="#button" id="button"><button form="" id="AddAnswer" class="form-control">Extra antwoord toevoegen</button></a></div>
+      {# Select correct answer #}
+      <div class="input-group nieuwimg">
+        <span class="input-group-addon widthvraaginput">
+          Correct antwoord:
+        </span>
+        <select class="form-control catbijvraag" id="correctant" name="correctant">
+          <option value="0">Antwoord 1</option>
+          <option value="1">Antwoord 2</option>
+        </select>
+      </div>
+      {#   Submit   #}
+      <div class="input-group centeren">
+        <input type="submit" class="form-control" name="vrtoev" value="Vraag toevoegen" />
+      </div>
+    </form>
+  </div>
 {% endblock content %}
-    
-    
-    
-    
+
+
+
