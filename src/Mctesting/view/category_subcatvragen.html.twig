@@ -1,0 +1,66 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+{% endblock %}
+
+{% block title %}
+    {{ parent() }}Home
+{% endblock %}
+
+
+{%block content%}
+
+<div class="gebruikertoevoegen container-fluid">
+    <h1 class="headerofpage">Subcategorie overzicht</h1>    
+    <h4>Details</h4>
+    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="" method="post">
+        
+        <div class="input-group">
+            <label for="fnaam" class="input-group-addon widthcatinput">ID</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="fnaam" id="fnaam" placeholder="{{ subcategorie.id }}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="vnaam" class="input-group-addon widthcatinput">Naam</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="vnaam" id="vnaam" placeholder="{{ subcategorie.subcatname }}" disabled/>
+        </div>
+        <div class="input-group">
+            <label for="rrnr" class="input-group-addon widthcatinput">Actief?</label>
+            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="rrnr" id="rrnr" placeholder="{% if subcategorie.active %}Ja{% else %}Nee{% endif %}" disabled/>
+        </div>
+        
+        <h4>Vragen</h4>
+        {% for question in subcategorie.questions %}
+        <div class="vraaggroep">
+            {# Question #}
+            <div class="vraag row">
+                <div class="col-lg-12">
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-pencil"></span>                                
+                        </div>
+                        <div class="form-control">
+                            {{ question.text|raw }}
+                            {% if question.media is not empty %}
+                                {% for file in question.media %}
+                                    <div class="imggroepbijvraag">
+                                        <img src="{{ app.root }}/public/images/{{ file }}" />
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %} 
+        <div class="input-group">
+            <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/category/categorylist"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+        </div>
+    </form>
+    
+    
+    
+</div>
+
+{% endblock %}
