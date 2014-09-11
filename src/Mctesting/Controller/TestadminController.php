@@ -289,6 +289,22 @@ class TestadminController extends AbstractController {
             'tests' => $tests,
         ));
     }
+    
+    //make test active
+    public function inactive() {
+        foreach ($_POST['testCheckbox'] as $check) {
+            TestService::updateStatus($check, 0);
+            header("location: " . ROOT . "/testadmin/testlist");
+        }
+    }
+
+    //make test active
+    public function active() {
+        foreach ($_POST['testCheckbox'] as $check) {
+            TestService::updateStatus($check, 1);
+            header("location: " . ROOT . "/testadmin/testlist");
+        }
+    }
 
     public function except() {
         throw new ApplicationException('Oh dear, controller says no.');

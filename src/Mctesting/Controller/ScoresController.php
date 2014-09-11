@@ -6,6 +6,7 @@ use Framework\AbstractController;
 use Mctesting\Model\Service\TestService;
 use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserSessionService;
+use Mctesting\Model\Service\TestQuestionService;
 
 /**
  * Description of ScoresController
@@ -72,15 +73,17 @@ class ScoresController extends AbstractController
         $userId = $arguments[1];
         
         //build model
-        //retrieve usersessions
+        //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
-        
+        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId);
         //var_dump($userSession);
-       
+        //var_dump($subcategories);
+        //var_dump($userId);
         
         //render page
         $this->render('scores_userrapport.html.twig', array(
             'usersession' => $userSession,
+            'subcats' => $subcategories,
         ));
     }
 

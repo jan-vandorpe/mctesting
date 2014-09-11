@@ -189,4 +189,12 @@ class TestService
                     . 'DIVISION BY ZERO');
         }
     }
+    
+    public static function updateStatus($testid, $status) {
+        if (TestDAO::updateStatus($testid, $status)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
