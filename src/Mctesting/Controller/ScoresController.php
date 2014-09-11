@@ -86,5 +86,19 @@ class ScoresController extends AbstractController
             'subcats' => $subcategories,
         ));
     }
+    
+    
+    /**
+     * Delibereer een gebruiker
+     */
+    public function delibereer($arguments) 
+    {
+        $sessionId = $arguments[0];
+        $userId = $arguments[1];        
+        
+        UserSessionService::delibereer($sessionId, $userId);
+        
+        header("location: " . ROOT . "/scores/showScoresRapport/" . $sessionId . "/" . $userId);
+    }
 
 }
