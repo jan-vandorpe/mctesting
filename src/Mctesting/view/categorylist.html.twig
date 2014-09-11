@@ -14,7 +14,7 @@
     <h1 class="headerofpage">Categorielijst</h1>
 </div>
 <div class="container-fluid ">
-    <form name="catbewerken" action="{{app.root}}/testadmin/changeuserstatus" method="post" id="catForm">
+    <form name="catbewerken" action="{{app.root}}/category/categorylist" method="post" id="catForm">
         {% if allcategories is empty %}
             <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
         {% else %}
@@ -22,7 +22,7 @@
                 <div class="form-group volle-breedte">
                     <div class="input-group volle-breedte">
                         <span class="input-group-addon addon-finetune">
-                            <input type="checkbox" name="catCheckbox[]" value="{{test.TestId}}" />  
+                            <input type="checkbox" name="catCheckbox[]" value="{{category.id}}" />  
                         </span>
                         <div class="form-control  volle-breedte"><h4>{{ category.catname }}</h4></div>
                     </div>
@@ -31,7 +31,7 @@
                 {% for subcategory in category.subcategories %}   
                     <div class="input-group volle-breedte">                    
                         <span class="input-group-addon addon-finetune">
-                            <input type="checkbox" name="subCheckbox[]" value="{{test.TestId}}" />
+                            <input type="checkbox" name="subcatCheckbox[]" value="{{subcategory.id}}" />
                         </span>
 
                         <div class="row form-control volle-breedte">
@@ -39,13 +39,17 @@
                             <div class="col-xs-6">{{subcategory.subcatname}}</div>
                             <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
                             {% if subcategory.active == 1 %}
-                                    <div class="col-xs-1">Actief</div>
-                                {% else %}
-                                    <div class="col-xs-1">Inactief</div>
-                                {% endif %}
-                            <div class="col-xs-3">
-                                <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
-                            </div>
+                                <div class="col-xs-1">Actief</div>
+                            {% else %}
+                                <div class="col-xs-1">Inactief</div>
+                            {% endif %}
+                                
+                            {% if subcategory.questions|length > 0 %}
+                                <div class="col-xs-3">
+                                    <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
+                                </div>
+                            {% endif %}       
+                            
 
                         </div>
                     </div>
@@ -62,8 +66,8 @@
             <p class="col-xs-1 navbar-text">Selectie: </p>
             <div class="col-xs-10">
             <ul class=" row nav navbar-nav">
-                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
-                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
+                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/inactive">Maak Inactief</button></li>
+                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/active">Maak Actief</button></li>
                 <li class="col-xs-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button></li>
             </ul>
             </div>

@@ -33,6 +33,7 @@ class SubcategoryDAO
                 $subcat->setId($record['subcatid']);
                 $subcat->setSubcatname($record['subcatnaam']);
                 $subcat->setActive($record['actief']);
+                $subcat->setQuestions(\Mctesting\Model\Service\QuestionService::getBySubCategory($subcat->getId()));
                 return $subcat;
             } else
             {
@@ -72,7 +73,7 @@ class SubcategoryDAO
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
-
+                    $subcat->setQuestions(\Mctesting\Model\Service\QuestionService::getBySubCategory($subcat->getId()));
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
