@@ -141,6 +141,10 @@ body{
     padding-left: 1em;
     width: 14%;
 }
+.info-tekst {
+  margin: 2%;
+  font-size: 1.2em;
+}
 .headergebroverzicht{
     width:100%;
     margin-left:1.25em; 
