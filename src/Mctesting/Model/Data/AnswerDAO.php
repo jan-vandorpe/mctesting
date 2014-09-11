@@ -80,20 +80,21 @@ class AnswerDAO
         }
     }
     
-    public static function insert($id, $questionId, $text)
+    public static function insert($answer)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'INSERT INTO antwoorden';
-        $sql .= ' (vraagid, antwoordid, antwoordtekst)';
-        $sql .= ' VALUES (:vraagid, :antwoordid, :antwoordtekst)';
+        $sql .= ' (vraagid, antwoordid, antwoordtekst, media)';
+        $sql .= ' VALUES (:vraagid, :antwoordid, :antwoordtekst, :media)';
         $stmt = $db->prepare($sql);
         
         //test if statement can be executed
-        if ($stmt->execute(array(':vraagid' => $questionId,
-                                ':antwoordid' => $id,
-                                ':antwoordtekst' => $text,
+        if ($stmt->execute(array(':vraagid' => $answer->getQuestionId(),
+                                ':antwoordid' => $answer->getId(),
+                                ':antwoordtekst' => $answer->getText(),
+                                ':media' => $answer->getMedia(),
                                 ))) {
         } else {
             $error = $stmt->errorInfo();
