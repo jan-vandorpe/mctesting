@@ -28,7 +28,7 @@
         <form name="testsessiesel" id="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
             <div class="form-group col-md-7">
                 <div class="input-group">            
-                    
+
                     <span class="input-group-addon widthcatinput">Selecteer een test:</span>
                     <select class="form-control" name="testsetselect">
                         <option value="0" >Selecteer een test:</option>
@@ -57,28 +57,31 @@
                 </div>
 
             </div>
-            <div class="input-group col-md-7">
-                <span class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</span>
+            <div class="form-group col-md-7">
+                <div class="input-group">
+                    <span class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</span>
 
-                <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
-            </div>
-
-            <div class="lighter gebrcollectie">
-                <div class="input-group gebraddon">
-                    <div class="input-group-addon ">Gebruikers: </div>
+                    <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
                 </div>
-
-                {% for user in allUsers %} 
-                    <div class="input-group ietssmaller">
-                        <span class="input-group-addon">
-                            <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
-                        </span>
-                        <div class=" form-control">
-                            <div class="vnaamaantest">{{ user.lastname }}</div>
-                            <div class="vnaamaantest">{{ user.firstname }}</div>
-                        </div>
+            </div>
+            <div class="form-group col-md-12">
+                <div class="lighter gebrcollectie">
+                    <div class="input-group gebraddon">
+                        <div class="input-group-addon ">Gebruikers: </div>
                     </div>
-                {% endfor %}
+
+                    {% for user in allUsers %} 
+                        <div class="input-group ietssmaller">
+                            <span class="input-group-addon">
+                                <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
+                            </span>
+                            <div class=" form-control">
+                                <div class="vnaamaantest">{{ user.lastname }}</div>
+                                <div class="vnaamaantest">{{ user.firstname }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
             <div class="input-group">
                 <div class="ietssmaller">

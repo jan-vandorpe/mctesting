@@ -6,6 +6,7 @@ $(document).ready(function() {
         language: "nl-BE",
         todayHighlight: true,
         autoclose: true,
+        orientation: "top right"
     });
 
 });

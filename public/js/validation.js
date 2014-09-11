@@ -74,6 +74,13 @@ $(document).ready(function() {
                         message: 'Voer een datum in'
                     }
                 }
+            },
+            testwachtwoord: {
+                validators: {
+                    notEmpty: {
+                        message: 'Voer een wachtwoord in'
+                    }
+                }
             }
         }
     });
