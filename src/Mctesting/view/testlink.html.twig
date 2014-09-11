@@ -2,73 +2,81 @@
 
 {% block stylesheets %}
     {{ parent() }}
-
+    <link rel="stylesheet" href="{{ app.root }}/public/css/datepicker.css" />
 {% endblock stylesheets %}
 
 {% block title %}
     {{ parent() }}Home
 {% endblock title %}
 
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ app.root }}/public/js/lib/bootstrap-datepicker.js"></script>
+    <script src="{{ app.root }}/public/js/datepicker.js"></script>
+
+{% endblock scripts %}
+
 
 {% block content %}
-<div class="container-fluid ">
-    <h1 class="headerofpage">Testsessie plannen</h1>
-</div>
-<div class="testsessieplannen">
-    <h4>Het plannen van een testsessie</h4>
-    
+    <div class="container-fluid ">
+        <h1 class="headerofpage">Testsessie plannen</h1>
+    </div>
+    <div class="testsessieplannen">
+        <h4>Het plannen van een testsessie</h4>
 
-    <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
-        <div class="input-group">            
-            <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
-            <select class="form-control" name="testsetselect">
-                <option value="0" >Selecteer een test:</option>
-                {% for key,value in allTest %}  
-                <optgroup label="{{ key }}">
-                {% for test in value %}                
-                
-                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
-                {% endfor %}
-                    </optgroup>
-                {% endfor %}
-            </select>
-        </div>
+
+        <form name="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
+            <div class="input-group">            
+                <label for="testsessieselect" class="input-group-addon widthcatinput">Selecteer een test</label>
+                <select class="form-control" name="testsetselect">
+                    <option value="0" >Selecteer een test:</option>
+                    {% for key,value in allTest %}  
+                        <optgroup label="{{ key }}">
+                            {% for test in value %}                
+
+                                <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    {% endfor %}
+                </select>
+            </div>
             {% if errormsg is defined and errormsg is not empty  %}
-        <span class="error">{{ errormsg }}</span> 
+                <span class="error">{{ errormsg }}</span> 
             {% endif %}
-        <div class="input-group">
-            <label for="testsessieselect" class="input-group-addon widthcatinput">Datum van de testsessie:</label>
-            <input type="date" class="form-control disableautoheight" name="testdatum" id="testdatum" placeholder="Vul hier de datum in voor de dag van de test." required/>
-        </div>
-        <div class="input-group">
-            <label for="testsessieselect" class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
-        </div>
-        
-        <div class="lighter gebrcollectie">
-            <div class="input-group gebraddon">
-                <div class="input-group-addon ">Gebruikers: </div>
+            <div class="input-group date" id="ctrlDatePicker">
+                <span class="input-group-addon">Datum van de testsessie:</span>
+
+                <input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+            </div>
+            <div class="input-group">
+                <label for="testsessieselect" class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</label>
+                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
             </div>
 
-            {% for user in allUsers %} 
-                <div class="input-group ietssmaller">
-                    <span class="input-group-addon">
-                           <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
-                    </span>
-                    <div class=" form-control">
-                        <div class="vnaamaantest">{{ user.lastname }}</div>
-                        <div class="vnaamaantest">{{ user.firstname }}</div>
-                    </div>
+            <div class="lighter gebrcollectie">
+                <div class="input-group gebraddon">
+                    <div class="input-group-addon ">Gebruikers: </div>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="input-group">
-            <div class="ietssmaller">
-                <input type="submit" name="catknop" class="form-control marginonbutton" >
+
+                {% for user in allUsers %} 
+                    <div class="input-group ietssmaller">
+                        <span class="input-group-addon">
+                            <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
+                        </span>
+                        <div class=" form-control">
+                            <div class="vnaamaantest">{{ user.lastname }}</div>
+                            <div class="vnaamaantest">{{ user.firstname }}</div>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-    </form>
-</div>
-    
+            <div class="input-group">
+                <div class="ietssmaller">
+                    <input type="submit" name="catknop" class="form-control marginonbutton" >
+                </div>
+            </div>
+        </form>
+    </div>
+
 
 {% endblock content %}
