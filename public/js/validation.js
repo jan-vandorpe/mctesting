@@ -1,31 +1,33 @@
 $(document).ready(function() {
 
-//    $('#frmLogin').bootstrapValidator({
-//        container: 'tooltip',
-//        feedbackIcons: {
-//            valid: 'glyphicon glyphicon-ok',
-//            invalid: 'glyphicon glyphicon-remove',
-//            validating: 'glyphicon glyphicon-refresh'
-//        },
-//        fields: {
-//            Login: {
-//                message: 'The username is not valid',
-//                validators: {
-//                    notEmpty: {
-//                        message: 'Voornaam is verplicht'
-//                    },
-//                }
-//            },
-//            Wachtwoord: {
-//                message: 'The username is not valid',
-//                validators: {
-//                    notEmpty: {
-//                        message: 'Wachtwoord is verplicht'
-//                    },
-//                }
-//            },
-//        }});
+    $('#frmLogin').bootstrapValidator({
+        container: 'tooltip',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            Login: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'Voornaam is verplicht'
+                    },
+                }
+            },
+            Wachtwoord: {
+                message: 'The username is not valid',
+                validators: {
+                    notEmpty: {
+                        message: 'Wachtwoord is verplicht'
+                    },
+                }
+            },
+        }});
+
     $('#testcreation2').bootstrapValidator({
+        
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -33,11 +35,14 @@ $(document).ready(function() {
         },
         fields: {
             testduration: {
-                message: 'The username is not valid',
+                message: 'Voer duur van de test in minuten in',
                 validators: {
                     digits: {
-                        message: 'Voer de tijd in minuuten in'
+                        message: 'Voer de tijd in minuten in'
                     },
+                    notEmpty: {
+                        message: 'Voer de tijd in minuten in'
+                    }
                 }
             },
         }});
