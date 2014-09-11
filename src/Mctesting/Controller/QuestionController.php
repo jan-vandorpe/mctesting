@@ -95,8 +95,8 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        //header('location: '.ROOT.'/question/create/');
-        //exit();
+        header('location: '.ROOT.'/question/create/');
+        exit();
     }
     
     private function reArrayFiles(&$file_post) {
