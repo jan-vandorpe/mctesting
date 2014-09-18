@@ -49,7 +49,7 @@
         {% for category in subcats %}
             <div class="row input-group-addon ">
                 <div class="col-xs-10"><h5>{{category.Subcatname}}</h5></div>
-                <div class="col-xs-2 subcatpercentage">{{category.percentage}} (min: {{category.passPercentage}}</div>
+                <div class="col-xs-2 subcatpercentage">{{category.percentage}} (min: {{category.passPercentage}})</div>
             </div>     
             {% for question in category.questions %}
             <div class="vraaggroep">
