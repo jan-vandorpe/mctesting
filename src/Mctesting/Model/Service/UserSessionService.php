@@ -26,9 +26,9 @@ class UserSessionService
         return UserSessionDAO::insert($sessionId, $RRNr);
     }
     
-    public static function update($userSession)
+    public static function update($userSession, $subcatResults)
     {
-        return UserSessionDAO::update($userSession);
+        return UserSessionDAO::update($userSession, $subcatResults);
     }
     
     public static function delibereer($sessionId, $userId)
