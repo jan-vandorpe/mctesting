@@ -35,12 +35,12 @@
                         <span class="input-group-addon addon-finetune">
                             <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" />  
                         </span>
-                        <div class="form-control volle-breedte"><h4>{{ category.catname }}</h4></div>
+                        <div class="form-control volle-breedte bgc-grey"><h4>{{ category.catname }}</h4></div>
                     </div>
                 
                       
                 {% for subcategory in category.subcategories %}   
-                    <div class="input-group volle-breedte">                    
+                    <div class="input-group volle-breedte marge-links">                    
                         <span class="input-group-addon addon-finetune">
                             <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" />
                         </span>
