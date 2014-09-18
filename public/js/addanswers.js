@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
 
-  tinymce.init({menubar: false, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true});
+  tinymce.init({menubar: true, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true, plugins: "visualblocks"});
 
 
   var $answers = $(".answers"); //antwoorden wrapper
@@ -38,7 +38,7 @@ $(document).ready(function() {
     $correctAns.append('<option value="' + (count - 1) + '">Antwoord ' + count + '</option>');
 
     //herinitialise tinymce op textarea.allowcode
-    tinymce.init({menubar: false, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true});
+    tinymce.init({menubar: true, toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true, plugins: "visualblocks"});
 
   });
 

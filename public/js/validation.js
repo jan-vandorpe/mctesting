@@ -56,6 +56,35 @@ $(document).ready(function() {
 
         }});
 
+    $('#testsessiesel').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            testdatum: {
+                feedbackIcons: false,
+                validators: {
+                    date: {
+                        format: 'DD/MM/YYYY',
+                        message: 'The value is not a valid date'
+                    },
+                    notEmpty: {
+                        message: 'Voer een datum in'
+                    }
+                }
+            },
+            testwachtwoord: {
+                validators: {
+                    notEmpty: {
+                        message: 'Voer een wachtwoord in'
+                    }
+                }
+            }
+        }
+    });
+
 });
 
 
