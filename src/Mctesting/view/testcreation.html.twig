@@ -16,6 +16,11 @@
     </div>
     <div class="testaanmaken">
         {% if testname is not defined %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                    <span class="sr-only">0% Compleet</span>
+                </div>
+            </div>
             <h4>Test aanmaken: stap 1</h4>
             <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
                 <div class="input-group">
@@ -36,20 +41,13 @@
                 </div>
             </form>
         {% elseif testduration is not defined %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 34%;">
+                    <span class="sr-only">33% Compleet</span>
+                </div>
+            </div>
             <h4>Test aanmaken: stap 2</h4>
             <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
-
-                <!-- Oude form met boeltje CSS -->
-                {#                <div class="form-group">
-                                    <div class="input-group">
-                                        <label for="testduration" class="input-group-addon widthcatinput">Duur van test(aantal minuten)</label>
-                                        <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="testduration" id="testduration" placeholder="Vul hier de tijdsduur in van de test." required/>
-                                    </div>
-                                </div>#}
-                <!-- -->
-
-                <!-- Nieuw opgecleanede FORM -->
-
                 <div class="form-group">
                     <label for="testduration" class="col-sm-2 control-label">Duur van test:</label>
                     <div class="col-sm-3">
@@ -102,6 +100,11 @@
             </form>
 
         {% elseif passpercentage is not defined %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 67%;">
+                    <span class="sr-only">66% Compleet</span>
+                </div>
+            </div>
             <h4>Test aanmaken stap 3</h4>
 
             <div class="lighter gebrcollectie">
@@ -162,6 +165,11 @@
                 </div>
             </form>
         {% else %}
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                    <span class="sr-only">100% Compleet</span>
+                </div>
+            </div>
             <h4>Test aanmaken voltooid.</h4>
             <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
             <h4>Dummytest afleggen</h4>
