@@ -118,7 +118,7 @@ class UserSessionDAO {
         }
     }
     
-    public static function update($userSession) {
+    public static function update($userSession, $subcatRes) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         
@@ -145,6 +145,12 @@ class UserSessionDAO {
                         $correct);
             }
             
+            foreach ($subcatRes as $subcatId => $subcatResults){
+            $score = $subcatResults['score'];
+            $percentage = $subcatResults['percentage'];
+            self::createSubCatTestResults($userSession, $subcatId, $score, $percentage);
+            }
+            
             return true;
         } else {
             $error = $stmt->errorInfo();
@@ -167,6 +173,32 @@ class UserSessionDAO {
         } else {
             $error = $stmt->errorInfo();
             throw new ApplicationException('kan de gebruiker niet delibereren: ' . $error[2]);
+        }
+    }
+    
+    public static function createSubCatTestResults($userSession, $subcatId, $score, $percentage){
+      //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `sessiegebruikercategoriepercentages`(`sessieid`, `rijksregisternr`, `testid`, `subcatid`, `score`, `percentage`) '
+                . 'VALUES ('
+                . ':sessionid,:userid,:testid,:subcatid,:score,:percentage)';
+        $stmt = $db->prepare($sql);
+        //bind parameters
+        $stmt->bindParam(':sessionid', $userSession->getTestSession()->getId());
+        $stmt->bindParam(':userid', $userSession->getUser()->getRRnr());
+        $stmt->bindParam(':testid', $userSession->getTestSession()->getTest()->getTestId());
+        $stmt->bindParam(':subcatid', $subcatId);
+        $stmt->bindParam(':score', $score);
+        $stmt->bindParam(':percentage', $percentage);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+          return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon deze sessiegebruikercategoriescores niet aanmaken: ' . $error[2]);
+            //header("location: /mctesting/agga/dagga");
         }
     }
 

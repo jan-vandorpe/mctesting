@@ -145,7 +145,7 @@ class TestService
         $userSession->setPassed(TestService::calculatePassFail($result));
         
         //persist into DB
-        UserSessionService::update($userSession);
+        UserSessionService::update($userSession,$result['subcategories']);
         //persist subcat results into NON EXISTENT TABLE 
         
 //        print '<pre>';
