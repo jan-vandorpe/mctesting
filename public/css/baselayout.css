@@ -284,6 +284,12 @@ body{
     margin: 0.125em 0.25em 0.125em 0.25em;
 }
 
+.subcatpercentage{
+    font-style: italic;
+    font-size: 0.875em;
+    margin-top: 0.875em;
+}
+
 .marginonbutton:nth-of-type(n){
     margin: 0.25em 0;
     width: 10em;
