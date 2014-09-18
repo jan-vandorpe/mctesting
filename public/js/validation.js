@@ -25,7 +25,6 @@ $(document).ready(function() {
                 }
             },
         }});
-
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -56,6 +55,23 @@ $(document).ready(function() {
 
         }});
 
+    $('#subcattoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            newcat: {
+                container: '#newcatErrorMessage',
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een naam voor de categorie'
+                    }
+                }
+            }
+        }
+    });
 
 
     $('#testsessiesel').bootstrapValidator({
@@ -98,13 +114,11 @@ $(document).ready(function() {
             }
         }
     });
-
     $('#ctrlDatePicker')
             .on('dp.change dp.show', function(e) {
                 // Validate the date when user change it
                 $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
             });
-
 });
 
 
