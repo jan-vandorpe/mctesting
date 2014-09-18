@@ -24,8 +24,7 @@ $(document).ready(function() {
                     },
                 }
             },
-        }});    
-    
+        }});
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -55,7 +54,7 @@ $(document).ready(function() {
             }
 
         }});
-    
+
     $('#subcattoev').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -73,6 +72,7 @@ $(document).ready(function() {
             }
         }
     });
+
 
     $('#testsessiesel').bootstrapValidator({
         feedbackIcons: {
@@ -113,8 +113,7 @@ $(document).ready(function() {
                 }
             }
         }
-    });    
-    
+    });
     $('#ctrlDatePicker')
             .on('dp.change dp.show', function(e) {
                 // Validate the date when user change it
