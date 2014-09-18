@@ -11,7 +11,7 @@
 {% endblock title %}
 
 {% block content %}
-<div class="testafleggenpag">
+<div class="{% block class %}testafleggenpag {% endblock class %}">
     <h1 class="headerofpage">{{ test.testname }}</h1>
     <div class="testinfotop clearFix">
         <div>Categorie: {{ catname }} </div>

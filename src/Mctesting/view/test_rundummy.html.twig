@@ -5,7 +5,12 @@
     MC Testing - Dummytest afleggen
 {% endblock title %}
 
+{% block class %}   
+    {{ parent() }}
+    rundummycontainer
+{% endblock class %} 
+    
 {% block form %}
-  "{{ app.root }}/testadmin/testlink"
+  "{{ app.root }}/testadmin/testlist"
 {% endblock %}
 
