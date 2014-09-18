@@ -9,5 +9,10 @@ $(document).ready(function() {
         orientation: "top right"
     });
 
+
+    $('#ctrlDatePicker').datepicker().on('changeDate', function(e) {
+        $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
+    });
+
 });
 
