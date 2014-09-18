@@ -37,7 +37,8 @@ class AnswerDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Antwoorden selectByQuestion recordset is leeg');
+                return false;
+                //throw new ApplicationException('Antwoorden selectByQuestion recordset is leeg');
             }
         } else {
             $error = $stmt->errorInfo();

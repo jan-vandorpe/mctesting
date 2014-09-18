@@ -34,6 +34,11 @@ class QuestionService
         return QuestionDAO::selectByCategory($categoryId);
     }
 
+    public static function getBySubCategory($subCatId)
+    {
+        return QuestionDAO::selectBySubCategory($subCatId);
+    }
+    
     /**
      * Function returns an array of ACTIVE question objects corresponding to the given
      * categoryId

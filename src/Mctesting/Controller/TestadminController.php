@@ -247,11 +247,11 @@ class TestadminController extends AbstractController {
      */ {
 
         $testid = $_POST["testsetselect"];
-        if ($testid == "0") {
-            $_SESSION["errormsg"] = "U moet een test selecteren";
-            header("location: ".ROOT."/testadmin/testlink");
-            exit(0);
-        }
+//        if ($testid == "0") {
+//            $_SESSION["errormsg"] = "U moet een test selecteren";
+//            header("location: ".ROOT."/testadmin/testlink");
+//            exit(0);
+//        }
         $datum = $_POST["testdatum"];
         $sessieww = $_POST["testwachtwoord"];
         $actief = 1;
