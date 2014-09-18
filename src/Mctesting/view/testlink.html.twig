@@ -43,6 +43,9 @@
                     </select>
                 </div>
             </div>
+            <div class="col-md-3">
+                <span id="testsetselectErrorMessage"></span>
+            </div>
             {% if errormsg is defined and errormsg is not empty  %}
                 <span class="error">{{ errormsg }}</span> 
             {% endif %}
@@ -57,12 +60,18 @@
                 </div>
 
             </div>
+            <div class="col-md-3">
+                <span id="testdatumErrorMessage"></span>
+            </div>
             <div class="form-group col-md-7">
                 <div class="input-group">
                     <span class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</span>
 
                     <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
                 </div>
+            </div>
+            <div class="col-md-3">
+                <span id="testwachtwoordErrorMessage"></span>
             </div>
             <div class="form-group col-md-12">
                 <div class="lighter gebrcollectie">

@@ -56,6 +56,8 @@ $(document).ready(function() {
 
         }});
 
+
+
     $('#testsessiesel').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -65,10 +67,11 @@ $(document).ready(function() {
         fields: {
             testdatum: {
                 feedbackIcons: false,
+                container: '#testdatumErrorMessage',
                 validators: {
                     date: {
                         format: 'DD/MM/YYYY',
-                        message: 'The value is not a valid date'
+                        message: 'Dit is geen geldige datum (dd/mm/yyyy)'
                     },
                     notEmpty: {
                         message: 'Voer een datum in'
@@ -76,14 +79,31 @@ $(document).ready(function() {
                 }
             },
             testwachtwoord: {
+                container: '#testwachtwoordErrorMessage',
                 validators: {
                     notEmpty: {
                         message: 'Voer een wachtwoord in'
                     }
                 }
+            },
+            testsetselect: {
+                feedbackIcons: false,
+                container: '#testsetselectErrorMessage',
+                validators: {
+                    greaterThan: {
+                        value: 1,
+                        message: 'Selecteer een test',
+                    }
+                }
             }
         }
     });
+
+    $('#ctrlDatePicker')
+            .on('dp.change dp.show', function(e) {
+                // Validate the date when user change it
+                $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
+            });
 
 });
 
