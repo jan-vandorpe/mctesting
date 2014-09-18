@@ -67,6 +67,7 @@ $(document).ready(function() {
         fields: {
             testdatum: {
                 feedbackIcons: false,
+                container: '#testdatumErrorMessage',
                 validators: {
                     date: {
                         format: 'DD/MM/YYYY',
@@ -78,6 +79,7 @@ $(document).ready(function() {
                 }
             },
             testwachtwoord: {
+                container: '#testwachtwoordErrorMessage',
                 validators: {
                     notEmpty: {
                         message: 'Voer een wachtwoord in'
@@ -86,6 +88,7 @@ $(document).ready(function() {
             },
             testsetselect: {
                 feedbackIcons: false,
+                container: '#testsetselectErrorMessage',
                 validators: {
                     greaterThan: {
                         value: 1,
