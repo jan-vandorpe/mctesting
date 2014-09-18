@@ -33,7 +33,6 @@ and open the template in the editor.
     z-index: 5;
     
 }
-
 .answer input[type="radio"]:checked+label{ 
     background-color: rgba(0, 132, 255, 0.4);
 } 
