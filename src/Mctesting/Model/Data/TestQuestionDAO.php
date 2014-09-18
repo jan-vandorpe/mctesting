@@ -44,17 +44,17 @@ class TestQuestionDAO {
 //            on subcategorie.subcatid = vraag.subcatid
 //            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
 //            ';
-        $sql = 'SELECT'. 
-                'sessiegebruikercategoriepercentages.subcatid,'.
-                'score, '.
-                'percentage,'.
-                'subcatnaam, '.
-                'tebehalenscore'.
-                'from sessiegebruikercategoriepercentages, subcategorie, testsubcat '.
-                'where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid '.
-                'and sessiegebruikercategoriepercentages.subcatid = testsubcat.subcatid'.
-                'and sessieid = :sessieid '.
-                'and rijksregisternr = :userid';
+        $sql = 'SELECT 
+                sessiegebruikercategoriepercentages.subcatid, 
+                score, 
+                percentage,
+                subcatnaam, 
+                tebehalenscore
+                from sessiegebruikercategoriepercentages, subcategorie, testsubcat 
+                where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid 
+                and sessiegebruikercategoriepercentages.subcatid = testsubcat.subcatid
+                and sessieid = :sessieid 
+                and rijksregisternr = :userid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid)))
@@ -69,7 +69,7 @@ class TestQuestionDAO {
                 foreach ($resultset as $record)
                 {
                     $subcat = new UserSessionSubCategory();
-                    $subcat->setId($record['sessiegebruikercategoriepercentages.subcatid']);
+                    $subcat->setId($record['subcatid']);
                     $subcat->setSubcatname($record['subcatnaam']);
                     //$subcat->setActive($record['actief']);                  
                     $subcat->setQuestions(TestQuestionDAO::selectQuestionsByCategory($subcat->getId(), $sessieid, $userid));
