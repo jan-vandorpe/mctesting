@@ -159,6 +159,12 @@ body{
   width: 3em;
   padding-right: 1.5em;
 }
+.marge-links {
+  margin-left: 4%;
+}
+.bgc-grey {
+  background-color: #f2f2f2;
+}
 
 .fnaamgebrupdateheader, .vnaamgebrupdateheader, .rrnrgebrupdateheader{
     text-align: center;
