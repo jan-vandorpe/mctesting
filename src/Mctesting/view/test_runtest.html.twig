@@ -44,39 +44,24 @@
               </div>
             {% endif %}
           </div>
-
           <!-- List group -->
           <ul class="list-group">
             {% for answer in question.answers %}
               <li class="list-group-item">
-                <div class="radio">
-                  <label>
-                    <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" />
-                    {% if answer.media is not empty %}
-                      <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                          <div class="">
-                             <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}"/>
-                             {% endif %}
-                             <div class="caption">
-                             {{ answer.text|raw }}
-                             </div>
-                             {% if answer.media is not empty %}
-                          </div>
-                        </div>
-                      {% endif %}
-                      
-                  </label>
+                <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
+                <div class="row">
+                  <div class="col-md-8">
+                  <h4 class="list-group-item-heading">Antwoord {{loop.index}}</h4>
+                  <p class="list-group-item-text">{{ answer.text|raw }}</p>
+                  </div>
+                  <div class="col-md-4">
+                    
+                  </div>
                 </div>
               </li>
             {% endfor %}
-
-
           </ul>
         </div>
-
-       
-
       {% endfor %}
       <div class="input-group voltooid">
         <input class="form-control" type="submit" value="Test voltooien">
