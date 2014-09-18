@@ -13,3 +13,26 @@ and open the template in the editor.
 .panel > .panel-body + .list-group .list-group-item:first-child {
   border-top: 1px solid #dddddd;
 }
+
+
+/**
+    Test answers layout
+**/
+.answer.div {
+    position: relative;
+}
+.answer input[type="radio"]{
+    display:none;
+}
+.answer label{
+    width:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    height: 100%;
+    z-index: 5;
+    
+}
+.answer input[type="radio"]:checked+label{ 
+    background-color: rgba(0, 132, 255, 0.4);
+} 
