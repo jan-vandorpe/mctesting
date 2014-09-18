@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-sep-2014, 14:20:15
+    Author     : cyber07
+*/
+
+
+/*first child of list group in panel did not have border top, now it does */
+.panel > .panel-body + .list-group .list-group-item:first-child {
+  border-top: 1px solid #dddddd;
+}

@@ -1,137 +1,167 @@
 {% extends "template/base.html.twig" %}
 {% block stylesheets %}
-    <link rel="stylesheet" href="{{ app.root }}/public/css/normalize.css" />
-    <link rel="stylesheet" href="{{ app.root }}/public/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="{{ app.root }}/public/css/baselayout.css" />
-    <link rel="stylesheet" href="{{ app.root }}/public/css/print.css" />
-    <link rel="stylesheet" href="{{ app.root }}/public/css/bootstrapValidator.min.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/normalize.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/print.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/bootstrapValidator.min.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/styles.css" />
 {% endblock stylesheets %}
 {% block scripts %}
-    {{ parent() }}
-    <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
-    <script src="{{ app.root }}/public/js/lib/bootstrap.min.js"></script>
-    <script src="{{ app.root }}/public/js/lib/bootstrapValidator.min.js"></script>
-    <script src="{{ app.root }}/public/js/validation.js"></script>
+  {{ parent() }}
+  <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
+  <script src="{{ app.root }}/public/js/lib/bootstrap.min.js"></script>
+  <script src="{{ app.root }}/public/js/lib/bootstrapValidator.min.js"></script>
+  <script src="{{ app.root }}/public/js/validation.js"></script>
 {% endblock scripts %}
 
 {% block title %}MC Testing - {% endblock title %}
 
 {% block body %}
-    {#------ TOP MENU + LOGIN ---------------#}
-    {% block login %}
-        <header class="container-fluid maincontainer topmenu">
-                <div class="navbar-collapse">
-                    {% if app.user is defined and app.user is not empty %}
-                        {% if app.user.group.name == 'admin' %}
-                            {# Admin topnav menu #}
-                            {#
-                            <ul class="nav navbar-nav">
-                                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
-                                <li><a>Vragen</a></li>
-                                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
-                                <li><a>Beheerders</a></li>
-                            </ul>
-                            #}
-                        {% elseif app.user.group.name == 'beheerder' %}
-                            {# Beheerder topnav menu #}
-                            {#
-                            <ul class="nav navbar-nav">
-                                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
-                                <li><a>Vragen</a></li>
-                                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
-                            </ul>
-                            #}
-                        {% else %}
-                            {# Gebruiker topnav menu #}
-                            {# overbodig geworden, knop onderaan nu
-                                <ul class="nav navbar-nav">
-                                    <li><a>Test Beëindigen</a></li>
-                                </ul>
-                            #}
-                        {% endif %}
-                        {# Login form #}
-                        <form class="navbar-form navbar-right login-top-right" role="logout" action="{{ app.root }}/login/logout" method="post">
-                            Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a>
-                            <button type="submit" class="btn btn-default">Afmelden</button>
-                        </form>                 
-                    {% else %}
-                        <form class="navbar-form navbar-right" role="login" action="{{ app.root }}/login/login" method="post" id="frmLogin">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Login" name="Login"
-                                       autofocus required 
-                                       data-msg-required="Required"
-                                       data-rule-required="true"
-                                       data-placement="bottom" title="Arne">
+  {#------ TOP MENU + LOGIN ---------------#}
+  {% block login %}
+    <header class="maincontainer topmenu navbar navbar-default row">
+      <div class="container-fluid navbar-right">
+        {% if app.user is defined and app.user is not empty %}
+          {% if app.user.group.name == 'admin' %}
+            {# Admin topnav menu #}
+            {#
+            <ul class="nav navbar-nav">
+                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
+                <li><a>Vragen</a></li>
+                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
+                <li><a>Beheerders</a></li>
+            </ul>
+            #}
+          {% elseif app.user.group.name == 'beheerder' %}
+            {# Beheerder topnav menu #}
+            {#
+            <ul class="nav navbar-nav">
+                <li><a href="{{ app.root }}/tests/go">Tests</a></li>
+                <li><a>Vragen</a></li>
+                <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
+            </ul>
+            #}
+          {% else %}
+            {# Gebruiker topnav menu #}
+            {# overbodig geworden, knop onderaan nu
+                <ul class="nav navbar-nav">
+                    <li><a>Test Beëindigen</a></li>
+                </ul>
+            #}
+          {% endif %}
+          {# Login form #}
+          <form class="navbar-form login-top-right" role="logout" action="{{ app.root }}/login/logout" method="post">
+            <span class="navbar-text">Ingelogd als <a href="#" class="navbar-link">{{app.user.firstName}} {{app.user.lastName}}</a></span>
+            <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
+          </form>                 
+        {% else %}
+          <form class="navbar-form" role="login" action="{{ app.root }}/login/login" method="post" id="frmLogin">
+            <div class="form-group">
+              <label class="sr-only" for="Login">Login met Rijksregisternummer of e-mail</label>
+              <input type="text" class="form-control" placeholder="Rijksregisternummer/e-mail" name="Login"
+                     autofocus required 
+                     data-msg-required="Required"
+                     data-rule-required="true"
+                     data-placement="bottom">
 
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
-                            </div>
-                            <div class="form-group btn-inlogform">
-                                <button type="submit" class="btn btn-default">Inloggen</button>
-                            </div>
-                        </form>
-                    {% endif %}
-                    </div>
-        </header>
-    {% endblock login %}
+            </div>
+            <div class="form-group">
+              <label class="sr-only" for="Wachtwoord">Wachtwoord</label>
+              <input type="password" class="form-control" placeholder="Wachtwoord" name="Wachtwoord" required>
+            </div>
+            <div class="form-group btn-inlogform">
+              <input type="submit" class="btn btn-default navbar-btn" name="inloggen" value="Inloggen"/>
+            </div>
+          </form>
+        {% endif %}
+      </div>
+    </header>
+  {% endblock login %}
 
-    {#------ SIDE MENU ---------------#}
-    <div class="container-fluid maincontainer clearFix">
-        {% block sidenav %}
-                {% if app.user is defined and app.user is not empty %}
-                    {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-                        <aside class="menu_on_left">
-                            <nav class="navbar">
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Vragen</li>
-                                    <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
-                                </ul>
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Categorie&euml;n</li>
-                                    <li><a href="{{ app.root }}/category">Aanmaken</a></li>
-                                    <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
-                                </ul>
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Gebruikers</li>
-                                    <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
-                                    <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
-                                </ul>
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Tests</li>
-                                    <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
-                                    <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
-                                    <li><a href="{{ app.root }}/testadmin/testlist/">Lijst</a></li>
-                                </ul>
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Rapporten</li>
-                                    <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
-                                </ul>
+  {#------ SIDE MENU ---------------#}
+  <div class="row maincontainer clearfix">
+    {% block sidenav %}
+      {% if app.user is defined and app.user is not empty %}
+        {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+          <aside class="menu_on_left col-md-2">
+            <ul class="nav nav-stacked " role="navigation">
+              <li>
+                <h4>Vragen</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Categorie&euml;n</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/category">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Gebruikers</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Tests</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
+                  <li><a href="{{ app.root }}/testadmin/testlist/">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Rapporten</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
+                </ul>
+              </li>
 
-                            {% if app.user.group.name == 'admin' %}
-                                <ul class="nav navbar-nav nav-stacked">
-                                    <li class="menuheader">Beheerders</li>
-                                    <li><a href="#">Aanmaken</a></li>
-                                    <li><a href="#">Lijst</a></li>
-                                </ul>
-                                {% endif %}
-                            </nav>
-                        </aside>
-                    {% endif %}
-                {% endif %}
-        {% endblock sidenav %}
+              {% if app.user.group.name == 'admin' %}
+                <li>
+                  <h4>Beheerders</h4>
+                  <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#">Aanmaken</a></li>
+                    <li><a href="#">Lijst</a></li>
+                  </ul>
+                </li>
+              {% endif %}
+            </ul>
+          </aside>
+        {% endif %}
+      {% endif %}
+    {% endblock sidenav %}
 
-        {#------ CONTENT ---------------#}
-        <main class="content clearFix">
-            {% block content %}{% endblock content %}
-        </main> 
+    {#------ CONTENT ---------------#}
+    <main 
+      {% if app.user is defined and app.user is not empty %}
+        {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+          class="content clearFix col-md-9"
+        {% else %}
+          class="col-md-10 col-md-offset-1"
+        {% endif %}
+      {% else %}
+        class="col-md-10 col-md-offset-1"
+      {% endif %}
+      >
+
+      <div class="panel panel-default">
+      {% block contentHeader %}{% endblock %}
+      <div class="panel-body">
+      {% block content %}{% endblock content %}
     </div>
-            
-    {#------ FOOTER ----------------#}
-    <footer class="footer headerpage maincontainer">
-        {% block footer %}
-            <p>&copy; vdab - 2014</p>
-        {% endblock footer %}
-    </footer>
+  </div>
+</main> 
+</div>
+
+{#------ FOOTER ----------------#}
+<footer class="navbar-default row container-fluid">
+  {% block footer %}
+    <p class="navbar-text navbar-right">&copy; vdab - 2014</p>
+  {% endblock footer %}
+</footer>
 {% endblock body %}
 
