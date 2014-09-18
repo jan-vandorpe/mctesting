@@ -6,6 +6,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Entity\AnsweredQuestion;
 use Mctesting\Model\Service\SubcategoryService;
+use Mctesting\Model\Entity\UserSessionSubCategory;
 use Mctesting\Model\Service\MediaService;
 
 /**
@@ -38,11 +39,22 @@ class TestQuestionDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT distinct subcategorie.subcatid, subcategorie.subcatnaam, subcategorie.actief from subcategorie 
-            inner join (vraag inner join sessiegebruikerantwoorden on vraag.vraagid = sessiegebruikerantwoorden.vraagid)
-            on subcategorie.subcatid = vraag.subcatid
-            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
-            ';
+//        $sql = 'SELECT distinct subcategorie.subcatid, subcategorie.subcatnaam, subcategorie.actief from subcategorie 
+//            inner join (vraag inner join sessiegebruikerantwoorden on vraag.vraagid = sessiegebruikerantwoorden.vraagid)
+//            on subcategorie.subcatid = vraag.subcatid
+//            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
+//            ';
+        $sql = 'SELECT'. 
+                'sessiegebruikercategoriepercentages.subcatid,'.
+                'score, '.
+                'percentage,'.
+                'subcatnaam, '.
+                'tebehalenscore'.
+                'from sessiegebruikercategoriepercentages, subcategorie, testsubcat '.
+                'where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid '.
+                'and sessiegebruikercategoriepercentages.subcatid = testsubcat.subcatid'.
+                'and sessieid = :sessieid '.
+                'and rijksregisternr = :userid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid)))
@@ -56,11 +68,14 @@ class TestQuestionDAO {
                 //create subcategory object(s)
                 foreach ($resultset as $record)
                 {
-                    $subcat = new Subcategory();
-                    $subcat->setId($record['subcatid']);
+                    $subcat = new UserSessionSubCategory();
+                    $subcat->setId($record['sessiegebruikercategoriepercentages.subcatid']);
                     $subcat->setSubcatname($record['subcatnaam']);
-                    $subcat->setActive($record['actief']);                  
+                    //$subcat->setActive($record['actief']);                  
                     $subcat->setQuestions(TestQuestionDAO::selectQuestionsByCategory($subcat->getId(), $sessieid, $userid));
+                    $subcat->setPercentage($record['percentage']);
+                    $subcat->setScore($record['score']);
+                    $subcat->setPassPercentage($record['tebehalenscore']);
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
