@@ -9,31 +9,40 @@
     {{parent()}}Gebruikers Importeren
 {% endblock %}
 
+{% block contentHeader %}
+<div class="panel-heading">
+    <h1>
+        Gebruikers Importeren
+        <br>
+    </h1>
+</div>
+{% endblock %} 
 
 {% block content %}
-    <div class="container-fluid ">
-        <h1 class="headerofpage">Gebruikers Importeren</h1>
-    </div>
-    <div class="container-fluid">
-        <h3>Status</h3>
-        {% if notValid == false %}
-            <div class="alert alert-success">
-                <p><strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.</p>
-            </div>
-            <div class="alert alert-danger" role="alert">
-                <p><strong>{{fail}}</strong> gebruiker(s) stonden al in de database.</p>
-            </div>
-        {% else %}
-            <div class="panel panel-danger">
-                <div class="panel-heading">FOUT</div>
-                <div class="panel-body">
-                    <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
+<div class="container-fluid">
+    <div class="panel panel-default">
+        <div class="panel-heading">Status</div>
+        <div class="panel-body">   
+            {% if notValid == false %}
+                <div class="alert alert-success">
+                    <p><strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.</p>
                 </div>
-            </div>
-        {% endif %}
-        <br>
-        <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            Terug</a>
+                <div class="alert alert-danger" role="alert">
+                    <p><strong>{{fail}}</strong> gebruiker(s) stonden al in de database.</p>
+                </div>
+            {% else %}
+                <div class="panel panel-danger">
+                    <div class="panel-heading">FOUT</div>
+                    <div class="panel-body">
+                        <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    <br>
+    <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        Terug</a>
     </div>
+</div>
 {% endblock %}
