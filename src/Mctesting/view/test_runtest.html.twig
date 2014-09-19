@@ -19,7 +19,7 @@
     </h1>
     <blockquote class="">
       <p class="">Categorie: {{ catname|capitalize }} </p>
-      <footer class="" >Nog te beantwoorden vragen: <span id="questioncount" class="badge">{{ test.testquestioncount }}</span></footer>
+      <footer class="" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
       <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
     </blockquote>
   </div>
@@ -34,19 +34,19 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-9">
-              <p>
-                <span class="glyphicon glyphicon-question-sign"></span>
-                {{ question.text|raw }}
-              </p>
+                <p>
+                  <span class="glyphicon glyphicon-question-sign"></span>
+                  {{ question.text|raw }}
+                </p>
               </div>
               <div class="col-md-3">
-              {% if question.media is not empty %}
-                {% for file in question.media %}
-                  <figure class=>
-                    <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
-                  </figure>
-                {% endfor %}
-              {% endif %}
+                {% if question.media is not empty %}
+                  {% for file in question.media %}
+                    <figure class=>
+                      <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                    </figure>
+                  {% endfor %}
+                {% endif %}
               </div>
             </div>
           </div>
@@ -75,6 +75,9 @@
           </ul>
         </div>
       {% endfor %}
+      <div class="row">
+        <div class="col-md-5 col-md-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
+      </div>
       <div class="row">
         <input class="btn btn-default btn-lg col-md-2 col-md-offset-5" type="submit" value="Test voltooien">
       </div>
