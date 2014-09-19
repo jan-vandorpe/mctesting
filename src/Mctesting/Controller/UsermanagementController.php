@@ -5,6 +5,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Includes\UploadManager;
 
 /**
  * Description of homecontroller
@@ -32,6 +33,55 @@ class UsermanagementController extends AbstractController {
         $this->render('newuserform.html.twig', array(
                 // 'message1' => $message1,
         ));
+    }
+
+    public function importUsers() {
+        $this->render('importusers.html.twig', array(
+        ));
+    }
+
+    public function import() {
+
+        //upload file
+        $file_id = "csv";
+        $folder = "../public/csv/";
+        $types = "csv";
+        $uploadedFile = UploadManager::upload($file_id, $folder, $types, $i = 0);
+        //echo "$uploadedFile[0]";
+        $fileName = "$uploadedFile[0]";
+
+        $file = fopen($folder . $fileName, "r");
+        $i = 0;
+        
+        
+        //eerste lijn overslaan, hierin zitten de koppen
+        fgetcsv($file, 1000, ";", "'");
+        
+        while (!feof($file)) {
+            $data[$i] = fgetcsv($file, 1000, ";", "'");
+            //print($data[$i][0] . "<br>");
+            $RRNr = $data[$i][0];
+            //print($data[$i][1] . "<br>");
+            $firstName = $data[$i][1];
+            $lastName = $data[$i][2];
+
+            if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
+                if (UserService::create($firstName, $lastName, $RRNr)) {
+                    $_SESSION["importSucces"] = true;
+                    header("location: " . ROOT . "/usermanagement/importusers");
+                } else {
+                    //header("location: ".ROOT."/home/newuserform");
+                    //echo("lolz");
+                }
+            } else {
+                print ("Niet valid.");
+            }
+
+            $i++;
+        }
+
+        //print($data[1][0]);
+        fclose($file);
     }
 
     public function newUser() {
