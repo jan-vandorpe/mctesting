@@ -49,11 +49,14 @@
             {% for answer in question.answers %}
               <li class="list-group-item answer">
                 <div class="row">
-                <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
-                  <label for="question{{question.id}}answer{{answer.id}}" class="col-md-1"></label>
+                  <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
+                  <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
                   <div class="col-md-7">
-                    <h4 class="list-group-item-heading">Antwoord {{loop.index}}</h4>
-                    <p class="list-group-item-text">{{ answer.text|raw }}</p>
+                    <h4>
+                      <small>Antwoord {{loop.index}}</small>
+                      <br>
+                      {{ answer.text|raw }}
+                    </h4>
                   </div>
                   <div class="col-md-3 col-md-offset-1">
                     {% if answer.media is not empty %}

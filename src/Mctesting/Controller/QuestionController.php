@@ -46,7 +46,7 @@ class QuestionController extends AbstractController
     public function add()
     {    
       $questionMediaFileNames = array();
-      if(!empty($_FILES['media'])){
+      if($_FILES['media']['error'][0]==0){
         /**
          * if question files have been selected
          * iterate and upload each of them
@@ -75,7 +75,7 @@ class QuestionController extends AbstractController
         $answer = new Answer();
         $answer->setId($index);
         $answer->setText($text);
-        if(!empty($_FILES['answerMedia']['name'][$index])){
+        if($_FILES['answerMedia']['error'][$index]==0){
           print $index;
         list($file,$error) = UploadManager::upload('answerMedia','../public/images/','jpg,jpeg,gif,png',$i);
         if($error) print $error;
