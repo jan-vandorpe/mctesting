@@ -108,87 +108,94 @@
       <h4>Test aanmaken stap 3</h4>
 
       <div class="panel panel-default">
-        <div class="panel-heading">
-          Test naam: {{testname}}
+        <div class="panel-heading clearfix">
+          <p><span class="col-md-3">Test naam: </span><span class="col-md-9"><b>{{testname}}</b></span></p> 
+          <p><span class="col-md-3">Categorie: </span><span class="col-md-9"><b>{{cat.catname}}</b></span></p>
+          <p><span class="col-md-3">Duurtijd: </span><span class="col-md-9"><b>{{testduration}}</b></span></p>
+          <p><span class="col-md-3">Aantal vragen: </span><span class="col-md-9"><b>{{questioncount}}</b></span></p>
+          <p><span class="col-md-3">Gewicht vragen: </span><span class="col-md-9"><b>{{questionweightcount}}</b></span></p>
         </div>
         <div class="panel-body">
-          
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4>Subcategorie&euml;n:</h4>
+            </div>
+            <ul class="list-group">
+              {% for key, subcat in subcatlist %}
+                <li class="list-group-item clearfix">
+                  <span class="col-md-3">Naam: </span><span class="col-md-9">{{key}}</span>
+                  <span class="col-md-3">Aantal vragen: </span><span class="col-md-9">{{subcat.count}}</span>
+                  <span class="col-md-3">Gewicht vragen: </span><span class="col-md-9">{{subcat.weight}}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload" role="form">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4>Slaagpercentages:</h4>
+              </div>
+
+              <div class="panel-body">
+                <div class="form-group">
+                  <label class="control-label col-md-5">Slaagpercentage voor volledige test: </label>
+                  <div class="col-md-7">
+                    <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
+                  </div>
+                </div>
+                {% for key, subcat in subcatlist %}
+                  <div class="form-group">
+                    <label class="control-label col-md-5">Slaagpercentage voor "{{ key }}":</label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-md-3 col-md-offset-5">
+                <input type="submit" name="catknop" class="btn btn-default btn-lg" >
+              </div>
+            </div>
+          </form>
+
         </div>
       </div>
+      {#      
+            <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload">
+              <div class="input-group">
+                <label for="testpasspercentage" class="input-group-addon widthslaaginput">Slaagpercentage voor de volledige test:</label>
+                <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
+              </div>
       
+              {% for key, subcat in subcatlist %}
       
+                <div class="input-group">
+                  <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{ key }}":</label>
+                  <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
+                </div>
       
-      <div class="lighter gebrcollectie">
-        <div class="input-group gebraddon">
-          <div class="input-group-addon">{{testname}}:</div>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon widthtestinput">Categorie: </span>
-          <div class="form-control frmcontrolwidth-testinvoeg">{{cat.catname}}</div>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon widthtestinput">Duurtijd: </span>
-          <div class="form-control frmcontrolwidth-testinvoeg">{{testduration}}</div>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon widthtestinput">Aantal vragen: </span>
-          <div class="form-control frmcontrolwidth-testinvoeg">{{questioncount}}</div>
-        </div>
-        <div class="input-group">
-          <span class="input-group-addon widthtestinput">Gewicht vragen: </span>
-          <div class="form-control frmcontrolwidth-testinvoeg">{{questionweightcount}}</div>
-        </div>
-        <div class="input-group gebraddon">
-          <div class="input-group-addon">Subcategorie&euml;n: </div>
-        </div>
-        <div class="input-group submargin">
-          <span class="input-group-addon widthtestinput centeren">Naam: </span>
-          <span class="input-group-addon widthtestinput centeren">Aantal vragen: </span>
-          <span class="input-group-addon widthtestinput centeren">Gewicht vragen: </span>
-        </div>
-        {% for key, subcat in subcatlist %}
-          <div class="input-group submargin">
-            <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{key}}</div>
-            <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.count}}</div>
-            <div class="form-control frmcontrolwidth-testsubcatinvoeg">{{subcat.weight}}</div>
-          </div>
-        {% endfor %}
-      </div>
-
-      <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload">
-        <div class="input-group">
-          <label for="testpasspercentage" class="input-group-addon widthslaaginput">Slaagpercentage voor de volledige test:</label>
-          <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
-        </div>
-
-        {% for key, subcat in subcatlist %}
-
-          <div class="input-group">
-            <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{ key }}":</label>
-            <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
-          </div>
-
-        {% endfor %}
-
-
-        <div class="input-group">
-          <input type="submit" name="catknop" class="form-control marginonbutton" >
-        </div>
-      </form>
+              {% endfor %}
+      #}
     {% else %}
       <div class="progress">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
           <span class="sr-only">100% Compleet</span>
         </div>
       </div>
       <h4>Test aanmaken voltooid.</h4>
       <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
+      <br>
       <h4>Dummytest afleggen</h4>
-      <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}"> 
+      <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}" role="form"> 
         <p>Klik hier om een dummytest af te leggen:</p>
-        <input type="submit" name="catknop" value="Test afleggen" class="form-control marginonbutton" >
+        <div class="form-group">
+          <div class="col-md-3">
+            <input type="submit" name="catknop" value="Test afleggen" class="btn btn-default" >
+          </div>
+        </div>
       </form>
     {% endif %}
   </div>
-
 {% endblock content %}
