@@ -252,7 +252,10 @@ class TestadminController extends AbstractController {
 //            header("location: ".ROOT."/testadmin/testlink");
 //            exit(0);
 //        }
-        $datum = $_POST["testdatum"];
+        $date = explode('/', $_POST['testdatum']);
+        $time = mktime(0,0,0,$date[0],$date[1],$date[2]-1);
+        $mysqldate = date( 'Y-m-d H:i:s', $time );
+        
         $sessieww = $_POST["testwachtwoord"];
         $actief = 1;
         $afgelegd = 0;
@@ -265,7 +268,7 @@ class TestadminController extends AbstractController {
 //        print("<pre>");
 //        var_dump($_POST);
 //        print("</pre>");
-        if (TestSessionService::create($datum, $testid, $sessieww, $users)) {
+        if (TestSessionService::create($mysqldate, $testid, $sessieww, $users)) {
             $this->render('testlinkconfirm.html.twig', array(
             ));
             //             

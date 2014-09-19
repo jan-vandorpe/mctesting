@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
 -- Machine: 127.0.0.1
--- Genereertijd: 17 apr 2014 om 14:57
--- Serverversie: 5.6.11
--- PHP-versie: 5.5.1
+-- Gegenereerd op: 18 sep 2014 om 12:58
+-- Serverversie: 5.6.16
+-- PHP-versie: 5.5.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Databank: `mctesting`
 --
-CREATE DATABASE IF NOT EXISTS `mctesting` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `mctesting`;
 
 -- --------------------------------------------------------
 
@@ -32,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `antwoorden` (
   `vraagid` int(11) NOT NULL,
   `antwoordid` int(11) NOT NULL,
   `antwoordtekst` text NOT NULL,
+  `media` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`vraagid`,`antwoordid`),
   KEY `vraagid` (`vraagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,67 +39,106 @@ CREATE TABLE IF NOT EXISTS `antwoorden` (
 -- Gegevens worden uitgevoerd voor tabel `antwoorden`
 --
 
-INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`) VALUES
-(1, 0, 'Rundskop'),
-(1, 1, 'In Darkness'),
-(1, 2, 'A Separation'),
-(1, 3, 'Footnote'),
-(2, 0, 'Nick Nuyens'),
-(2, 1, 'Tom Boonen'),
-(2, 2, 'Philippe Gilbert'),
-(2, 3, 'Fabian Cancellara'),
-(3, 0, '356'),
-(3, 1, '485'),
-(3, 2, '510'),
-(3, 3, '541'),
-(4, 0, '5'),
-(4, 1, '8'),
-(4, 2, '11'),
-(4, 3, '15'),
-(5, 0, 'Het varken'),
-(5, 1, 'De draak'),
-(5, 2, 'De slang'),
-(5, 3, 'De rat'),
-(5, 99, 'Testantwoord'),
-(11, 0, 'BelgiÃ«'),
-(11, 1, 'China'),
-(11, 2, 'BraziliÃ«'),
-(11, 3, 'Rusland'),
-(12, 0, 'A'),
-(12, 1, '2'),
-(12, 2, 'Kleine friet met mayo'),
-(12, 3, 'Bram?'),
-(13, 0, '2 mei'),
-(13, 1, '17 juni'),
-(13, 2, '25 mei'),
-(13, 3, '5 november'),
-(14, 0, 'ja'),
-(14, 1, 'nee'),
-(14, 2, 'kweetnie'),
-(15, 0, 'Een stok'),
-(15, 1, 'Een bal'),
-(15, 2, 'Hoepels'),
-(15, 3, 'AK47'),
-(16, 0, 'Bram'),
-(16, 1, 'Hendrik'),
-(16, 2, 'Jan'),
-(16, 3, 'Bert2'),
-(17, 0, 'a'),
-(17, 1, 'a'),
-(17, 2, 'a'),
-(17, 3, 'a'),
-(18, 0, 'a'),
-(18, 1, 'a'),
-(18, 2, 'a'),
-(18, 3, 'a'),
-(19, 0, 'a'),
-(19, 1, 'a'),
-(19, 2, 'a'),
-(19, 3, 'a'),
-(20, 0, 'Linker arm'),
-(20, 1, 'Rechter arm'),
-(20, 2, 'Beide benen'),
-(20, 3, 'Alle ledematen');
+INSERT INTO `antwoorden` (`vraagid`, `antwoordid`, `antwoordtekst`, `media`) VALUES
+(1, 0, 'Rundskop', NULL),
+(1, 1, 'In Darkness', NULL),
+(1, 2, 'A Separation', NULL),
+(1, 3, 'Footnote', NULL),
+(2, 0, 'Nick Nuyens', NULL),
+(2, 1, 'Tom Boonen', NULL),
+(2, 2, 'Philippe Gilbert', NULL),
+(2, 3, 'Fabian Cancellara', NULL),
+(3, 0, '356', NULL),
+(3, 1, '485', NULL),
+(3, 2, '510', NULL),
+(3, 3, '541', NULL),
+(4, 0, '5', NULL),
+(4, 1, '8', NULL),
+(4, 2, '11', NULL),
+(4, 3, '15', NULL),
+(5, 0, 'Het varken', NULL),
+(5, 1, 'De draak', NULL),
+(5, 2, 'De slang', NULL),
+(5, 3, 'De rat', NULL),
+(5, 99, 'Testantwoord', NULL),
+(11, 0, 'BelgiÃ«', NULL),
+(11, 1, 'China', NULL),
+(11, 2, 'BraziliÃ«', NULL),
+(11, 3, 'Rusland', NULL),
+(12, 0, 'A', NULL),
+(12, 1, '2', NULL),
+(12, 2, 'Kleine friet met mayo', NULL),
+(12, 3, 'Bram?', NULL),
+(13, 0, '2 mei', NULL),
+(13, 1, '17 juni', NULL),
+(13, 2, '25 mei', NULL),
+(13, 3, '5 november', NULL),
+(14, 0, 'ja', NULL),
+(14, 1, 'nee', NULL),
+(14, 2, 'kweetnie', NULL),
+(15, 0, 'Een stok', NULL),
+(15, 1, 'Een bal', NULL),
+(15, 2, 'Hoepels', NULL),
+(15, 3, 'AK47', NULL),
+(16, 0, 'Bram', NULL),
+(16, 1, 'Hendrik', NULL),
+(16, 2, 'Jan', NULL),
+(16, 3, 'Bert2', NULL),
+(17, 0, 'a', NULL),
+(17, 1, 'a', NULL),
+(17, 2, 'a', NULL),
+(17, 3, 'a', NULL),
+(18, 0, 'a', NULL),
+(18, 1, 'a', NULL),
+(18, 2, 'a', NULL),
+(18, 3, 'a', NULL),
+(19, 0, 'a', NULL),
+(19, 1, 'a', NULL),
+(19, 2, 'a', NULL),
+(19, 3, 'a', NULL),
+(20, 0, 'Linker arm', NULL),
+(20, 1, 'Rechter arm', NULL),
+(20, 2, 'Beide benen', NULL),
+(20, 3, 'Alle ledematen', NULL),
+(21, 0, '<p>Jamarie Pfaff</p>', NULL),
+(21, 1, '<p>Eddy Wally</p>', NULL),
+(21, 2, '<p>Arne Slabbinck</p>', NULL),
+(22, 0, '<p>A</p>', NULL),
+(22, 1, '<p>B</p>', NULL),
+(23, 0, '<p>A</p>', NULL),
+(23, 1, '<p>B</p>', NULL),
+(24, 0, '<p>A</p>', NULL),
+(24, 1, '<p>B</p>', NULL),
+(25, 0, '<p>a</p>', NULL),
+(25, 1, '<p>b</p>', NULL),
+(26, 0, '<p>ze</p>', NULL),
+(26, 1, '<p>r</p>', NULL),
+(27, 0, '<p>zef</p>', NULL),
+(27, 1, '<p>zef</p>', NULL),
+(28, 0, '<p>er</p>', NULL),
+(28, 1, '<p>er</p>', NULL),
+(29, 0, '<p>er</p>', NULL),
+(29, 1, '<p>er</p>', NULL),
+(30, 0, '<p>er</p>', NULL),
+(30, 1, '<p>er</p>', NULL),
+(31, 0, '<p>er</p>', NULL),
+(31, 1, '<p>er</p>', NULL),
+(32, 0, '<p>er</p>', NULL),
+(32, 1, '<p>er</p>', NULL),
+(33, 0, '<p>test</p>', NULL),
+(33, 1, '<p>test</p>', NULL),
+(34, 0, '<p>test</p>', NULL),
+(34, 1, '<p>test</p>', NULL),
+(35, 0, '<p>test</p>', NULL),
+(35, 1, '<p>test</p>', NULL),
+(36, 0, '<p>test</p>', NULL),
+(36, 1, '<p>test</p>', NULL),
+(37, 0, '<p>ef</p>', NULL),
+(37, 1, '<p>zef</p>', NULL),
+(38, 0, '<p>e</p>', NULL),
+(38, 1, '<p>a</p>', '55804_pasta.jpg'),
+(39, 0, '<p>no image</p>', NULL),
+(39, 1, '<p>image</p>', 'b9cc4_cheese.jpg');
 
 -- --------------------------------------------------------
 
@@ -309,7 +347,7 @@ CREATE TABLE IF NOT EXISTS `categorie` (
   `catnaam` tinytext CHARACTER SET utf8mb4 NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`catid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `categorie`
@@ -320,7 +358,8 @@ INSERT INTO `categorie` (`catid`, `catnaam`, `actief`) VALUES
 (2, 'sport', 1),
 (3, 'programma', 1),
 (4, 'test', 1),
-(5, 'Lege testcategorie', 1);
+(5, 'Lege testcategorie', 1),
+(7, '', 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `gebruikers` (
   `email` varchar(40) NOT NULL,
   `voornaam` varchar(25) NOT NULL,
   `familienaam` varchar(25) NOT NULL,
-  `wachtwoord` varchar(30) NOT NULL,
+  `wachtwoord` varchar(80) NOT NULL,
   `gebruikerstype` int(1) DEFAULT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`rijksregisternr`),
@@ -345,17 +384,20 @@ CREATE TABLE IF NOT EXISTS `gebruikers` (
 --
 
 INSERT INTO `gebruikers` (`rijksregisternr`, `email`, `voornaam`, `familienaam`, `wachtwoord`, `gebruikerstype`, `actief`) VALUES
-('12345678900', 'gebruiker@email.be', 'gebruiker', 'gebruikerfnaam', 'qsdf', 1, 1),
-('12345678933', 'bert@email.be', 'Bert', 'Mortier', 'qsdf', 3, 1),
-('32165498722', 'hendrik@email.be', 'Hendrik', 'De Buck', 'qsdf', 3, 1),
+('05927674012', '', 'Vansteenkiste', 'Jarni', '', 1, 1),
+('12345678900', 'gebruiker@email.be', 'gebruiker', 'gebruikerfnaam', '$2a$10$oW9JzL3c63G2AvIMMBkn8eXU.oBRuTWqBESC6J/ozhf6jgyVkqeBy', 1, 1),
+('12345678933', 'bert@email.be', 'Bert', 'Mortier', '$2a$10$J/iBOEeRch4C2S.ZQNaFdOY2Ei4B07fl29Ij0D0nx1d7om/99Posy', 3, 1),
+('32165498722', 'hendrik@email.be', 'Hendrik', 'De Buck', '$2a$10$erfWDDsxR1Gxygb1da501.h3TCyaSN1vS1XHm9/.5Ya185Wd31uaC', 3, 1),
 ('32165498723', '', 'nummerEEN', 'testgebruiker', '', 1, 1),
-('32165498755', 'thomas@email.be', 'Thomas', 'Deserranno', 'azerty', 3, 1),
-('44475888888', '', 'p', 'o', '', 1, 1),
-('45678901230', 'beheerder@email.be', 'beheerder', 'beheerderfnaam', 'qsdf', 2, 1),
-('45781273864', '', 'tester', 'ulrich', '', 1, 1),
-('46737215184', '', 'retsr', 'testr', '', 1, 1),
+('32165498755', 'thomas@email.be', 'Thomas', 'Deserranno', '$2a$10$F55ibf0044.ysSuHu0GNGeG1pXCRFPCjIJaUJ8VnY8UqI8dTRS5Ty', 3, 1),
+('45645645645', '', 'Jemoeder', 'Tuur', '', 1, 0),
+('45678901230', 'beheerder@email.be', 'beheerder', 'beheerderfnaam', '$2a$10$Yc/z/l7dz9RPY0L2Ou6ftOKlVwRvzFVn5qH7pz7XI5bcBpZnqIK8K', 2, 1),
+('46737215184', '', 'retsr', 'testr', '', 1, 0),
 ('78451545454', '', 'nummerTWEE', 'testgebruiker', '', 1, 1),
-('98765432100', 'bram@email.be', 'Bram', 'Peters', 'wxcv', 3, 1);
+('78945612312', '', 'Slabbinck', 'Arne', '', 1, 1),
+('78945641523', '', 'Jan', 'Vandorpe', '', 1, 1),
+('98765432100', 'bram@email.be', 'Bram', 'Peters', '$2a$10$jP3CzzLnjX/1azG1LD2Kkuuy/ZCm7K2sOCs9NSNkCtII9Rdlwt6A2', 3, 1),
+('99999999999', '', 'Slabbinck', 'Arne', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -401,7 +443,23 @@ INSERT INTO `media` (`vraagid`, `mediaid`, `filename`) VALUES
 (3, 0, 'china.jpg'),
 (4, 0, 'ijs.jpg'),
 (12, 0, 'Git-1.9.0-preview20140217.exe'),
-(12, 1, 'lazarus-1.0.14-fpc-2.6.2-win32.exe');
+(12, 1, 'lazarus-1.0.14-fpc-2.6.2-win32.exe'),
+(21, 0, 'arne.png'),
+(22, 0, 'gmap.png'),
+(22, 1, 'green80.png'),
+(22, 2, 'grijs185x120.gif'),
+(22, 3, 'groep.jpg'),
+(22, 4, 'hanne.jpg'),
+(22, 5, 'hannelore.jpg'),
+(22, 6, 'html_code.jpg'),
+(26, 0, 'hanne.jpg'),
+(37, 0, 'env3.jpg'),
+(37, 1, 'env4.jpg'),
+(37, 2, 'flipboard.jpg'),
+(38, 0, '66fb5_anchovies.jpg'),
+(38, 1, '82003_cheese.jpg'),
+(39, 0, '56af3_olives.jpg'),
+(39, 1, '7d5d3_pasta.jpg');
 
 -- --------------------------------------------------------
 
@@ -417,16 +475,22 @@ CREATE TABLE IF NOT EXISTS `sessie` (
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`sessieid`),
   KEY `testid` (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=39 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `sessie`
 --
 
 INSERT INTO `sessie` (`sessieid`, `datum`, `testid`, `sessieww`, `actief`) VALUES
-(1, '2014-04-01', 1, '1', 0),
-(2, '2014-04-17', 1, 'domkalf', 1),
-(3, '2014-04-17', 1, 'koekoek', 0);
+(15, '2010-09-14', 29, 'sam', 1),
+(16, '2014-09-11', 30, 'test', 1),
+(17, '0000-00-00', 29, 'qsdf', 1),
+(18, '2014-09-11', 31, 'test', 1),
+(19, '0000-00-00', 29, 'qsdf', 1),
+(20, '0000-00-00', 29, 'aaaa', 1),
+(23, '0000-00-00', 32, 'qsdf', 1),
+(24, '0000-00-00', 29, 'test', 1),
+(25, '2014-09-18', 29, 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -451,7 +515,14 @@ CREATE TABLE IF NOT EXISTS `sessiegebruiker` (
 --
 
 INSERT INTO `sessiegebruiker` (`sessieid`, `rijksregisternr`, `score`, `percentage`, `geslaagd`, `afgelegd`, `actief`) VALUES
-(1, '12345678900', 1, '50', 1, 1, 0);
+(15, '32165498723', 3, '75', 1, 1, 0),
+(15, '78945641523', 0, '0', 0, 1, 0),
+(16, '12345678900', 5, '56', 0, 1, 0),
+(17, '12345678900', 0, '0', 0, NULL, 0),
+(17, '32165498723', 0, '0', 0, NULL, 0),
+(18, '12345678900', 0, '0', 0, NULL, 0),
+(24, '12345678900', 2, '50', 0, 1, 0),
+(25, '12345678900', 1, '25', 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -461,12 +532,69 @@ INSERT INTO `sessiegebruiker` (`sessieid`, `rijksregisternr`, `score`, `percenta
 
 CREATE TABLE IF NOT EXISTS `sessiegebruikerantwoorden` (
   `sessieid` int(11) NOT NULL,
-  `gebruikerid` int(11) NOT NULL,
+  `gebruikerid` varchar(11) NOT NULL,
   `vraagid` int(11) NOT NULL,
   `correct` tinyint(1) NOT NULL,
   PRIMARY KEY (`sessieid`,`gebruikerid`,`vraagid`),
   KEY `vraagid` (`vraagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `sessiegebruikerantwoorden`
+--
+
+INSERT INTO `sessiegebruikerantwoorden` (`sessieid`, `gebruikerid`, `vraagid`, `correct`) VALUES
+(15, '32165498723', 1, 0),
+(15, '32165498723', 3, 1),
+(15, '32165498723', 4, 1),
+(15, '32165498723', 5, 1),
+(15, '78945641523', 1, 0),
+(15, '78945641523', 3, 0),
+(15, '78945641523', 4, 0),
+(15, '78945641523', 5, 0),
+(16, '12345678900', 22, 1),
+(16, '12345678900', 23, 0),
+(16, '12345678900', 24, 1),
+(16, '12345678900', 26, 1),
+(16, '12345678900', 27, 0),
+(16, '12345678900', 33, 1),
+(16, '12345678900', 34, 0),
+(16, '12345678900', 35, 1),
+(16, '12345678900', 36, 0),
+(24, '12345678900', 1, 1),
+(24, '12345678900', 3, 0),
+(24, '12345678900', 4, 0),
+(24, '12345678900', 5, 1),
+(25, '12345678900', 1, 0),
+(25, '12345678900', 3, 0),
+(25, '12345678900', 4, 0),
+(25, '12345678900', 5, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `sessiegebruikercategoriepercentages`
+--
+
+CREATE TABLE IF NOT EXISTS `sessiegebruikercategoriepercentages` (
+  `sessieid` int(11) NOT NULL,
+  `rijksregisternr` varchar(11) NOT NULL,
+  `testid` int(11) NOT NULL,
+  `subcatid` int(11) NOT NULL,
+  `score` int(5) NOT NULL,
+  `percentage` int(5) NOT NULL,
+  PRIMARY KEY (`sessieid`,`rijksregisternr`,`testid`,`subcatid`),
+  KEY `fk_test12` (`testid`),
+  KEY `fk_subcat12` (`subcatid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `sessiegebruikercategoriepercentages`
+--
+
+INSERT INTO `sessiegebruikercategoriepercentages` (`sessieid`, `rijksregisternr`, `testid`, `subcatid`, `score`, `percentage`) VALUES
+(25, '12345678900', 29, 1, 0, 0),
+(25, '12345678900', 29, 2, 1, 50);
 
 -- --------------------------------------------------------
 
@@ -481,7 +609,7 @@ CREATE TABLE IF NOT EXISTS `subcategorie` (
   `actief` tinyint(1) NOT NULL,
   PRIMARY KEY (`subcatid`),
   KEY `catid` (`catid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=43 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `subcategorie`
@@ -489,25 +617,26 @@ CREATE TABLE IF NOT EXISTS `subcategorie` (
 
 INSERT INTO `subcategorie` (`subcatid`, `catid`, `subcatnaam`, `actief`) VALUES
 (1, 1, 'politiek', 1),
-(2, 1, 'landen', 1),
-(3, 1, 'kunst', 1),
-(4, 2, 'wielrennen', 1),
-(5, 2, 'voetbal', 1),
-(6, 2, 'andere', 1),
+(2, 1, 'landen', 0),
+(3, 1, 'kunst', 0),
+(4, 2, 'wielrennen', 0),
+(5, 2, 'voetbal', 0),
+(6, 2, 'andere', 0),
 (7, 3, 'htmlcss', 1),
-(8, 3, 'javascript', 1),
-(9, 3, 'php', 1),
-(10, 3, 'sql', 1),
+(8, 3, 'javascript', 0),
+(9, 3, 'php', 0),
+(10, 3, 'sql', 0),
 (11, 4, 'testsubcategorie', 1),
 (12, 4, 'testsubcategorie2', 1),
-(28, 1, 'beeldhouwen', 1),
-(35, 2, 'hockey', 1),
-(36, 2, 'fierljeppen', 1),
+(28, 1, 'beeldhouwen', 0),
+(35, 2, 'hockey', 0),
+(36, 2, 'fierljeppen', 0),
 (37, 4, '1', 0),
 (38, 4, '2', 0),
 (39, 4, '3', 0),
 (40, 4, 'testtestest4', 0),
-(41, 4, 'testtestest5', 0);
+(41, 4, 'testtestest5', 0),
+(42, 1, '', 0);
 
 -- --------------------------------------------------------
 
@@ -525,14 +654,19 @@ CREATE TABLE IF NOT EXISTS `test` (
   `beheerder` varchar(11) NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`testid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `test`
 --
 
 INSERT INTO `test` (`testid`, `testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `tebehalenscore`, `beheerder`, `actief`) VALUES
-(1, 'o', 1, 1, 1, 0, '1', 1);
+(29, 'Politiek', 50, 4, 4, 60, '45678901230', 1),
+(30, 'test', 50, 9, 9, 60, '45678901230', 1),
+(31, 'kl', 15, 2, 4, 60, '45678901230', 1),
+(32, 'test test', 15, 3, 7, 60, '12345678933', 1),
+(33, 'lll', 60, 2, 2, 60, '45678901230', 1),
+(34, 'lll', 50, 2, 2, 60, '45678901230', 1);
 
 -- --------------------------------------------------------
 
@@ -550,6 +684,19 @@ CREATE TABLE IF NOT EXISTS `testsubcat` (
   KEY `subcatid` (`subcatid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden uitgevoerd voor tabel `testsubcat`
+--
+
+INSERT INTO `testsubcat` (`testid`, `subcatid`, `aantal`, `totgewicht`, `tebehalenscore`) VALUES
+(29, 1, 2, 2, 50),
+(29, 2, 2, 2, 50),
+(30, 11, 9, 9, 50),
+(31, 11, 2, 4, 50),
+(32, 11, 3, 7, 50),
+(33, 1, 2, 2, 50),
+(34, 1, 2, 2, 50);
+
 -- --------------------------------------------------------
 
 --
@@ -562,6 +709,34 @@ CREATE TABLE IF NOT EXISTS `testvragen` (
   KEY `testid` (`testid`,`vraagid`),
   KEY `vraagid` (`vraagid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden uitgevoerd voor tabel `testvragen`
+--
+
+INSERT INTO `testvragen` (`testid`, `vraagid`) VALUES
+(29, 1),
+(29, 3),
+(29, 4),
+(29, 5),
+(30, 22),
+(30, 23),
+(30, 24),
+(30, 26),
+(30, 27),
+(30, 33),
+(30, 34),
+(30, 35),
+(30, 36),
+(31, 36),
+(31, 39),
+(32, 12),
+(32, 22),
+(32, 23),
+(33, 1),
+(33, 3),
+(34, 1),
+(34, 3);
 
 -- --------------------------------------------------------
 
@@ -577,7 +752,7 @@ CREATE TABLE IF NOT EXISTS `vraag` (
   `correctantwoord` int(11) NOT NULL,
   `actief` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`vraagid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=40 ;
 
 --
 -- Gegevens worden uitgevoerd voor tabel `vraag`
@@ -603,7 +778,26 @@ INSERT INTO `vraag` (`subcatid`, `vraagid`, `vraagtekst`, `gewicht`, `correctant
 (7, 17, 'Vul hier uw vraag in', 1, 0, 1),
 (7, 18, 'Vul hier uw vraag in', 1, 0, 1),
 (7, 19, 'Vul hier uw vraag in', 1, 0, 1),
-(35, 20, 'Indien je in een team tegen Thomas zou spelen, welk ledemaat bewerk je eerst?', 1, 2, 1);
+(35, 20, 'Indien je in een team tegen Thomas zou spelen, welk ledemaat bewerk je eerst?', 1, 2, 1),
+(3, 21, '<p>Wie is deze bekende persoon?</p>', 1, 2, 1),
+(11, 22, '<p>&lt;p&gt;test test&lt;/p&gt;</p>\r\n<p>&lt;img src="#"&gt;</p>\r\n<p>wut wut</p>\r\n<p>wut</p>', 1, 0, 1),
+(11, 23, '<ul>\r\n<li>Bullet list test</li>\r\n<li>line 2</li>\r\n</ul>\r\n<p style="text-align: justify;">justified text</p>\r\n<p style="text-align: right;">right align</p>\r\n<p style="text-align: center;">center</p>\r\n<p style="text-align: left;">left</p>\r\n<p style="text-align: left;"><strong>bold</strong>&nbsp;<em>italic</em></p>\r\n<ol>\r\n<li>1</li>\r\n<li>2</li>\r\n<li>3</li>\r\n<li>four</li>\r\n</ol>\r\n<pre>Pre test<br />&lt;div&gt;div test&lt;/div&gt;<br />&lt;div style="color:red"&gt;color test&lt;/div&gt;</pre>', 1, 0, 1),
+(11, 24, '<p>&lt;p&gt;test&lt;/p&gt;</p>\r\n<p>&lt;div style="color:red"&gt;color test&lt;/div&gt;</p>\r\n<p>&lt;code&gt;</p>\r\n<p>if then else&lt;p&gt;do&lt;/p&gt;</p>\r\n<p>Â  Â  &lt;aside&gt;&lt;/aside&gt;</p>\r\n<p>&lt;/code&gt;</p>\r\n<p><strong>bold</strong></p>\r\n<p><em>italic</em></p>\r\n<ul>\r\n<li>bullet</li>\r\n<li>list</li>\r\n<li>test</li>\r\n</ul>\r\n<p>Â </p>', 1, 0, 1),
+(1, 25, '<p>test</p>', 1, 0, 1),
+(11, 26, '<p>A</p>', 1, 0, 1),
+(11, 27, '<p>zefzef</p>', 1, 0, 1),
+(1, 28, '<p>er</p>', 1, 0, 1),
+(1, 29, '<p>er</p>', 1, 0, 1),
+(1, 30, '<p>er</p>', 1, 0, 1),
+(1, 31, '<p>er</p>', 1, 0, 1),
+(1, 32, '<p>er</p>', 1, 0, 1),
+(11, 33, '<p>test</p>', 1, 0, 1),
+(11, 34, '<p>test</p>', 1, 0, 1),
+(11, 35, '<p>test</p>', 1, 0, 1),
+(11, 36, '<p>test</p>', 1, 0, 1),
+(1, 37, '<p>zef</p>', 1, 0, 1),
+(1, 38, '<p>test</p>', 1, 0, 1),
+(11, 39, '<p>test image upload</p>', 3, 0, 1);
 
 --
 -- Beperkingen voor gedumpte tabellen
@@ -645,6 +839,14 @@ ALTER TABLE `sessiegebruiker`
 --
 ALTER TABLE `sessiegebruikerantwoorden`
   ADD CONSTRAINT `sessiegebruikerantwoorden_ibfk_1` FOREIGN KEY (`sessieid`) REFERENCES `sessiegebruiker` (`sessieid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Beperkingen voor tabel `sessiegebruikercategoriepercentages`
+--
+ALTER TABLE `sessiegebruikercategoriepercentages`
+  ADD CONSTRAINT `fk_sessieid12` FOREIGN KEY (`sessieid`) REFERENCES `sessie` (`sessieid`),
+  ADD CONSTRAINT `fk_subcat12` FOREIGN KEY (`subcatid`) REFERENCES `subcategorie` (`subcatid`),
+  ADD CONSTRAINT `fk_test12` FOREIGN KEY (`testid`) REFERENCES `test` (`testid`);
 
 --
 -- Beperkingen voor tabel `subcategorie`
