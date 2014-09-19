@@ -61,7 +61,11 @@
         <span class="input-group-addon widthvraaginput">
           Afbeeldingen:
         </span>
-        <input type="file" name="media[]" class="form-control" multiple="true" />
+        <span class="btn btn-default btn-file">
+            Bladeren...
+            <input type="file" name="media[]" class="form-control" multiple="true" />
+        </span>      
+        
       </div>
       {# Answers #}
       <div class="answers">
@@ -75,7 +79,10 @@
           <span class="input-group-addon widthvraaginput">
             Afbeelding:
           </span>
-          <input type="file" name="answerMedia[]" class="form-control" />
+          <span class="btn btn-default btn-file">
+            Bladeren...
+            <input type="file" name="answerMedia[]" class="form-control" />
+          </span>
         </div>
         <div class="input-group nieuwantwoord">
           <span class="input-group-addon widthvraaginput">
@@ -87,7 +94,10 @@
           <span class="input-group-addon widthvraaginput">
             Afbeelding:
           </span>
-          <input type="file" name="answerMedia[]" class="form-control" />
+          <span class="btn btn-default btn-file">
+            Bladeren...
+            <input type="file" name="answerMedia[]" class="form-control" />
+          </span>
         </div>
       </div>
       {#   Add extra answer, triggers addanswer.js   #}
