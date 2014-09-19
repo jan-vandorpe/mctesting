@@ -82,3 +82,16 @@ and open the template in the editor.
     z-index: 5;
 
 }
+
+
+/**
+    progress-bar
+**/
+.progress{
+    position: relative;
+}
+.progress span{
+    position: absolute;
+    left:45%;
+    color:black;
+}
