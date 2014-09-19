@@ -28,21 +28,27 @@
   <div class="{% block class %}testafleggenpag {% endblock class %}">
     <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post" role="form" class="form-horizontal">
       {% for question in test.questions %}
-
         <div class="panel panel-default">
           <!-- Default panel contents -->
           <div class="panel-heading">Vraag {{loop.index}}</div>
           <div class="panel-body">
-            <p>{{ question.text|raw }}</p>
-            {% if question.media is not empty %}
-              <div class="row">
+            <div class="row">
+              <div class="col-md-9">
+              <p>
+                <span class="glyphicon glyphicon-question-sign"></span>
+                {{ question.text|raw }}
+              </p>
+              </div>
+              <div class="col-md-3">
+              {% if question.media is not empty %}
                 {% for file in question.media %}
-                  <figure class="col-xs-6 col-md-3">
+                  <figure class=>
                     <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
                   </figure>
                 {% endfor %}
+              {% endif %}
               </div>
-            {% endif %}
+            </div>
           </div>
           <!-- List group -->
           <ul class="list-group">
@@ -58,7 +64,7 @@
                       {{ answer.text|raw }}
                     </h4>
                   </div>
-                  <div class="col-md-2 col-md-offset-1">
+                  <div class="col-md-3 ">
                     {% if answer.media is not empty %}
                       <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
                     {% endif %}
