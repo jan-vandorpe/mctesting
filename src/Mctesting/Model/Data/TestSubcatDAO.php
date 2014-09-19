@@ -77,4 +77,26 @@ class TestSubcatDAO {
             throw new ApplicationException($errormsg);
         }
     }
+    
+    public static function insertSubCatResults($testId,$subCatId,$testSessionId,$userId,$score,$percentage){
+      $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+      $sql = 'INSERT INTO `sessiegebruikercategoriepercentages`'
+              . '(`sessieid`, `rijksregisternr`, `testid`, `subcatid`, `score`, `percentage`) '
+              . 'VALUES (:sessieid,:rkknr,:testid,:subcatid,:score,:percentage)';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':sessieid', $testSessionId);
+        $stmt->bindParam(':rkknr', $userId);
+        $stmt->bindParam(':testid', $testId);
+        $stmt->bindParam(':subcatid', $subCatId);
+        $stmt->bindParam(':score', $score);
+        $stmt->bindParam(':percentage', $percentage);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon de scores voor de subcategorieën niet toevoegen: ' . $error[2]);
+        }
+    }
 }

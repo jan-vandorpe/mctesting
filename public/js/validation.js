@@ -25,7 +25,6 @@ $(document).ready(function() {
                 }
             },
         }});
-
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -55,6 +54,49 @@ $(document).ready(function() {
             }
 
         }});
+
+//    $('#frmImportUsers').bootstrapValidator({
+//        feedbackIcons: {
+//            valid: 'glyphicon glyphicon-ok',
+//            invalid: 'glyphicon glyphicon-remove',
+//            validating: 'glyphicon glyphicon-refresh'
+//        },
+//        live: 'enabled',
+//        fields: {
+//            csv: {
+//                selector: '#csv',
+//                feedbackIcons: false,
+//                validators: {
+////                    file: {
+////                        extension: 'csv',
+////                        message: 'Dit is geen geldig .csv bestand'
+////                    },
+//                    notEmpty: {
+//                        message: "Selecteer een .csv bestand"
+//                    }
+//                }
+//            }
+//        }
+//    });
+
+    $('#subcattoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            newcat: {
+                container: '#newcatErrorMessage',
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een naam voor de categorie'
+                    }
+                }
+            }
+        }
+    });
+
 
 
 
@@ -98,12 +140,16 @@ $(document).ready(function() {
             }
         }
     });
-
     $('#ctrlDatePicker')
             .on('dp.change dp.show', function(e) {
                 // Validate the date when user change it
                 $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
             });
+
+//    $('#btnImport').on('click', function(e) {
+//        $('#frmImportUsers').bootstrapValidator('revalidateField', 'csv');
+//    })
+
 
 });
 
