@@ -35,18 +35,18 @@
       <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
     {% else %}
       {% for category in allcategories %}  
-        <div class="panel panel-default">
-          <label class="panel-heading col-md-12" for="catid{{category.id}}">
-            <span class="col-md-11">{{ category.catname }}</span>
-            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class=""/>  
-          </label>
-          <div class="panel-body"></div>
+        <div class="panel panel-default"> 
+            <div class="panel-heading categorie"> &nbsp;                
+                <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class="col-md-1"/>
+                <label class="col-md-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
+            </div>          
           <ul class="list-group">
             {% for subcategory in category.subcategories %}   
-              <li class="list-group-item">                    
-                <label for="subcatid{{subcategory.id}}" class="">
-                  <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
-                </label>
+              <li class="list-group-item subcategorie">  &nbsp;  
+                  <label for="subcatid{{subcategory.id}}" class=""></label>
+                  <div class="col-md-1">                    
+                    <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
+                  </div>                
                 <div class="col-md-5">{{subcategory.subcatname}}</div>
                 <div class="col-md-2">{{subcategory.questions|length}} vragen</div>
                 {% if subcategory.active == 1 %}
@@ -54,7 +54,7 @@
                 {% else %}
                   <div class="col-md-1">Inactief</div>
                 {% endif %}
-                <div class="col-md-3">
+                <div class="col-md-2">
                   {% if subcategory.questions|length > 0 %}
                     <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
                   {% endif %}  
