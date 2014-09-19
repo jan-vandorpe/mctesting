@@ -34,7 +34,6 @@ and open the template in the editor.
 
 }
 .answer input[type="radio"]:checked+label{ 
-
   border:8px solid rgba(0, 132, 255, 0.4);
 } 
 
