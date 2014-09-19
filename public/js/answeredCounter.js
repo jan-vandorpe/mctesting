@@ -15,7 +15,7 @@ jQuery(document).ready(function($) {
     var $counter = $('input[type="radio"]:checked').length;
     var $remaining = $originQuestions - $counter;
     console.log($counter);
-    $('#questioncount').text($remaining);
+    $('.questioncount').text($remaining);
   }
 
 });

@@ -55,30 +55,6 @@ $(document).ready(function() {
 
         }});
 
-//    $('#frmImportUsers').bootstrapValidator({
-//        feedbackIcons: {
-//            valid: 'glyphicon glyphicon-ok',
-//            invalid: 'glyphicon glyphicon-remove',
-//            validating: 'glyphicon glyphicon-refresh'
-//        },
-//        live: 'enabled',
-//        fields: {
-//            csv: {
-//                selector: '#csv',
-//                feedbackIcons: false,
-//                validators: {
-////                    file: {
-////                        extension: 'csv',
-////                        message: 'Dit is geen geldig .csv bestand'
-////                    },
-//                    notEmpty: {
-//                        message: "Selecteer een .csv bestand"
-//                    }
-//                }
-//            }
-//        }
-//    });
-
     $('#subcattoev').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -96,8 +72,6 @@ $(document).ready(function() {
             }
         }
     });
-
-
 
 
     $('#testsessiesel').bootstrapValidator({
@@ -145,12 +119,6 @@ $(document).ready(function() {
                 // Validate the date when user change it
                 $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
             });
-
-//    $('#btnImport').on('click', function(e) {
-//        $('#frmImportUsers').bootstrapValidator('revalidateField', 'csv');
-//    })
-
-
 });
 
 

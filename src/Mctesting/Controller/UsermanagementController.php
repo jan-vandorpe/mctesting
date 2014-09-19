@@ -5,7 +5,6 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
-use Mctesting\Model\Includes\UploadManager;
 
 /**
  * Description of homecontroller
@@ -33,6 +32,7 @@ class UsermanagementController extends AbstractController {
         $this->render('newuserform.html.twig', array(
                 // 'message1' => $message1,
         ));
+
     }
 
     public function importUsers() {
@@ -101,6 +101,7 @@ class UsermanagementController extends AbstractController {
             $notValid = true;
             $this->render('importstatus.html.twig', array("notValid" => $notValid));
         }
+
     }
 
     public function newUser() {

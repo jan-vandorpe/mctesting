@@ -1,56 +1,46 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-    {{ parent() }}Rapport Scores - Sessiedetail
+  {{ parent() }}Rapport Scores - Sessiedetail
 {% endblock title %}
 
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      Scores rapport
+      <br>
+    </h1>
+  </div>
+{% endblock %}
 {% block content %}
-<div class="container-fluid">
-    <h1 class="headerofpage">Overzicht sessiescores</h1>
-    <div class="row">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <h3>
-                    {{ testsession.test.testname }}
-                </h3>
-            </div>
+  <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+            <span>stap 3 van 3</span>
         </div>
-        <div class="row">
-            <div class="col-lg-3"></div>
-            <div class="col-lg-2"><h4>{{ testsession.date.date|date('d/m/Y') }}</h4></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-1"></div>
-            <div class="col-lg-10">
-                <table class="table">
-                    <thead>
-                        <tr class="tableheaderscores">
-                            <th>Voornaam</th>
-                            <th>Familienaam</th>
-                            <th>Score</th>
-                            <th>Percentage</th>
-                            <th>Geslaagd</th>
-                            <th>Afgelegd</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for usersession in usersessions %}
-                            <tr>
-                                <td>{{ usersession.user.firstname }}</td>
-                                <td>{{ usersession.user.lastname }}</td>
-                                <td>{{ usersession.score }} / {{ testsession.test.testmaxscore }}</td>
-                                <td>{{ usersession.percentage }}</td>
-                                <td>{% if usersession.passed %}Ja{% else %}Nee{% endif %}</td>
-                                <td>{% if usersession.participated %}Ja{% else %}Nee{% endif %}</td>
-                                <td>
-                                    {% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}
-                                </td>
-                            </tr>
-                        {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+    </div>
+  <h3>Testsessie: {{ testsession.test.testname }}<small> van {{ testsession.date.date|date('d/m/Y') }}</small></h3>
+  <ul class="list-group">
+    <li class="list-group-item clearfix">
+      <b>
+        <div class="col-md-2">Voornaam</div>
+        <div class="col-md-2">Familienaam</div>
+        <div class="col-md-1">Score</div>
+        <div class="col-md-2">Percentage</div>
+        <div class="col-md-2">Geslaagd</div>
+        <div class="col-md-1">Afgelegd</div>
+        <div class="col-md-1">Details</div>
+      </b>
+    </li>
+    {% for usersession in usersessions %}
+      <li class="list-group-item clearfix">
+        <div class="col-md-2">{{ usersession.user.firstname }}</div>
+        <div class="col-md-2">{{ usersession.user.lastname }}</div>
+        <div class="col-md-1">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
+        <div class="col-md-2">{{ usersession.percentage }}</div>
+        <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
+        <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+        <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
+      </li>
+    {% endfor %}
+  </ul>
 {% endblock content %}

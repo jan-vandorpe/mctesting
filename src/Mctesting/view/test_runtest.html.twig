@@ -1,70 +1,84 @@
 {% extends "template/layout.html.twig" %}
 
 {% block scripts %}
-    {{ parent() }}
-<script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
-<script src="{{ app.root }}/public/js/answeredCounter.js"></script>
+  {{ parent() }}
+  <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
+  <script src="{{ app.root }}/public/js/answeredCounter.js"></script>
 {% endblock scripts %}
 
 {% block title %}
-    {{ parent() }}Test afleggen
+  {{ parent() }}Test afleggen
 {% endblock title %}
 
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      {{ test.testname }} 
+      <br>
+      <small>Per vraag is maar 1 correct antwoord mogelijk</small>
+    </h1>
+    <blockquote class="">
+      <p class="">Categorie: {{ catname|capitalize }} </p>
+      <footer class="" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
+      <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
+    </blockquote>
+  </div>
+{% endblock %}
 {% block content %}
-<div class="{% block class %}testafleggenpag {% endblock class %}">
-    <h1 class="headerofpage">{{ test.testname }}</h1>
-    <div class="testinfotop clearFix">
-        <div>Categorie: {{ catname }} </div>
-        <div >Nog te beantwoorden vragen: <span id="questioncount">{{ test.testquestioncount }}</span></div>
-        <div>Maximum duurtijd: {{ test.testmaxduration }} minuten</div>
-    </div>
-    <h1 class="headerofpage">Per vraag is maar 1 correct antwoord mogelijk</h1>
-    <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post">
-        {% for question in test.questions %}
-            <div class="vraaggroep">
-                {# Question #}
-                <div class="vraag row">
-                    <div class="col-lg-12">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                VRAAG {{ loop.index }}: 
-                            </div>
-                            <div class="form-control">
-                                {{ question.text|raw }}
-                                {% if question.media is not empty %}
-                                    {% for file in question.media %}
-                                        <div class="imggroepbijvraag">
-                                            <img src="{{ app.root }}/public/images/{{ file }}" />
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {# Answers #}
-                <div class="antwoorden row">
-                    {% for answer in question.answers %}
-                        <div class="col-lg-11 antwoordmetradio">
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" />
-                                </span>
-                                <div class="antwoord form-control">{{ answer.text|raw }}</div>
-                                {% if answer.media is not empty %}
-                                  <div class="imggroepbijvraag">
-                                            <img src="{{ app.root }}/public/images/{{ answer.media }}" />
-                                  </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
+  <div class="{% block class %}testafleggenpag {% endblock class %}">
+    <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post" role="form" class="form-horizontal">
+      {% for question in test.questions %}
+        <div class="panel panel-default">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Vraag {{loop.index}}</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-9">
+                <span class="col-md-1 glyphicon glyphicon-comment"></span> 
+                <div class="col-md-11"><p>{{ question.text|raw }}</p></div>
+              </div>
+              <div class="col-md-3">
+                {% if question.media is not empty %}
+                  {% for file in question.media %}
+                    <figure class="">
+                      <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                    </figure>
+                  {% endfor %}
+                {% endif %}
+              </div>
             </div>
-        {% endfor %}
-        <div class="input-group voltooid">
-            <input class="form-control" type="submit" value="Test voltooien">
+          </div>
+          <!-- List group -->
+          <ul class="list-group">
+            {% for answer in question.answers %}
+              <li class="list-group-item answer">
+                <div class="row">
+                  <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
+                  <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
+                  <div class="col-md-9">
+                    <h4>
+                      <small>Antwoord {{loop.index}}</small>
+                      <br>
+                      {{ answer.text|raw }}
+                    </h4>
+                  </div>
+                  <div class="col-md-3 ">
+                    {% if answer.media is not empty %}
+                      <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
+                    {% endif %}
+                  </div>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
         </div>
+      {% endfor %}
+      <div class="row">
+        <div class="col-md-5 col-md-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
+      </div>
+      <div class="row">
+        <input class="btn btn-default btn-lg col-md-2 col-md-offset-5" type="submit" value="Test voltooien">
+      </div>
     </form>
-</div>
+  </div>
 {% endblock content %}

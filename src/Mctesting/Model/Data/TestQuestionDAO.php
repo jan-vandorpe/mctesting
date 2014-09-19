@@ -44,15 +44,9 @@ class TestQuestionDAO {
 //            on subcategorie.subcatid = vraag.subcatid
 //            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
 //            ';
-        $sql = 'SELECT 
-                sessiegebruikercategoriepercentages.subcatid, 
-                score, 
-                percentage,
-                subcatnaam, 
-                tebehalenscore
-                from sessiegebruikercategoriepercentages, subcategorie, testsubcat 
-                where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid 
-                and sessiegebruikercategoriepercentages.subcatid = testsubcat.subcatid
+        $sql = 'SELECT sessiegebruikercategoriepercentages.subcatid, score, percentage, subcatnaam, tebehalenscore
+                from sessiegebruikercategoriepercentages inner join ( subcategorie inner join testsubcat on subcategorie.subcatid = testsubcat.subcatid)
+                on sessiegebruikercategoriepercentages.testid = testsubcat.testid
                 and sessieid = :sessieid 
                 and rijksregisternr = :userid';
         $stmt = $db->prepare($sql);

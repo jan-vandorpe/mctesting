@@ -1,104 +1,99 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ app.root }}/public/css/datepicker.css" />
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ app.root }}/public/css/datepicker.css" />
 {% endblock stylesheets %}
 
 {% block title %}
-    {{ parent() }}Home
+  {{ parent() }}Home
 {% endblock title %}
 
 {% block scripts %}
-    {{ parent() }}
-    <script src="{{ app.root }}/public/js/lib/bootstrap-datepicker.js"></script>
-    <script src="{{ app.root }}/public/js/datepicker.js"></script>
+  {{ parent() }}
+  <script src="{{ app.root }}/public/js/lib/bootstrap-datepicker.js"></script>
+  <script src="{{ app.root }}/public/js/datepicker.js"></script>
 
 {% endblock scripts %}
 
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      Testsessie plannen
+      <br>
+    </h1>
+  </div>
+{% endblock %}
 
 {% block content %}
-    <div class="container-fluid ">
-        <h1 class="headerofpage">Testsessie plannen</h1>
-    </div>
-    <div class="testsessieplannen">
-        <h4>Het plannen van een testsessie</h4>
-
-
-        <form name="testsessiesel" id="testsessiesel" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
-            <div class="form-group col-md-7">
-                <div class="input-group">            
-
-                    <span class="input-group-addon widthcatinput">Selecteer een test:</span>
-                    <select class="form-control" name="testsetselect">
-                        <option value="0" >Selecteer een test:</option>
-                        {% for key,value in allTest %}  
-                            <optgroup label="{{ key }}">
-                                {% for test in value %}                
-
-                                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
-                                {% endfor %}
-                            </optgroup>
-                        {% endfor %}
-                    </select>
+  <div class="testsessieplannen">
+    {% if errormsg is defined and errormsg is not empty  %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        {{ errormsg }}
+      </div>
+    {% endif %}
+    <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
+      <div class="form-group">
+        <label class="control-label col-md-3" for="testsetselect">Selecteer een test:</label>
+        <div class="col-md-6">
+          <select class="form-control" name="testsetselect" id="testsetselect">
+            <option value="0" >Selecteer een test:</option>
+            {% for key,value in allTest %}  
+              <optgroup label="{{ key }}">
+                {% for test in value %}                
+                  <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
+                {% endfor %}
+              </optgroup>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <span id="testsetselectErrorMessage"></span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3">Datum van de testsessie:</label>
+        <div class="col-md-6">
+          <div class="input-group date">
+            <input type="text" class="form-control" id="ctrlDatePicker" name="testdatum" id="testdatum" placeholder="dd/mm/yyyy">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <span id="testdatumErrorMessage"></span>
+        </div>
+      </div>   
+      <div class="form-group">
+        <label class="control-label col-md-3">Wachtwoord van de testsessie:</label>
+        <div class="col-md-6">
+          <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
+        </div>
+        <div class="col-md-3">
+          <span id="testwachtwoordErrorMessage"></span>
+        </div>
+      </div>   
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>Gebruikers:</h4>
+        </div>
+        <ul class="list-group">
+          {% for user in allUsers %} 
+            <li class="list-group-item clearfix">
+              <label class="col-md-12">
+                <div class="col-md-3">
+                  <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <span id="testsetselectErrorMessage"></span>
-            </div>
-            {% if errormsg is defined and errormsg is not empty  %}
-                <span class="error">{{ errormsg }}</span> 
-            {% endif %}
-            <div class="form-group col-md-7">
-                <div class="input-group date">
-                    <span class="input-group-addon widthcatinput">Datum van de testsessie:</span>
-
-                    <input type="text" class="form-control" id="ctrlDatePicker" name="testdatum" id="testdatum" placeholder="dd/mm/yyyy">
-
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-
-                </div>
-
-            </div>
-            <div class="col-md-3">
-                <span id="testdatumErrorMessage"></span>
-            </div>
-            <div class="form-group col-md-7">
-                <div class="input-group">
-                    <span class="input-group-addon widthcatinput">Wachtwoord van de testsessie:</span>
-
-                    <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <span id="testwachtwoordErrorMessage"></span>
-            </div>
-            <div class="form-group col-md-12">
-                <div class="lighter gebrcollectie">
-                    <div class="input-group gebraddon">
-                        <div class="input-group-addon ">Gebruikers: </div>
-                    </div>
-
-                    {% for user in allUsers %} 
-                        <div class="input-group ietssmaller">
-                            <span class="input-group-addon">
-                                <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
-                            </span>
-                            <div class=" form-control">
-                                <div class="vnaamaantest">{{ user.lastname }}</div>
-                                <div class="vnaamaantest">{{ user.firstname }}</div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="ietssmaller">
-                    <input type="submit" name="catknop" class="form-control marginonbutton" >
-                </div>
-            </div>
-        </form>
-    </div>
-
-
+                <div class="col-md-4">{{ user.lastname }}</div>
+                <div class="col-md-4">{{ user.firstname }}</div>
+              </label>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <input type="submit" name="catknop" class="btn btn-default btn-lg" value="Test plannen">
+      </div>
+    </form>
+  </div>
 {% endblock content %}
