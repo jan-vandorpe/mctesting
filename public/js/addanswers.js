@@ -18,18 +18,25 @@ $(document).ready(function() {
     ++count;
 
     //add input box
-    var strNewAnswer = '<div class="input-group nieuwantwoord">';
-    strNewAnswer += '<span class="input-group-addon widthvraaginput">  ';
-    strNewAnswer += 'Antwoord ' + count + ': ';
-    strNewAnswer += ' </span> ';
-    strNewAnswer += '<textarea name="antwoord[]" id="antwoord' + count + '" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea>  ';
-    strNewAnswer += ' </div> ';
-    strNewAnswer += ' <div class="input-group nieuwimg"> ';
-    strNewAnswer += ' <span class="input-group-addon widthvraaginput"> ';
-    strNewAnswer += 'Afbeelding: ';
-    strNewAnswer += '  </span> ';
-    strNewAnswer += ' <input type="file" name="answerMedia[]" class="form-control" /> ';
-    strNewAnswer += ' </div>';
+    var strNewAnswer = '<div class="panel panel-default">';
+    strNewAnswer += '<div class="panel-body">';
+    strNewAnswer += '<div class="form-group">';
+    strNewAnswer += '<label for="antwoord[]" class="col-md-3 control-label">Antwoord ' + count + ':</label>';
+    strNewAnswer += '<div class="col-md-9">';
+    strNewAnswer += '<textarea name="antwoord[]" id="antwoord' + count + '" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea>';
+    strNewAnswer += '</div>';
+    strNewAnswer += '</div>';
+    strNewAnswer += '<div class="form-group">';
+    strNewAnswer += '<label for="answerMedia[]" class="col-md-3 control-label">';
+    strNewAnswer += 'Afbeelding antwoord ' + count + ':';
+    strNewAnswer += '</label>';
+    strNewAnswer += '<div class="col-md-3">';
+    strNewAnswer += '<span class="btn btn-default btn-file">';
+    strNewAnswer += 'Bladeren...';
+    strNewAnswer += '<input type="file" name="answerMedia[]" class="form-control" />';
+    strNewAnswer += '</span> ';
+    strNewAnswer += '</div>';
+    strNewAnswer += '</div></div></div>';
     console.log(strNewAnswer);
     var $newAnswer = $(strNewAnswer);
     $answers.append($newAnswer);
