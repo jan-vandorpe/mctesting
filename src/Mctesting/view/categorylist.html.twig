@@ -1,90 +1,113 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-    {{ parent() }}
+  {{ parent() }}
 {% endblock stylesheets %}
 
 {% block scripts %}
   {{ parent() }}
-    <script language="JavaScript">
-        function toggle(source) {
-            checkboxes = document.getElementsByClassName(source.value);
-            for(var i=0, n=checkboxes.length;i<n;i++) {
-                checkboxes[i].checked = source.checked;
-            }
-        }
-    </script>
+  <script language="JavaScript">
+    function toggle(source) {
+      checkboxes = document.getElementsByClassName(source.value);
+      for (var i = 0, n = checkboxes.length; i < n; i++) {
+        checkboxes[i].checked = source.checked;
+      }
+    }
+  </script>
 {% endblock scripts %}
 
 {% block title %}
-    {{ parent() }}Category
+  {{ parent() }}Category
 {% endblock title%}
 
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      Categorielijst
+      <br>
+    </h1>
+  </div>
+{% endblock %}
+
 {% block content %}
-    <div class="container-fluid ">
-    <h1 class="headerofpage">Categorielijst</h1>
-</div>
-<div class="container-fluid ">
-    <form name="catbewerken" action="{{app.root}}/category/categorylist" method="post" id="catForm">
-        {% if allcategories is empty %}
-            <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
-        {% else %}
-            {% for category in allcategories %}  
-                <div class="form-group volle-breedte">
-                    <div class="input-group volle-breedte">
-                        <span class="input-group-addon addon-finetune">
-                            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" />  
-                        </span>
-                        <div class="form-control volle-breedte bgc-grey"><h4>{{ category.catname }}</h4></div>
-                    </div>
-                
-                      
-                {% for subcategory in category.subcategories %}   
-                    <div class="input-group volle-breedte marge-links">                    
-                        <span class="input-group-addon addon-finetune">
-                            <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" />
-                        </span>
-
-                        <div class="row form-control volle-breedte">
-
-                            <div class="col-xs-6">{{subcategory.subcatname}}</div>
-                            <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
-                            {% if subcategory.active == 1 %}
-                                <div class="col-xs-1">Actief</div>
-                            {% else %}
-                                <div class="col-xs-1">Inactief</div>
-                            {% endif %}
-                                
-                            {% if subcategory.questions|length > 0 %}
-                                <div class="col-xs-3">
-                                    <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
-                                </div>
-                            {% endif %}       
-                            
-
-                        </div>
-                    </div>
-                {% endfor %}
+  <form name="catbewerken" action="{{app.root}}/category/categorylist" method="post" id="catForm" class="form-horizontal">
+    {% if allcategories is empty %}
+      <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
+    {% else %}
+      {% for category in allcategories %}  
+        <div class="panel panel-default">
+          <label class="panel-heading col-md-12" for="catid{{category.id}}">
+            <span class="col-md-11">{{ category.catname }}</span>
+            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class=""/>  
+          </label>
+          <div class="panel-body"></div>
+          <ul class="list-group">
+            {% for subcategory in category.subcategories %}   
+              <li class="list-group-item">                    
+                <label for="subcatid{{subcategory.id}}" class="">
+                  <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
+                </label>
+                <div class="col-md-5">{{subcategory.subcatname}}</div>
+                <div class="col-md-2">{{subcategory.questions|length}} vragen</div>
+                {% if subcategory.active == 1 %}
+                  <div class="col-md-1">Actief</div>
+                {% else %}
+                  <div class="col-md-1">Inactief</div>
+                {% endif %}
+                <div class="col-md-3">
+                  {% if subcategory.questions|length > 0 %}
+                    <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
+                  {% endif %}  
                 </div>
+              </li>
             {% endfor %}
-            
-        {% endif %}
-        
-
-        <!-- DE BEWERKINGSKNOPEN -->
-        <nav class="row pull-down">
-            <!-- knopen links -->
-            <p class="col-xs-1 navbar-text">Selectie: </p>
-            <div class="col-xs-10">
-            <ul class=" row nav navbar-nav">
-                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/inactive">Maak Inactief</button></li>
-                <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/active">Maak Actief</button></li>
-                <li class="col-xs-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button></li>
-            </ul>
+          </ul>
+        </div>
+        {#    <div class="input-group">
+              <span class="input-group-addon addon-finetune">
+                <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}"/>  
+              </span>
+              <label class="form-control" for="catid{{category.id}}">{{ category.catname }}</label>
             </div>
-        </nav>
-    </form>
-</div>
+            <ul>
+              {% for subcategory in category.subcategories %}   
+                <li class="input-group">                    
+                  <span class="input-group-addon addon-finetune">
+                    <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
+                  </span>
+                  <label for="subcatid{{subcategory.id}}" class="form-control">
+                    <div class="col-md-6">{{subcategory.subcatname}}</div>
+                    <div class="col-md-2">{{subcategory.questions|length}} vragen</div>
+                    {% if subcategory.active == 1 %}
+                      <div class="col-md-1">Actief</div>
+                    {% else %}
+                      <div class="col-md-1">Inactief</div>
+                    {% endif %}
+                    {% if subcategory.questions|length > 0 %}
+                      <div class="col-md-3">
+                        <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
+                      </div>
+                    {% endif %}       
+                  </label>
+                </li>#}
+        {#            {% endfor %}#}
+        {# </ul>#}
+      {% endfor %}
+    {% endif %}
+
+    <!-- DE BEWERKINGSKNOPEN -->
+    <nav class="row pull-down">
+      <!-- knopen links -->
+      <p class="col-md-1 navbar-text">Selectie: </p>
+      <div class="col-md-10">
+        <ul class=" row nav navbar-nav">
+          <li class="col-md-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/inactive">Maak Inactief</button></li>
+          <li class="col-md-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/category/active">Maak Actief</button></li>
+          <li class="col-md-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button></li>
+        </ul>
+      </div>
+    </nav>
+  </form>
 
 
 {% endblock content %}
