@@ -134,7 +134,8 @@ class UserDAO {
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
+                //throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
+                
             }
         } else {
             throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
@@ -173,7 +174,6 @@ class UserDAO {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen: ' . $error[2]);
-            
         }
     }
 
@@ -191,7 +191,6 @@ class UserDAO {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon deze gebruiker niet verwijderen: ' . $error[2]);
-            
         }
     }
 

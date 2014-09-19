@@ -28,13 +28,22 @@
                 </div>
             </div>
 
-
             <div class="form-group">
-
                 <input type="submit" class="btn btn-lg btn-default" name="submit" value="Importeer" id="btnImport" />
+            </div>
+        </form>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Opgepast</div>
+            <div class="panel-body">
+                <p>De VDAB testing site maakt gebruik van een <strong>Excel Template</strong> voor het toevoegen van gebruikers.</p>
+                <p>U kan deze <strong><a href="{{ app.root }}/public/csv/csv_template_mctesting.xlsx">hier</a></strong> downloaden.</p>
+                <p>Zorg ervoor dat u het bestand opslaat als <strong>.CSV</strong> na het invoeren van de gebruikers. </p>
 
             </div>
-
-        </form>
+        </div>       
     </div>
 {% endblock %}
