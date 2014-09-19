@@ -51,14 +51,14 @@
                 <div class="row">
                   <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
                   <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
-                  <div class="col-md-7">
+                  <div class="col-md-9">
                     <h4>
                       <small>Antwoord {{loop.index}}</small>
                       <br>
                       {{ answer.text|raw }}
                     </h4>
                   </div>
-                  <div class="col-md-3 col-md-offset-1">
+                  <div class="col-md-2 col-md-offset-1">
                     {% if answer.media is not empty %}
                       <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
                     {% endif %}
