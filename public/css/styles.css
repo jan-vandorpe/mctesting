@@ -59,3 +59,26 @@ and open the template in the editor.
   cursor: inherit;
   display: block;
 } 
+
+/**
+    categorie lijst layout
+**/
+.categorie input[type="checkbox"]{
+    left: -1em;
+}
+.subcategorie{
+    position:relative;
+}
+.subcategorie a{
+    position: absolute;
+    z-index: 6;
+}
+.subcategorie label{
+    width:100%;
+    height: 100%;
+    position:absolute; 
+    top:0;
+    left:0;
+    z-index: 5;
+
+}
