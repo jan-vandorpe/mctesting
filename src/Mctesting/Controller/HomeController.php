@@ -23,6 +23,26 @@ class HomeController extends AbstractController {
         //render page
         $this->render('home.html.twig', array());
     }
+    
+    public function feedback($msg = null){
+      
+      switch ($msg[0]) {
+        case 'success':
+          $message = 'U bent succesvol ingelogd. Nog een prettige dag!';
+          break;
+        case 'fail':
+          $message = 'U heeft een foutief wachtwoord of gebruikersnaam ingevoerd. Probeer opnieuw.';
+          break;
+        default:
+          $message = null;
+          break;
+      }
+      //var_dump($message, $msg);
+      
+      $this->render('home.html.twig', array(
+                            'message' => $message,
+      ));
+    }
 
     public function register() {
         //render page

@@ -11,7 +11,18 @@
 
 
 {% block content %}
-  
+      {% if message is not null %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        {% if message is iterable %}
+          {% for msg in message %}
+            <p>{{msg}}</p>
+            {% endfor %}
+        {% else %}
+          <p>{{message}}</p>
+          {% endif %}
+      </div>
+      {% endif %}
       <h1>Welkom op de testing website van de VDAB</h1>
               <br>
       {% if app.user is defined and app.user is not empty %}

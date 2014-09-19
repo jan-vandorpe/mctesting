@@ -27,15 +27,15 @@ class LoginController extends AbstractController
         $password = $_POST["Wachtwoord"];
         if (UserService::isValidEmailFormat($login)) {
             if (UserService::loginCheck($login, $password)) {
-                header("location: " . ROOT . "/home/go");
+                header("location: " . ROOT . "/home/feedback/success");
             } else {
-                header("location: " . ROOT . "/home/go");
+                header("location: " . ROOT . "/home/feedback/fail");
             }
         } else {
             if (UserService::loginCheck($login, $password)) {
                 header("location: " . ROOT . "/test/choosesession");
             } else {
-                header("location: " . ROOT . "/home/go");
+                header("location: " . ROOT . "/home/feedback/fail");
             }
         }
     }
