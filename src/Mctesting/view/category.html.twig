@@ -6,66 +6,67 @@
 {% endblock %}
 
 {% block title %}
-    {{ parent() }}Category
+    {{ parent() }}Categorie aanmaken
 {% endblock title %}
 
+{% block contentHeader %}
+<div class="panel-heading">
+    <h1>
+        Categorie aanmaken
+        <br>
+    </h1>
+</div>
+{% endblock %}
 
 {% block content %}
-    <div class="container-fluid ">
-        <h1 class="headerofpage">Categoriepagina</h1>
-    </div>
-    <div class="gebruikertoevoegen">
-        <h4>Voeg een Categorie toe:</h4>
-
-        <form name="subcattoev" id="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newCategory" method="post">
-
-            <div class="form-group">
-                <div class="col-md-7">
-                    <div class="input-group">
-                        {#<label for="cat" class="input-group-addon widthcatinput">Categorie: </label>#}
-
-                        <span class="input-group-addon widthcatinput">Categorie:</span>
-
-                        <input type="text" class="form-control col-md-5" name="newcat" id="category" placeholder="Nieuwe categorie."/>
+<div class="container-fluid">
+    <form name="subcattoev" id="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newCategory" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">Voeg een Categorie toe:</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="subcat" class="col-md-3 control-label">Categorie:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="newcat" id="category" placeholder="Nieuwe categorie"/>
+                    </div>
+                    <div  class="col-md-offset-3 col-md-9">
+                        <span id="newcatErrorMessage"></span>
                     </div>
 
                 </div>
-                <div class="col-md-3">
-                    <span id="newcatErrorMessage"></span>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="submit" name="catknop" class="btn btn-default" value="Categorie toevoegen">
+                    </div>
                 </div>
             </div>
-
-
-
-            <div class="form-group">
-
-
-                <div class="col-sm-offset-3 col-md-4">
-                    <input type="submit" name="catknop" class="btn btn-default">
+        </div>
+    </form> 
+    <form name="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newSubcategory" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">Voeg een subcategorie toe aan een hoofdcategorie:</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="category" class="col-md-3 control-label">Categorie: </label>
+                    <div class="col-md-9">
+                        <select class="form-control catbijvraag " name="category" id="category"/>
+                            {% for category in allcategories %}  
+                                <option value="{{category.id}}">{{category.catname}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>                    
+                <div class="form-group">
+                    <label for="subcat" class="col-md-3 control-label">Subcategorie</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="subcat" id="subcat" placeholder="Nieuwe subcategorie"/>
+                    </div>
                 </div>
-
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-9">
+                        <input type="submit" name="subcatknop" class="btn btn-default" value="Subcategorie toevoegen">
+                    </div>
+                </div>
+                </form>
             </div>
-
-        </form> 
-
-        <h4>Voeg een subcategorie toe aan een hoofdcategorie:</h4>
-
-        <form name="subcattoev" class="form-horizontal meerboven-onder" action="{{app.root}}/category/newSubcategory" method="post">
-            <div class="input-group">
-                <label for="category" class="input-group-addon widthcatinput">Categorie: </label>
-                <select name="category" class="form-control" id="category"/>
-                {% for category in allcategories %}  
-                    <option value="{{category.id}}">{{category.catname}}</option>
-                {% endfor %}
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="subcat" class="input-group-addon widthcatinput">Subcategorie</label>
-                <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="subcat" id="subcat" placeholder="Nieuwe subcategorie."/>
-            </div>
-            <div class="input-group">
-                <input type="submit" name="subcatknop" class="form-control marginonbutton">
-            </div>
-        </form>
-    </div>
 {% endblock content %}
