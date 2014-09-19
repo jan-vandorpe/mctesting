@@ -22,9 +22,11 @@
   <form name="testtebewerken" action="{{app.root}}/testadmin/changeuserstatus" method="post" id="testForm">
     <ul class="list-group">
       <li class="list-group-item clearfix">
+        <label class="col-md-12">
         <div class="col-md-5 col-md-offset-1">Test naam</div>
         <div class="col-md-1">maxduur</div>
         <div class="col-md-2">aantal vragen</div>
+        </label>
       </li>
       {% if tests is empty %}
         <li class="list-group-item-warning list-group-item">U heeft nog geen testen  aangemaakt.</li>
