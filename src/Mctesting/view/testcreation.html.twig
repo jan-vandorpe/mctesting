@@ -71,18 +71,9 @@
 
                                     </span>
                                     <div class="form-control vraagsel">
-                                        <div class="row">
-                                            <div class="col-xs-10 vraagsubcat">{{question.subcategory.subcatname}}</div>
-                                            <div class="col-xs-2 vraaggewicht">Gewicht: {{question.weight}}</div>
-                                        </div>                                        
+                                        <div class="vraagsubcat">{{question.subcategory.subcatname}}</div>
                                         <div class="vraagzelf">{{question.text|raw}}</div>
-                                        {% if question.media is not empty %}
-                                            {% for file in question.media %}
-                                                <div class="imggroepbijvraag">
-                                                    <img src="{{ app.root }}/public/images/{{ file }}" />
-                                                </div>
-                                            {% endfor %}
-                                        {% endif %}                                        
+                                        <div class="vraaggewicht">Gewicht: {{question.weight}}</div>
                                     </div>
                                 </div>
                             </div>
