@@ -25,7 +25,7 @@ class QuestionController extends AbstractController
      * Categories and subcategories are supplied to populate a select box
      */
     public function success(){
-      $msg = 'Huzzah!';
+      $msg = 'Vraag succesvol toegevoegd';
       $this->create($msg);
     }
     
