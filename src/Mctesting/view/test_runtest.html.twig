@@ -34,10 +34,8 @@
           <div class="panel-body">
             <div class="row">
               <div class="col-md-9">
-                <p>
-                  <span class="glyphicon glyphicon-question-sign"></span>
-                  {{ question.text|raw }}
-                </p>
+                <span class="col-md-1 glyphicon glyphicon-comment"></span> 
+                <div class="col-md-11"><p>{{ question.text|raw }}</p></div>
               </div>
               <div class="col-md-3">
                 {% if question.media is not empty %}
