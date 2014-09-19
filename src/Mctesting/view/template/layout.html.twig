@@ -79,7 +79,7 @@
   {% endblock login %}
 
   {#------ SIDE MENU ---------------#}
-  <div class="row maincontainer clearfix">
+  <div class="row maincontainer clearfix" role="nav">
     {% block sidenav %}
       {% if app.user is defined and app.user is not empty %}
         {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
