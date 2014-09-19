@@ -5,88 +5,149 @@
 {% endblock %}
 
 {% block title %}
-    {{ parent() }}Home
+    {{ parent() }}Rapport scores
 {% endblock %}
 
+{% block contentHeader %}
+<div class="panel-heading">
+    <h1>
+        Scores rapport
+        <br>
+    </h1>
+</div>
+{% endblock %}   
 
 {%block content%}
 
-<div class="gebruikertoevoegen container-fluid">
-    <h1 class="headerofpage">Scores rapport</h1>    
-    <h4>Gebruiker overzicht</h4>
-    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="" method="post">
+<div class="container-fluid">  
+    <form name="gebrtoev" class="form-horizontal" action="" method="post">
+        <div class="panel panel-default">
+            <div class="panel-heading">Gebruiker overzicht</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="fnaam" class="col-md-3 control-label">Familienaam:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="{{ usersession[0].user.lastname }}" disabled/>
+                    </div>
+                </div>                    
+                <div class="form-group">
+                    <label for="vnaam" class="col-md-3 control-label">Voornaam:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="{{ usersession[0].user.firstname }}" disabled/>
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label for="rrnr" class="col-md-3 control-label">Rijksregisternummer:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="{{usersession[0].user.RRnr}}" disabled/>
+                    </div>
+                </div> 
+                <div class="form-group">
+                    <label for="score" class="col-md-3 control-label">Score:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="score" id="score" placeholder="{{usersession[0].score}}" disabled/>
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label for="percentage" class="col-md-3 control-label">Percentage:</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}} (min: {{usersession[0].testsession.test.testpasspercentage}})" disabled/>
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label for="passes" class="col-md-3 control-label">Geslaagd:</label>
+                    <div class="col-md-7">                        
+                        <input type="text" class="form-control" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
+                    </div>
+                    <div class="col-md-2">
+                        {% if not usersession[0].passed %}
+                            <button type="submit" class="col-md-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                        {% else %}
+                            <button type="submit" class="col-md-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                        {% endif %}
+                    </div>
+                </div> 
+            </div>
+        </div> 
         
-        <div class="input-group">
-            <label for="fnaam" class="input-group-addon widthcatinput">Familienaam</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="fnaam" id="fnaam" placeholder="{{ usersession[0].user.lastname }}" disabled/>
-        </div>
-        <div class="input-group">
-            <label for="vnaam" class="input-group-addon widthcatinput">Voornaam</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="vnaam" id="vnaam" placeholder="{{ usersession[0].user.firstname }}" disabled/>
-        </div>
-        <div class="input-group">
-            <label for="rrnr" class="input-group-addon widthcatinput">Rijksregisternummer:</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="rrnr" id="rrnr" placeholder="{{usersession[0].user.RRnr}}" disabled/>
-        </div>
-        <div class="input-group">
-            <label for="score" class="input-group-addon widthcatinput">Score:</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="score" id="score" placeholder="{{usersession[0].score}}" disabled/>
-        </div>
-        <div class="input-group">
-            <label for="percentage" class="input-group-addon widthcatinput">Percentage:</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}} (min: {{usersession[0].testsession.test.testpasspercentage}})" disabled/>
-        </div>
-        <div class="input-group">
-            <label for="passes" class="input-group-addon widthcatinput">Geslaagd:</label>
-            <input type="text" class="form-control frmcontrolwidth-catinvoeg" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
-            {% if not usersession[0].passed %}
-                <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
-            {% endif %}
-        </div>
         
-        
-        <h4>Test details </h4>
-        {% for category in subcats %}
-            <div class="row input-group-addon ">
-                <div class="col-xs-10"><h5>{{category.Subcatname}}</h5></div>
-                <div class="col-xs-2 subcatpercentage">{{category.percentage}} (min: {{category.passPercentage}})</div>
-            </div>     
-            {% for question in category.questions %}
-            <div class="vraaggroep">
-                {# Question #}
-                <div class="vraag row">
-                    <div class="col-lg-12">
-                        <div class="input-group">
-                            <div class="input-group-addon">
-                                {% if question.correct %}
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                {% else %}
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                {% endif %}
-                            </div>
-                            <div class="form-control">
-                                {{ question.text|raw }}
-                                {% if question.media is not empty %}
-                                    {% for file in question.media %}
-                                        <div class="imggroepbijvraag">
-                                            <img src="../../../images/{{ file }}" />
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
+        <div class="panel panel-default">
+            <div class="panel-heading">Test details</div>            
+            <div class="panel-body">
+                {% for category in subcats %}
+                <div class="form-group">
+                    <h4 class="col-md-offset-1">{{category.Subcatname}}<small class="col-md-offset-1">{{category.percentage}} (min: {{category.passPercentage}})</small></h4>
+                </div>                 
+                
+                 {% for question in category.questions %}
+                    <div class="panel panel-default">
+                      <div class="panel-heading "> &nbsp;
+                        {% if question.correct %}
+                            <span class="col-md-1 glyphicon glyphicon-ok"></span>
+                        {% else %}
+                            <span class="col-md-1 glyphicon glyphicon-remove"></span>
+                        {% endif %}
+                        <div class="col-md-5 ">Vraag {{loop.index}}</div>
+                        <div class="col-md-2 col-md-offset-3 "><small>Gewicht: {{question.weight}}</small></div>
+                      </div>
+                            
+                      <div class="panel-body" style="font-weight: normal">     
+                      <div class="col-md-9">
+                        <p>{{ question.text|raw }}</p>
+                      </div>
+                      <div class="col-md-3">
+                        {% if question.media is not empty %}
+                          {% for file in question.media %}
+                            <figure class="">
+                              <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                            </figure>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                    </div>
+                {% endfor %}    
+                    
+                    
+                    
+                {# {% for question in category.questions %}
+                <div class="vraaggroep">
+                    Question 
+                    <div class="vraag row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    {% if question.correct %}
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    {% endif %}
+                                </div>
+                                <div class="form-control">
+                                    {{ question.text|raw }}
+                                    {% if question.media is not empty %}
+                                        {% for file in question.media %}
+                                            <div class="imggroepbijvraag">
+                                                <img src="../../../images/{{ file }}" />
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}#}
+            {% endfor %}  
             </div>
-            {% endfor %}
-        {% endfor %}  
-        <div class="input-group">
-            <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/showsessiondetail/{{usersession[0].testsession.id}}"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-1">
+                <input type="hidden" name="selectsession" value="{{usersession[0].testsession.id}}">
+                <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/showsessiondetail"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+            </div>
         </div>
     </form>
-    
-    
-    
 </div>
 
 {% endblock %}

@@ -77,28 +77,6 @@
                       </div>
                     </div>
                     </div>
-                {#<div class="vraaggroep">
-                 Question 
-                    <div class="vraag row">
-                        <div class="col-lg-12">
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <span class="glyphicon glyphicon-comment"></span>                                
-                                </div>
-                                <div class="form-control">
-                                {{ question.text|raw }}
-                                {% if question.media is not empty %}
-                                    {% for file in question.media %}
-                                        <div class="imggroepbijvraag">
-                                            <img src="{{ app.root }}/public/images/{{ file }}" />
-                                        </div>
-                                    {% endfor %}
-                                {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>#}
                 {% endfor %} 
             </div>
         </div>
