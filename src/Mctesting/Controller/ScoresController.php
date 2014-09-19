@@ -45,10 +45,10 @@ class ScoresController extends AbstractController
         ));
     }
 
-    public function showSessionDetail($arguments)
+    public function showSessionDetail()
     {
         //assign argument values
-        $sessionId = $arguments[0];
+        $sessionId = $_POST['selectsession'];
         
         //build model
         //retrieve testsession
