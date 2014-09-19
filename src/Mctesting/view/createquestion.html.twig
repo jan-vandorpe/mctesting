@@ -16,6 +16,12 @@
     Vraag Toevoegen
   </h1>
   <div class="container-fluid">
+    {% if msg is not null %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        {{msg}}
+      {% endif %}
+    </div>
     <form name="toevoegenvraag" method="post" action="{{ app.root }}/question/add" enctype="multipart/form-data">
       {#   Subcategory   #}
       <div class="input-group nieuwimg">

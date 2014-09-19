@@ -24,7 +24,16 @@ class QuestionController extends AbstractController
      * Controller action that shows the input form for a new question.
      * Categories and subcategories are supplied to populate a select box
      */
-    public function create()
+    public function success(){
+      $msg = 'Huzzah!';
+      $this->create($msg);
+    }
+    
+    /**
+     * Controller action that shows the input form for a new question.
+     * Categories and subcategories are supplied to populate a select box
+     */
+    public function create($msg = null)
     {
         //build model
         //get categories, but only the ones with subcategories
@@ -36,7 +45,8 @@ class QuestionController extends AbstractController
 
         //render page
         $this->render('createquestion.html.twig', array(
-            'categories' => $categories,));
+            'categories' => $categories,
+            'msg' => $msg));
     }
     
     /**
@@ -95,7 +105,7 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        header('location: '.ROOT.'/question/create/');
+        header('location: '.ROOT.'/question/success/');
         exit();
     }
     
