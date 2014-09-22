@@ -1,0 +1,40 @@
+{% extends "template/layout.html.twig" %}
+
+{% block title %}
+  {{ parent() }}Gebruiker - Details
+{% endblock title %}
+
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      Gebruiker details
+      <br>
+    </h1>
+  </div>
+{% endblock %}
+{% block content %}
+  <ul class="list-group">
+    <li class="list-group-item clearfix">
+      <b>
+        <div class="col-md-2">Test</div>
+        <div class="col-md-2">Sessie datum</div>
+        <div class="col-md-1">Score</div>
+        <div class="col-md-2">Percentage</div>
+        <div class="col-md-2">Geslaagd</div>
+        <div class="col-md-1">Afgelegd</div>
+        <div class="col-md-1">Details</div>
+      </b>
+    </li>
+    {% for usersession in usersessions %}
+      <li class="list-group-item clearfix">
+        <div class="col-md-2">{{ usersession.testsession.test.testname }}</div>
+        <div class="col-md-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
+        <div class="col-md-1">{{ usersession.score }}</div>
+        <div class="col-md-2">{{ usersession.percentage }}</div>
+        <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
+        <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+        <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{usersession.testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content %}

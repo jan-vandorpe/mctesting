@@ -99,6 +99,48 @@ class UserSessionDAO {
         }
     }
 
+    public static function selectByUser($userId) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM sessiegebruiker WHERE rijksregisternr = :userid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':userid' => $userId))) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create object(s) and return
+                    $userSession = new UserSession();
+                    $user = UserService::getById($record['rijksregisternr']);
+                    $userSession->setUser($user);
+                    $userSession->setScore($record['score']);
+                    $userSession->setPercentage($record['percentage']);
+                    $userSession->setPassed((boolean) $record['geslaagd']);
+                    $userSession->setParticipated((boolean) $record['afgelegd']);
+                    $testSession = TestSessionService::getById($record['sessieid']);
+                    $userSession->setTestSession($testSession);
+                    $userSession->setActive((boolean) $record['actief']);
+
+                    //push to result array
+                    array_push($result, $userSession);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('UserSession selectByUser recordset is leeg');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            $errormsg = 'UserSession selectByUser statement kan niet worden uitgevoerd'
+                    . '<br>'
+                    . '<br>'
+                    . $error[2];
+            throw new ApplicationException($errormsg);
+        }
+    }
+    
     public static function insert($sessionId, $RRNr) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);

@@ -5,6 +5,7 @@ namespace Mctesting\Controller;
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
+use Mctesting\Model\Service\UserSessionService;
 
 /**
  * Description of homecontroller
@@ -168,7 +169,16 @@ class UsermanagementController extends AbstractController {
     //UserService::loginCheck($login, $password);
     //header("location: ".ROOT."/home/go");        
 
-
+    public function userdetails($arguments){        
+        
+        $userid = $arguments[0];
+        $userSessions = UserSessionService::getByUser($userid);
+        
+        //render page
+        $this->render('userdetails.html.twig', array(
+            'usersessions' => $userSessions,
+        ));
+    }
 
 
 
