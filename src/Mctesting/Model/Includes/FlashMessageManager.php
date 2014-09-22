@@ -19,9 +19,10 @@ use Mctesting\Model\Entity\Feedback;
  */
 class FlashMessageManager {
   
-  public function setFlashMessage($msg){
+  public function setFlashMessage($msg, $class = 0){
     $message = new Feedback();
     $message->setMessage($msg);
+    $message->setClass($class);
     $_SESSION['feedback'] = serialize($message);
   }
   

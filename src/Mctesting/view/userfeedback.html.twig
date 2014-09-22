@@ -11,11 +11,19 @@ add to layout twig after merge
 
 
 {% if feedback %}
-  <div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-    <p></p>
-    {{feedback.message|raw}}
-    {#              {{dump(error.message)}}#}
-  </div>
+  {#  {{dump(feedback)}}#}
+  {% if feedback.class == '0' %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Waarschuwing!</strong>
+      <p>{{feedback.message|raw}}</p>
+    </div>
+  {% elseif feedback.class == '1' %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Success!</strong>
+      <p>{{feedback.message|raw}}</p>
+    </div>
+  {% endif %}
 {% endif %}
 

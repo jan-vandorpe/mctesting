@@ -7,7 +7,7 @@ use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
 use Mctesting\Model\Entity\Answer;
 use Mctesting\Model\Includes\UploadManager;
-use Mctesting\Model\Entity\Feedback;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of QuestionController
@@ -97,9 +97,8 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        $msg = new Feedback();
-        $msg->setMessage('Vraag succesvol toegevoegd');
-        $_SESSION['feedback'] = serialize($msg);
+        $msg = new FlashMessageManager();
+        $msg->setFlashMessage('Vraag succesvol toegevoegd',1);
         header('location: '.ROOT.'/question/create');
         exit();
     }

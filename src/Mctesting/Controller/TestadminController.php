@@ -9,6 +9,7 @@ use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of testscontroller
@@ -203,6 +204,7 @@ class TestadminController extends AbstractController {
         //model
         if (isset($_SESSION["errormsg"])) {
             $message = $_SESSION["errormsg"];
+            unset($_SESSION["errormsg"]);
         } else {
             $message = "";
         }
@@ -260,8 +262,11 @@ class TestadminController extends AbstractController {
 //        var_dump($_POST);
 //        print("</pre>");
         if (TestSessionService::create($mysqldate, $testid, $sessieww, $users)) {
-            $this->render('testlinkconfirm.html.twig', array());
-            //             
+          $FMM = new FlashMessageManager();
+          $FMM->setFlashMessage('Testsessie aangemaakt!<br>Er is een nieuwe testsessie aangemaakt. Gebruik het linkermenu om verder te werken.',1);
+          header('Location:testlink');
+          exit(0);
+           //$this->render('testlinkconfirm.html.twig', array());             
         } else {
             //niet gelukt
         }

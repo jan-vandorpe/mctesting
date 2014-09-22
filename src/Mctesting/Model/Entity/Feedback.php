@@ -15,7 +15,17 @@ namespace Mctesting\Model\Entity;
  */
 class Feedback {
   private $message;
+  private $class = 0;
   
+  public function getClass() {
+    return $this->class;
+  }
+
+  public function setClass($class) {
+    $this->class = $class;
+  }
+
+    
   public function getMessage() {
     return $this->message;
   }
