@@ -1,0 +1,55 @@
+{% block sidenav %}
+      {% if app.user is defined and app.user is not empty %}
+        {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
+          <aside class="menu_on_left col-md-2">
+            <ul class="nav nav-stacked " role="navigation">
+              <li>
+                <h4>Vragen</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/question/create">Aanmaken</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Categorie&euml;n</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/category">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/category/categorylist">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Gebruikers</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/usermanagement/newuserform">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/usermanagement/importusers">Importeren</a></li>
+                  <li><a href="{{ app.root }}/usermanagement/listusers">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Tests</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/testadmin/testcreation/">Aanmaken</a></li>
+                  <li><a href="{{ app.root }}/testadmin/testlink/">Plannen</a></li>
+                  <li><a href="{{ app.root }}/testadmin/testlist/">Lijst</a></li>
+                </ul>
+              </li>
+              <li>
+                <h4>Rapporten</h4>
+                <ul class="nav nav-pills nav-stacked">
+                  <li><a href="{{ app.root }}/scores/selecttest/">Scores</a></li>
+                </ul>
+              </li>
+
+              {% if app.user.group.name == 'admin' %}
+                <li>
+                  <h4>Beheerders</h4>
+                  <ul class="nav nav-pills nav-stacked">
+                    <li><a href="#">Aanmaken</a></li>
+                    <li><a href="#">Lijst</a></li>
+                  </ul>
+                </li>
+              {% endif %}
+            </ul>
+          </aside>
+        {% endif %}
+      {% endif %}
+    {% endblock sidenav %}

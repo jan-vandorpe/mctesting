@@ -36,13 +36,15 @@
     {% else %}
       {% for category in allcategories %}  
             <div class="panel panel-default"> 
-                <div class="panel-heading categorie"> &nbsp;                
-                    <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class="col-md-1"/>
+                <div class="panel-heading categorie clearfix">   
+                    <div class="col-md-1">
+                        <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class=""/>
+                    </div>                    
                     <label class="col-md-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
                 </div>          
                 <ul class="list-group">
             {% for subcategory in category.subcategories %}   
-                        <li class="list-group-item subcategorie">  &nbsp;  
+                        <li class="list-group-item subcategorie clearfix">
                             <label for="subcatid{{subcategory.id}}" class=""></label>
                             <div class="col-md-1">                    
                                 <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>

@@ -63,9 +63,6 @@ and open the template in the editor.
 /**
     categorie lijst layout
 **/
-.categorie input[type="checkbox"]{
-    left: -1em;
-}
 .subcategorie{
     position:relative;
 }

@@ -21,6 +21,11 @@ class UserSessionService
         return UserSessionDAO::selectByUserAndSession($sessionId, $userId);
     }
     
+    public static function getByUser($userId)
+    {
+        return UserSessionDAO::selectByUser($userId);
+    }
+    
     public static function create($sessionId, $RRNr)
     {
         return UserSessionDAO::insert($sessionId, $RRNr);
