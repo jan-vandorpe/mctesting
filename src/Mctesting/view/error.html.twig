@@ -1,18 +1,1 @@
 {% extends "template/layout.html.twig" %}
-
-
-{% block feedback %}
-  {% if feedback.class == 0 %}
-  <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h1>Waarschuwing!<h2>
-        <p>{{feedback.message}}</p>
-      </div>
-  {% else feedback.class == 1 %}
-      <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h2>Success!</h2>
-        <p>{{feedback.message}}</p>
-      </div>
-        {% endif %}
-{% endblock %}

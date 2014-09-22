@@ -24,6 +24,10 @@ class HomeController extends AbstractController {
         $this->render('home.html.twig', array());
     }
     
+    public function error(){
+      $this->render('error.html.twig', array());
+    }
+    
     public function feedback($msg = null){
       
       switch ($msg[0]) {
