@@ -17,6 +17,14 @@ use Mctesting\Model\Service\TestQuestionService;
  */
 class ScoresController extends AbstractController
 {
+  function __construct($app) {
+        parent::__construct($app);
+    }
+
+  
+  public function go(){
+    $this->selectTest();
+  }
 
     public function selectTest()
     {

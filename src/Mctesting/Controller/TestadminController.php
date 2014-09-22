@@ -24,20 +24,8 @@ class TestadminController extends AbstractController {
     }
 
     public function go()
-    /**
-     * In case of bad redirect, show this
-     */ {
-        //model
-        $message1 = 'Landingspagina voor alles ivm de tests (hier zou je normaal niet moeten komen)';
-        $message2 = "";
-
-        //view
-        $this->render('testadmin.html.twig', array(
-            'message1' => $message1,
-            'message2' => $message2,
-        ));
-        //print_r($_SESSION);
-        //var_dump($this->app->getUser());
+    {
+    $this->testCreation();
     }
 
     public function testCreation()

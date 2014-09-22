@@ -25,9 +25,7 @@ class UsermanagementController extends AbstractController {
     }
 
     public function go() {
-        $this->render('usermanagement.html.twig', array(
-                // 'message1' => $message1,
-        ));
+        $this->newUserForm();
     }
 
     public function newUserForm() {

@@ -26,7 +26,11 @@ class CategoryController extends AbstractController
 
     public function go()
     {
-        $allcategories = CategoryService::getAll();
+        $this->newCatForm();
+    }
+    
+    public function newCatForm(){
+      $allcategories = CategoryService::getAll();
         $this->render('category.html.twig', array('allcategories' => $allcategories,
         ));
     }
