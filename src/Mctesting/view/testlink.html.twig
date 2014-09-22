@@ -73,24 +73,24 @@
           <span id="testwachtwoordErrorMessage"></span>
         </div>
       </div>   
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4>Gebruikers:</h4>
-        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Gebruikers:</label>
+          <div class="col-md-9">        
         <ul class="list-group">
           {% for user in allUsers %} 
             <li class="list-group-item clearfix">
               <label class="col-md-12">
-                <div class="col-md-3">
+                <div class="col-md-1">
                   <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
                 </div>
-                <div class="col-md-4">{{ user.lastname }}</div>
-                <div class="col-md-4">{{ user.firstname }}</div>
+                <div class="col-md-5">{{ user.lastname }}</div>
+                <div class="col-md-5">{{ user.firstname }}</div>
               </label>
             </li>
           {% endfor %}
-        </ul>
-      </div>
+        </ul> 
+          </div>
+          </div>
       <div class="col-md-2 col-md-offset-5">
         <input type="submit" name="catknop" class="btn btn-default btn-lg" value="Test plannen">
       </div>
