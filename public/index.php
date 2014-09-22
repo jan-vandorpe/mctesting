@@ -35,6 +35,12 @@ $app->getFrameworkEnvironment()->addGlobal('session', $_SESSION);
 $app->getAppEnvironment()->addGlobal('session', $_SESSION);
 $app->getFrameworkEnvironment()->addGlobal('app', $app);
 $app->getAppEnvironment()->addGlobal('app', $app);
+//Exception Messages are now flash messages -> disappear after redirect/refresh
+if(isset($_SESSION['error'])){
+$app->getFrameworkEnvironment()->addGlobal('error', unserialize($_SESSION['error']));
+$app->getAppEnvironment()->addGlobal('error', unserialize($_SESSION['error']));
+unset($_SESSION['error']);
+}
 
 //attempt to run dispatcher
 try {
