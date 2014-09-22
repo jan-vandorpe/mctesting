@@ -134,7 +134,7 @@ class UserDAO {
                 $user->setGroup($group);
                 return $user;
             } else {
-                //throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
+                throw new ApplicationException('Geen gebruiker gevonden met dit rijksregisternummer.');
                 
             }
         } else {
