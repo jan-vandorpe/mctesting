@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="{{ app.root }}/public/css/print.css" />
   <link rel="stylesheet" href="{{ app.root }}/public/css/bootstrapValidator.min.css" />
   <link rel="stylesheet" href="{{ app.root }}/public/css/styles.css" />
+  <link rel="stylesheet" href="{{ app.root }}/public/css/responsiveMenu.css" />
 {% endblock stylesheets %}
 {% block scripts %}
   {{ parent() }}
@@ -90,7 +91,7 @@
     <main 
       {% if app.user is defined and app.user is not empty %}
         {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-          class="content clearFix col-md-9"
+          class="content clearFix col-md-9 resp"
         {% else %}
           class="col-md-10 col-md-offset-1"
         {% endif %}
