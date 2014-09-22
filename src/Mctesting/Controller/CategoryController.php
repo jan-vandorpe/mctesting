@@ -7,6 +7,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\SubcategoryService;
+use Mctesting\Model\Entity\Feedback;
 
 /**
  * Description of Categoriecontroller
@@ -60,23 +61,26 @@ class CategoryController extends AbstractController
     public function newSubcategory()
     {
         //check if variables are set
-        if (isset($_POST["subcat"]) && isset($_POST["category"]) && $_POST["category"] !== NULL)
+        if (isset($_POST["subcat"]) && !empty($_POST["subcat"]) && isset($_POST["category"]) &&!empty($_POST['category']) && $_POST["category"] !== NULL)
         {
             $subcategory = $_POST["subcat"];
             $categoryid = $_POST["category"];
         } else
         {
-            throw new ApplicationException('Nieuwe subcategorie en categorie zijn niet geldig ingevoerd');
+            throw new ApplicationException('Het subcategorie veld mag niet leeg zijn');
         }
         //check if subcategory is filled in and doesn't yet exist within the category
         if ($subcategory !== null && SubcategoryService::validateSubcategory($subcategory, $categoryid) == false)
         {
             //creates a new subcategory
             SubcategoryService::create($categoryid, $subcategory);
+            $message = new Feedback();
+            $message->setMessage('Subcategorie succesvol toegevoegd');
+            $_SESSION['feedback'] = serialize($message);
             header("location: go");
         } else
         {
-            
+            //throw new ApplicationException('Subcategorie bestaat al');
         }
     }
     

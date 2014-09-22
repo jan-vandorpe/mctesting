@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Service;
 
 use Mctesting\Model\Data\SubcategoryDAO;
+use Mctesting\Exception\ApplicationException;
 
 /* * *** Author: Bert Mortier **** */
 
@@ -30,6 +31,18 @@ class SubcategoryService
     //function checks if subcategory exists or not
     public static function validateSubcategory($subcategoryname, $categoryid)
     {
+        $name = $subcategoryname;
+        //var_dump($name);
+        $name = str_replace(' ','', $name);
+        //var_dump($name);
+        $name = preg_replace('/[^a-zA-Z]/', '', $name);
+        //var_dump($name);
+        if(!ctype_alpha($name)){
+          throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        }
+        if(strlen($subcategoryname)<3 | strlen($subcategoryname)>20 ){
+          throw new ApplicationException('Subcategorienaam moet tussen de 3 en 20 karakters bevatten');
+        }
         return SubcategoryDAO::checkName($subcategoryname, $categoryid);
     }
 
