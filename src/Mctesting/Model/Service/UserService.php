@@ -6,6 +6,7 @@ use Mctesting\Model\Entity\User;
 use Mctesting\Model\Entity\TestSession;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\UserDAO;
+use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of UserService
@@ -53,7 +54,7 @@ class UserService {
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
 //             }
-            } else {
+            } elseif(UserService::isValidRRNRFormat($login)) {
                 //print(" rijksregister");
                 $user = UserDAO::selectByRRNr($login);
                 $sessions = TestSessionService::getSessionByPW($password);
@@ -87,8 +88,7 @@ class UserService {
 //             }
             }
         } else {
-            print("Geen valid login");
-            return false;
+          throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
         }
     }
 

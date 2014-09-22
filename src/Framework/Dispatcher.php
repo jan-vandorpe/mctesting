@@ -5,6 +5,7 @@ namespace Framework;
 use Framework\Exception\DispatcherException;
 use Framework\Exception\SecurityException;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of Dispatcher
@@ -24,7 +25,8 @@ class Dispatcher
     }
 
     public function run()
-    {
+    {   //manages messages that only appear once
+        $FMM = new FlashMessageManager();
         //process url, trim any leading and trailing slashes
         $url = trim($_SERVER['REQUEST_URI'], '/');
         //explode url and shift elements out until application folder is found
@@ -70,7 +72,9 @@ class Dispatcher
                         }
                     }
                 } catch (ApplicationException $ex) {
-                    print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex, 'back' => $_SERVER['HTTP_REFERER'])));
+                  $FMM->setFlashMessage($ex->getMessage());
+                  header('Location:'.$_SERVER['HTTP_REFERER']);
+                   // print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex, 'back' => $_SERVER['HTTP_REFERER'])));
                 }
             } else {
                 throw new DispatcherException('Unknown method ' . $methodName);

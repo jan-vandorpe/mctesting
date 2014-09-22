@@ -106,34 +106,36 @@ class QuestionService
 
         //validate subcatId
         if ($subcatId === 0) {
-            array_push($errors, 'subcatId mag niet 0 zijn');
+            array_push($errors, 'Geen valide categorie gekozen');
         }
 
         //validate text
         if (empty($text) || $text === '') {
-            array_push($errors, 'vraag tekst mag niet leeg zijn');
+            array_push($errors, 'Vraag tekst mag niet leeg zijn');
         }
 
         //validate weight
         if ($weight < 1) {
-            array_push($errors, 'moeilijkheidsgraad moet groter dan 0 zijn');
+            array_push($errors, 'Moeilijkheidsgraad moet groter dan 0 zijn');
         }
 
         //validate answers
-        if (is_array($answers)) {
-            if (empty($answers)) {
-                array_push($errors, 'answers array is leeg');
-            } elseif (count($answers) < 2) {
-                array_push($errors, 'U moet minimum 2 antwoorden ingeven.');
-            }
-            //validate correctAnswerId
-            if (!array_key_exists($correctAnswerId, $answers)) {
-                array_push($errors, 'correct antwoord kan niet gekoppeld worden aan een van de opgegeven antwoorden');
-            }
-        } else {
-            array_push($errors, 'answers variabele is geen array');
+        if(count($answers)<2) {
+          array_push($errors, 'U moet minimum 2 antwoorden ingeven.');
         }
-
+        
+        $answerKeys = array();
+        foreach($answers as $answer){
+          if(empty($answer->getText())|$answer->getText() === ''){
+            $id = $answer->getId() + 1;
+            array_push($errors, 'Antwoorden moeten tekst bevatten. Antwoord '.$id.' is leeg');
+          }
+          array_push($answerKeys, $answer->getId());
+        }
+        if(array_search($correctAnswerId, $answerKeys) === false){
+          array_push($errors, 'Correct antwoord kan niet gekoppeld worden aan een van de opgegeven antwoorden');
+        }
+        
         //validate media
         if (!empty($media) && !is_array($media)) {
             array_push($errors, 'media variabele is geen array');
@@ -141,7 +143,7 @@ class QuestionService
 
         //assess errors
         if (empty($errors)) {
-            return true;
+            return true;  //set to true for prod
         } else {
             $errormsg = '';
             foreach ($errors as $key => $value) {

@@ -1,8 +1,8 @@
 <?php
+
 /** Index.php essentially functions as a front controller,
  * instanciating the application class and running the dispatcher.
  */
-
 //require initial application code
 require_once '../src/Framework/AbstractFramework.php';
 require_once '../src/Framework/Application.php';
@@ -10,6 +10,7 @@ require_once '../src/Framework/Application.php';
 use Framework\Application;
 use Framework\Exception\FrameworkException;
 use Framework\Exception\DispatcherException;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 //load helper functions
 require_once '../src/Framework/Helper.php';
@@ -35,15 +36,22 @@ $app->getFrameworkEnvironment()->addGlobal('session', $_SESSION);
 $app->getAppEnvironment()->addGlobal('session', $_SESSION);
 $app->getFrameworkEnvironment()->addGlobal('app', $app);
 $app->getAppEnvironment()->addGlobal('app', $app);
+//Exception Messages are now flash messages -> disappear after redirect/refresh
+if (isset($_SESSION['feedback'])) {
+  $FMM = new FlashMessageManager();
+  $app->getFrameworkEnvironment()->addGlobal('feedback', $FMM->getFlashMessage());
+  $app->getAppEnvironment()->addGlobal('feedback', $FMM->getFlashMessage());
+  $FMM->unsetFlashMessage();
+}
 
 //attempt to run dispatcher
 try {
-    //dispatch requested controller
-    $app->getDispatcher()->run();
+  //dispatch requested controller
+  $app->getDispatcher()->run();
 } catch (DispatcherException $ex) {
-    $app->render('error.html.twig', array('exception' => $ex));
+  $app->render('error.html.twig', array('exception' => $ex));
 } catch (FrameworkException $ex) {
-    $app->render('error.html.twig', array('exception' => $ex));
+  $app->render('error.html.twig', array('exception' => $ex));
 } catch (Exception $ex) {
-    $app->render('error.html.twig', array('exception' => $ex));
+  $app->render('error.html.twig', array('exception' => $ex));
 }

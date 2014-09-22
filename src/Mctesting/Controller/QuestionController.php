@@ -7,6 +7,7 @@ use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\QuestionService;
 use Mctesting\Model\Entity\Answer;
 use Mctesting\Model\Includes\UploadManager;
+use Mctesting\Model\Entity\Feedback;
 
 /**
  * Description of QuestionController
@@ -18,15 +19,6 @@ class QuestionController extends AbstractController
     function __construct($app)
     {
         parent::__construct($app);
-    }
-    
-    /**
-     * Controller action that shows the input form for a new question.
-     * Categories and subcategories are supplied to populate a select box
-     */
-    public function success(){
-      $msg = 'Vraag succesvol toegevoegd';
-      $this->create($msg);
     }
     
     /**
@@ -105,7 +97,10 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        header('location: '.ROOT.'/question/success/');
+        $msg = new Feedback();
+        $msg->setMessage('Vraag succesvol toegevoegd');
+        $_SESSION['feedback'] = serialize($msg);
+        header('location: '.ROOT.'/question/create');
         exit();
     }
     

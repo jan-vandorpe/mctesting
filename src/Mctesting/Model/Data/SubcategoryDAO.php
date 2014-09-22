@@ -238,7 +238,7 @@ class SubcategoryDAO
             if (!empty($result))
             //if statement returned a value
             {
-                return true;
+                throw new ApplicationException('Subcategorie bestaat al');
             } else
             //if statement returns no value
             {

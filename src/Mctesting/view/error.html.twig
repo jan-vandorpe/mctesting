@@ -1,19 +1,9 @@
 {% extends "template/layout.html.twig" %}
 
 
-{% block contentHeader %}
-  <div class="panel-heading">
-    <h1 class="">Oeps! Er is iets misgelopen...</h1>
-  </div>
-{% endblock %}
-
-{% block content %}
-  <div class="">
-    <h4 class="">{{exception.message}}</h4>
-  </div>
-  <a href="{{back}}">
-    <button type="submit" class="btn btn-default">
-      <span class="glyphicon glyphicon-arrow-left"></span> Terug
-    </button>
-  </a>
+{% block feedback %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <p>{{feedback.message}}</p>
+      </div>
 {% endblock %}
