@@ -92,3 +92,8 @@ and open the template in the editor.
     left:45%;
     color:black;
 }
+
+.overflow{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

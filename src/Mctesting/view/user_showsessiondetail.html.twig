@@ -13,6 +13,7 @@
   </div>
 {% endblock %}
 {% block content %}
+  <h3><small>Resultaten van </small>{{ usersessions[0].user.firstname }} {{ usersessions[0].user.lastname }}</h3>
   <ul class="list-group">
     <li class="list-group-item clearfix">
       <b>
@@ -27,7 +28,7 @@
     </li>
     {% for usersession in usersessions %}
       <li class="list-group-item clearfix">
-        <div class="col-md-2">{{ usersession.testsession.test.testname }}</div>
+        <div class="col-md-2 overflow">{{ usersession.testsession.test.testname }}</div>
         <div class="col-md-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
         <div class="col-md-1">{{ usersession.score }}</div>
         <div class="col-md-2">{{ usersession.percentage }}</div>
