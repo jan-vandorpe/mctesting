@@ -73,7 +73,13 @@ class Dispatcher
                     }
                 } catch (ApplicationException $ex) {
                   $FMM->setFlashMessage($ex->getMessage());
-                  header('Location:'.$_SERVER['HTTP_REFERER']);
+                  if(isset($_SERVER['HTTP_REFERER'])){
+                    header('Location:'.$_SERVER['HTTP_REFERER']);
+                  } else {
+                    header("location: " . ROOT . "/home/go");
+                    exit(0);
+                  }
+                  
                    // print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex, 'back' => $_SERVER['HTTP_REFERER'])));
                 }
             } else {

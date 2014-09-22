@@ -87,7 +87,7 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('UserSession selectByUserANDSession recordset is leeg');
+                throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
             }
         } else {
             $error = $stmt->errorInfo();
