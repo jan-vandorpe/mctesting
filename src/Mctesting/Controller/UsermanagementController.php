@@ -6,6 +6,7 @@ use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\UserSessionService;
+use Mctesting\Model\Service\TestQuestionService;
 
 /**
  * Description of homecontroller
@@ -175,12 +176,34 @@ class UsermanagementController extends AbstractController {
         $userSessions = UserSessionService::getByUser($userid);
         
         //render page
-        $this->render('userdetails.html.twig', array(
+        $this->render('user_showsessiondetail.html.twig', array(
             'usersessions' => $userSessions,
         ));
     }
 
-
+    public function showUserRapport($arguments)
+    {
+        /**
+         * Scores per gebruiker tonen
+         */
+        
+        $sessionId = $arguments[0];
+        $userId = $arguments[1];
+        
+        //build model
+        //retrieve
+        $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
+        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId);
+        //var_dump($userSession);
+        //var_dump($subcategories);
+        //var_dump($userId);
+        
+        //render page
+        $this->render('user_userrapport.html.twig', array(
+            'usersession' => $userSession,
+            'subcats' => $subcategories,
+        ));
+    }
 
 
     public function listusers() {
