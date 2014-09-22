@@ -84,7 +84,8 @@ class TestSessionDAO
                 
                 return $result;
             } else {
-                throw new ApplicationException('TestSession selectByPW recordset is leeg');
+                throw new ApplicationException('Er werden geen tests gevonden voor deze combinatie van rijksregisternummer en wachtwoord. Probeer opnieuw of vraag hulp'
+                        . ' aan de instructeur/instructrice');
             }
         } else {
             $error = $stmt->errorInfo();

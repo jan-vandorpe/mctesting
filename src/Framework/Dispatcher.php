@@ -70,7 +70,7 @@ class Dispatcher
                         }
                     }
                 } catch (ApplicationException $ex) {
-                    print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex)));
+                    print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex, 'back' => $_SERVER['HTTP_REFERER'])));
                 }
             } else {
                 throw new DispatcherException('Unknown method ' . $methodName);
