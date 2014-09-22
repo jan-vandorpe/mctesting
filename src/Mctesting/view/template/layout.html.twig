@@ -102,6 +102,9 @@
       <div class="panel panel-default">
       {% block contentHeader %}{% endblock %}
       <div class="panel-body">
+        {% block feedback %}
+          {% include 'userfeedback.html.twig' %}
+        {% endblock feedback %}
       {% block content %}{% endblock content %}
     </div>
   </div>

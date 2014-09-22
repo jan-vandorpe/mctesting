@@ -70,7 +70,7 @@ class Dispatcher
                         }
                     }
                 } catch (ApplicationException $ex) {
-                  $_SESSION['error'] = serialize($ex);
+                  $_SESSION['feedback'] = serialize($ex);
                   header('Location:'.$_SERVER['HTTP_REFERER']);
                    // print($this->app->getAppEnvironment()->render('error.html.twig', array('exception' => $ex, 'back' => $_SERVER['HTTP_REFERER'])));
                 }
