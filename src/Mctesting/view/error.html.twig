@@ -1,8 +1,17 @@
 {% extends "template/layout.html.twig" %}
 
+
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1 class="">Oeps! Er is iets misgelopen...</h1>
+  </div>
+{% endblock %}
+
 {% block content %}
-<div class="page error">
-    <h1 class="errorhead">Fout</h1>
-    <div class="errorbody">{{exception.message}}</div>
-</div>
+  <div class="">
+    <h4 class="">{{exception.message}}</h4>
+  </div>
+  <a href="{{back}}">
+    <input type="button" class="btn btn-default" value="Back" />
+  </a>
 {% endblock %}
