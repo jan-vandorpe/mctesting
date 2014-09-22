@@ -1,0 +1,31 @@
+/* 
+    CSS voor een responsive menu 
+*/
+@import "bootstrap.scss";
+
+.resp{
+    width: 100%;
+}
+aside.resp{
+    @extend .navbar;
+    @extend .navbar-default;
+}
+aside.resp > ul {
+   // @extend .nav-pills;
+    @extend .nav;
+    @extend .navbar-nav;
+}
+aside.resp > ul > li{
+}
+aside.resp > ul > li > h4 {
+    cursor: pointer;
+    @extend .dropdown-toggle;
+    @extend .btn;
+}
+aside.resp > ul > li > h4 >span {
+    margin-left: 5px;
+    @extend .caret;
+}
+aside.resp > ul > li > ul {
+    @extend .dropdown-menu;
+}

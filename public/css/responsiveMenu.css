@@ -1,0 +1,112 @@
+/* 
+    CSS voor een responsive menu 
+*/
+@media screen and (max-width:550px) {
+    aside.resp *{
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+}
+@media screen and (min-width: 550px) and (max-width:1005px) {
+    aside.resp > ul > li > h4 {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: normal;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857;
+      border-radius: 4px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    aside.resp > ul > li > h4 > span {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      margin-left: 2px;
+      vertical-align: middle;
+      border-top: 4px solid;
+      border-right: 4px solid transparent;
+      border-left: 4px solid transparent;
+    }
+
+    aside.resp > ul > li > ul {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+      display: none;
+      float: left;
+      min-width: 160px;
+      padding: 5px 0;
+      margin: 2px 0 0;
+      list-style: none;
+      font-size: 14px;
+      text-align: left;
+      background-color: white;
+      border: 1px solid #cccccc;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      background-clip: padding-box;
+    }
+
+
+    aside.resp > ul > li > ul > li > h4 {
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      line-height: 1.42857;
+      color: #333333;
+      white-space: nowrap;
+    }
+
+    aside.resp > ul > li > ul > li > h4:hover, aside.resp > ul > li > ul > li > h4:focus {
+      text-decoration: none;
+      color: #262626;
+      background-color: whitesmoke;
+    }
+
+    aside.resp > ul > li.open > ul {
+      display: block;
+    }
+
+    aside.resp {
+      position: relative;
+      min-height: 50px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+    }
+
+    aside.resp > ul > li {
+        float: left;
+    }
+    aside.resp {
+      background-color: #f8f8f8;
+      border-color: #e7e7e7;
+    }
+
+    .resp {
+      width: 100%;
+    }
+
+    aside.resp > ul > li > h4 {
+      cursor: pointer;
+    }
+
+    aside.resp > ul > li > h4 > span {
+      margin-left: 5px;
+    }
+}
