@@ -7,7 +7,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Model\Service\SubcategoryService;
-use Mctesting\Model\Entity\Feedback;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of Categoriecontroller
@@ -47,10 +47,12 @@ class CategoryController extends AbstractController
     {
         $category = $_POST["newcat"];
         //checks if the new category variable is set and if it isn't already in the DB
-        if ($category !== null and CategoryService::validateCategory($category) == true)
+        if ($category !== '' and CategoryService::validateCategory($category) == true)
         {     
             //creates a new category
             CategoryService::create($category);
+            $FMM = new FlashMessageManager();
+            $FMM->setFlashMessage('Categorie succesvol toegevoegd');
             header("location: go");
         } else
         {

@@ -49,7 +49,7 @@ class CategoryService {
 
   //function checks if category exists or not and validates input
   public static function validateCategory($categoryname) {
-    
+
     $name = $categoryname;
     //var_dump($name);
     $name = str_replace(' ', '', $name);
