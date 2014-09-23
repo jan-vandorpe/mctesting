@@ -31,7 +31,9 @@ class TestQuestionDAO {
         }
     }
     
-    public static function selectCategoriesAnsweredQuestions($sessieid, $userid)
+    
+    
+    public static function selectCategoriesAnsweredQuestions($sessieid, $userid, $testId)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -42,13 +44,14 @@ class TestQuestionDAO {
 //            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
 //            ';
         $sql = 'SELECT sessiegebruikercategoriepercentages.subcatid, score, percentage, subcatnaam, tebehalenscore
-                from sessiegebruikercategoriepercentages inner join ( subcategorie inner join testsubcat on subcategorie.subcatid = testsubcat.subcatid)
-                on sessiegebruikercategoriepercentages.testid = testsubcat.testid
-                and sessieid = :sessieid 
-                and rijksregisternr = :userid';
+               from sessiegebruikercategoriepercentages, subcategorie, testsubcat where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid and 
+               testsubcat.subcatid = subcategorie.subcatid
+               and testsubcat.testid = :testid
+               and sessieid = :sessieid
+               and rijksregisternr = :userid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid)))
+        if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid, ':testid' => $testId)))
         {
             //test if statement retrieved something
             $resultset = $stmt->fetchall();
