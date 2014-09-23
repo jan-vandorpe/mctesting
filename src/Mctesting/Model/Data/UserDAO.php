@@ -35,10 +35,11 @@ class UserDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectAll recordset is leeg');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden');
             }
         } else {
-            throw new ApplicationException('users selectAll statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -69,10 +70,11 @@ class UserDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectAllgebruikers recordset is leeg');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden');
             }
         } else {
-            throw new ApplicationException('users selectAllgebruikers statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -104,10 +106,11 @@ class UserDAO {
                     throw new ApplicationException('Wachtwoord is incorrect');
                 }
             } else {
-                throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden met het email ('.$email.')');
             }
         } else {
-            throw new ApplicationException('User selectByEmail statement kan niet worden uitgevoerd.');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers met het email ('.$email.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -142,7 +145,8 @@ class UserDAO {
                 return false;
             }
         } else {
-            throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers met het rrnr ('.$rrnr.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -159,7 +163,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze gebruiker niet toevoegen: ' . $error[2]);
+            throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -177,7 +181,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen: ' . $error[2]);
+            throw new ApplicationException('Kon de status van deze gebruiker ('.$RRNr.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -194,7 +198,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze gebruiker niet verwijderen: ' . $error[2]);
+            throw new ApplicationException('Kon de gebruiker ('.$RRNr.') niet verwijderen, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
