@@ -117,6 +117,32 @@ $(document).ready(function () {
     /*
      * testcreation.html.twig
      */
+    $('#testcreation').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            testname: {
+                validators: {                    
+                    notEmpty: {
+                        message: 'Voer een testnaam in'
+                    }
+                }
+            },
+            testcatselect: {
+                feedbackIcons: false,
+                validators: {
+                    greaterThan: {
+                        value: 1,
+                        message: 'Selecteer een test'
+                    }
+                }
+            }
+
+        }});
+    
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
