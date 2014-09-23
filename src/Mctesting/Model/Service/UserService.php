@@ -145,10 +145,10 @@ class UserService {
         return $hash;
     }
 
-    public function create($firstName, $lastName, $RRNr) {
+    public function create($firstName, $lastName, $RRNr, $timestamp) {
         //cleanup
         $userGroup = 1;
-        if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)) {
+        if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup, $timestamp)) {
             return true;
         } else {
             //exception

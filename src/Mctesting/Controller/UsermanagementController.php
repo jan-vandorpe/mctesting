@@ -56,9 +56,9 @@ class UsermanagementController extends AbstractController {
 
         //als het een valid .csv file is
         if ($uploadedFile[1] == null) {
+            ini_set('auto_detect_line_endings', true);
             $notValid = false;
             $file = fopen($folder . $fileName, "r");
-            $i = 0;
             $fail = 0;
             $success = 0;
             $wrongdata = 0;
@@ -71,12 +71,16 @@ class UsermanagementController extends AbstractController {
 
             //regel per regel de .csv file lezen
             while (!feof($file)) {
-                $data[$i] = fgetcsv($file, 1000, ";", "'");
 
-                $RRNr = $data[$i][0];
-                $firstName = $data[$i][1];
-                $lastName = $data[$i][2];
-                $i++;
+                $data = fgetcsv($file, 1000, ";", "'");
+                $RRNr = $data[0];
+                if (isset($data[1])) {
+                    $firstName = $data[1];
+                }
+
+                if (isset($data[2])) {
+                    $lastName = $data[2];
+                }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
                 if ($firstName !== null and $lastName !== null && UserService::isValidRRNRFormat($RRNr) == true) {
@@ -104,8 +108,6 @@ class UsermanagementController extends AbstractController {
                     }
                 }
             }
-
-
             fclose($file);
             $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
         } else {

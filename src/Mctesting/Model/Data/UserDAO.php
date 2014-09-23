@@ -39,7 +39,7 @@ class UserDAO {
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -74,7 +74,7 @@ class UserDAO {
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -106,11 +106,11 @@ class UserDAO {
                     throw new ApplicationException('Wachtwoord is incorrect');
                 }
             } else {
-                throw new ApplicationException('Er zijn geen gebruikers gevonden met het email ('.$email.')');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden met het email (' . $email . ')');
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De gebruikers met het email ('.$email.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('De gebruikers met het email (' . $email . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -140,30 +140,29 @@ class UserDAO {
                 //CSV controlleerd als gebruikers als aanwezig zijn in database,
                 //Deze error gecomment anders wordt hij weergegeven en worden gebruikers 
                 //niet aan de database toegevoegd.
-                
                 //throw new ApplicationException('Geen gebruiker gevonden met dit rijksregisternummer.');
                 return false;
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De gebruikers met het rrnr ('.$rrnr.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('De gebruikers met het rrnr (' . $rrnr . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
-    public static function insert($firstName, $lastName, $RRNr, $userGroup) {
+    public static function insert($firstName, $lastName, $RRNr, $userGroup, $timestamp) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :lastName , :group)';
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`, `toegevoegd`) VALUES (:RRNr , :firstName , :lastName , :group, :timestamp)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup))) {
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup, ':timestamp' => $timestamp))) {
             //test if statement succes
             return true;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            //throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -181,7 +180,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de status van deze gebruiker ('.$RRNr.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon de status van deze gebruiker (' . $RRNr . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -198,7 +197,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de gebruiker ('.$RRNr.') niet verwijderen, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon de gebruiker (' . $RRNr . ') niet verwijderen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
