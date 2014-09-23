@@ -22,17 +22,14 @@ class TestQuestionDAO {
         //prepare sql statement
         $sql = 'INSERT INTO `testvragen`(`testid`, `vraagid`) 
                                     VALUES (:testid,:vraagid)';
-               $stmt = $db->prepare($sql);
-                //test if statement can be executed
-               if ($stmt->execute(array(':testid' => $testid,':vraagid' => $questionId ))) {                   
-               }else{
-                   $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze testvraag niet toevoegen: '.$error[2]);              
-            }
+        $stmt = $db->prepare($sql);
+         //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testid,':vraagid' => $questionId ))) {                   
+        }else{
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon geen testvraag in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);              
+        }
     }
-    
-    
     
     public static function selectCategoriesAnsweredQuestions($sessieid, $userid)
     {
