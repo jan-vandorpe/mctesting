@@ -117,7 +117,9 @@ class UserService {
             $result = true;
             return $result;
         } else {
-            throw new ApplicationException('Rijksregisternummer is niet correct');
+            //Voorlopig in comment voor import CSV fouthandler
+            //throw new ApplicationException('Rijksregisternummer is niet correct');
+            return false;
         }
         return $result;
     }
