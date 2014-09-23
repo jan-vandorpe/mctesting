@@ -7,6 +7,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of homecontroller
@@ -105,36 +106,40 @@ class UsermanagementController extends AbstractController {
     }
 
     public function newUser() {
+      if(isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])){
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
-                header("location: " . ROOT . "/usermanagement/listusers");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
-            }
-        } else {
-            print ("Niet valid.");
+        if($this->validateUser($firstName, $lastName, $RRNr) == true){
+          header("location: " . ROOT . "/usermanagement/listusers");
         }
+      } else {
+        throw new ApplicationException('Gelieve alle vakjes in te vullen');
+      }
     }
 
     public function registerUser() {
+        if(isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])){
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
+        if($this->validateUser($firstName, $lastName, $RRNr) == true){
+          header("location: " . ROOT . "/home/go");
+        }
+      } else {
+        throw new ApplicationException('Gelieve alle vakjes in te vullen');
+      }
+    }
+    
+    private function validateUser($firstName,$lastName,$RRNr){
+      if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
             if (UserService::create($firstName, $lastName, $RRNr)) {
-                header("location: " . ROOT . "/home/go");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
-            }
+              $FMM = new FlashMessageManager();
+              $FMM->setFlashMessage('Gebruiker successvol aangemaakt',1);
+              return true;
+            } 
         } else {
-            print ("Niet valid.");
+            throw new ApplicationException('Gelieve alle vakjes in te vullen');
         }
     }
 

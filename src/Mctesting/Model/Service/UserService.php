@@ -116,8 +116,7 @@ class UserService {
             $result = true;
             return $result;
         } else {
-            $result = false;
-            return $result;
+            throw new ApplicationException('Rijksregisternummer is niet correct');
         }
         return $result;
     }
@@ -168,6 +167,33 @@ class UserService {
             return true;
         } else {
             return false;
+        }
+    }
+    
+    public static function validateNames($firstName,$lastName){
+        $errors = array();
+        $firstName = str_replace('-','', $firstName);
+        $lastName = str_replace('-', '', $lastName);
+        if(!ctype_alpha($firstName)){
+          array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
+          //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        }
+        if(!ctype_alpha($lastName)){
+          array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
+          //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        }
+        //assess errors
+        if (empty($errors)) {
+            return true;  //set to true for prod
+        } else {
+            $errormsg = '';
+            foreach ($errors as $key => $value) {
+                if ($errormsg !== '') {
+                    $errormsg .= '<br>';
+                }
+                $errormsg .= $value;
+            }
+            throw new ApplicationException($errormsg);
         }
     }
 
