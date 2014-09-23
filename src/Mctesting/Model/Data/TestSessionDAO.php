@@ -42,15 +42,16 @@ class TestSessionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('TestSession selectByTest recordset is leeg');
+                throw new ApplicationException('Er zijn geen sessies gevonden voor deze test');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'TestSession selectByTest statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+//            $error = $stmt->errorInfo();
+//            $errormsg = 'TestSession selectByTest statement kan niet worden uitgevoerd'
+//                    . '<br>'
+//                    . '<br>'
+//                    . $error[2];
+//            throw new ApplicationException($errormsg);
+            throw new ApplicationException('Sesies konden niet opgehaald worden');
         }
     }
     
@@ -88,12 +89,13 @@ class TestSessionDAO
                         . ' aan de instructeur/instructrice');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'TestSession selectByPW statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+//            $error = $stmt->errorInfo();
+//            $errormsg = 'TestSession selectByPW statement kan niet worden uitgevoerd'
+//                    . '<br>'
+//                    . '<br>'
+//                    . $error[2];
+//            throw new ApplicationException($errormsg);
+            throw new ApplicationException('Sesies konden niet opgehaald worden');
         }
     }
     
@@ -119,15 +121,16 @@ class TestSessionDAO
                 $testSession->setActive((boolean)$record['actief']);
                 return $testSession;
             } else {
-                throw new ApplicationException('Sessie selectById record is leeg');
+                throw new ApplicationException('Er is geen sessie gevonden met Id: ' . $id);
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Sessie selectById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+//            $error = $stmt->errorInfo();
+//            $errormsg = 'Sessie selectById statement kan niet worden uitgevoerd'
+//                    . '<br>'
+//                    . '<br>'
+//                    . $error[2];
+//            throw new ApplicationException($errormsg);
+            throw new ApplicationException('Sessie kon niet worden opgehaald');
         }
     }
     
