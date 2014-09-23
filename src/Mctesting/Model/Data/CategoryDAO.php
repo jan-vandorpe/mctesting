@@ -69,7 +69,7 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Kon geen categorieën ophalen, gelieve dit te controleren');
+                throw new ApplicationException('Er zijn geen categorieën gevonden');
             }
         } else
         {
