@@ -7,16 +7,16 @@
 {% endblock scripts %}
 
 {% block title %}
-    {{ parent() }}Nieuwe vraag
+  {{ parent() }}Nieuwe vraag
 {% endblock title %}
 
 {% block contentHeader %}
-    <div class="panel-heading">
-        <h1>
-            Vraag Toevoegen
-            <br>
-        </h1>
-    </div>
+  <div class="panel-heading">
+    <h1>
+      Vraag Toevoegen
+      <br>
+    </h1>
+  </div>
 {% endblock %}
 
 {% block content %}
@@ -84,84 +84,90 @@
         </div>
       </div>
 
-            {# Answers #}
+      {# Answers #}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Antwoorden
+        </div>
+        <div class="panel-body">
+          <div class="answers">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Antwoorden
+              <div class="panel-body">
+                <div class="form-group">
+                  <label for="antwoord[]" class="col-md-3 control-label">Antwoord 1:</label>   
+                  <div class="col-md-9">
+                    <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                  </div>
                 </div>
-                <div class="panel-body">
-                    <div class="answers">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="antwoord[]" class="col-md-3 control-label">Antwoord 1:</label>   
-                                    <div class="col-md-9">
-                                        <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea>      
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="answerMedia[]" class="col-md-3 control-label">
-                                        Afbeelding antwoord 1:
-                                    </label>
-                                    <div class="col-md-3">
-                                        <span class="btn btn-default btn-file">
-                                            Bladeren...
-                                            <input type="file" name="answerMedia[]" class="form-control" />
-                                        </span> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="antwoord[]" class="col-md-3 control-label">Antwoord 2:</label>   
-                                    <div class="col-md-9">
-                                        <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="answerMedia[]" class="col-md-3 control-label">
-                                        Afbeelding antwoord 2:
-                                    </label>
-                                    <div class="col-md-3">
-                                        <span class="btn btn-default btn-file">
-                                            Bladeren...
-                                            <input type="file" name="answerMedia[]" class="form-control" />
-                                        </span> 
-                                    </div>
-                                </div>
-                            </div> </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Afbeelding antwoord 1:</label>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <span class="btn btn-default btn-file">
+                          Bladeren... 
+                          <input type="file" name="answerMedia[]" class="form-control" />
+                        </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
                     </div>
-                    {#   Add extra answer, triggers addanswer.js   #}
-                    <div class="form-group">
-                        <label for="AddAnswer" class="col-md-3 control-label">
-                            Extra antwoord toevoegen:
-                        </label>
-                        <div class="col-md-3">
-                            <a href="#" id="AddAnswer" class="btn btn-default">Toevoegen</a>
-                        </div>
-                    </div>
-                    {# Select correct answer #}
-                    <div class="form-group">
-                        <label class="col-md-3 control-label" for="correctant">
-                            Correct antwoord:
-                        </label>
-                        <div class="col-md-9">
-                            <select class="form-control catbijvraag" id="correctant" name="correctant">
-                                <option value="0">Antwoord 1</option>
-                                <option value="1">Antwoord 2</option>
-                            </select>
-                        </div>
-                    </div>
+                  </div>
                 </div>
+              </div></div>
+              <div class="panel panel-default">
+              <div class="panel-body">
+                <div class="form-group">
+                  <label for="antwoord[]" class="col-md-3 control-label">Antwoord 2:</label>   
+                  <div class="col-md-9">
+                    <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 control-label">Afbeelding antwoord 2:</label>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <span class="btn btn-default btn-file">
+                          Bladeren... 
+                          <input type="file" name="answerMedia[]" class="form-control" />
+                        </span>
+                      </span>
+                      <input type="text" class="form-control" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div></div>
+            
+          </div>
+          {#   Add extra answer, triggers addanswer.js   #}
+          <div class="form-group">
+            <label for="AddAnswer" class="col-md-3 control-label">
+              Extra antwoord toevoegen:
+            </label>
+            <div class="col-md-3">
+              <a href="#" id="AddAnswer" class="btn btn-default">Toevoegen</a>
             </div>
-            {#   Submit   #}
-            <div class="col-md-3 col-md-offset-5">
-                <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag toevoegen" />
+          </div>
+          {# Select correct answer #}
+          <div class="form-group">
+            <label class="col-md-3 control-label" for="correctant">
+              Correct antwoord:
+            </label>
+            <div class="col-md-9">
+              <select class="form-control catbijvraag" id="correctant" name="correctant">
+                <option value="0">Antwoord 1</option>
+                <option value="1">Antwoord 2</option>
+              </select>
             </div>
-        </form>
-    </div>
+          </div>
+        </div>
+      </div>
+      {#   Submit   #}
+      <div class="col-md-3 col-md-offset-5">
+        <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag toevoegen" />
+      </div>
+    </form>
+  </div>
 {% endblock content %}
 
 
