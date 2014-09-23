@@ -30,7 +30,7 @@ class UserAnswerDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon dit antwoord niet toevoegen: '.$error[2]);              
+            throw new ApplicationException('Kon dit antwoord niet in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);              
         }
     }
 }
