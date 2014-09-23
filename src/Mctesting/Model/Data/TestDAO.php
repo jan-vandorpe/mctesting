@@ -90,7 +90,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test WHERE beheerder = :adminId';
+        $sql = 'SELECT * FROM test WHERE beheerder = :adminId order by testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':adminId' => $adminId,))) {

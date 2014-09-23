@@ -1,14 +1,14 @@
 /* 
     CSS voor een responsive menu 
 */
-@media screen and (max-width:550px) {
+@media screen and (max-width:650px) {
     aside.resp *{
         margin: 0;
         padding: 0;
         text-align: center;
     }
 }
-@media screen and (min-width: 550px) and (max-width:1005px) {
+@media screen and (min-width: 650px) and (max-width:1005px) {
     aside.resp > ul > li > h4 {
       display: inline-block;
       margin-bottom: 0;
