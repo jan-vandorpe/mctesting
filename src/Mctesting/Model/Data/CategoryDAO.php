@@ -37,7 +37,7 @@ class CategoryDAO
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd: '.$error[2]);
+            throw new ApplicationException('De categorie kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -74,7 +74,7 @@ class CategoryDAO
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd: '.$error[2]);
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -111,7 +111,7 @@ class CategoryDAO
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd: '.$error[2]);
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -148,7 +148,7 @@ class CategoryDAO
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd: '.$error[2]);
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -169,12 +169,12 @@ class CategoryDAO
                 return true;
             } else
             {
-                throw new ApplicationException('Deze categorie bestaat al');
+                throw new ApplicationException('De categorie ('.$catname.') bestaat al, gelieve de categorie een andere naam te geven');
             }
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd: '.$error[2]);
+            throw new ApplicationException('De categorie ('.$catname.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -187,12 +187,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catname' => $catname)))
-        {
-            
+        {            
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren: '.$error[2]);
+            throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -205,12 +204,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
-        {
-            
+        {            
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de categorie in de database niet op actief zetten, gelieve dit te controleren: '.$error[2]);
+            throw new ApplicationException('Kon de categorie in de database niet op actief zetten, gelieve dit te controleren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -223,12 +221,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
-        {
-            
+        {            
         } else
         {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren: '.$error[2]);
+            throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
