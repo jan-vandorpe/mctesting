@@ -61,6 +61,7 @@ class UsermanagementController extends AbstractController {
             $i = 0;
             $fail = 0;
             $success = 0;
+            $timestamp = date('Y-m-d G:i:s');
 
             //eerste lijn overslaan, hierin zitten de koppen
             fgetcsv($file, 1000, ";", "'");
@@ -83,7 +84,7 @@ class UsermanagementController extends AbstractController {
                         array_push($statussen, $status);
                         $fail ++;
                     } else {
-                        if (UserService::create($firstName, $lastName, $RRNr)) {
+                        if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
 
                             $status['success'] = "toegevoegd <br>";
@@ -109,7 +110,8 @@ class UsermanagementController extends AbstractController {
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
-        if(UserService::validateUser($firstName, $lastName, $RRNr) == true){
+        $timestamp = date('Y-m-d G:i:s');
+        if(UserService::validateUser($firstName, $lastName, $RRNr, $timestamp) == true){
           header("location: " . ROOT . "/usermanagement/listusers");
         }
       } else {
