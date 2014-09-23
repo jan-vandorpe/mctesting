@@ -27,7 +27,7 @@
                     <span>stap 1 van 4</span>
                 </div>
             </div>
-            <form name="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
+            <form name="testcreation" id="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
                 <div class="form-group">
                     <label for="testname" class="col-md-3 control-label">Naam van test:</label>
                     <div class="col-md-9">
@@ -58,7 +58,7 @@
                     <span>stap 2 van 4</span>
                 </div>
             </div>
-            <form name="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
+            <form name="testcreation2" id="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
                 <div class="form-group">
                     <label for="testduration" class="col-md-3 control-label">Duur van test:</label>
                     <div class="col-md-9">                            
@@ -127,7 +127,7 @@
                             {% endfor %}
                         </ul>
                     </div>
-                    <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload" role="form">
+                    <form name="testcreation3" id="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload" role="form">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>Slaagpercentages:</h4>
