@@ -46,7 +46,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM categorie';
+        $sql = 'SELECT * FROM categorie ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -83,7 +83,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid';
+        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -120,7 +120,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM categorie where actief = 1';
+        $sql = 'SELECT * FROM categorie where actief = 1 ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())

@@ -20,7 +20,7 @@ class TestSessionDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessie WHERE testid = :testid';
+        $sql = 'SELECT * FROM sessie WHERE testid = :testid ORDER BY datum';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':testid' => $testId,))) {
@@ -61,7 +61,7 @@ class TestSessionDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessie WHERE sessieww = :sessionpw';
+        $sql = 'SELECT * FROM sessie WHERE sessieww = :sessionpw ORDER BY datum';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessionpw' => $password,))) {

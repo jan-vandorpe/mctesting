@@ -19,7 +19,7 @@ class UserSessionDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid';
+        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid ORDER BY rijksregisternr';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessieid' => $sessionId,))) {

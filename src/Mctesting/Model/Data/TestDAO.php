@@ -17,7 +17,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test';
+        $sql = 'SELECT * FROM test ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -90,7 +90,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test WHERE beheerder = :adminId order by testnaam';
+        $sql = 'SELECT * FROM test WHERE beheerder = :adminId ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':adminId' => $adminId,))) {
@@ -232,7 +232,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief';
+        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //bind statement parameters
         $stmt->bindParam(':testid', $id);

@@ -51,7 +51,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid';
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
@@ -101,7 +101,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid AND actief = 1';
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid AND actief = 1 ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
@@ -151,7 +151,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid';
+        $sql = 'SELECT * FROM subcategorie ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -190,7 +190,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid where actief = 1';
+        $sql = 'SELECT * FROM subcategorie order by catid where actief = 1 ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
