@@ -36,7 +36,7 @@
         <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
             <div class="form-group">
                 <label class="control-label col-md-3" for="testsetselect">Selecteer een test:</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <select class="form-control" name="testsetselect" id="testsetselect">
                         <option value="0" >Selecteer een test:</option>
                         {% for key,value in allTest %}  
@@ -48,30 +48,21 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <span id="testsetselectErrorMessage"></span>
-                </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-3">Datum van de testsessie:</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <div class="input-group date datepicker">
                         <input type="text" class="form-control" id="testdatum" name="testdatum" placeholder="dd/mm/yyyy"/>
                         <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
-                </div>
-                <div class="col-md-3">
-                    <span id="testdatumErrorMessage"></span>
-                </div>
+                </div>                
             </div>   
             <div class="form-group">
                 <label class="control-label col-md-3">Wachtwoord van de testsessie:</label>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <input type="text" class="form-control col-md-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
-                </div>
-                <div class="col-md-3">
-                    <span id="testwachtwoordErrorMessage"></span>
-                </div>
+                </div>                
             </div>   
             <div class="form-group">
                 <label class="col-md-3 control-label">Gebruikers:</label>

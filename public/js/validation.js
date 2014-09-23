@@ -25,6 +25,98 @@ $(document).ready(function () {
                 }
             },
         }});
+
+
+    /*
+     * Category.html.twig
+     */
+    $('#cattoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            newcat: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een naam voor de categorie'
+                    }
+                }
+            }
+        }
+    });
+    $('#subcattoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            subcat: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een naam voor de subcategorie'
+                    }
+                }
+            }
+        }
+    });
+
+
+    /*
+     * newuserform.html.twig
+     */
+    $('#gebrtoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de familienaam in'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z_]+$/,
+                        message: 'De familienaam kan enkel letters bevatten'
+                    }
+                }
+            },
+            vnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de voornaam in'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z_]+$/,
+                        message: 'De voornaam kan enkel letters bevatten'
+                    }
+                }
+            },
+            rrnr: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de rijksregisternummer in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: 'Het rijksregisternummer moet 11 cijfers bevatten'
+                    },
+                }
+            }
+        }
+    });
+
+    /*
+     * testcreation.html.twig
+     */
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -54,26 +146,6 @@ $(document).ready(function () {
             }
 
         }});
-
-    $('#subcattoev').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            newcat: {
-                container: '#newcatErrorMessage',
-                validators: {
-                    notEmpty: {
-                        message: 'Geef een naam voor de categorie'
-                    }
-                }
-            }
-        }
-    });
-
-
     $('#testsessiesel').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -83,7 +155,6 @@ $(document).ready(function () {
         fields: {
             testdatum: {
                 feedbackIcons: false,
-                container: '#testdatumErrorMessage',
                 validators: {
                     date: {
                         format: 'DD/MM/YYYY',
@@ -95,7 +166,6 @@ $(document).ready(function () {
                 }
             },
             testwachtwoord: {
-                container: '#testwachtwoordErrorMessage',
                 validators: {
                     notEmpty: {
                         message: 'Voer een wachtwoord in'
@@ -104,7 +174,6 @@ $(document).ready(function () {
             },
             testsetselect: {
                 feedbackIcons: false,
-                container: '#testsetselectErrorMessage',
                 validators: {
                     greaterThan: {
                         value: 1,
