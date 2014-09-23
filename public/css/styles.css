@@ -9,6 +9,7 @@ and open the template in the editor.
 */
 
 
+
 /*first child of list group in panel did not have border top, now it does */
 .panel > .panel-body + .list-group .list-group-item:first-child {
     border-top: 1px solid #dddddd;

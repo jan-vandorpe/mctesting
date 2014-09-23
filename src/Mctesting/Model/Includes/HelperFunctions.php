@@ -44,5 +44,11 @@ class HelperFunctions {
     $stringArray = array($before, $between, $after);
     return $stringArray;
   }
+  
+  public function numbers_only($value)
+{
+    //return preg_match('/^([0-9]+)$/', $value);
+    return ctype_digit(strval($value));
+}
 
 }

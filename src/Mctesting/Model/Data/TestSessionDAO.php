@@ -42,7 +42,7 @@ class TestSessionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen sessies gevonden voor deze test');
+                throw new ApplicationException('Er zijn geen sessies voor de test ('.$testId.') gevonden');
             }
         } else {
 //            $error = $stmt->errorInfo();
@@ -52,7 +52,7 @@ class TestSessionDAO
 //                    . $error[2];
 //            throw new ApplicationException($errormsg);
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Sesies konden niet opgehaald worden: '.$error[2]);
+            throw new ApplicationException('De sessies voor de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -89,15 +89,9 @@ class TestSessionDAO
                 throw new ApplicationException('Er werden geen tests gevonden voor deze combinatie van rijksregisternummer en wachtwoord. Probeer opnieuw of vraag hulp'
                         . ' aan de instructeur/instructrice');
             }
-        } else {
-//            $error = $stmt->errorInfo();
-//            $errormsg = 'TestSession selectByPW statement kan niet worden uitgevoerd'
-//                    . '<br>'
-//                    . '<br>'
-//                    . $error[2];
-//            throw new ApplicationException($errormsg);
+        } else {//           
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Sesies konden niet opgehaald worden: '.$error[2]);
+            throw new ApplicationException('Sesies konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -123,7 +117,7 @@ class TestSessionDAO
                 $testSession->setActive((boolean)$record['actief']);
                 return $testSession;
             } else {
-                throw new ApplicationException('Er is geen sessie gevonden met Id: ' . $id);
+                throw new ApplicationException('Er werd geen sessie ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
 //            $error = $stmt->errorInfo();
@@ -133,7 +127,7 @@ class TestSessionDAO
 //                    . $error[2];
 //            throw new ApplicationException($errormsg);
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Sessie kon niet worden opgehaald: '.$error[2]);
+            throw new ApplicationException('De sessie ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -156,7 +150,7 @@ class TestSessionDAO
         } else {            
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
+            throw new ApplicationException('Kon geen sessie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }

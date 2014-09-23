@@ -83,7 +83,8 @@ class ScoresController extends AbstractController
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
-        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId);
+        $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
+        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
         //var_dump($userSession);
         //var_dump($subcategories);
         //var_dump($userId);
