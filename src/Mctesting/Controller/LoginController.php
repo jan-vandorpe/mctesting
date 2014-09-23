@@ -44,6 +44,8 @@ class LoginController extends AbstractController
     {
         unset($_SESSION["user"]);
         unset($_SESSION["testsessions"]);
+        unset($_SESSION["sessionchoices"]);
+        unset($_SESSION["sessionParticipation"]);
         header("location: " . ROOT . "/home/go");
     }
 
