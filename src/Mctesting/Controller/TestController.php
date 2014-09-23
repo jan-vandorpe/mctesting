@@ -40,6 +40,9 @@ class TestController extends AbstractController
         //if user already took test, redirect to homepage
       $user = UserService::unserializeFromSession();
       $sessionuser = UserSessionService::getByUserANDSession($testSessionId, $user->getRRnr());
+      if($sessionuser === false ){
+        throw new ApplicationException('Er zijn geen testsessies gevonden');
+      }
       if($sessionuser[0]->getParticipated() === 1){
         header("location: " . ROOT . "/home");
       }

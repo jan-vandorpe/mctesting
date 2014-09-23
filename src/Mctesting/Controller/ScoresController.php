@@ -7,6 +7,7 @@ use Mctesting\Model\Service\TestService;
 use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of ScoresController
@@ -83,6 +84,9 @@ class ScoresController extends AbstractController
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
+        if($userSession === false){
+          throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
+        }
         $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
         $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
         //var_dump($userSession);
