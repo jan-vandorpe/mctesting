@@ -35,10 +35,11 @@ class UsergroupDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('usergroup selectAll recordset is leeg');
+                throw new ApplicationException('Er zijn geen gebruikercategorieën gevonden');
             }
         } else {
-            throw new ApplicationException('usergroup selectAll statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikercategorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -61,10 +62,11 @@ class UsergroupDAO
                 $usergroup->setName($record['typenaam']);
                 return $usergroup;
             } else {
-                throw new ApplicationException('usergroup selectById record is leeg');
+                throw new ApplicationException('Er werd geen gebruikercategorie ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
-            throw new ApplicationException('usergroup selectById statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikercategorie ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }

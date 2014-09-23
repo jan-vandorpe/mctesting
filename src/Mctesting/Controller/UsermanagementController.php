@@ -95,12 +95,13 @@ class UsermanagementController extends AbstractController {
                             print ("fout");
                         }
                     }
-                } elseif ($firstName == "" and $lastName == "" && $RRNr == "") {
-                    
+                    //check for whitespaces
                 } else {
-                    $status['wrongdata'] = $i;
-                    array_push($statussen, $status);
-                    $wrongdata ++;
+                    if ($firstName != "" && $lastName != "" && $RRNr != "") {
+                        $status['wrongdata'] = $i;
+                        array_push($statussen, $status);
+                        $wrongdata ++;
+                    }
                 }
             }
 
@@ -108,8 +109,9 @@ class UsermanagementController extends AbstractController {
             fclose($file);
             $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
         } else {
-            $notValid = true;
-            $this->render('importstatus.html.twig', array("notValid" => $notValid));
+//            $notValid = true;
+//            $this->render('importstatus.html.twig', array("notValid" => $notValid));
+            throw new ApplicationException('Dit is geen geldig .CSV bestand!');
         }
     }
 

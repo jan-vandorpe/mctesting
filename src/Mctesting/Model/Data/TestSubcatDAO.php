@@ -24,7 +24,7 @@ class TestSubcatDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze testsubcat niet toevoegen: ' . $error[2]);
+            throw new ApplicationException('Kon geen testsubcat in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -66,15 +66,11 @@ class TestSubcatDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('TestsubcatDAO selectByTestANDSubcategory recordset is leeg');
+                throw new ApplicationException('Er werd geen testsubcat gevonden voor deze combinatie van test ('.$testId.') en subcat ('.$subcatId.')');
             }
         } else {
             $error = $stmt->errorInfo();
-            $errormsg = 'TestsubcatDAO selectByTestANDSubcategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            throw new ApplicationException('testsubcat konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -96,7 +92,7 @@ class TestSubcatDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de scores voor de subcategorieën niet toevoegen: ' . $error[2]);
+            throw new ApplicationException('Kon de scores voor de subcategorieën niet toevoegen, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }
