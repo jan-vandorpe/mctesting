@@ -12,7 +12,7 @@ class UserDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers';
+        $sql = 'SELECT * FROM gebruikers ORDER BY toegevoegd DESC';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -46,7 +46,7 @@ class UserDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 1';
+        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 1 ORDER BY toegevoegd DESC';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
