@@ -26,15 +26,31 @@ $(document).ready(function () {
       
       /*
        * 
-       * testcreation twig
+       * createquestion twig
        */
       $('#toevoegenvraag').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
-        },
-      })
+        },fields: {
+            vraag: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een vraag in'
+                    }
+                }
+            },
+            'antwoord[]': {
+              validators: {
+                    notEmpty: {
+                        message: 'Geef tenminste twee antwoorden'
+                    }
+                }
+            }
+            
+        }
+      });
 
     /*
      * Category.html.twig
