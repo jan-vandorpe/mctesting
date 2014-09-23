@@ -7,6 +7,7 @@ use Mctesting\Model\Entity\TestSession;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\UserDAO;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of UserService
