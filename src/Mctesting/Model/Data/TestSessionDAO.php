@@ -91,7 +91,7 @@ class TestSessionDAO
             }
         } else {//           
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Sesies konden niet opgehaald worden, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Sesies konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
