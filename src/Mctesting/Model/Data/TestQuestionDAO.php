@@ -79,7 +79,8 @@ class TestQuestionDAO {
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De subcategorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -115,15 +116,11 @@ class TestQuestionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Vraag selectByCategory record is leeg');
+                throw new ApplicationException('De gekozen subcategorie ('.$subcatId.') bevat geen vragen');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectByCategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subcatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }
