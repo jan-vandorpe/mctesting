@@ -71,11 +71,11 @@ class AnswerDAO
                 $answer->setMedia($record['media']);
                 return $answer;
             } else {
-                throw new ApplicationException('Antwoorden selectByQuestionAndId record is leeg');
+                throw new ApplicationException('Er zijn geen antwoorden gevonden voor de combinatie van vraag ('.$questionId.') en antwoord ('.$answerId.')');
             }
         } else {
             $error = $stmt->errorInfo();
-            $errormsg = 'Antwoorden selectByQuestionAndId statement kan niet worden uitgevoerd'
+            $errormsg = 'Het antwoord kon niet worden opgehaald'
                     . '<br>'
                     . '<br>'
                     . $error[2];
@@ -101,7 +101,7 @@ class AnswerDAO
                                 ))) {
         } else {
             $error = $stmt->errorInfo();
-            $errormsg = 'Antwoord insert statement kan niet worden uitgevoerd'
+            $errormsg = 'Het antwoord kon niet worden aangemaakt'
                     . '<br>'
                     . '<br>'
                     . $error[2];
