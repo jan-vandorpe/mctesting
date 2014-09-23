@@ -33,6 +33,7 @@ class TestadminController extends AbstractController {
     /**
      * 
      */ {
+        unset($_SESSION['testcreation']);
         //model
         $allCat = CategoryService::getAllExceptEmpty();
         //view
@@ -46,7 +47,7 @@ class TestadminController extends AbstractController {
      * 
      */ {
         //model
-        if (isset($_POST["testname"]) && isset($_POST["testcatselect"])) {
+        if (isset($_POST["testname"]) && isset($_POST["testcatselect"]) && trim($_POST['testname']) != '' && $_POST['testcatselect'] != 0) {
             $_SESSION["testcreation"]["testname"] = $_POST["testname"];
             $_SESSION["testcreation"]["catid"] = $_POST["testcatselect"];
 
@@ -75,6 +76,8 @@ class TestadminController extends AbstractController {
                     'testname' => $testname,
                 ));
             } else {
+                $FMM = new FlashMessageManager();
+                
                 header("location: ".ROOT."/testadmin/testcreation");
                 exit(0);
             }

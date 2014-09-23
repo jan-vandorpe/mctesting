@@ -105,7 +105,7 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Vraag selectByCategory record is leeg');
+                throw new ApplicationException('De gekozen categorie bevat geen vragen');
             }
         } else {
             $error = $stmt->errorInfo();
