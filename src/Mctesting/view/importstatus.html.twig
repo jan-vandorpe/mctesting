@@ -10,43 +10,48 @@
 {% endblock %}
 
 {% block contentHeader %}
-<div class="panel-heading">
-    <h1>
-        Gebruikers Importeren
-        <br>
-    </h1>
-</div>
+    <div class="panel-heading">
+        <h1>
+            Gebruikers Importeren
+            <br>
+        </h1>
+    </div>
 {% endblock %} 
 
 {% block content %}
-<div class="container-fluid">
-    <div class="panel panel-default">
-        <div class="panel-heading">Status</div>
-        <div class="panel-body">   
-            {% if notValid == false %}
-                <div class="alert alert-success">
-                    <p><strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.</p>
-                </div>
-                <div class="alert alert-danger" role="alert">
-                    <p><strong>{{fail}}</strong> gebruiker(s) stonden al in de database.</p>
-                </div>
-            {% else %}
-                <div class="panel panel-danger">
-                    <div class="panel-heading">FOUT</div>
-                    <div class="panel-body">
-                        <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">Status</div>
+            <div class="panel-body">   
+                {% if notValid == false %}
+                    <div class="alert alert-success">
+                        <p><strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.</p>
                     </div>
-                </div>
-            {% endif %}
+                    <div class="alert alert-info" role="alert">
+                        <p><strong>{{fail}}</strong> gebruiker(s) stonden al in de database.</p>
+                    </div>
+                    {% if wrongdata > 0 %}
+                        <div class="alert alert-danger" role="alert">
+                            <p><strong>{{wrongdata}}</strong> lijn(en) bevatte foutieve data.</p>
+                        </div>
+                    {% endif %}
+                {% else %}
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">FOUT</div>
+                        <div class="panel-body">
+                            <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <br>
+
         </div>
-    <br>
-    
-</div>
-<div class="form-group">
-    <div class="col-md-offset-1">
-        <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        Terug</a>
-    </div>
-</div>
-{% endblock %}
+        <div class="form-group">
+            <div class="col-md-offset-1">
+                <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    Terug</a>
+            </div>
+        </div>
+    {% endblock %}

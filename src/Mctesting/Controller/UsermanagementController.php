@@ -61,6 +61,7 @@ class UsermanagementController extends AbstractController {
             $i = 0;
             $fail = 0;
             $success = 0;
+            $wrongdata = 0;
             $timestamp = date('Y-m-d G:i:s');
 
             //eerste lijn overslaan, hierin zitten de koppen
@@ -91,14 +92,21 @@ class UsermanagementController extends AbstractController {
                             array_push($statussen, $status);
                             $success ++;
                         } else {
-                            print("fout");
+                            print ("fout");
                         }
                     }
+                } elseif ($firstName == "" and $lastName == "" && $RRNr == "") {
+                    
+                } else {
+                    $status['wrongdata'] = $i;
+                    array_push($statussen, $status);
+                    $wrongdata ++;
                 }
             }
 
+
             fclose($file);
-            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid));
+            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
         } else {
             $notValid = true;
             $this->render('importstatus.html.twig', array("notValid" => $notValid));
@@ -106,21 +114,19 @@ class UsermanagementController extends AbstractController {
     }
 
     public function newUser() {
-      if(isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])){
-        $firstName = $_POST["vnaam"];
-        $lastName = $_POST["fnaam"];
-        $RRNr = $_POST["rrnr"];
-        $timestamp = date('Y-m-d G:i:s');
-        if(UserService::validateUser($firstName, $lastName, $RRNr, $timestamp) == true){
-          header("location: " . ROOT . "/usermanagement/listusers");
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])) {
+            $firstName = $_POST["vnaam"];
+            $lastName = $_POST["fnaam"];
+            $RRNr = $_POST["rrnr"];
+            $timestamp = date('Y-m-d G:i:s');
+            if (UserService::validateUser($firstName, $lastName, $RRNr, $timestamp) == true) {
+                header("location: " . ROOT . "/usermanagement/listusers");
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle vakjes in te vullen');
         }
-      } else {
-        throw new ApplicationException('Gelieve alle vakjes in te vullen');
-      }
     }
 
-      
-    
     //make user inactive
     public function inactive() {
         foreach ($_POST['userCheckbox'] as $check) {
