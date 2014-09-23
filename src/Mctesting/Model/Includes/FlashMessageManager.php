@@ -15,6 +15,9 @@ use Mctesting\Model\Entity\Feedback;
  * Serializes messages to the the session, which then get deleted after one redirect
  * deletion triggers in index.php
  *
+ * $message = string, message to be displayed
+ * $class = int: 0 for error message, 1 for success message
+ * 
  * @author cyber07
  */
 class FlashMessageManager {

@@ -56,7 +56,7 @@ class CategoryController extends AbstractController
             //creates a new category
             CategoryService::create($category);
             $FMM = new FlashMessageManager();
-            $FMM->setFlashMessage('Categorie succesvol toegevoegd');
+            $FMM->setFlashMessage('Categorie succesvol toegevoegd',1);
             header("location: go");
         } else
         {
