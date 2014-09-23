@@ -358,6 +358,7 @@ class TestadminController extends AbstractController {
    * Overzicht gemaakte testen weergeven
    */
   public function testlist() {
+    unset($_SESSION['test']);
     $admin = UserService::unserializeFromSession();
     $adminId = $admin->getRRNr();
 
