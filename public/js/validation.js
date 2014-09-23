@@ -168,7 +168,7 @@ $(document).ready(function () {
                         min: 1,
                         message: 'Selecteer tenminste 1 vraag'
                     }
-                },
+                }
             }
 
         }});
