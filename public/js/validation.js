@@ -23,7 +23,18 @@ $(document).ready(function () {
                 }
             },
         }});
-
+      
+      /*
+       * 
+       * testcreation twig
+       */
+      $('#toevoegenvraag').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+      })
 
     /*
      * Category.html.twig
