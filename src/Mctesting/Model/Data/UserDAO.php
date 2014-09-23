@@ -162,6 +162,24 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
+            throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
+
+    public static function insertCSVuser($firstName, $lastName, $RRNr, $userGroup, $timestamp) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`, `toegevoegd`) VALUES (:RRNr , :firstName , :lastName , :group, :timestamp)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup, ':timestamp' => $timestamp))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
             //throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }

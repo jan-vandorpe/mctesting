@@ -67,10 +67,10 @@ class UserService {
                         $name = $test->getTestName();
                         $testid = $test->getTestId();
                         //throw new ApplicationException($id.' and '.$user->getRRnr());
-                        if(UserSessionService::getByUserANDSession($id, $user->getRRnr()) !== false){
-                          $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
-                          $_SESSION["sessionchoices"][$id] = array($testid => $name);
-                          $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
+                        if (UserSessionService::getByUserANDSession($id, $user->getRRnr()) !== false) {
+                            $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
+                            $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                            $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
                         }
                     }
                     //$_SESSION["testsessions"]=$sessions;  unused?
@@ -152,6 +152,18 @@ class UserService {
         //cleanup
         $userGroup = 1;
         if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup, $timestamp)) {
+            return true;
+        } else {
+            //exception
+            return false;
+        }
+//        }
+    }
+
+    public function createCSVuser($firstName, $lastName, $RRNr, $timestamp) {
+        //cleanup
+        $userGroup = 1;
+        if (UserDAO::insertCSVuser($firstName, $lastName, $RRNr, $userGroup, $timestamp)) {
             return true;
         } else {
             //exception

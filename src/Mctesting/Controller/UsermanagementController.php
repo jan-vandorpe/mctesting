@@ -89,7 +89,7 @@ class UsermanagementController extends AbstractController {
                         array_push($statussen, $status);
                         $fail ++;
                     } else {
-                        if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
+                        if (UserService::createCSVuser($firstName, $lastName, $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
 
                             $status['success'] = "toegevoegd <br>";
@@ -182,8 +182,8 @@ class UsermanagementController extends AbstractController {
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
-        if($userSession === false ){
-          throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
+        if ($userSession === false) {
+            throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
         }
         $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
         $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
