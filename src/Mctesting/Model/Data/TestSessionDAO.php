@@ -51,7 +51,8 @@ class TestSessionDAO
 //                    . '<br>'
 //                    . $error[2];
 //            throw new ApplicationException($errormsg);
-            throw new ApplicationException('Sesies konden niet opgehaald worden');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Sesies konden niet opgehaald worden: '.$error[2]);
         }
     }
     
@@ -95,7 +96,8 @@ class TestSessionDAO
 //                    . '<br>'
 //                    . $error[2];
 //            throw new ApplicationException($errormsg);
-            throw new ApplicationException('Sesies konden niet opgehaald worden');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Sesies konden niet opgehaald worden: '.$error[2]);
         }
     }
     
@@ -130,7 +132,8 @@ class TestSessionDAO
 //                    . '<br>'
 //                    . $error[2];
 //            throw new ApplicationException($errormsg);
-            throw new ApplicationException('Sessie kon niet worden opgehaald');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Sessie kon niet worden opgehaald: '.$error[2]);
         }
     }
     
