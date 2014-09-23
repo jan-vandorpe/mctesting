@@ -9,7 +9,6 @@ $(document).ready(function () {
         },
         fields: {
             Login: {
-                message: 'The username is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Voornaam is verplicht'
@@ -17,7 +16,6 @@ $(document).ready(function () {
                 }
             },
             Wachtwoord: {
-                message: 'The username is not valid',
                 validators: {
                     notEmpty: {
                         message: 'Wachtwoord is verplicht'
@@ -64,6 +62,55 @@ $(document).ready(function () {
     });
 
 
+    /*
+     * registerUserForm
+     */
+    $('#gebrreg').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de familienaam in'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z_]+$/,
+                        message: 'De familienaam kan enkel letters bevatten'
+                    }
+                }
+            },
+            vnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de voornaam in'
+                    },
+                    regexp: {
+                        regexp: /^[a-zA-Z_]+$/,
+                        message: 'De voornaam kan enkel letters bevatten'
+                    }
+                }
+            },
+            rrnr: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de rijksregisternummer in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    },
+                    stringLength: {
+                        min: 11,
+                        max: 11,
+                        message: 'Het rijksregisternummer moet 11 cijfers bevatten'
+                    },
+                }
+            }
+        }
+    });
     /*
      * newuserform.html.twig
      */
@@ -125,7 +172,7 @@ $(document).ready(function () {
         },
         fields: {
             testname: {
-                validators: {                    
+                validators: {
                     notEmpty: {
                         message: 'Voer een testnaam in'
                     }
@@ -142,7 +189,7 @@ $(document).ready(function () {
             }
 
         }});
-    
+
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -172,6 +219,39 @@ $(document).ready(function () {
             }
 
         }});
+    $('#testcreation3').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            testpasspercentage: {
+                validators: {
+                    notEmpty: {
+                        message: 'Voer een test percentage in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    }
+                }
+            },
+            'subcatpasspercentage[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Voer een test percentage in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    }
+                }
+            },
+        }});
+
+
+    /*
+     * testlink.html.twig
+     */
     $('#testsessiesel').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -204,6 +284,15 @@ $(document).ready(function () {
                     greaterThan: {
                         value: 1,
                         message: 'Selecteer een test',
+                    }
+                }
+            },
+            'user[]': {
+                feedbackIcons: false,
+                validators: {
+                    choice: {
+                        min: 1,
+                        message: 'Selecteer tenminste 1 gebruiker'
                     }
                 }
             }
