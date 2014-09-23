@@ -7,6 +7,7 @@ use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Includes\UploadManager;
 
 /**
  * Description of homecontroller
@@ -32,7 +33,6 @@ class UsermanagementController extends AbstractController {
         $this->render('newuserform.html.twig', array(
                 // 'message1' => $message1,
         ));
-
     }
 
     public function importUsers() {
@@ -101,7 +101,6 @@ class UsermanagementController extends AbstractController {
             $notValid = true;
             $this->render('importstatus.html.twig', array("notValid" => $notValid));
         }
-
     }
 
     public function newUser() {
@@ -168,26 +167,24 @@ class UsermanagementController extends AbstractController {
     //UserService::loginCheck($login, $password);
     //header("location: ".ROOT."/home/go");        
 
-    public function userdetails($arguments){        
-        
+    public function userdetails($arguments) {
+
         $userid = $arguments[0];
         $userSessions = UserSessionService::getByUser($userid);
-        
+
         //render page
         $this->render('user_showsessiondetail.html.twig', array(
             'usersessions' => $userSessions,
         ));
     }
 
-    public function showUserRapport($arguments)
-    {
+    public function showUserRapport($arguments) {
         /**
          * Scores per gebruiker tonen
          */
-        
         $sessionId = $arguments[0];
         $userId = $arguments[1];
-        
+
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
@@ -195,14 +192,12 @@ class UsermanagementController extends AbstractController {
         //var_dump($userSession);
         //var_dump($subcategories);
         //var_dump($userId);
-        
         //render page
         $this->render('user_userrapport.html.twig', array(
             'usersession' => $userSession,
             'subcats' => $subcategories,
         ));
     }
-
 
     public function listusers() {
         //model

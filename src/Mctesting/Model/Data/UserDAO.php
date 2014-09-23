@@ -134,8 +134,12 @@ class UserDAO {
                 $user->setGroup($group);
                 return $user;
             } else {
-                throw new ApplicationException('Geen gebruiker gevonden met dit rijksregisternummer.');
+                //CSV controlleerd als gebruikers als aanwezig zijn in database,
+                //Deze error gecomment anders wordt hij weergegeven en worden gebruikers 
+                //niet aan de database toegevoegd.
                 
+                //throw new ApplicationException('Geen gebruiker gevonden met dit rijksregisternummer.');
+                return false;
             }
         } else {
             throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
