@@ -196,6 +196,18 @@ class UserService {
             throw new ApplicationException($errormsg);
         }
     }
+    
+    public function validateUser($firstName,$lastName,$RRNr){
+      if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
+            if (UserService::create($firstName, $lastName, $RRNr)) {
+              $FMM = new FlashMessageManager();
+              $FMM->setFlashMessage('Gebruiker successvol aangemaakt',1);
+              return true;
+            } 
+        } else {
+            throw new ApplicationException('Gelieve alle vakjes in te vullen');
+        }
+    }
 
 //    public function getUser($email) {
 //

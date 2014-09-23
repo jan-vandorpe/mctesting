@@ -109,7 +109,7 @@ class UsermanagementController extends AbstractController {
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
-        if($this->validateUser($firstName, $lastName, $RRNr) == true){
+        if(UserService::validateUser($firstName, $lastName, $RRNr) == true){
           header("location: " . ROOT . "/usermanagement/listusers");
         }
       } else {
@@ -117,31 +117,8 @@ class UsermanagementController extends AbstractController {
       }
     }
 
-    public function registerUser() {
-        if(isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])){
-        $firstName = $_POST["vnaam"];
-        $lastName = $_POST["fnaam"];
-        $RRNr = $_POST["rrnr"];
-        if($this->validateUser($firstName, $lastName, $RRNr) == true){
-          header("location: " . ROOT . "/home/go");
-        }
-      } else {
-        throw new ApplicationException('Gelieve alle vakjes in te vullen');
-      }
-    }
+      
     
-    private function validateUser($firstName,$lastName,$RRNr){
-      if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
-              $FMM = new FlashMessageManager();
-              $FMM->setFlashMessage('Gebruiker successvol aangemaakt',1);
-              return true;
-            } 
-        } else {
-            throw new ApplicationException('Gelieve alle vakjes in te vullen');
-        }
-    }
-
     //make user inactive
     public function inactive() {
         foreach ($_POST['userCheckbox'] as $check) {
