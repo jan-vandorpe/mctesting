@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     $('#frmLogin').bootstrapValidator({
         container: 'tooltip',
@@ -115,14 +115,10 @@ $(document).ready(function() {
         }
     });
     $('#ctrlDatePicker')
-            .on('dp.change dp.show', function(e) {
+            .on('dp.change dp.show', function (e) {
                 // Validate the date when user change it
                 $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
             });
-
-    
-
-
 });
 
 
