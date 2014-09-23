@@ -1,12 +1,12 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-  {{ parent() }}
+    {{ parent() }}
 
 {% endblock stylesheets%}
 
 {% block title %}
-  {{ parent() }}Home
+    {{ parent() }}Home
 {% endblock  title %}
 
 
@@ -29,14 +29,11 @@
               <a href='{{ app.root }}/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a>
             </li>
             {% endfor %}  
-          </ul>
-          {% endif %}
-        {% endfor %}  
 
 
 
-    {% endif %}    
-  </div>   
+        {% endif %}    
+    </div>   
 
 {% endblock content %}
 

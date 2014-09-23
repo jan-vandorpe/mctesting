@@ -1,39 +1,39 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-  {{parent()}}
+    {{parent()}}
 
 {% endblock %}
 
 {% block title %}
-  {{parent()}}Home
+    {{parent()}}Home
 {% endblock %}
 
 
 {% block content %}
-      {% if message is not null %}
-      <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        {% if message is iterable %}
-          {% for msg in message %}
-            <p>{{msg}}</p>
-            {% endfor %}
-        {% else %}
-          <p>{{message}}</p>
-          {% endif %}
-      </div>
-      {% endif %}
-      <h1>Welkom op de testing website van de VDAB</h1>
-              <br>
-      {% if app.user is defined and app.user is not empty %}
+    {% if message is not null %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            {% if message is iterable %}
+                {% for msg in message %}
+                    <p>{{msg}}</p>
+                {% endfor %}
+            {% else %}
+                <p>{{message}}</p>
+            {% endif %}
+        </div>
+    {% endif %}
+    <h1>Welkom op de testing website van de VDAB</h1>
+    <br>
+    {% if app.user is defined and app.user is not empty %}
         <h4> U bent ingelogd als {{app.user.group.name}}</h4>
-      {% else %}
+    {% else %}
         <h4>Mensen die een test willen afleggen:</h4> 
         <p>
-          Gelieve in te loggen met
-          uw rijksregisternummer als Login en
-          het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
-          <span class="small">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
+            Gelieve in te loggen met
+            uw rijksregisternummer als Login en
+            het wachtwoord dat meegedeeld wordt door de instructeur op de dag van de testafname.<br>
+            <span class="small">Uw rijksregisternummer kan u terugvinden op de achterkant van uw identiteitskaart.</span>
         </p>
         <br>
         <p>Nog geen account?</p>

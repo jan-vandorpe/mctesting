@@ -10,47 +10,47 @@
 {% endblock %}
 
 {% block contentHeader %}
-<div class="panel-heading">
-    <h1>
-        Gebruiker aanmaken
-        <br>
-    </h1>
-</div>
+    <div class="panel-heading">
+        <h1>
+            Gebruiker aanmaken
+            <br>
+        </h1>
+    </div>
 {% endblock %}
-    
+
 {%block content%}
 
-<div class="container-fluid">    
-    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/usermanagement/newUser" method="post">
-        <div class="panel panel-default">
-            <div class="panel-heading">Maak hier een nieuwe basisgebruiker aan</div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="fnaam" class="col-md-3 control-label">Familienaam:</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="Vul hier de familienaam in." required/>
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <label for="vnaam" class="col-md-3 control-label">Voornaam:</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="Vul hier de voornaam in." required/>
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <label for="rrnr" class="col-md-3 control-label">Rijksregisternummer:</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="Vul hier het rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-9">
-                        <input type="submit" name="gebrknop" class="btn btn-default" value="Gebruiker toevoegen">
+    <div class="container-fluid">    
+        <form name="gebrtoev" class="form-horizontal meerboven-onder" action="{{ app.root }}/usermanagement/newUser" method="post">
+            <div class="panel panel-default">
+                <div class="panel-heading">Maak hier een nieuwe basisgebruiker aan</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="fnaam" class="col-md-3 control-label">Familienaam:</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="Vul hier de familienaam in." required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="vnaam" class="col-md-3 control-label">Voornaam:</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="Vul hier de voornaam in." required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="rrnr" class="col-md-3 control-label">Rijksregisternummer:</label>
+                        <div class="col-md-9">
+                            <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="Vul hier het rijksregisternummer in." pattern="[0-9]{11}" maxlength='11' required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-9">
+                            <input type="submit" name="gebrknop" class="btn btn-default" value="Gebruiker toevoegen">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form> 
-</div>
+        </form> 
+    </div>
 
 {% endblock %}

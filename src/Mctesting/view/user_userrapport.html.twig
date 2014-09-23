@@ -6,18 +6,18 @@
 {% endblock %}
 
 {% block contentHeader %}
-<div class="panel-heading">
-    <h1>
-        Gebruiker rapport
-        <br>
-    </h1>
-</div>
+    <div class="panel-heading">
+        <h1>
+            Gebruiker rapport
+            <br>
+        </h1>
+    </div>
 {% endblock %}   
 
 {% block terugknop %}
-<div class="form-group">
-    <div class="col-md-offset-1">
-        <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/userdetails/{{usersession[0].user.RRnr}}"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+    <div class="form-group">
+        <div class="col-md-offset-1">
+            <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/userdetails/{{usersession[0].user.RRnr}}"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+        </div>
     </div>
-</div>
 {% endblock %}

@@ -1,46 +1,46 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-  {{ parent() }}Rapport Scores - Sessiedetail
+    {{ parent() }}Rapport Scores - Sessiedetail
 {% endblock title %}
 
 {% block contentHeader %}
-  <div class="panel-heading">
-    <h1>
-      Scores rapport
-      <br>
-    </h1>
-  </div>
+    <div class="panel-heading">
+        <h1>
+            Scores rapport
+            <br>
+        </h1>
+    </div>
 {% endblock %}
 {% block content %}
-  <div class="progress">
+    <div class="progress">
         <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
             <span>stap 3 van 3</span>
         </div>
     </div>
-  <h3>Testsessie: {{ testsession.test.testname }}<small> van {{ testsession.date.date|date('d/m/Y') }}</small></h3>
-  <ul class="list-group">
-    <li class="list-group-item clearfix">
-      <b>
-        <div class="col-md-2">Voornaam</div>
-        <div class="col-md-2">Familienaam</div>
-        <div class="col-md-1">Score</div>
-        <div class="col-md-2">Percentage</div>
-        <div class="col-md-2">Geslaagd</div>
-        <div class="col-md-1">Afgelegd</div>
-        <div class="col-md-1">Details</div>
-      </b>
-    </li>
-    {% for usersession in usersessions %}
-      <li class="list-group-item clearfix">
-        <div class="col-md-2">{{ usersession.user.firstname }}</div>
-        <div class="col-md-2">{{ usersession.user.lastname }}</div>
-        <div class="col-md-1">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
-        <div class="col-md-2">{{ usersession.percentage }}</div>
-        <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
-        <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
-        <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
-      </li>
-    {% endfor %}
-  </ul>
+    <h3>Testsessie: {{ testsession.test.testname }}<small> van {{ testsession.date.date|date('d/m/Y') }}</small></h3>
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <b>
+                <div class="col-md-2">Voornaam</div>
+                <div class="col-md-2">Familienaam</div>
+                <div class="col-md-1">Score</div>
+                <div class="col-md-2">Percentage</div>
+                <div class="col-md-2">Geslaagd</div>
+                <div class="col-md-1">Afgelegd</div>
+                <div class="col-md-1">Details</div>
+            </b>
+        </li>
+        {% for usersession in usersessions %}
+            <li class="list-group-item clearfix">
+                <div class="col-md-2">{{ usersession.user.firstname }}</div>
+                <div class="col-md-2">{{ usersession.user.lastname }}</div>
+                <div class="col-md-1">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
+                <div class="col-md-2">{{ usersession.percentage }}</div>
+                <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
+                <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+                <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock content %}
