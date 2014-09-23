@@ -41,12 +41,8 @@ class AnswerDAO
                 //throw new ApplicationException('Antwoorden selectByQuestion recordset is leeg');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Antwoorden selectByQuestion statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De antwoorden konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -71,15 +67,11 @@ class AnswerDAO
                 $answer->setMedia($record['media']);
                 return $answer;
             } else {
-                throw new ApplicationException('Antwoorden selectByQuestionAndId record is leeg');
+                throw new ApplicationException('Er zijn geen antwoorden gevonden voor de combinatie van vraag ('.$questionId.') en antwoord ('.$answerId.')');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Antwoorden selectByQuestionAndId statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Het antwoord kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -100,12 +92,8 @@ class AnswerDAO
                                 ':media' => $answer->getMedia(),
                                 ))) {
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Antwoord insert statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Het antwoord kon niet worden aangemaakt, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }

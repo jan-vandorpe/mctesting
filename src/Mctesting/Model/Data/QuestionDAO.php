@@ -53,15 +53,11 @@ class QuestionDAO
                 $question->setActive((boolean) $record['actief']);
                 return $question;
             } else {
-                throw new ApplicationException('Vraag selectById record is leeg');
+                throw new ApplicationException('Er werd geen vraag ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De vraag ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -105,15 +101,11 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('De gekozen categorie bevat geen vragen');
+                throw new ApplicationException('De gekozen categorie ('.$categoryId.') bevat geen vragen');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectByCategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De vragen van de gekozen categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -157,12 +149,8 @@ class QuestionDAO
                 //throw new ApplicationException('Vraag selectBySubCategory record is leeg');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectByCategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subCatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -208,15 +196,11 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Vraag selectActiveByCategory record is leeg');
+                throw new ApplicationException('Er zijn geen actieve vragen voor de categorie ('.$categoryId.') gevonden');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectActiveByCategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De actieve vragen voor de categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -262,15 +246,11 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Vraag selectActiveByTest record is leeg');
+                throw new ApplicationException('Er zijn geen actieve vragen voor de test ('.$testId.') gevonden');
             }
         } else {
             $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectActiveByTest statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            throw new ApplicationException('De actieve vragen voor de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -297,12 +277,8 @@ class QuestionDAO
             AnswerService::create($questionId, $answersArray);
             MediaService::create($questionId, $questionMediaFileNames);
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Antwoord insert statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Kon geen vraag in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
