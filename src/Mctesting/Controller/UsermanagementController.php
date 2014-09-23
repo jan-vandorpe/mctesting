@@ -8,6 +8,7 @@ use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of homecontroller
@@ -105,41 +106,21 @@ class UsermanagementController extends AbstractController {
     }
 
     public function newUser() {
+      if(isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])){
         $firstName = $_POST["vnaam"];
         $lastName = $_POST["fnaam"];
         $RRNr = $_POST["rrnr"];
         $timestamp = date('Y-m-d G:i:s');
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
-                header("location: " . ROOT . "/usermanagement/listusers");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
-            }
-        } else {
-            print ("Niet valid.");
+        if(UserService::validateUser($firstName, $lastName, $RRNr, $timestamp) == true){
+          header("location: " . ROOT . "/usermanagement/listusers");
         }
+      } else {
+        throw new ApplicationException('Gelieve alle vakjes in te vullen');
+      }
     }
 
-    public function registerUser() {
-        $firstName = $_POST["vnaam"];
-        $lastName = $_POST["fnaam"];
-        $RRNr = $_POST["rrnr"];
-        $timestamp = date('Y-m-d G:i:s');
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
-                header("location: " . ROOT . "/home/go");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
-            }
-        } else {
-            print ("Niet valid.");
-        }
-    }
-
+      
+    
     //make user inactive
     public function inactive() {
         foreach ($_POST['userCheckbox'] as $check) {

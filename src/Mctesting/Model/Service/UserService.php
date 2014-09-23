@@ -54,7 +54,7 @@ class UserService {
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
 //             }
-            } elseif(UserService::isValidRRNRFormat($login)) {
+            } elseif (UserService::isValidRRNRFormat($login)) {
                 //print(" rijksregister");
                 $user = UserDAO::selectByRRNr($login);
                 $sessions = TestSessionService::getSessionByPW($password);
@@ -88,7 +88,7 @@ class UserService {
 //             }
             }
         } else {
-          throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
+            throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
         }
     }
 
@@ -169,18 +169,18 @@ class UserService {
             return false;
         }
     }
-    
-    public static function validateNames($firstName,$lastName){
+
+    public static function validateNames($firstName, $lastName) {
         $errors = array();
-        $firstName = str_replace('-','', $firstName);
+        $firstName = str_replace('-', '', $firstName);
         $lastName = str_replace('-', '', $lastName);
-        if(!ctype_alpha($firstName)){
-          array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
-          //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        if (!ctype_alpha($firstName)) {
+            array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
+            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
         }
-        if(!ctype_alpha($lastName)){
-          array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
-          //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        if (!ctype_alpha($lastName)) {
+            array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
+            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
         }
         //assess errors
         if (empty($errors)) {
@@ -196,14 +196,14 @@ class UserService {
             throw new ApplicationException($errormsg);
         }
     }
-    
-    public function validateUser($firstName,$lastName,$RRNr){
-      if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
-              $FMM = new FlashMessageManager();
-              $FMM->setFlashMessage('Gebruiker successvol aangemaakt',1);
-              return true;
-            } 
+
+    public function validateUser($firstName, $lastName, $RRNr, $timestamp) {
+        if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
+            if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gebruiker successvol aangemaakt', 1);
+                return true;
+            }
         } else {
             throw new ApplicationException('Gelieve alle vakjes in te vullen');
         }
