@@ -80,9 +80,9 @@ class CategoryController extends AbstractController
         {
             //creates a new subcategory
             SubcategoryService::create($categoryid, $subcategory);
-            $message = new Feedback();
-            $message->setMessage('Subcategorie succesvol toegevoegd');
-            $_SESSION['feedback'] = serialize($message);
+            $FMM = new FlashMessageManager();
+            $FMM->setFlashMessage('Subcategorie succesvol toegevoegd');
+            
             header("location: go");
         } else
         {
