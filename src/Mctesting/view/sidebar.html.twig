@@ -1,7 +1,7 @@
 {% block sidenav %}
   {% if app.user is defined and app.user is not empty %}
     {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-      <aside class="menu_on_left col-md-2 resp no-print">
+      <aside class="menu_on_left col-xs-2 resp no-print">
         <ul class="nav nav-stacked " role="navigation">
           <li></li>
           <li>

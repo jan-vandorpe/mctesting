@@ -25,45 +25,45 @@
                 <div class="panel-heading">Gebruiker overzicht</div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <label for="fnaam" class="col-md-3 control-label">Familienaam:</label>
-                        <div class="col-md-9">
+                        <label for="fnaam" class="col-xs-3 control-label">Familienaam:</label>
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" name="fnaam" id="fnaam" placeholder="{{ usersession[0].user.lastname }}" disabled/>
                         </div>
                     </div>                    
                     <div class="form-group">
-                        <label for="vnaam" class="col-md-3 control-label">Voornaam:</label>
-                        <div class="col-md-9">
+                        <label for="vnaam" class="col-xs-3 control-label">Voornaam:</label>
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" name="vnaam" id="vnaam" placeholder="{{ usersession[0].user.firstname }}" disabled/>
                         </div>
                     </div>     
                     <div class="form-group">
-                        <label for="rrnr" class="col-md-3 control-label">Rijksregisternummer:</label>
-                        <div class="col-md-9">
+                        <label for="rrnr" class="col-xs-3 control-label">Rijksregisternummer:</label>
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" name="rrnr" id="rrnr" placeholder="{{usersession[0].user.RRnr}}" disabled/>
                         </div>
                     </div> 
                     <div class="form-group">
-                        <label for="score" class="col-md-3 control-label">Score:</label>
-                        <div class="col-md-9">
+                        <label for="score" class="col-xs-3 control-label">Score:</label>
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" name="score" id="score" placeholder="{{usersession[0].score}}" disabled/>
                         </div>
                     </div>     
                     <div class="form-group">
-                        <label for="percentage" class="col-md-3 control-label">Percentage:</label>
-                        <div class="col-md-9">
+                        <label for="percentage" class="col-xs-3 control-label">Percentage:</label>
+                        <div class="col-xs-9">
                             <input type="text" class="form-control" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}} (min: {{usersession[0].testsession.test.testpasspercentage}})" disabled/>
                         </div>
                     </div>  
                     <div class="form-group">
-                        <label for="passes" class="col-md-3 control-label">Geslaagd:</label>
-                        <div class="col-md-7">                        
+                        <label for="passes" class="col-xs-3 control-label">Geslaagd:</label>
+                        <div class="col-xs-7">                        
                             <input type="text" class="form-control" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-xs-2">
                             {% if not usersession[0].passed %}
-                                <button type="submit" class="col-md-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                                <button type="submit" class="col-xs-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
                             {% else %}
-                                <button type="submit" class="col-md-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                                <button type="submit" class="col-xs-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
                             {% endif %}
                         </div>
                     </div> 
@@ -76,26 +76,26 @@
                 <div class="panel-body">
                     {% for category in subcats %}
                         <div class="form-group">
-                            <h4 class="col-md-offset-1">{{category.Subcatname}}<small class="col-md-offset-1">{{category.percentage}} (min: {{category.passPercentage}})</small></h4>
+                            <h4 class="col-xs-offset-1">{{category.Subcatname}}<small class="col-xs-offset-1">{{category.percentage}} (min: {{category.passPercentage}})</small></h4>
                         </div>                 
 
                         {% for question in category.questions %}
                             <div class="panel panel-default">
                                 <div class="panel-heading "> &nbsp;
                                     {% if question.correct %}
-                                        <span class="col-md-1 glyphicon glyphicon-ok"></span>
+                                        <span class="col-xs-1 glyphicon glyphicon-ok"></span>
                                     {% else %}
-                                        <span class="col-md-1 glyphicon glyphicon-remove"></span>
+                                        <span class="col-xs-1 glyphicon glyphicon-remove"></span>
                                     {% endif %}
-                                    <div class="col-md-5 ">Vraag {{loop.index}}</div>
-                                    <div class="col-md-2 col-md-offset-3 "><small>Gewicht: {{question.weight}}</small></div>
+                                    <div class="col-xs-5 ">Vraag {{loop.index}}</div>
+                                    <div class="col-xs-2 col-xs-offset-3 "><small>Gewicht: {{question.weight}}</small></div>
                                 </div>
 
                                 <div class="panel-body" style="font-weight: normal">     
-                                    <div class="col-md-9">
+                                    <div class="col-xs-9">
                                         <p>{{ question.text|raw }}</p>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-xs-3">
                                         {% if question.media is not empty %}
                                             {% for file in question.media %}
                                                 <figure class="">
@@ -112,7 +112,7 @@
             </div> 
             {% block terugknop %}
                 <div class="form-group">
-                    <div class="col-md-offset-1">
+                    <div class="col-xs-offset-1">
                         <input type="hidden" name="selectsession" value="{{usersession[0].testsession.id}}">
                         <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/showsessiondetail/"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
                     </div>

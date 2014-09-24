@@ -2,6 +2,9 @@
     CSS voor een responsive menu 
 */
 @media screen and (max-width:650px) {
+  .resp {
+    width:100%;
+  }
     aside.resp *{
         margin: 0;
         padding: 0;
