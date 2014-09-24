@@ -10,6 +10,7 @@ use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Model\Entity\User;
+use Mctesting\Model\Entity\Feedback;
 
 /**
  * Description of homecontroller
@@ -140,6 +141,8 @@ class UsermanagementController extends AbstractController {
             $user->setLastName($_POST["fnaam"]);
             
             if (UserService::updateUser($user)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gebruiker succesvol aangepast', 1);
                 header("location: " . ROOT . "/usermanagement/userdetails/" . $user->getRRnr());
             }
         } else {
