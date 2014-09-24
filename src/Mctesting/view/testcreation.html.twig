@@ -82,26 +82,28 @@
 
                     <div class="col-sm-9"> 
                         {% for subcat in subcats %}  
-                            <div class="panel panel-default"> 
-                                <div class="panel-heading categorie clearfix">   
-                                    <div class="col-xs-1">
-                                        <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{subcat.id}}" id="subcat{{subcat.id}}" class=""/>
-                                    </div>                    
-                                    <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname }}</label>                         
-                                </div>          
-                                <ul class="list-group">
-                                    {% for question in subcat.questions %}   
-                                        <li class="list-group-item subcategorie clearfix">
-                                            <label for="questionid{{question.id}}" class=""></label>
-                                            <div class="col-xs-1">                    
-                                                <input type="checkbox" class="{{subcat.id}}" name="question[]" value="{{question.id}}" id="questionid{{question.id}}"/>
-                                            </div>                
-                                            <div class="col-xs-8">{{question.text|raw}}</div>                                            
-                                            <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
+                            {% if subcat.questions|length > 0 %}
+                                <div class="panel panel-default"> 
+                                    <div class="panel-heading categorie clearfix">   
+                                        <div class="col-xs-1">
+                                            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{subcat.id}}" id="subcat{{subcat.id}}" class=""/>
+                                        </div>                    
+                                        <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname }}</label>                         
+                                    </div>          
+                                    <ul class="list-group">
+                                        {% for question in subcat.questions %}   
+                                            <li class="list-group-item subcategorie clearfix">
+                                                <label for="questionid{{question.id}}" class=""></label>
+                                                <div class="col-xs-1">                    
+                                                    <input type="checkbox" class="{{subcat.id}}" name="question[]" value="{{question.id}}" id="questionid{{question.id}}"/>
+                                                </div>                
+                                                <div class="col-xs-8">{{question.text|raw}}</div>                                            
+                                                <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>                           
