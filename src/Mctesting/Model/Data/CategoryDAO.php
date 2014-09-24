@@ -36,7 +36,8 @@ class CategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorie kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -45,7 +46,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM categorie';
+        $sql = 'SELECT * FROM categorie ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -68,11 +69,12 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Kon geen categorieset ophalen, gelieve dit te controleren');
+                throw new ApplicationException('Er zijn geen categorieën gevonden');
             }
         } else
         {
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -81,7 +83,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid';
+        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -108,7 +110,8 @@ class CategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -117,7 +120,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM categorie where actief = 1';
+        $sql = 'SELECT * FROM categorie where actief = 1 ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -144,7 +147,8 @@ class CategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen categorieset statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -165,11 +169,12 @@ class CategoryDAO
                 return true;
             } else
             {
-                throw new ApplicationException('Deze categorie bestaat al');
+                throw new ApplicationException('De categorie ('.$catname.') bestaat al, gelieve de categorie een andere naam te geven');
             }
         } else
         {
-            throw new ApplicationException('Ophalen categorie statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorie ('.$catname.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -182,11 +187,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catname' => $catname)))
-        {
-            
+        {            
         } else
         {
-            throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon geen categorie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -199,11 +204,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
-        {
-            
+        {            
         } else
         {
-            throw new ApplicationException('Kon de categorie in de database niet op actief zetten, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de categorie in de database niet op actief zetten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -216,11 +221,11 @@ class CategoryDAO
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
-        {
-            
+        {            
         } else
         {
-            throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 

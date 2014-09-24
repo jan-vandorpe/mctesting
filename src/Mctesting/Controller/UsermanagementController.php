@@ -8,6 +8,7 @@ use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of homecontroller
@@ -55,11 +56,13 @@ class UsermanagementController extends AbstractController {
 
         //als het een valid .csv file is
         if ($uploadedFile[1] == null) {
+            ini_set('auto_detect_line_endings', true);
             $notValid = false;
             $file = fopen($folder . $fileName, "r");
-            $i = 0;
             $fail = 0;
             $success = 0;
+            $wrongdata = 0;
+            $timestamp = date('Y-m-d G:i:s');
 
             //eerste lijn overslaan, hierin zitten de koppen
             fgetcsv($file, 1000, ";", "'");
@@ -68,12 +71,16 @@ class UsermanagementController extends AbstractController {
 
             //regel per regel de .csv file lezen
             while (!feof($file)) {
-                $data[$i] = fgetcsv($file, 1000, ";", "'");
 
-                $RRNr = $data[$i][0];
-                $firstName = $data[$i][1];
-                $lastName = $data[$i][2];
-                $i++;
+                $data = fgetcsv($file, 1000, ";", "'");
+                $RRNr = $data[0];
+                if (isset($data[1])) {
+                    $firstName = $data[1];
+                }
+
+                if (isset($data[2])) {
+                    $lastName = $data[2];
+                }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
                 if ($firstName !== null and $lastName !== null && UserService::isValidRRNRFormat($RRNr) == true) {
@@ -82,58 +89,45 @@ class UsermanagementController extends AbstractController {
                         array_push($statussen, $status);
                         $fail ++;
                     } else {
-                        if (UserService::create($firstName, $lastName, $RRNr)) {
+                        if (UserService::createCSVuser($firstName, $lastName, $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
 
                             $status['success'] = "toegevoegd <br>";
                             array_push($statussen, $status);
                             $success ++;
                         } else {
-                            print("fout");
+                            print ("fout");
                         }
+                    }
+                    //check for whitespaces
+                } else {
+                    if ($firstName != "" && $lastName != "" && $RRNr != "") {
+                        $status['wrongdata'] = $i;
+                        array_push($statussen, $status);
+                        $wrongdata ++;
                     }
                 }
             }
-
             fclose($file);
-            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid));
+            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
         } else {
-            $notValid = true;
-            $this->render('importstatus.html.twig', array("notValid" => $notValid));
+//            $notValid = true;
+//            $this->render('importstatus.html.twig', array("notValid" => $notValid));
+            throw new ApplicationException('Dit is geen geldig .CSV bestand!');
         }
     }
 
     public function newUser() {
-        $firstName = $_POST["vnaam"];
-        $lastName = $_POST["fnaam"];
-        $RRNr = $_POST["rrnr"];
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])) {
+            $firstName = $_POST["vnaam"];
+            $lastName = $_POST["fnaam"];
+            $RRNr = $_POST["rrnr"];
+            $timestamp = date('Y-m-d G:i:s');
+            if (UserService::validateUser($firstName, $lastName, $RRNr, $timestamp) == true) {
                 header("location: " . ROOT . "/usermanagement/listusers");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
             }
         } else {
-            print ("Niet valid.");
-        }
-    }
-
-    public function registerUser() {
-        $firstName = $_POST["vnaam"];
-        $lastName = $_POST["fnaam"];
-        $RRNr = $_POST["rrnr"];
-
-        if ($firstName !== null and $lastName !== null and UserService::isValidRRNRFormat($RRNr) == true) {
-            if (UserService::create($firstName, $lastName, $RRNr)) {
-                header("location: " . ROOT . "/home/go");
-            } else {
-                //header("location: ".ROOT."/home/newuserform");
-                //echo("lolz");
-            }
-        } else {
-            print ("Niet valid.");
+            throw new ApplicationException('Gelieve alle vakjes in te vullen');
         }
     }
 
@@ -188,7 +182,11 @@ class UsermanagementController extends AbstractController {
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
-        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId);
+        if ($userSession === false) {
+            throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
+        }
+        $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
+        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
         //var_dump($userSession);
         //var_dump($subcategories);
         //var_dump($userId);

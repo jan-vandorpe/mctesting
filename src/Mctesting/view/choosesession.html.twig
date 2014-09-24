@@ -11,31 +11,25 @@
 
 
 {% block content %}
-
-      <h1>Welkom op de testing website van de VDAB</h1>
-      <br>
+  <h1>Welkom op de testing website van de VDAB</h1>
+  <br>
   <div class="intropage ">
     {% if app.user is defined and app.user is not empty %}
       <h4> U bent ingelogd als {{app.user.group.name}}</h4>
       <br>
+      <h5>U bent ingeschreven voor de volgende tests:</h5>
       {% for sessionid,test in session.sessionchoices %}
         {% if session.sessionParticipation[sessionid].participated != 1 %}
-          <h5>U bent ingeschreven voor de volgende tests:</h5>
           <ul class="nav nav-stacked">
-          {% for testid, testname in test %}
-            {# If app user hasn't taken test yet, print it #}
-            <li>
-              <a href='{{ app.root }}/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a>
-            </li>
+            {% for testid, testname in test %}
+              {# If app user hasn't taken test yet, print it #}
+              <li>
+                <a href='{{ app.root }}/test/runtest/{{ testid }}/{{ sessionid }}' value="{{ sessionid }}">{{ testname }}</a>
+              </li>
             {% endfor %}  
-          </ul>
-          {% endif %}
-        {% endfor %}  
-
-
-
-    {% endif %}    
+          {% endif %}    
+        {% endfor %}
+      {% endif %}
   </div>   
-
 {% endblock content %}
 

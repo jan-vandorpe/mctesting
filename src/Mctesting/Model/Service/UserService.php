@@ -7,6 +7,7 @@ use Mctesting\Model\Entity\TestSession;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Data\UserDAO;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of UserService
@@ -54,7 +55,7 @@ class UserService {
 //                 //throw new app exc
 //                 print( "could not login with these credentials");
 //             }
-            } elseif(UserService::isValidRRNRFormat($login)) {
+            } elseif (UserService::isValidRRNRFormat($login)) {
                 //print(" rijksregister");
                 $user = UserDAO::selectByRRNr($login);
                 $sessions = TestSessionService::getSessionByPW($password);
@@ -65,9 +66,12 @@ class UserService {
                         $test = $session->getTest();
                         $name = $test->getTestName();
                         $testid = $test->getTestId();
-                        $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
-                        $_SESSION["sessionchoices"][$id] = array($testid => $name);
-                        $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
+                        //throw new ApplicationException($id.' and '.$user->getRRnr());
+                        if (UserSessionService::getByUserANDSession($id, $user->getRRnr()) !== false) {
+                            $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
+                            $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                            $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
+                        }
                     }
                     //$_SESSION["testsessions"]=$sessions;  unused?
                     UserService::serializeToSession($user);
@@ -88,7 +92,7 @@ class UserService {
 //             }
             }
         } else {
-          throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
+            throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
         }
     }
 
@@ -116,8 +120,9 @@ class UserService {
             $result = true;
             return $result;
         } else {
-            $result = false;
-            return $result;
+            //Voorlopig in comment voor import CSV fouthandler
+            //throw new ApplicationException('Rijksregisternummer is niet correct');
+            return false;
         }
         return $result;
     }
@@ -143,10 +148,22 @@ class UserService {
         return $hash;
     }
 
-    public function create($firstName, $lastName, $RRNr) {
+    public function create($firstName, $lastName, $RRNr, $timestamp) {
         //cleanup
         $userGroup = 1;
-        if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup)) {
+        if (UserDAO::insert($firstName, $lastName, $RRNr, $userGroup, $timestamp)) {
+            return true;
+        } else {
+            //exception
+            return false;
+        }
+//        }
+    }
+
+    public function createCSVuser($firstName, $lastName, $RRNr, $timestamp) {
+        //cleanup
+        $userGroup = 1;
+        if (UserDAO::insertCSVuser($firstName, $lastName, $RRNr, $userGroup, $timestamp)) {
             return true;
         } else {
             //exception
@@ -168,6 +185,45 @@ class UserService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function validateNames($firstName, $lastName) {
+        $errors = array();
+        $firstName = str_replace('-', '', $firstName);
+        $lastName = str_replace('-', '', $lastName);
+        if (!ctype_alpha($firstName)) {
+            array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
+            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        }
+        if (!ctype_alpha($lastName)) {
+            array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
+            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        }
+        //assess errors
+        if (empty($errors)) {
+            return true;  //set to true for prod
+        } else {
+            $errormsg = '';
+            foreach ($errors as $key => $value) {
+                if ($errormsg !== '') {
+                    $errormsg .= '<br>';
+                }
+                $errormsg .= $value;
+            }
+            throw new ApplicationException($errormsg);
+        }
+    }
+
+    public function validateUser($firstName, $lastName, $RRNr, $timestamp) {
+        if ($firstName !== '' && $lastName !== '' && UserService::isValidRRNRFormat($RRNr) == true && UserService::validateNames($firstName, $lastName) == true) {
+            if (UserService::create($firstName, $lastName, $RRNr, $timestamp)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gebruiker successvol aangemaakt', 1);
+                return true;
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle vakjes in te vullen');
         }
     }
 

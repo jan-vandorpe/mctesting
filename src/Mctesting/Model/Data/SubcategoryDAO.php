@@ -41,7 +41,8 @@ class SubcategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorie statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De subcategorie ('.$subcatid.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -50,7 +51,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid';
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
@@ -91,7 +92,7 @@ class SubcategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
+            throw new ApplicationException('De subcategorieën van de gekozen categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -100,7 +101,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid AND actief = 1';
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid AND actief = 1 ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':catid' => $catid)))
@@ -141,7 +142,7 @@ class SubcategoryDAO
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
+            throw new ApplicationException('De actieve subcategorieën voor de categorie ('.$catid.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -150,7 +151,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid';
+        $sql = 'SELECT * FROM subcategorie ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -176,11 +177,11 @@ class SubcategoryDAO
                 return $subcatarray;
             } else
             {
-                throw new ApplicationException('Kon subcategorieën niet ophalen, gelieve dit te controleren');
+                throw new ApplicationException('Er zijn geen subcategorieën gevonden');
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
+            throw new ApplicationException('De subcategorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -189,7 +190,7 @@ class SubcategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM subcategorie order by catid where actief = 1';
+        $sql = 'SELECT * FROM subcategorie order by catid where actief = 1 ORDER BY subcatnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
@@ -215,11 +216,12 @@ class SubcategoryDAO
                 return $subcatarray;
             } else
             {
-                throw new ApplicationException('Kon subcategorieën niet ophalen, gelieve dit te controleren');
+                throw new ApplicationException('Er zijn geen actieve subcategorieën gevonden');
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieën statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();  
+            throw new ApplicationException('De actieve subcategorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -238,7 +240,7 @@ class SubcategoryDAO
             if (!empty($result))
             //if statement returned a value
             {
-                throw new ApplicationException('Subcategorie bestaat al');
+                throw new ApplicationException('De subcategorie ('.$subcatname.') bestaat al, gelieve de subcategorie een andere naam te geven');
             } else
             //if statement returns no value
             {
@@ -246,7 +248,7 @@ class SubcategoryDAO
             }
         } else
         {
-            throw new ApplicationException('check voor naam subcategorie kan niet worden uitgevoerd');
+            throw new ApplicationException('De subcategorie ('.$subcatname.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -264,8 +266,7 @@ class SubcategoryDAO
         } else
         {
             $error = $stmt->errorInfo();
-
-            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren' . $error[2]);
+            throw new ApplicationException('Kon geen subcategorie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -282,7 +283,8 @@ class SubcategoryDAO
             
         } else
         {
-            throw new ApplicationException('Kon de subcategorie in de database niet op actief zetten, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de subcategorie in de database niet op actief zetten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -299,7 +301,8 @@ class SubcategoryDAO
             
         } else
         {
-            throw new ApplicationException('Kon de subcategorie in de database niet passief zetten, gelieve dit te controleren');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 

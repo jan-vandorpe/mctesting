@@ -36,12 +36,8 @@ class MediaDAO
             }
             return $result;
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Media selectByQuestion statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De media voor de vraag ('.$questionId.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -61,12 +57,8 @@ class MediaDAO
                                 ':filename' => $filename,
                                 ))) {
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Media insert statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Kon geen media in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }

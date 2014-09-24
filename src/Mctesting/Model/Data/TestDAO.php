@@ -17,7 +17,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test';
+        $sql = 'SELECT * FROM test ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -42,10 +42,11 @@ class TestDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectAll recordset is leeg');
+                throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            throw new ApplicationException('users selectAll statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -74,15 +75,11 @@ class TestDAO {
                 $test->setStatus($record['actief']);
                 return $test;
             } else {
-                throw new ApplicationException('Test selectById record is leeg');
+                throw new ApplicationException('Er werd geen test ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Test selectById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De test ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -90,7 +87,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test WHERE beheerder = :adminId order by testnaam';
+        $sql = 'SELECT * FROM test WHERE beheerder = :adminId ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':adminId' => $adminId,))) {
@@ -118,7 +115,8 @@ class TestDAO {
                 //throw new ApplicationException('users selectByBeheerder recordset is leeg');
             }
         } else {
-            throw new ApplicationException('users selectByBeheerder statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();  
+            throw new ApplicationException('De testen van de gekozen beheerder ('.$adminId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -139,15 +137,11 @@ class TestDAO {
                 //$test->setTestCreator($record['beheerder']);
                 return $testcatname;
             } else {
-                throw new ApplicationException('Test selectById record is leeg');
+                throw new ApplicationException('Er werd geen categorienaam gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Test selectById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De categorienaam van de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -167,13 +161,11 @@ class TestDAO {
             foreach ($questions as $questionId) {
                 TestQuestionService::create($testid, $questionId);
             }
-
-
             return $testid;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze test niet toevoegen: ' . $error[2]);
+            throw new ApplicationException('Kon geen test in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -232,7 +224,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief';
+        $sql = 'SELECT * FROM test WHERE testid = :testid AND actief = :actief ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //bind statement parameters
         $stmt->bindParam(':testid', $id);
@@ -258,15 +250,11 @@ class TestDAO {
                 $test->setStatus($record['actief']);
                 return $test;
             } else {
-                throw new ApplicationException('Test selectActiveFullTestById record is leeg');
+                throw new ApplicationException('Er is geen actieve test ('.$id.') gevonden');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Test selectActiveFullTestById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De actieve test ('.$id.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -282,7 +270,7 @@ class TestDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de status van deze test niet aanpassen: ' . $error[2]);
+            throw new ApplicationException('Kon de status van deze test ('.$testid.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
             
         }
     }

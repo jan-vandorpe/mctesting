@@ -8,6 +8,7 @@ use Mctesting\Model\Service\QuestionService;
 use Mctesting\Model\Entity\Answer;
 use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
+use Mctesting\Exception\ApplicationException;
 
 /**
  * Description of QuestionController
@@ -58,7 +59,9 @@ class QuestionController extends AbstractController
         $i = 0;
       foreach ($_FILES['media']['name'] as $value) {
         list($file,$error) = UploadManager::upload('media','../public/images/','jpg,jpeg,gif,png',$i);
-        if($error) print $error;
+        if($error) {
+          throw new ApplicationException($error);
+        }
         $i++;
         array_push($questionMediaFileNames, $file);
       }
@@ -78,9 +81,11 @@ class QuestionController extends AbstractController
         $answer->setId($index);
         $answer->setText($text);
         if($_FILES['answerMedia']['error'][$index]==0){
-          print $index;
+          //print $index;
         list($file,$error) = UploadManager::upload('answerMedia','../public/images/','jpg,jpeg,gif,png',$i);
-        if($error) print $error;
+        if($error) {
+          throw new ApplicationException($error);
+        }
         $answer->setMedia($file);
         }
         $i++;

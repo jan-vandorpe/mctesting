@@ -19,7 +19,7 @@ class UserSessionDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid';
+        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid ORDER BY rijksregisternr';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessieid' => $sessionId,))) {
@@ -45,15 +45,11 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('UserSession selectBySession recordset is leeg');
+                throw new ApplicationException('Er werd geen sessie ('.$sessionId.') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'UserSession selectBySession statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De sessie ('.$sessionId.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -87,15 +83,12 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
+                return false;
+                //throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'UserSession selectBySession statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De sessie kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 
@@ -129,15 +122,11 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('UserSession selectByUser recordset is leeg');
+                throw new ApplicationException('Er werden geen sessies gevonden voor de gekozen gebruiker ('.$userId.')');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'UserSession selectByUser statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De testen van de gekozen gebruiker ('.$userId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -155,7 +144,7 @@ class UserSessionDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessiegebruiker niet toevoegen: ' . $error[2]);
+            throw new ApplicationException('Kon geen sessiegebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -197,7 +186,7 @@ class UserSessionDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessiegebruiker niet updaten: ' . $error[2]);
+            throw new ApplicationException('Kon deze sessiegebruiker niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -214,7 +203,7 @@ class UserSessionDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('kan de gebruiker niet delibereren: ' . $error[2]);
+            throw new ApplicationException('kan de gebruiker niet delibereren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -239,7 +228,7 @@ class UserSessionDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessiegebruikercategoriescores niet aanmaken: ' . $error[2]);
+            throw new ApplicationException('Kon geen subcat resultaten in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }

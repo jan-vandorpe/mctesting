@@ -40,6 +40,9 @@ class TestController extends AbstractController
         //if user already took test, redirect to homepage
       $user = UserService::unserializeFromSession();
       $sessionuser = UserSessionService::getByUserANDSession($testSessionId, $user->getRRnr());
+      if($sessionuser === false ){
+        throw new ApplicationException('Er zijn geen testsessies gevonden');
+      }
       if($sessionuser[0]->getParticipated() === 1){
         header("location: " . ROOT . "/home");
       }
@@ -49,12 +52,14 @@ class TestController extends AbstractController
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
         $catname = TestService::getCatName($testId);
-
-        //shuffle questions
+        if(isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()){
+          $test = unserialize($_SESSION['test']);
+        } else {
+         //shuffle questions
         $test->shuffleQuestions();
         //shuffle answers
         $test->shuffleAnswers();
-
+        }
         //store in session for process method
         $_SESSION['test'] = serialize($test);
         $_SESSION['testsessionid'] = $testSessionId;
@@ -76,11 +81,14 @@ class TestController extends AbstractController
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
         $catname = TestService::getCatName($testId);
-
-        //shuffle questions
+        if(isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()){
+          $test = unserialize($_SESSION['test']);
+        } else {
+         //shuffle questions
         $test->shuffleQuestions();
         //shuffle answers
         $test->shuffleAnswers();
+        }
 
         //store in session for process method
         $_SESSION['test'] = serialize($test);
@@ -95,6 +103,7 @@ class TestController extends AbstractController
     
     public function processDummy(){
         $this->render('testcreation.html.twig', array());
+        
     }
     
     public function process()
@@ -114,6 +123,7 @@ class TestController extends AbstractController
             TestService::processAnswers($test, $_POST['answer'], $userSession);
             //render confirm page
             $this->render('test_confirm.html.twig', array());
+            unset($_SESSION['test']);
         } else {
             //redirect to runtest
             header("location: " . ROOT . "/test/runTest/$testId/$testSessionId");

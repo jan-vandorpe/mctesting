@@ -12,7 +12,7 @@ class UserDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers';
+        $sql = 'SELECT * FROM gebruikers ORDER BY familienaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -35,10 +35,11 @@ class UserDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectAll recordset is leeg');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden');
             }
         } else {
-            throw new ApplicationException('users selectAll statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -46,7 +47,7 @@ class UserDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 1';
+        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 1 ORDER BY familienaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -69,10 +70,11 @@ class UserDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('users selectAllgebruikers recordset is leeg');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden');
             }
         } else {
-            throw new ApplicationException('users selectAllgebruikers statement kon niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -104,10 +106,11 @@ class UserDAO {
                     throw new ApplicationException('Wachtwoord is incorrect');
                 }
             } else {
-                throw new ApplicationException('Geen user gevonden met de opgegeven waarden.');
+                throw new ApplicationException('Er zijn geen gebruikers gevonden met het email (' . $email . ')');
             }
         } else {
-            throw new ApplicationException('User selectByEmail statement kan niet worden uitgevoerd.');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers met het email (' . $email . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -137,29 +140,51 @@ class UserDAO {
                 //CSV controlleerd als gebruikers als aanwezig zijn in database,
                 //Deze error gecomment anders wordt hij weergegeven en worden gebruikers 
                 //niet aan de database toegevoegd.
-                
                 //throw new ApplicationException('Geen gebruiker gevonden met dit rijksregisternummer.');
                 return false;
             }
         } else {
-            throw new ApplicationException('User selectByRRNr statement kan niet worden uitgevoerd.');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers met het rrnr (' . $rrnr . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
-    public static function insert($firstName, $lastName, $RRNr, $userGroup) {
+    public static function insert($firstName, $lastName, $RRNr, $userGroup, $timestamp) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`) VALUES (:RRNr , :firstName , :lastName , :group)';
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`, `toegevoegd`) VALUES (:RRNr , :firstName , :lastName , :group, :timestamp)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup))) {
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup, ':timestamp' => $timestamp))) {
             //test if statement succes
             return true;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze gebruiker niet toevoegen: ' . $error[2]);
+            if ($error[1] == 1062){
+                throw new ApplicationException('De gebruiker ('.$RRNr.') bestaat al');
+            }else{
+                throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            }
+            //header("location: /mctesting/agga/dagga");
+        }
+    }
+
+    public static function insertCSVuser($firstName, $lastName, $RRNr, $userGroup, $timestamp) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'INSERT INTO `gebruikers`(`rijksregisternr`, `voornaam`, `familienaam`,`gebruikerstype`, `toegevoegd`) VALUES (:RRNr , :firstName , :lastName , :group, :timestamp)';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':RRNr' => $RRNr, ':firstName' => $firstName, ':lastName' => $lastName, ':group' => $userGroup, ':timestamp' => $timestamp))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            //throw new ApplicationException($error[2]);
+            //throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
@@ -177,7 +202,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de status van deze gebruiker niet aanpassen: ' . $error[2]);
+            throw new ApplicationException('Kon de status van deze gebruiker (' . $RRNr . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -194,7 +219,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze gebruiker niet verwijderen: ' . $error[2]);
+            throw new ApplicationException('Kon de gebruiker (' . $RRNr . ') niet verwijderen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 

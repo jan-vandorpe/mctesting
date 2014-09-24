@@ -19,7 +19,7 @@
     </h1>
     <blockquote class="">
       <p class="">Categorie: {{ catname|capitalize }} </p>
-      <footer class="" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
+      <footer class="no-print" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
       <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
     </blockquote>
   </div>
@@ -28,16 +28,16 @@
   <div class="{% block class %}testafleggenpag {% endblock class %}">
     <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post" role="form" class="form-horizontal">
       {% for question in test.questions %}
-        <div class="panel panel-default">
+        <div class="panel panel-default no-break print-question">
           <!-- Default panel contents -->
-          <div class="panel-heading">Vraag {{loop.index}}</div>
+          <div class="panel-heading ">Vraag {{loop.index}}</div>
           <div class="panel-body">
             <div class="row">
               <div class="col-md-9">
                 <span class="col-md-1 glyphicon glyphicon-comment"></span> 
                 <div class="col-md-11"><p>{{ question.text|raw }}</p></div>
               </div>
-              <div class="col-md-3">
+              <div class="col-md-3 print-image">
                 {% if question.media is not empty %}
                   {% for file in question.media %}
                     <figure class="">
@@ -49,11 +49,11 @@
             </div>
           </div>
           <!-- List group -->
-          <ul class="list-group">
+          <ul class="list-group ">
             {% for answer in question.answers %}
-              <li class="list-group-item answer">
+              <li class="list-group-item answer print-answers">
                 <div class="row">
-                  <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style=""/>
+                  <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style="" required/>
                   <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
                   <div class="col-md-9">
                     <h4>
@@ -62,7 +62,7 @@
                       {{ answer.text|raw }}
                     </h4>
                   </div>
-                  <div class="col-md-3 ">
+                  <div class="col-md-3 print-image">
                     {% if answer.media is not empty %}
                       <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
                     {% endif %}
@@ -73,10 +73,10 @@
           </ul>
         </div>
       {% endfor %}
-      <div class="row">
+      <div class="row no-print">
         <div class="col-md-5 col-md-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
       </div>
-      <div class="row">
+      <div class="row no-print">
         <input class="btn btn-default btn-lg col-md-2 col-md-offset-5" type="submit" value="Test voltooien">
       </div>
     </form>

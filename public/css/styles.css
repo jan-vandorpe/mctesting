@@ -9,9 +9,10 @@ and open the template in the editor.
 */
 
 
+
 /*first child of list group in panel did not have border top, now it does */
 .panel > .panel-body + .list-group .list-group-item:first-child {
-  border-top: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
 }
 
 
@@ -19,46 +20,53 @@ and open the template in the editor.
     Test answers layout
 **/
 .answer.div {
-  position: relative;
+    position: relative;
 }
 .answer input[type="radio"]{
-  display:none;
+    display:none;
 }
 .answer label{
-  width:100%;
-  position:absolute;
-  left:0;
-  top:0;
-  height: 100%;
-  z-index: 5;
+    width:100%;
+    position:absolute;
+    left:0;
+    top:0;
+    height: 100%;
+    z-index: 5;
 
 }
 .answer input[type="radio"]:checked+label{ 
-  border:8px solid rgba(0, 132, 255, 0.4);
+    border:8px solid rgba(0, 132, 255, 0.4);
 } 
 
 /**
     Upload buttons
 **/
 .btn-file {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 .btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 100px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  outline: none;
-  background: white;
-  cursor: inherit;
-  display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
 } 
+
+// ** input textvak **//
+
+input[readonly] {
+    background-color: white !important;
+    cursor: text !important;
+}
 
 /**
     categorie lijst layout

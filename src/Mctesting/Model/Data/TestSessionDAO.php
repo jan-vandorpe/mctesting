@@ -20,7 +20,7 @@ class TestSessionDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessie WHERE testid = :testid';
+        $sql = 'SELECT * FROM sessie WHERE testid = :testid ORDER BY datum';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':testid' => $testId,))) {
@@ -42,15 +42,17 @@ class TestSessionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('TestSession selectByTest recordset is leeg');
+                throw new ApplicationException('Er zijn geen sessies voor de test ('.$testId.') gevonden');
             }
         } else {
+//            $error = $stmt->errorInfo();
+//            $errormsg = 'TestSession selectByTest statement kan niet worden uitgevoerd'
+//                    . '<br>'
+//                    . '<br>'
+//                    . $error[2];
+//            throw new ApplicationException($errormsg);
             $error = $stmt->errorInfo();
-            $errormsg = 'TestSession selectByTest statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            throw new ApplicationException('De sessies voor de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -59,7 +61,7 @@ class TestSessionDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessie WHERE sessieww = :sessionpw';
+        $sql = 'SELECT * FROM sessie WHERE sessieww = :sessionpw ORDER BY datum';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':sessionpw' => $password,))) {
@@ -87,13 +89,9 @@ class TestSessionDAO
                 throw new ApplicationException('Er werden geen tests gevonden voor deze combinatie van rijksregisternummer en wachtwoord. Probeer opnieuw of vraag hulp'
                         . ' aan de instructeur/instructrice');
             }
-        } else {
+        } else {//           
             $error = $stmt->errorInfo();
-            $errormsg = 'TestSession selectByPW statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            throw new ApplicationException('Sesies konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -119,15 +117,17 @@ class TestSessionDAO
                 $testSession->setActive((boolean)$record['actief']);
                 return $testSession;
             } else {
-                throw new ApplicationException('Sessie selectById record is leeg');
+                throw new ApplicationException('Er werd geen sessie ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
+//            $error = $stmt->errorInfo();
+//            $errormsg = 'Sessie selectById statement kan niet worden uitgevoerd'
+//                    . '<br>'
+//                    . '<br>'
+//                    . $error[2];
+//            throw new ApplicationException($errormsg);
             $error = $stmt->errorInfo();
-            $errormsg = 'Sessie selectById statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            throw new ApplicationException('De sessie ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -150,7 +150,7 @@ class TestSessionDAO
         } else {            
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessie niet toevoegen: '.$error[2]);
+            throw new ApplicationException('Kon geen sessie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }

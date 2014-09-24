@@ -22,19 +22,18 @@ class TestQuestionDAO {
         //prepare sql statement
         $sql = 'INSERT INTO `testvragen`(`testid`, `vraagid`) 
                                     VALUES (:testid,:vraagid)';
-               $stmt = $db->prepare($sql);
-                //test if statement can be executed
-               if ($stmt->execute(array(':testid' => $testid,':vraagid' => $questionId ))) {                   
-               }else{
-                   $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze testvraag niet toevoegen: '.$error[2]);              
-            }
+        $stmt = $db->prepare($sql);
+         //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testid,':vraagid' => $questionId ))) {                   
+        }else{
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon geen testvraag in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);              
+        }
     }
     
     
     
-    public static function selectCategoriesAnsweredQuestions($sessieid, $userid)
+    public static function selectCategoriesAnsweredQuestions($sessieid, $userid, $testId)
     {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -45,13 +44,14 @@ class TestQuestionDAO {
 //            WHERE sessiegebruikerantwoorden.sessieid = :sessieid AND sessiegebruikerantwoorden.gebruikerid = :userid
 //            ';
         $sql = 'SELECT sessiegebruikercategoriepercentages.subcatid, score, percentage, subcatnaam, tebehalenscore
-                from sessiegebruikercategoriepercentages inner join ( subcategorie inner join testsubcat on subcategorie.subcatid = testsubcat.subcatid)
-                on sessiegebruikercategoriepercentages.testid = testsubcat.testid
-                and sessieid = :sessieid 
-                and rijksregisternr = :userid';
+               from sessiegebruikercategoriepercentages, subcategorie, testsubcat where subcategorie.subcatid = sessiegebruikercategoriepercentages.subcatid and 
+               testsubcat.subcatid = subcategorie.subcatid
+               and testsubcat.testid = :testid
+               and sessieid = :sessieid
+               and rijksregisternr = :userid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid)))
+        if ($stmt->execute(array(':sessieid' => $sessieid,':userid' => $userid, ':testid' => $testId)))
         {
             //test if statement retrieved something
             $resultset = $stmt->fetchall();
@@ -79,7 +79,8 @@ class TestQuestionDAO {
             }
         } else
         {
-            throw new ApplicationException('Ophalen subcategorieset statement kan niet worden uitgevoerd');
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De subcategorieën konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     
@@ -115,15 +116,11 @@ class TestQuestionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Vraag selectByCategory record is leeg');
+                throw new ApplicationException('De gekozen subcategorie ('.$subcatId.') bevat geen vragen');
             }
         } else {
-            $error = $stmt->errorInfo();
-            $errormsg = 'Vraag selectByCategory statement kan niet worden uitgevoerd'
-                    . '<br>'
-                    . '<br>'
-                    . $error[2];
-            throw new ApplicationException($errormsg);
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subcatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }

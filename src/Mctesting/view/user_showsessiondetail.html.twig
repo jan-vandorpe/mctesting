@@ -1,48 +1,48 @@
 {% extends "template/layout.html.twig" %}
 
 {% block title %}
-  {{ parent() }}Gebruiker - Details
+    {{ parent() }}Gebruiker - Details
 {% endblock title %}
 
 {% block contentHeader %}
-  <div class="panel-heading">
-    <h1>
-      Gebruiker details
-      <br>
-    </h1>
-  </div>
+    <div class="panel-heading">
+        <h1>
+            Gebruiker details
+            <br>
+        </h1>
+    </div>
 {% endblock %}
 {% block content %}
-  <h3><small>Resultaten van </small>{{ usersessions[0].user.firstname }} {{ usersessions[0].user.lastname }}</h3>
-  <ul class="list-group">
-    <li class="list-group-item clearfix">
-      <b>
-        <div class="col-md-2">Test</div>
-        <div class="col-md-2">Sessie datum</div>
-        <div class="col-md-1">Score</div>
-        <div class="col-md-2">Percentage</div>
-        <div class="col-md-2">Geslaagd</div>
-        <div class="col-md-1">Afgelegd</div>
-        <div class="col-md-1">Details</div>
-      </b>
-    </li>
-    {% for usersession in usersessions %}
-      <li class="list-group-item clearfix">
-        <div class="col-md-2 overflow">{{ usersession.testsession.test.testname }}</div>
-        <div class="col-md-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
-        <div class="col-md-1">{{ usersession.score }}</div>
-        <div class="col-md-2">{{ usersession.percentage }}</div>
-        <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
-        <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
-        <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/usermanagement/showUserRapport/{{usersession.testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
-      </li>
-    {% endfor %}
-  </ul>
-  <form name="gebrtoev" class="form-horizontal" action="" method="post">
-    <div class="form-group">
-      <div class="col-md-offset-1">
-          <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/listusers"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
-      </div>
-  </div>
+    <h3><small>Resultaten van </small>{{ usersessions[0].user.firstname }} {{ usersessions[0].user.lastname }}</h3>
+    <ul class="list-group">
+        <li class="list-group-item clearfix">
+            <b>
+                <div class="col-md-2">Test</div>
+                <div class="col-md-2">Sessie datum</div>
+                <div class="col-md-1">Score</div>
+                <div class="col-md-2">Percentage</div>
+                <div class="col-md-2">Geslaagd</div>
+                <div class="col-md-1">Afgelegd</div>
+                <div class="col-md-1">Details</div>
+            </b>
+        </li>
+        {% for usersession in usersessions %}
+            <li class="list-group-item clearfix">
+                <div class="col-md-2 overflow">{{ usersession.testsession.test.testname }}</div>
+                <div class="col-md-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
+                <div class="col-md-1">{{ usersession.score }}</div>
+                <div class="col-md-2">{{ usersession.percentage }}</div>
+                <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
+                <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+                <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/usermanagement/showUserRapport/{{usersession.testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
+            </li>
+        {% endfor %}
+    </ul>
+    <form name="gebrtoev" class="form-horizontal" action="" method="post">
+        <div class="form-group">
+            <div class="col-md-offset-1">
+                <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/listusers"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+            </div>
+        </div>
     </form>
 {% endblock content %}

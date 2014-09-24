@@ -4,88 +4,35 @@ author: Bert
 */
 @media print{
 
-    @page{
-        size:auto;
-    }   
+  header, .footer, nav, footer, .no-print{
+    display:none    
+  }
 
-    @page:left{
-        margin-left:2cm;
-        margin-right:2cm;
-    }
-    @page:right{
-        margin-left:2cm;
-        margin-right:2cm;
-    }
+  .no-break {
+    page-break-inside: avoid;
+  }
 
-    html, body{
-        margin-top:0;
-        height:98%;
-    }
+  .print-image {
+    max-height:100px;
+    max-width: 100px;
+  }
 
-    .headerofpage{
-        font-size: 3em;
-        margin-bottom: 0.75em;
-    }
+  .print-question {
+    border:2px solid black;
+  }
+  .print-question > .list-group {
+    border-top:1px solid black;
 
-    .row{
-        width:100%;
-        float:left;
-        margin-left: 0;
-    }
+  }
+  .print-answers {
+    border-top:2px solid black;
+  }
+  .print-answers:before {
+    content: '';
+    height:50px;
+    width:50px;
+    border:1px solid black;
+    float:right;
+  }
 
-    .row .col-lg-1 {
-        display: none;
-    }
-
-    .row .col-lg-2 {
-        padding-left: 0;
-    }
-    .row .col-lg-3 {
-        padding-left: 0;
-    } 
-    .row .col-lg-4 {
-        padding-left: 0;
-    }
-    .row .col-lg-5 {
-        display:inline-block;
-        clear:none;
-    }
-    .row .col-lg-6 {
-        padding-left: 0;
-    }
-
-    table.table thead tr th, table.table tbody tr td{
-        padding-left: 0;
-        margin-left: 0;
-    }
-     
-    div.content{
-        height:98%;
-        width:100%;
-    }
-
-    header, .footer, nav, .no-print{
-        display:none    
-    }
-
-    .footer .headerpage .maincontainer {
-        position: fixed;
-        display: block;
-    }
-
-    div.container-fluid.maincontainer.clearFix{
-        height:98%;
-        margin-bottom:0;
-        padding-bottom:0;
-    }
-
-
-    /* categorielijst */
-    .catlijst h4 {
-        padding-left: 0;
-    }    
-    ul.subcathiding li, ul.subcathiding{
-        margin-left: 0;
-        padding-left: 0;
-    }
 }

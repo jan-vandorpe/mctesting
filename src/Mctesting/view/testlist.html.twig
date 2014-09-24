@@ -1,83 +1,83 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-  {{ parent() }}
+    {{ parent() }}
 
 {% endblock stylesheets %}
 
 {% block title %}
-  {{ parent() }}Tests
+    {{ parent() }}Tests
 {% endblock title%}
 
 {% block contentHeader %}
-  <div class="panel-heading">
-    <h1>
-      Testen lijst
-      <br>
-    </h1>
-  </div>
+    <div class="panel-heading">
+        <h1>
+            Testen lijst
+            <br>
+        </h1>
+    </div>
 {% endblock %}
 
 {% block content %}
-  <form name="testtebewerken" action="{{app.root}}/testadmin/changeuserstatus" method="post" id="testForm">
-    <ul class="list-group">
-      <li class="list-group-item clearfix">
-        <label class="col-md-12">
-        <div class="col-md-5 col-md-offset-1">Test naam</div>
-        <div class="col-md-1">maxduur</div>
-        <div class="col-md-2">aantal vragen</div>
-        </label>
-      </li>
-      {% if tests is empty %}
-        <li class="list-group-item-warning list-group-item">U heeft nog geen testen  aangemaakt.</li>
-        {% else %}
-          {% for test in tests %}   
-          <li class="list-group-item clearfix">
-            <label class="col-md-12" style="font-weight:normal">
-              <div class="col-md-1">
-                <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
-              </div>
-              <div class="col-md-5 overflow">{{test.TestName}}</div>
-              <div class="col-md-1">{{test.TestMaxDuration}}</div>
-              <div class="col-md-1">{{test.TestQuestionCount}}</div>
-              {% if test.status == 1 %}
-                <div class="col-md-2">Actief</div>
-              {% else %}
-                <div class="col-md-2">Inactief</div>
-              {% endif %}            
-              <div class="col-md-2"><a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a></div>
+    <form name="testtebewerken" action="{{app.root}}/testadmin/changeuserstatus" method="post" id="testForm">
+        <ul class="list-group">
+            <li class="list-group-item clearfix">
+                <label class="col-md-12">
+                    <div class="col-md-5 col-md-offset-1">Test naam</div>
+                    <div class="col-md-1">maxduur</div>
+                    <div class="col-md-2">aantal vragen</div>
+                </label>
+            </li>
+            {% if tests is empty %}
+                <li class="list-group-item-warning list-group-item">U heeft nog geen testen  aangemaakt.</li>
+                {% else %}
+                    {% for test in tests %}   
+                    <li class="list-group-item clearfix">
+                        <label class="col-md-12" style="font-weight:normal">
+                            <div class="col-md-1">
+                                <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
+                            </div>
+                            <div class="col-md-5 overflow">{{test.TestName}}</div>
+                            <div class="col-md-1">{{test.TestMaxDuration}}</div>
+                            <div class="col-md-1">{{test.TestQuestionCount}}</div>
+                            {% if test.status == 1 %}
+                                <div class="col-md-2">Actief</div>
+                            {% else %}
+                                <div class="col-md-2">Inactief</div>
+                            {% endif %}            
+                            <div class="col-md-2"><a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a></div>
 
-            </label>
-          </li>
-        {% endfor %}
-      {% endif %}
-    </ul>
+                        </label>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
 
-    <!-- DE BEWERKINGSKNOPEN -->
+        <!-- DE BEWERKINGSKNOPEN -->
 
-    <nav>
-      <div class="form-group">
-        <label class="col-md-2 control-label">Selectie:</label>                            
-        <div class="col-md-10 btn-toolbar" role="toolbar">     
-          <div class="btn-group col-md-5">
-            <button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button>
-            <button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button>
-          </div>                
-          <button type="submit" class="btn btn-primary" formaction="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</button>            </div>
-    </nav>
+        <nav>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Selectie:</label>                            
+                <div class="col-md-10 btn-toolbar" role="toolbar">     
+                    <div class="btn-group col-md-5">
+                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button>
+                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button>
+                    </div>                
+                    <button type="submit" class="btn btn-primary" formaction="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</button>            </div>
+        </nav>
 
-    {# <nav class="row pull-down">
-       <!-- knopen links -->
-       <p class="col-xs-1 navbar-text">Selectie: </p>
-       <div class="col-xs-10">
-         <ul class=" row nav navbar-nav">
-           <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
-           <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
-           <li class="col-xs-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</button></li>
-         </ul>
-       </div>
-     </nav>#}
-  </form>
+        {# <nav class="row pull-down">
+           <!-- knopen links -->
+           <p class="col-xs-1 navbar-text">Selectie: </p>
+           <div class="col-xs-10">
+             <ul class=" row nav navbar-nav">
+               <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/inactive">Maak Inactief</button></li>
+               <li class="col-xs-4"><button type="submit" class="btn btn-default" formaction="{{app.root}}/testadmin/active">Maak Actief</button></li>
+               <li class="col-xs-4"><button type="submit" class="btn btn-primary" formaction="{{app.root}}/testadmin/testcreation/">Maak nieuwe test</button></li>
+             </ul>
+           </div>
+         </nav>#}
+    </form>
 
 
 {% endblock content %}
