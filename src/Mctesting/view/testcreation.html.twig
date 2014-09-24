@@ -5,6 +5,18 @@
 
 {% endblock stylesheets %}
 
+{% block scripts %}
+    {{ parent() }}
+    <script language="JavaScript">
+        function toggle(source) {
+            checkboxes = document.getElementsByClassName(source.value);
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
+    </script>
+{% endblock scripts %}
+
 {% block title %}
     {{ parent() }}Test aanmaken
 {% endblock title %}
@@ -67,26 +79,29 @@
                 </div> 
                 <div class="form-group">
                     <label class="col-xs-3 control-label">Vragen:</label>
+
                     <div class="col-xs-9"> 
-                        {% for question in allQuest %}
-                            <label class="col-xs-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading "> &nbsp;
-                                        <input type="checkbox" class="col-xs-1" name="question[]" value='{{question.id}}'/>
-                                        <div class="col-xs-5 ">{{question.subcategory.subcatname}}</div>
-                                        <div class="col-xs-2 col-xs-offset-3 "><small>Gewicht: {{question.weight}}</small></div>
-                                    </div>                                        
-                                    <div class="panel-body" style="font-weight: normal">{{question.text|raw}}
-                                        {% if question.media is not empty %}
-                                            {% for file in question.media %}
-                                                <figure class="col-xs-6">
-                                                    <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
-                                                </figure>
-                                            {% endfor %}
-                                        {% endif %}   
-                                    </div>
-                                </div>
-                            </label>
+                        {% for subcat in subcats %}  
+                            <div class="panel panel-default"> 
+                                <div class="panel-heading categorie clearfix">   
+                                    <div class="col-xs-1">
+                                        <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{subcat.id}}" id="subcat{{subcat.id}}" class=""/>
+                                    </div>                    
+                                    <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname }}</label>                         
+                                </div>          
+                                <ul class="list-group">
+                                    {% for question in subcat.questions %}   
+                                        <li class="list-group-item subcategorie clearfix">
+                                            <label for="questionid{{question.id}}" class=""></label>
+                                            <div class="col-xs-1">                    
+                                                <input type="checkbox" class="{{subcat.id}}" name="question[]" value="{{question.id}}" id="questionid{{question.id}}"/>
+                                            </div>                
+                                            <div class="col-xs-8">{{question.text|raw}}</div>                                            
+                                            <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>                           

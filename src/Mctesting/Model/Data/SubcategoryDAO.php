@@ -6,6 +6,7 @@ use Mctesting\Model\Entity\Category;
 use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Service\CategoryService;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Service\QuestionService;
 
 /* * **** Author: Bert Mortier ****** */
 
@@ -26,14 +27,13 @@ class SubcategoryDAO
             $record = $stmt->fetch();
             if (!empty($record))
             {
-                //create object(s) and return
-                $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
+                //create object(s) and return                
                 //create  object
                 $subcat = new Subcategory();
                 $subcat->setId($record['subcatid']);
                 $subcat->setSubcatname($record['subcatnaam']);
                 $subcat->setActive($record['actief']);
-                $subcat->setQuestions(\Mctesting\Model\Service\QuestionService::getBySubCategory($subcat->getId()));
+                $subcat->setQuestions(QuestionService::getBySubCategory($subcat->getId()));
                 return $subcat;
             } else
             {
@@ -62,8 +62,7 @@ class SubcategoryDAO
             {
                 //create array
                 $subcatarray = array();
-                //create object and return
-                $category = \Mctesting\Model\Service\CategoryService::getById($catid);
+                
                 //create subcategory object(s)
                 foreach ($resultset as $record)
                 {
@@ -74,7 +73,7 @@ class SubcategoryDAO
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
-                    $subcat->setQuestions(\Mctesting\Model\Service\QuestionService::getBySubCategory($subcat->getId()));
+                    $subcat->setQuestions(QuestionService::getBySubCategory($subcat->getId()));
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
@@ -113,7 +112,6 @@ class SubcategoryDAO
                 //create array
                 $subcatarray = array();
                 //create object and return
-                $category = \Mctesting\Model\Service\CategoryService::getById($catid);
                 //create subcategory object(s)
                 foreach ($resultset as $record)
                 {
@@ -124,7 +122,7 @@ class SubcategoryDAO
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
-
+                    $subcat->setQuestions(QuestionService::getBySubCategory($subcat->getId()));
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
@@ -165,7 +163,6 @@ class SubcategoryDAO
                 foreach ($resultset as $record)
                 {
                     //create category object and return
-                    $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
                     //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
@@ -204,7 +201,6 @@ class SubcategoryDAO
                 foreach ($resultset as $record)
                 {
                     //create category object and return
-                    $category = \Mctesting\Model\Service\CategoryService::getById($record['catid']);
                     //create subcategory object(s)
                     $subcat = new Subcategory();
                     $subcat->setId($record['subcatid']);
