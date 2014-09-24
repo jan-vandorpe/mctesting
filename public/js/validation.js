@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
     $('#frmLogin').bootstrapValidator({
         container: 'tooltip',
@@ -296,11 +296,72 @@ $(document).ready(function() {
             }
         }
     });
-    $('#ctrlDatePicker')
-            .on('dp.change dp.show', function(e) {
-                // Validate the date when user change it
-                $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
-            });
+    $('#ctrlDatePicker').on('dp.change dp.show', function (e) {
+        // Validate the date when user change it
+        $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
+    });
+    
+    /*
+     * newBeheerderform.html.twig
+     */
+    $('#behtoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de familienaam in'
+                    },
+                }
+            },
+            vnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de voornaam in'
+                    },
+                }
+            },
+            rrnr: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de rijksregisternummer in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    },
+                    regexp: {
+                        regexp: '[0-9]{11}',
+                        message: 'Het rijksregisternummer moet 11 cijfers bevatten'
+                    },
+                }
+            },
+            email:{
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de rijksregisternummer in'
+                    },
+                    emailAdress: {
+                        message: 'Voer een geldig emailadres in'
+                    }
+                }
+            },
+            wachtwoord:{
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de wachtwoord in'
+                    },
+                    stringLength: {
+                        min: 3,
+                        message: 'Het wachtwoord moet minstens 3 tekens bevatten'
+                    }
+                }
+            }
+        }
+    });
 });
 
 
