@@ -35,11 +35,14 @@ class QuestionController extends AbstractController
         foreach ($categories as $category) {
             $category->retrieveSubcategories();
         }
+        
 
         //render page
         $this->render('createquestion.html.twig', array(
             'categories' => $categories,
-            'msg' => $msg));
+            'msg' => $msg,
+           ));
+        unset($_SESSION['nopopup']);
     }
     
     /**
@@ -47,7 +50,10 @@ class QuestionController extends AbstractController
      * input form (see create() action)
      */
     public function add()
-    {    
+    { 
+      if(isset($_POST['nopopup'])) {
+      $_SESSION['nopopup'] = true;
+    }
       $questionMediaFileNames = array();
       if($_FILES['media']['error'][0]==0){
         /**
@@ -102,8 +108,10 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        $msg = new FlashMessageManager();
-        $msg->setFlashMessage('Vraag succesvol toegevoegd',1);
+        if($_SESSION['nopopup'] != true){
+          $msg = new FlashMessageManager();
+        $msg->setFlashMessage('Vraag succesvol toegevoegd'.$_SESSION['nopopup'],1);
+        }
         header('location: '.ROOT.'/question/create');
         exit();
     }
