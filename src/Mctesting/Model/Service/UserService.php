@@ -179,7 +179,10 @@ class UserService {
             return false;
         }
     }
-
+    public static function updateUser($user) {
+        return UserDAO::update($user);
+    }
+    
     public static function deleteUser($RRNr) {
         if (UserDAO::deleteUser($RRNr)) {
             return true;

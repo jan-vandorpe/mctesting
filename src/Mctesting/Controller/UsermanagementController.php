@@ -9,6 +9,7 @@ use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
+use Mctesting\Model\Entity\User;
 
 /**
  * Description of homecontroller
@@ -131,6 +132,21 @@ class UsermanagementController extends AbstractController {
         }
     }
 
+    public function updateUser() {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"])) {
+            $user = new User();
+            $user->setRRnr($_POST["rrnr"]);
+            $user->setFirstName($_POST["vnaam"]);
+            $user->setLastName($_POST["fnaam"]);
+            
+            if (UserService::updateUser($user)) {
+                header("location: " . ROOT . "/usermanagement/userdetails/" . $user->getRRnr());
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle velden in te vullen');
+        }
+    }
+
     //make user inactive
     public function inactive() {
         foreach ($_POST['userCheckbox'] as $check) {
@@ -164,10 +180,12 @@ class UsermanagementController extends AbstractController {
     public function userdetails($arguments) {
 
         $userid = $arguments[0];
+        $user = UserService::getById($userid);
         $userSessions = UserSessionService::getByUser($userid);
 
         //render page
         $this->render('user_showsessiondetail.html.twig', array(
+            'user' => $user,
             'usersessions' => $userSessions,
         ));
     }
