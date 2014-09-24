@@ -42,7 +42,6 @@
             </label>
           </div>
         </div>
-      {% elseif feedback.class == '2' %}
       {% endif %}
     {% endif %}
   {% endif %}
@@ -74,7 +73,13 @@
                 {% for category in categories %}
                   <optgroup label="{{category.catname|capitalize}}">
                     {% for subcategory in category.subcategories %}
-                      <option value="{{ subcategory.id }}">{{ subcategory.subcatname|lower }}</option>
+                      <option value="{{ subcategory.id }}"
+                          {% if session.subcatprevious %}
+                            {% if session.subcatprevious == subcategory.id %}
+                              selected
+                            {% endif %}
+                          {% endif %}    
+                              >{{ subcategory.subcatname|lower }}</option>
                     {% endfor %}
                   </optgroup>
                 {% endfor %}
