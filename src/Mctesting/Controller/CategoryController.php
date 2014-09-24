@@ -81,7 +81,7 @@ class CategoryController extends AbstractController
             //creates a new subcategory
             SubcategoryService::create($categoryid, $subcategory);
             $FMM = new FlashMessageManager();
-            $FMM->setFlashMessage('Subcategorie succesvol toegevoegd');
+            $FMM->setFlashMessage('Subcategorie succesvol toegevoegd',1);
             
             header("location: go");
         } else
