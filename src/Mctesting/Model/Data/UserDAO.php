@@ -162,7 +162,11 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            if ($error[1] == 1062){
+                throw new ApplicationException('De gebruiker ('.$RRNr.') bestaat al');
+            }else{
+                throw new ApplicationException('Kon geen gebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            }
             //header("location: /mctesting/agga/dagga");
         }
     }
