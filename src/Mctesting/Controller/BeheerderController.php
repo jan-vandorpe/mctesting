@@ -25,7 +25,7 @@ class BeheerderController extends AbstractController {
             $user->setFirstName($_POST["vnaam"]);
             $user->setLastName($_POST["fnaam"]);
             $user->setEmail($_POST["email"]);
-            $user->setGroup("2");
+            $user->setGroup(2);
             
             if (true) {
                 header("location: " . ROOT . "/usermanagement/listusers");
