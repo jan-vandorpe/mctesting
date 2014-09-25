@@ -35,6 +35,16 @@
                             <li><a>Beheerders</a></li>
                         </ul>
                         #}
+                        <div class="navbar-form">
+                            <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/" method="post">
+                                <span class="">Ingelogd als  </span><button type='submit'class="btn btn-default"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</button>
+                                <input type='hidden' name='RRnr' value='{{app.user.RRnr}}'>
+                            </form>  
+                            <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
+                                <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
+                            </form>
+                        </div>
+
                     {% elseif app.user.group.name == 'beheerder' %}
                         {# Beheerder topnav menu #}
                         {#
@@ -44,6 +54,18 @@
                             <li><a href="{{ app.root }}/usermanagement/newuserform">Gebruikers</a></li>
                         </ul>
                         #}
+
+                        <div class="navbar-form">
+                            <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/" method="post">
+                                <span class="">Ingelogd als  </span><button type='submit'class="btn btn-default"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</button>
+                                <input type='hidden' name='RRnr' value='{{app.user.RRnr}}'>
+                            </form>  
+                            <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
+                                <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
+                            </form>
+                        </div>
+
+
                     {% else %}
                         {# Gebruiker topnav menu #}
                         {# overbodig geworden, knop onderaan nu
@@ -51,17 +73,17 @@
                                 <li><a>Test Beëindigen</a></li>
                             </ul>
                         #}
+
+                        <div class="navbar-form">
+                            <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
+                                <span class="">Ingelogd als  </span><p class="btn btn-default disabled"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</p>
+
+                                <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
+                            </form>
+                        </div>
                     {% endif %}
                     {# Login form #}
-                    <div class="navbar-form">
-                        <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/" method="post">
-                            <span class="">Ingelogd als  </span><button type='submit'class="btn btn-default"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</button>
-                            <input type='hidden' name='RRnr' value='{{app.user.RRnr}}'>
-                        </form>  
-                        <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
-                            <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
-                        </form>
-                    </div>
+
                 {% else %}
                     <form class="navbar-form" role="login" action="{{ app.root }}/login/login" method="post" id="frmLogin">
                         <div class="form-group">
