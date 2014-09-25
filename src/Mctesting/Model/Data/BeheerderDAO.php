@@ -9,6 +9,45 @@ class BeheerderDAO
 {
     
     /*
+     * alle beheerders ophalen
+     */
+    public static function selectAllBeheerders() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 2 ORDER BY familienaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $user = new User();
+                    $user->setRRnr($record['rijksregisternr']);
+                    $user->setFirstName($record['voornaam']);
+                    $user->setLastName($record['familienaam']);
+                    $user->setEmail($record['email']);
+                    $user->setGroup($record['gebruikerstype']);
+                    $user->setStatus($record['actief']);
+
+                    array_push($result, $user);
+                }
+                return $result;
+            } else {
+                return false;
+                //throw new ApplicationException('Er zijn geen beheerders gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De beheerders konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+        }
+    }
+    
+    /*
      * een gebruiekr toevoegen als beheerder
      */
     public static function insert($user, $password, $timestamp) {
