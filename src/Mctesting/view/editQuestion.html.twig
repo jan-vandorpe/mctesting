@@ -116,7 +116,7 @@ if false, b ack to editquestion twig
         <div id="questionImgWrapper">
           {% if question.media is not empty %}
             {% for file in question.media %}
-              <div class="form-group">
+              <div class="form-group" id="QuestionMediaBlock{{loop.index}}">
                 <div class="pull-right col-xs-3">
                   <figure class="">
                     <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail thumb" alt="{{file}}" title="{{file}}" id="imagePreview{{loop.index}}"/>
@@ -132,15 +132,14 @@ if false, b ack to editquestion twig
                           <input type="file" name="media[]" class="form-control uploadImage" onchange="PreviewImage('QuestionUpload{{loop.index}}', 'imagePreview{{loop.index}}');" id="QuestionUpload{{loop.index}}"/>
                         </span>
                       </span>
-                      <input type="text" class="form-control" readonly>
+                      <input type="text" class="form-control" readonly value="{{ file }}">
                     </div>
                   </div>
                 </div>
                 <div class="pull-left col-xs-9">
                   <div class="col-xs-4 control-label"></div>
                   <div class="col-xs-8" style="padding-top:0.5em">
-                    <label class="btn btn-default" for="ImageId{{file}}delete">
-                      <input type="checkbox" name="ImageId{{file}}delete" id="ImageId{{file}}delete">
+                    <label class="btn btn-default" onclick="imgInputDelete('#QuestionMediaBlock{{loop.index}}');">
                       <span>Afbeelding verwijderen</span>
                     </label>
                   </div>
@@ -175,57 +174,103 @@ if false, b ack to editquestion twig
                     </textarea> 
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-xs-3 control-label">Afbeelding antwoord {{answer.id + 1}}:</label>
-                  <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                          Bladeren... 
-                          <input type="file" name="answerMedia[]" class="form-control" />
-                        </span>
-                      </span>
-                      <input type="text" class="form-control" readonly>
+                {#                    #}
+                {% if answer.media is not empty %}
+                  <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
+                    <div class="pull-right col-xs-3">
+                      <figure class="">
+                        <img src="{{ app.root }}/public/images/{{ answer.media }}" class="img-thumbnail thumb" alt="{{answer.media}}" title="{{answer.media}}" id="imagePreview{{answer.media}}"/>
+                      </figure>
                     </div>
-                  </div>
-                </div>
-                <div class="form-group">
-                  {% if answer.media is not empty %}
-                    <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
-                  {% endif %}
-                </div>
+                    <div class="pull-left col-xs-9">
+                      <label class="col-xs-4 control-label">Afbeelding:</label>
+                      <div class="col-xs-8">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                              Vervangen... 
+                              <input type="file" name="answerMedia[]" class="form-control uploadImage" onchange="PreviewImage('AnswerUpload{{answer.media}}', 'imagePreview{{answer.media}}');" id="AnswerUpload{{answer.media}}"/>
+                            </span>
+                          </span>
+                          <input type="text" class="form-control" readonly value="{{ answer.media }}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pull-left col-xs-9">
+                      <div class="col-xs-4 control-label"></div>
+                      <div class="col-xs-8" style="padding-top:0.5em">
+                        <label class="btn btn-default" onclick="imgInputDelete('#AnswerMediaBlock{{loop.index}}');">
+                          <span>Afbeelding verwijderen</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>   
+                {% else %}
+                  <div class="form-group">
+                    <div class="pull-right col-xs-3">
+                      <figure class="">
+                        <img src="{{ app.root }}/public/images/placeholder.jpg" class="img-thumbnail thumb" id="imagePreview{{answer.id + 999}}"/>
+                      </figure>
+                    </div>
+                    <div class="pull-left col-xs-9">
+                      <label class="col-xs-4 control-label">Afbeelding:</label>
+                      <div class="col-xs-8">
+                        <div class="input-group">
+                          <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                              Bladeren... 
+                              <input type="file" name="answerMedia[]" class="form-control uploadImage" onchange="PreviewImage('AnswerUpload{{answer.id + 999}}', 'imagePreview{{answer.id + 999}}');" id="AnswerUpload{{answer.id + 999}}"/>
+                            </span>
+                          </span>
+                          <input type="text" class="form-control" readonly>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="pull-left col-xs-9">
+                      <div class="col-xs-4 control-label"></div>
+                      <div class="col-xs-8" style="padding-top:0.5em">
+                        <label class="btn btn-default" onclick="resetFormElement('#AnswerUpload{{answer.id + 999}}');">
+                          <span>Reset</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>   
+                {% endif %}
+                {#                      #}
+
               </div>
             </div>
           {% endfor %}
         </div>
-        {#   Add extra answer, triggers addanswer.js   #}
-        <div class="form-group">
-          <label for="AddAnswer" class="col-xs-3 control-label">
-            Extra antwoord toevoegen:
-          </label>
-          <div class="col-xs-3">
-            <a href="#" id="AddAnswer" class="btn btn-default">Antwoord Toevoegen</a>
-          </div>
+      </div>
+      {#   Add extra answer, triggers addanswer.js   #}
+      <div class="form-group">
+        <label for="AddAnswer" class="col-xs-3 control-label">
+          Extra antwoord toevoegen:
+        </label>
+        <div class="col-xs-3">
+          <a href="#" id="AddAnswer" class="btn btn-default">Antwoord Toevoegen</a>
         </div>
-        {# Select correct answer #}
-        <div class="form-group">
-          <label class="col-xs-3 control-label" for="correctant">
-            Correct antwoord:
-          </label>
-          <div class="col-xs-9">
-            <select class="form-control catbijvraag" id="correctant" name="correctant">
-              <option value="0">Antwoord 1</option>
-              <option value="1">Antwoord 2</option>
-            </select>
-          </div>
+      </div>
+      {# Select correct answer #}
+      <div class="form-group">
+        <label class="col-xs-3 control-label" for="correctant">
+          Correct antwoord:
+        </label>
+        <div class="col-xs-9">
+          <select class="form-control catbijvraag" id="correctant" name="correctant">
+            <option value="0">Antwoord 1</option>
+            <option value="1">Antwoord 2</option>
+          </select>
         </div>
       </div>
     </div>
-    {#   Submit   #}
-    <div class="col-xs-3 col-xs-offset-5">
-      <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
-    </div>
-  </form>
+  </div>
+  {#   Submit   #}
+  <div class="col-xs-3 col-xs-offset-5">
+    <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
+  </div>
+</form>
 </div>
 {% endblock content %}
 

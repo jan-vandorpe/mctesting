@@ -16,6 +16,12 @@ function PreviewImage(inputId, previewId) {
 }
 ;
 
+//delete img input
+function imgInputDelete(butts) {
+  console.log(butts);
+  $(butts).empty();
+};
+
 $(document).ready(function() {
   
   var QuestionImgWrapper = $('#questionImgWrapper');
@@ -36,7 +42,7 @@ $(document).ready(function() {
     strNewQPic += '<div class="input-group">';
     strNewQPic += '<span class="input-group-btn">';
     strNewQPic += '<span class="btn btn-default btn-file">';
-    strNewQPic += 'Vervangen... ';
+    strNewQPic += 'Bladeren... ';
     strNewQPic += '<input type="file" name="media[]" class="form-control uploadImage" onchange="PreviewImage(\'QuestionUploadNew'+j+'\',\'imagePreviewNew'+ j +'\');" id="QuestionUploadNew'+ j +'"/>';
     strNewQPic += '</span>';
     strNewQPic += '</span>';
