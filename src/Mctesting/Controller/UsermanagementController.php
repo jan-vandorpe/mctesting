@@ -78,7 +78,10 @@ class UsermanagementController extends AbstractController {
             while (!feof($file)) {
 
                 $data = fgetcsv($file, 1000, ";", "'");
-                $RRNr = $data[0];
+                $formatRRNr = str_replace(".", "", $data[0]);
+                $formatRRNr = str_replace("-", "", $formatRRNr);
+                $formatRRNr = str_replace("/", "", $formatRRNr);
+                $RRNr = $formatRRNr;
                 if (isset($data[1])) {
                     $firstName = $data[1];
                 }
