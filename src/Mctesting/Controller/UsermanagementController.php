@@ -82,12 +82,13 @@ class UsermanagementController extends AbstractController {
                 $formatRRNr = str_replace("-", "", $formatRRNr);
                 $formatRRNr = str_replace("/", "", $formatRRNr);
                 $RRNr = $formatRRNr;
+
                 if (isset($data[1])) {
-                    $firstName = $data[1];
+                    $firstName = htmlspecialchars($data[1]);
                 }
 
                 if (isset($data[2])) {
-                    $lastName = $data[2];
+                    $lastName = htmlspecialchars($data[2]);
                 }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
