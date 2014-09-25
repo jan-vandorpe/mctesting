@@ -6,6 +6,11 @@ author: Bert
   .content {
     width:100%;
   }
+  
+  .print-only {
+    display:block;
+    border:none;
+  }
 
   header, .footer, nav, footer, .no-print{
     display:none    

@@ -1,115 +1,143 @@
 {% extends "template/layout.html.twig" %}
 
 {% block stylesheets %}
-    {{parent()}}
+  {{parent()}}
 {% endblock %}
 
 {% block title %}
-    {{ parent() }}Rapport scores
+  {{ parent() }}Rapport scores
 {% endblock %}
 
 {% block contentHeader %}
-    <div class="panel-heading">
-        <h1>
-            Scores rapport
-            <br>
-        </h1>
-    </div>
+  <div class="panel-heading no-print">
+    <h1>
+      Scores rapport
+      <br>
+    </h1>
+  </div>
 {% endblock %}   
 
 {%block content%}
 
-    <div class="container-fluid">  
-        <form name="gebrtoev" class="form-horizontal" action="" method="post">
-            <div class="panel panel-default">
-              <div class="panel-heading">Test overzicht - <strong>{{usersession[0].testsession.test.testname}}</strong></div>
-                <div class="panel-body">     
-                  <div class="form-group">
-                        <label for="score" class="col-xs-3 control-label">Naam:</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="score" id="score" placeholder="{{usersession[0].user.firstname}} {{usersession[0].user.lastname}}" disabled/>
-                        </div>
-                    </div>    
-                    <div class="form-group">
-                        <label for="score" class="col-xs-3 control-label">Score:</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="score" id="score" placeholder="{{usersession[0].score}}" disabled/>
-                        </div>
-                    </div>     
-                    <div class="form-group">
-                        <label for="percentage" class="col-xs-3 control-label">Percentage:</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}}&#37; (min: {{usersession[0].testsession.test.testpasspercentage}}&#37;)" disabled/>
-                        </div>
-                    </div>  
-                    <div class="form-group">
-                        <label for="passes" class="col-xs-3 control-label">Geslaagd:</label>
-                        <div class="col-xs-7">                        
-                            <input type="text" class="form-control" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
-                        </div>
-                        <div class="col-xs-2">
-                            {% if not usersession[0].passed %}
-                                <button type="submit" class="col-xs-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
-                            {% else %}
-                                <button type="submit" class="col-xs-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
-                            {% endif %}
-                        </div>
-                    </div> 
+  <div class="container-fluid">  
+    <form name="gebrtoev" class="form-horizontal" action="" method="post">
+      <div class="panel panel-default">
+        <div class="panel-heading">Testsessie: {{ usersession[0].testsession.test.testname }} van {{ usersession[0].testsession.date.date|date('d/m/Y') }}</div>
+        <div class="panel-body">     
+          <div class="form-group">
+            <label for="score" class="col-xs-3 control-label">Naam:</label>
+            <div class="col-xs-9">
+              <span class="print-only form-control">{{usersession[0].user.firstname}} {{usersession[0].user.lastname}}</span>
+              <input type="text" class="form-control no-print" name="name" id="name" placeholder="{{usersession[0].user.firstname}} {{usersession[0].user.lastname}}" disabled/>
+            </div>
+          </div>    
+          <div class="form-group">
+            <label for="score" class="col-xs-3 control-label">Score:</label>
+            <div class="col-xs-9">
+              <span class="print-only form-control">{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}</span>
+              <input type="text" class="form-control no-print" name="score" id="score" placeholder="{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}" disabled/>
+            </div>
+          </div>     
+          <div class="form-group">
+            <label for="percentage" class="col-xs-3 control-label">Percentage:</label>
+            <div class="col-xs-9">
+              <span class="print-only form-control">{{usersession[0].percentage}}&#37; (min: {{usersession[0].testsession.test.testpasspercentage}}&#37;)</span>
+              <input type="text" class="form-control no-print" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}}&#37; (min: {{usersession[0].testsession.test.testpasspercentage}}&#37;)" disabled/>
+            </div>
+          </div>  
+          <div class="form-group">
+            <label for="passes" class="col-xs-3 control-label">Geslaagd:</label>
+            <div class="col-xs-7">    
+              <span class="print-only form-control">{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}</span>
+              <input type="text" class="form-control no-print" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
+            </div>
+            <div class="col-xs-2">
+              {% if not usersession[0].passed %}
+                <button type="submit" class="col-xs-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+              {% else %}
+                <button type="submit" class="col-xs-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+              {% endif %}
+            </div>
+          </div> 
+        </div>
+      </div> 
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Test details</div>            
+        <div class="panel-body">
+          {% for category in subcats %}
+            <div class="form-group no-print">
+              <h4 class="col-xs-offset-1">{{category.Subcatname|capitalize}}<small class="col-xs-offset-1">{{category.percentage}}&#37; (min: {{category.passPercentage}}&#37;)</small></h4>
+            </div>                 
+
+            {% for question in category.questions %}
+              <div class="panel panel-default dropdown no-print">
+                <div class="panel-heading dropdown-toggle hover" data-toggle="dropdown" id="question{{question.id}}"> &nbsp;
+                  {% if question.correct %}
+                    <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                  {% else %}
+                    <span class="col-xs-1 glyphicon glyphicon-remove"></span>
+                  {% endif %}
+                  <div class="col-xs-5 ">Vraag {{loop.index}}</div>
+                  <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
                 </div>
-            </div> 
-
-
-            <div class="panel panel-default">
-                <div class="panel-heading">Test details</div>            
-                <div class="panel-body">
-                    {% for category in subcats %}
-                        <div class="form-group">
-                          <h4 class="col-xs-offset-1">{{category.Subcatname|capitalize}}<small class="col-xs-offset-1">{{category.percentage}}&#37; (min: {{category.passPercentage}}&#37;)</small></h4>
-                        </div>                 
-
-                        {% for question in category.questions %}
-                            <div class="panel panel-default dropdown">
-                                <div class="panel-heading dropdown-toggle" data-toggle="dropdown" id="question{{question.id}}"> &nbsp;
-                                    {% if question.correct %}
-                                        <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                                    {% else %}
-                                        <span class="col-xs-1 glyphicon glyphicon-remove"></span>
-                                    {% endif %}
-                                    <div class="col-xs-5 ">Vraag {{loop.index}}</div>
-                                    <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
-                                </div>
-                                <ul class="dropdown-menu" aria-labelledby="question{{question.id}}" style="width:100%">
-                                  <li role="presentation">
-                                <div class="panel-body" style="font-weight: normal">     
-                                    <div class="col-xs-9">
-                                        <p>{{ question.text|raw }}</p>
-                                    </div>
-                                    <div class="col-xs-3">
-                                        {% if question.media is not empty %}
-                                            {% for file in question.media %}
-                                                <figure class="">
-                                                    <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
-                                                </figure>
-                                            {% endfor %}
-                                        {% endif %}
-                                    </div>
-                                </div>
-                                  </li>
-                                </ul>
-                            </div>
-                        {% endfor %}  
-                    {% endfor %}  
-                </div>
-            </div> 
-            {% block terugknop %}
-                <div class="form-group">
-                    <div class="col-xs-offset-1">
-                        <input type="hidden" name="selectsession" value="{{usersession[0].testsession.id}}">
-                        <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/scores/showsessiondetail/"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+                <ul class="dropdown-menu" aria-labelledby="question{{question.id}}" style="width:100%">
+                  <li role="presentation">
+                    <div class="panel-body" style="font-weight: normal">     
+                      <div class="col-xs-9">
+                        <p>{{ question.text|raw }}</p>
+                      </div>
+                      <div class="col-xs-3">
+                        {% if question.media is not empty %}
+                          {% for file in question.media %}
+                            <figure class="">
+                              <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                            </figure>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
                     </div>
-                </div>
-            {% endblock %}
-        </form>
-    </div>
+                  </li>
+                </ul>
+              </div>
+            {% endfor %}  
+          {% endfor %}  
+
+          {#       print             #}
+          {% for category in subcats %}
+            <ul class="print-only no-ul-style">
+              <h4 class="">
+                {{category.Subcatname|capitalize}}: <small>{{category.percentage}}&#37; (min: {{category.passPercentage}}&#37;)</small>
+              </h4>
+              {% for question in category.questions %}
+                <li class="">
+                  <div class="" data-toggle="dropdown" id="question{{question.id}}"> &nbsp;
+                    {% if question.correct %}
+                      <span class="col-xs-1 glyphicon glyphicon-ok"></span>
+                    {% else %}
+                      <span class="col-xs-1 glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                    <div class="col-xs-5 ">Vraag {{loop.index}}</div>
+                    <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
+                  </div>
+                </li>
+              {% endfor %}  
+            </ul>
+            <br>
+          {% endfor %}  
+
+        </div>
+      </div> 
+      {% block terugknop %}
+        <div class="form-group no-print">
+          <div class="col-xs-offset-1">
+            <input type="hidden" name="selectsession" value="{{usersession[0].testsession.id}}">
+            <button type="submit" class="btn btn-default" formaction="{{ app.root }}/scores/showsessiondetail/"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+          </div>
+        </div>
+      {% endblock %}
+    </form>
+  </div>
 
 {% endblock %}
