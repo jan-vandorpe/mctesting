@@ -27,6 +27,7 @@ class BeheerderService {
     }
     
     public function changePassword($rrnr, $password){
-        return BeheerderDAO::changePassword($rrnr, $password);
+        $hashedpassword = UserService::encryptPassword($password);
+        return BeheerderDAO::changePassword($rrnr, $hashedpassword);
     }
 }
