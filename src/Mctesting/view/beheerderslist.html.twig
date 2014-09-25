@@ -1,0 +1,74 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{parent()}}
+
+{% endblock stylesheets %}
+
+{% block title %}
+    {{ parent() }}Home
+{% endblock title %}
+
+{% block contentHeader %}
+    <div class="panel-heading">
+        <h1>
+            Beheer beheerders
+            <br>
+        </h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <form name="testtebewerken" action="{{app.root}}/beheerder/" method="post" id="userForm">
+        <ul class="list-group">
+            <li class="list-group-item clearfix">
+                <label class="col-xs-12">
+                    <div class="col-xs-1"></div>
+                    <div class="col-xs-3 overflow" title="Emailadres">Emailadres</div>
+                    <div class="col-xs-2 overflow" title="Familienaam">Familienaam</div>
+                    <div class="col-xs-2 overflow" title="Voornaam">Voornaam</div>
+                    <div class="col-xs-2 overflow" title="Rijksregisternr">Rijksregisternr</div>
+                    <div class="col-xs-1 text-right">Status</div>
+                    <div class="col-xs-1"></div>
+                </label>
+            </li>
+            {% if beheerders is empty %}
+                <li class="list-group-item-warning list-group-item">Er zijn nog geen beheerders.</li>
+                {% else %}
+                    {% for beheerder in beheerders %}   
+                    <li class="list-group-item clearfix">
+                        <label class="col-xs-12" style="font-weight:normal">
+                            <div class="col-xs-1">
+                                <input type="checkbox" name="userCheckbox[]" value="{{beheerder.rrnr}}" />
+                            </div>
+                            <div class="col-xs-3 overflow" title="{{beheerder.email}}">{{beheerder.email}}</div>
+                            <div class="col-xs-2 overflow" title="{{beheerder.lastname}}">{{beheerder.lastname}}</div>
+                            <div class="col-xs-2 overflow" title="{{beheerder.firstname}}">{{beheerder.firstname}}</div>
+                            <div class="col-xs-2" title="{{beheerder.rrnr}}">{{beheerder.rrnr}}</div>
+                            {% if beheerder.status == 1 %}
+                                <div class="col-xs-1 text-right overflow" title="Actief">Actief</div>
+                            {% else %}
+                                <div class="col-xs-1 text-right overflow" title="Inactief">Inactief</div>
+                            {% endif %}            
+                            <div class="col-xs-1 no-print"><a href="{{ app.root }}/beheerder/beheerderdetails/{{beheerder.rrnr}}">Details</a></div>
+                        </label>
+                    </li>
+                {% endfor %}
+            {% endif %}
+        </ul>
+        <!-- DE BEWERKINGSKNOPEN -->
+        <nav>
+            <div class="form-group">
+                <label class="col-xs-2 control-label">Selectie:</label>                            
+                <div class="col-xs-10 btn-toolbar" role="toolbar">     
+                    <div class="btn-group col-xs-8">
+                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/beheerder/inactive">Maak Inactief</button>
+                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/beheerder/active">Maak Actief</button>
+                    </div> 
+                    <div class="col-xs-2">
+                        <button type="submit" class="btn btn-primary" formaction="{{app.root}}/beheerder/newBeheerderForm">Maak nieuwe beheerder</button> 
+                    </div>
+                </div>
+        </nav>
+    </form>
+
+{% endblock content %}

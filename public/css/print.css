@@ -3,11 +3,19 @@ CSS for print version tests
 author: Bert
 */
 @media print{
-
-  header, .footer, nav, footer, .no-print{
-    display:none    
+  .content {
+    width:100%;
+  }
+  
+  .print-only {
+    display:block;
+    border:none;
   }
 
+  header, .footer, nav, footer, .no-print, .btn{
+    display:none    
+  }
+    
   .no-break {
     page-break-inside: avoid;
   }
@@ -35,4 +43,16 @@ author: Bert
     float:right;
   }
 
+  .print-rapport {
+    border:1px solid black;
+  }
+  
+  .print-rapport .list-group-item{
+    border-top:1px solid black;
+  }
+  
+  .print-rapport .list-group-item:first-child{
+    border:none;
+    background:grey;
+  }
 }

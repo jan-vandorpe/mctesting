@@ -1,0 +1,74 @@
+{% extends "template/layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}Gebruiker - Details
+{% endblock title %}
+
+{% block contentHeader %}
+    <div class="panel-heading">
+        <h1>
+            Beheerder details
+            <br>
+        </h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">  
+
+        <div class="panel panel-default beheerderdetails">
+            <div class="panel-heading">Beheerder overzicht</div>
+            <form name="behtoev" id="behtoev" class="form-horizontal"  action="{{ app.root }}/beheerder/updateBeheerder" method="post">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label overflow">Rijksregisternummer:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="fnaam" class="col-xs-3 control-label">Familienaam:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="fnaam" id="fnaam" value="{{user.lastName}}" required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="vnaam" class="col-xs-3 control-label">Voornaam:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="vnaam" id="vnaam" value="{{user.firstName}}" required/>
+                        </div>  
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label">Emailadres:</label>
+                        <div class="col-xs-9">
+                            <input type="email" class="form-control" name="email" id="email" value="{{user.email}}" data-bv-emailaddress-message="Voer een geldig emailadres in" required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class=col-xs-12">                            
+                            <div class="col-xs-offset-3 col-xs-3">
+                                <input type="submit" name="gebrknop" class="btn btn-success" value="Beheerder aanpassen">
+                            </div>
+                            <div class="col-xs-6 text-right">
+
+                            </div>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <form name="resetww" id="resetww" class="form-horizontal resetww"  action="{{ app.root }}/beheerder/resetwachtwoord" method="post">
+            <input type="hidden" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
+            <input type="submit" name="resetwwbtn" class="btn btn-danger" value="Reset wachtwoord">
+        </form>
+    </div>
+
+
+    <form name="gebrtoev" class="form-horizontal" action="" method="post">
+        <div class="form-group">
+            <div class="col-xs-offset-1">
+                <button type="submit" class="btn btn-default" formaction="{{ app.root }}/beheerder/listBeheerders"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

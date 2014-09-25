@@ -300,7 +300,7 @@ $(document).ready(function () {
         // Validate the date when user change it
         $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
     });
-    
+
     /*
      * newBeheerderform.html.twig
      */
@@ -339,7 +339,7 @@ $(document).ready(function () {
                     },
                 }
             },
-            email:{
+            email: {
                 validators: {
                     notEmpty: {
                         message: 'Geef het emailadres in'
@@ -348,7 +348,7 @@ $(document).ready(function () {
                         message: 'Voer een geldig emailadres in'
                     }
                 }
-            }         
+            }
         }
     });
     $('#changeUserGroup').bootstrapValidator({
@@ -357,7 +357,7 @@ $(document).ready(function () {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-        fields: { 
+        fields: {
             selectuser: {
                 feedbackIcons: false,
                 validators: {
@@ -367,7 +367,7 @@ $(document).ready(function () {
                     }
                 }
             },
-            email:{
+            email: {
                 validators: {
                     notEmpty: {
                         message: 'Geef het emailadres in'
@@ -376,9 +376,72 @@ $(document).ready(function () {
                         message: 'Voer een geldig emailadres in'
                     }
                 }
-            }         
+            }
         }
     });
+    $('#wijzigww').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            wachtwoord1: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een wachtwoord in'
+                    },
+                    regexp: {
+                        regexp: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{4,})$/,
+                        message: 'Het wachtwoord moet minstens 4 tekens, waaronder minstens 1 cijfer bevatten (geen spatie, geen speciale tekens)'
+                    }
+                }
+            },
+            wachtwoord2: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef het wachtwoord nogmaals in'
+                    },
+                    identical: {
+                        field: 'wachtwoord1',
+                        message: 'De wachtwoorden komen niet overeen'
+                    },
+                    regexp: {
+                        regexp: /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{4,})$/,
+                        message: ' '
+                    }
+                }
+            }
+        }
+    });
+
+
+
+
+
+    $('.popover-markup-trigger').popover({
+        html: true,
+        content: function () {
+            return $(this).parent().find('.content').html();
+        },
+        trigger: 'manual',
+        container: 'body',
+        placement: 'top'
+    });
+
+    $('.popover-markup-trigger').popover('show');
+
+//    $('.popover-markup-trigger').popover({
+//        html: true,
+//        content: function () {
+//            return $(this).parent().find('.content').html();
+//        },
+//        trigger: 'focus',
+//        container: 'body',
+//        placement: 'top'
+//    });
+
+
 });
 
 

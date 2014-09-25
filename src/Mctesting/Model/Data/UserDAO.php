@@ -28,9 +28,9 @@ class UserDAO {
                     $user->setFirstName($record['email']);
                     $user->setLastName($record['voornaam']);
                     $user->setEmail($record['familienaam']);
-                    $user->setGroup($record['wachtwoord']);
                     $user->setGroup($record['gebruikerstype']);
-
+                    $user->setStatus($record['actief']);
+                    
                     array_push($result, $user);
                 }
                 return $result;

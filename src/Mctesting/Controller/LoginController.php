@@ -13,21 +13,23 @@ use Mctesting\Model\Service\UserService;
  *
  * @author Bram & Thomas
  */
-class LoginController extends AbstractController
-{
+class LoginController extends AbstractController {
 
-    function __construct($app)
-    {
+    function __construct($app) {
         parent::__construct($app);
     }
 
-    public function login()
-    {
+    public function login() {
         $login = $_POST["Login"];
         $password = $_POST["Wachtwoord"];
         if (UserService::isValidEmailFormat($login)) {
             if (UserService::loginCheck($login, $password)) {
-                header("location: " . ROOT . "/home/go");
+                if (isset($_SESSION['pwreset']) && $_SESSION['pwreset'] == true) {
+                    $user = UserService::getByEmail($login, $password);
+                    header("location: " . ROOT . "/usermanagement/accountdetails/" . $user->getRRnr());
+                } else {
+                    header("location: " . ROOT . "/home/go");
+                }
             } else {
                 header("location: " . ROOT . "/home/go");
             }
@@ -40,8 +42,7 @@ class LoginController extends AbstractController
         }
     }
 
-    public function logout()
-    {
+    public function logout() {
         unset($_SESSION["user"]);
         unset($_SESSION["testsessions"]);
         unset($_SESSION["sessionchoices"]);

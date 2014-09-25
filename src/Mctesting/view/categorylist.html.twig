@@ -56,7 +56,7 @@
                                 {% else %}
                                     <div class="col-xs-1">Inactief</div>
                                 {% endif %}
-                                <div class="col-xs-3">
+                                <div class="col-xs-3 no-print">
                                     {% if subcategory.questions|length > 0 %}
                                         <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
                                     {% endif %}  
@@ -105,8 +105,10 @@
                     <div class="btn-group col-xs-8">
                         <button type="submit" class="btn btn-default" formaction="{{app.root}}/category/inactive">Maak Inactief</button>
                         <button type="submit" class="btn btn-default" formaction="{{app.root}}/category/active">Maak Actief</button>
-                    </div>                
-                    <button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button>
+                    </div> 
+                    <div class="col-xs-2">
+                        <button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button>
+                    </div>
                 </div>
         </nav>
     </form>

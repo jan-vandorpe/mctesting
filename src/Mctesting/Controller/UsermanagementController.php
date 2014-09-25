@@ -10,7 +10,7 @@ use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Model\Entity\User;
-use Mctesting\Model\Entity\Feedback;
+use Mctesting\Model\Service\BeheerderService;
 
 /**
  * Description of homecontroller
@@ -50,6 +50,7 @@ class UsermanagementController extends AbstractController {
     public function import() {
 
         //upload file
+        $originalName = $_POST['filename'];
         $file_id = "csv";
         $folder = "../public/csv/";
         $types = "csv";
@@ -68,34 +69,47 @@ class UsermanagementController extends AbstractController {
 
             //eerste lijn overslaan, hierin zitten de koppen
             fgetcsv($file, 1000, ";", "'");
-            $statussen = array();
+            $failStatussen = array();
+            $wrongDataStatussen = array();
+            $successStatussen = array();
 
 
             //regel per regel de .csv file lezen
             while (!feof($file)) {
 
                 $data = fgetcsv($file, 1000, ";", "'");
-                $RRNr = $data[0];
+                $formatRRNr = str_replace(".", "", $data[0]);
+                $formatRRNr = str_replace("-", "", $formatRRNr);
+                $formatRRNr = str_replace("/", "", $formatRRNr);
+                $formatRRNr = str_replace(",", "", $formatRRNr);
+                $RRNr = $formatRRNr;
+
                 if (isset($data[1])) {
-                    $firstName = $data[1];
+                    $firstName = htmlspecialchars($data[1]);
                 }
 
                 if (isset($data[2])) {
-                    $lastName = $data[2];
+                    $lastName = htmlspecialchars($data[2]);
                 }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
                 if ($firstName !== null and $lastName !== null && UserService::isValidRRNRFormat($RRNr) == true) {
                     if (UserService::getById($RRNr)) {
-                        $status['fail'] = "Gebruiker '" . $firstName . " " . $lastName . "' met Rijksregisternummer '" . $RRNr . "' stond al in de database.";
-                        array_push($statussen, $status);
+//                      
+                        $status['RRnr'] = $RRNr;
+                        $status['voornaam'] = $firstName;
+                        $status['familienaam'] = $lastName;
+                        array_push($failStatussen, $status);
                         $fail ++;
                     } else {
                         if (UserService::createCSVuser($firstName, $lastName, $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
 
-                            $status['success'] = "toegevoegd <br>";
-                            array_push($statussen, $status);
+
+                            $status['RRnr'] = $RRNr;
+                            $status['voornaam'] = $firstName;
+                            $status['familienaam'] = $lastName;
+                            array_push($successStatussen, $status);
                             $success ++;
                         } else {
                             print ("fout");
@@ -104,14 +118,20 @@ class UsermanagementController extends AbstractController {
                     //check for whitespaces
                 } else {
                     if ($firstName != "" && $lastName != "" && $RRNr != "") {
-                        $status['wrongdata'] = $i;
-                        array_push($statussen, $status);
+                        $status['RRnr'] = $RRNr;
+                        $status['voornaam'] = $firstName;
+                        $status['familienaam'] = $lastName;
+
+                        array_push($wrongDataStatussen, $status);
                         $wrongdata ++;
                     }
                 }
             }
             fclose($file);
-            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
+            //delete temporary file
+            unlink($folder . $fileName);
+            $this->render('importstatus.html.twig', array("failStatussen" => $failStatussen, "fail" => $fail, "success" => $success, "notValid" => $notValid,
+                "wrongdata" => $wrongdata, "filename" => $originalName, "successStatussen" => $successStatussen, "wrongDataStatussen" => $wrongDataStatussen));
         } else {
 //            $notValid = true;
 //            $this->render('importstatus.html.twig', array("notValid" => $notValid));
@@ -139,7 +159,7 @@ class UsermanagementController extends AbstractController {
             $user->setRRnr($_POST["rrnr"]);
             $user->setFirstName($_POST["vnaam"]);
             $user->setLastName($_POST["fnaam"]);
-            
+
             if (UserService::updateUser($user)) {
                 $FMM = new FlashMessageManager();
                 $FMM->setFlashMessage('Gebruiker succesvol aangepast', 1);
@@ -231,6 +251,70 @@ class UsermanagementController extends AbstractController {
         ));
         //print_r($_SESSION);
         //var_dump($this->app->getUser());
+    }
+
+    public function accountdetails($arguments) {
+
+        $userid = $arguments[0];
+        $user = UserService::getById($userid);
+
+        //render page
+        $this->render('beheerder_accountpage.html.twig', array(
+            'user' => $user,
+        ));
+    }
+
+    public function changepassword() {
+        if (isset($_POST["rrnr"])) {
+            $rrnr = $_POST["rrnr"];
+
+            if (isset($_POST["wachtwoord1"])) {
+                if (isset($_POST["wachtwoord2"])) {
+                    $wachtwoord1 = $_POST["wachtwoord1"];
+                    $wachtwoord2 = $_POST["wachtwoord2"];
+
+                    if (preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{4,})$/i', $wachtwoord1)) {
+                        if ($wachtwoord1 == $wachtwoord2) {
+                            if (BeheerderService::changePassword($rrnr, $wachtwoord1)) {
+                                unset($_SESSION['pwreset']);
+                                $FMM = new FlashMessageManager();
+                                $FMM->setFlashMessage('Wachtwoord succesvol aangepast', 1);
+                                header("location: " . ROOT . "/usermanagement/accountdetails/" . $rrnr);
+                            }
+                        } else {
+                            throw new ApplicationException('De wachtwoorden komen niet overeen');
+                        }
+                    } else {
+                        throw new ApplicationException('Het wachtwoord moet minstens 4 tekens, waaronder minstens 1 cijfer bevatten (geen spatie, geen speciale tekens)');
+                    }
+                } else {
+                    throw new ApplicationException('Gelieve het wachtwoord opnieuw in te vullen');
+                }
+            } else {
+                throw new ApplicationException('Gelieve het wachtwoord in te vullen');
+            }
+        }
+    }
+
+    public function updateBeheerder() {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
+
+            $rrnr = $_POST["rrnr"];
+            $user = UserService::getById($rrnr);
+
+            $user->setFirstName($_POST["vnaam"]);
+            $user->setLastName($_POST["fnaam"]);
+            $user->setEmail($_POST["email"]);
+            $user->setGroup($user->getGroup()->getId());
+
+            if (BeheerderService::updateBeheerder($user)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Account succesvol aangepast', 1);
+                header("location: " . ROOT . "/usermanagement/accountdetails/" . $rrnr);
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle velden in te vullen');
+        }
     }
 
     public function except() {

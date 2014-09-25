@@ -32,8 +32,12 @@ and open the template in the editor.
     top:0;
     height: 100%;
     z-index: 5;
-
+    cursor:pointer;
 }
+.answer label:hover{
+    outline:2px solid rgba(0, 132, 255, 0.4);
+}
+
 .answer input[type="radio"]:checked+label{ 
     border:8px solid rgba(0, 132, 255, 0.4);
 } 
@@ -87,7 +91,12 @@ input[readonly] {
     z-index: 5;
 
 }
-
+/*
+print only
+*/
+.print-only {
+  display:none;
+}
 
 /**
     progress-bar
@@ -112,4 +121,30 @@ padding bottom for certain labels (col-sm-X)
 */
 .label-padding {
   padding-bottom:1.5em;
+}
+
+/*
+change cursor to hand when hovering
+*/
+
+.hover:hover {
+  cursor: pointer;
+}
+
+/*remove UL dot*/
+.no-ul-style {
+  list-style-type: none;
+}
+
+
+/*
+    Beheerder details
+*/
+.beheerderdetails {
+    position:relative;
+}
+.beheerderdetails .resetww{
+    position:absolute;
+    bottom:9.65%;
+    right:2%;
 }
