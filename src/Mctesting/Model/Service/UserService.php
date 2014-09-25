@@ -34,14 +34,18 @@ class UserService {
         return UserDAO::selectAll();
     }
 
+    public static function getByEmail($email, $password) {
+        return UserDAO::selectByEmail($email, $password);
+    }
+
     public static function getAllUsers() {
         return UserDAO::selectAllBaseUsers();
     }
-    
+
     public static function getAllActiveUsers() {
         return UserDAO::selectAllActiveBaseUsers();
     }
-    
+
     public static function loginCheck($login, $password) {
         if (UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)) {
             //print("valid");
@@ -51,6 +55,11 @@ class UserService {
 
                 $user = UserDAO::selectByEmail($login, $password);
                 UserService::serializeToSession($user);
+
+                if (UserService::checkForPasswordReset($password)) {
+                    $_SESSION['pwreset'] = true;
+                }
+
                 return true;
 //             $foundUser = UserService::getUser($login);
 //             if ($foundUser == true){
@@ -131,6 +140,14 @@ class UserService {
         return $result;
     }
 
+    public function checkForPasswordReset($password) {
+        if ($password == "Vdab") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function encryptPassword($password) {
 
         //beveilig wachtwoord
@@ -183,10 +200,11 @@ class UserService {
             return false;
         }
     }
+
     public static function updateUser($user) {
         return UserDAO::update($user);
     }
-    
+
     public static function deleteUser($RRNr) {
         if (UserDAO::deleteUser($RRNr)) {
             return true;
@@ -207,11 +225,11 @@ class UserService {
 //            array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
 //            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
 //        }
-        if(strlen($firstName)<1){
-          array_push($errors, 'Voornaam moet langer zijn dan 1 letter');
+        if (strlen($firstName) < 1) {
+            array_push($errors, 'Voornaam moet langer zijn dan 1 letter');
         }
-         if(strlen($lastName)<1){
-          array_push($errors, 'Familienaam moet langer zijn dan 1 letter');
+        if (strlen($lastName) < 1) {
+            array_push($errors, 'Familienaam moet langer zijn dan 1 letter');
         }
         //assess errors
         if (empty($errors)) {
