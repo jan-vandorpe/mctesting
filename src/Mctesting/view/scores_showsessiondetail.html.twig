@@ -22,21 +22,21 @@
     <ul class="list-group">
         <li class="list-group-item clearfix">
             <b>
-                <div class="col-xs-2">Voornaam</div>
-                <div class="col-xs-2">Familienaam</div>
-                <div class="col-xs-1">Score</div>
-                <div class="col-xs-2">Percentage</div>
-                <div class="col-xs-2">Geslaagd</div>
-                <div class="col-xs-1 overflow">Afgelegd</div>
-                <div class="col-xs-1">Details</div>
+                <div class="col-xs-2 overflow">Voornaam</div>
+                <div class="col-xs-2 overflow">Familienaam</div>
+                <div class="col-xs-1 ">Score</div>
+                <div class="col-xs-2 overflow text-right">Percentage</div>
+                <div class="col-xs-2 overflow">Geslaagd</div>
+                <div class="col-xs-2 overflow">Afgelegd</div>
+{#                <div class="col-xs-1 overflow">Details</div>#}
             </b>
         </li>
         {% for usersession in usersessions %}
             <li class="list-group-item clearfix">
                 <div class="col-xs-2">{{ usersession.user.firstname }}</div>
                 <div class="col-xs-2">{{ usersession.user.lastname }}</div>
-                <div class="col-xs-1">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
-                <div class="col-xs-2">{{ usersession.percentage }}</div>
+                <div class="col-xs-2">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
+                <div class="col-xs-1">{{ usersession.percentage }}&#37;</div>
                 <div class="col-xs-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
                 <div class="col-xs-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
                 <div class="col-xs-1">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
