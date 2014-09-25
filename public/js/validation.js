@@ -414,6 +414,18 @@ $(document).ready(function () {
             }
         }
     });
+
+    $('.popover-markup-trigger').popover({
+        html: true,
+        content: function () {
+            return $(this).parent().find('.content').html();
+        },
+        trigger: 'focus',
+        container: 'body',
+        placement: 'top'
+    });
+
+
 });
 
 
