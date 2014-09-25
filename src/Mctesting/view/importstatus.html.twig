@@ -21,36 +21,153 @@
 {% block content %}
     <div class="container-fluid">
         <div class="panel panel-default">
-            <div class="panel-heading">Status</div>
+            <div class="panel-heading">Status voor <span class='badge'>{{filename}}</span></div>
             <div class="panel-body">   
                 {% if notValid == false %}
-                    <div class="alert alert-success">
-                        <p><strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.</p>
-                    </div>
-                    <div class="alert alert-info" role="alert">
-                        <p><strong>{{fail}}</strong> gebruiker(s) stonden al in de database.</p>
-                    </div>
-                    {% if wrongdata > 0 %}
-                        <div class="alert alert-danger" role="alert">
-                            <p><strong>{{wrongdata}}</strong> lijn(en) bevatte foutieve data.</p>
+                    <div class="panel-group" id="accordion">
+
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <p>
+                                    <strong>{{success}}</strong> gebruiker(s) toegevoegd aan de database.
+                                    {% if success > 0 %}
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            <strong>weergeven</strong>
+                                        </a>
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h4>Rijksregisternummer</h4>
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <h4>Voornaam</h4>
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <h4>Familienaam</h4>
+                                        </div> 
+                                    </div>
+
+                                    {% for status in successStatussen %}
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p>{{status.RRnr}}</p>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <p>{{status.voornaam}}</p>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <p>{{status.familienaam}}</p>
+                                            </div> 
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if fail > 0 %}
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <p>
+                                        <strong>{{fail}}</strong> gebruiker(s) stonden al in de database.
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            <strong>weergeven</strong>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h4>Rijksregisternummer</h4>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <h4>Voornaam</h4>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <h4>Familienaam</h4>
+                                            </div> 
+                                        </div>
+
+                                        {% for status in failStatussen %}
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p>{{status.RRnr}}</p>
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <p>{{status.voornaam}}</p>
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <p>{{status.familienaam}}</p>
+                                                </div> 
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if wrongdata > 0 %}
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    <p>
+                                        <strong>{{wrongdata}}</strong> lijn(en) bevatte foutieve data.
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                            <strong>weergeven</strong>
+                                        </a>
+                                    </p>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <h4>Rijksregisternummer</h4>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <h4>Voornaam</h4>
+                                            </div> 
+                                            <div class="col-md-4">
+                                                <h4>Familienaam</h4>
+                                            </div> 
+                                        </div>
+
+                                        {% for status in wrongDataStatussen %}
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p>{{status.RRnr}}</p>
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <p>{{status.voornaam}}</p>
+                                                </div> 
+                                                <div class="col-md-4">
+                                                    <p>{{status.familienaam}}</p>
+                                                </div> 
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% else %}
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">FOUT</div>
+                            <div class="panel-body">
+                                <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
+                            </div>
                         </div>
                     {% endif %}
-                {% else %}
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">FOUT</div>
-                        <div class="panel-body">
-                            <p>Dit is <strong>GEEN</strong> geldig <strong>.CSV</strong> bestand!</p>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
+                </div>
 
-        </div>
-        <div class="form-group">
-            <div class="col-xs-offset-1">
-                <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    Terug</a>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-1">
+                    <a href="{{ app.root }}/usermanagement/importusers" class="btn btn-default">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        Terug</a>
+                </div>
             </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

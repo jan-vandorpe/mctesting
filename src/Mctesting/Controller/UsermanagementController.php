@@ -50,6 +50,7 @@ class UsermanagementController extends AbstractController {
     public function import() {
 
         //upload file
+        $originalName = $_POST['filename'];
         $file_id = "csv";
         $folder = "../public/csv/";
         $types = "csv";
@@ -68,7 +69,9 @@ class UsermanagementController extends AbstractController {
 
             //eerste lijn overslaan, hierin zitten de koppen
             fgetcsv($file, 1000, ";", "'");
-            $statussen = array();
+            $failStatussen = array();
+            $wrongDataStatussen = array();
+            $successStatussen = array();
 
 
             //regel per regel de .csv file lezen
@@ -87,15 +90,21 @@ class UsermanagementController extends AbstractController {
                 //validaten of het geen lege regel is en of het RRNr wel klopt
                 if ($firstName !== null and $lastName !== null && UserService::isValidRRNRFormat($RRNr) == true) {
                     if (UserService::getById($RRNr)) {
-                        $status['fail'] = "Gebruiker '" . $firstName . " " . $lastName . "' met Rijksregisternummer '" . $RRNr . "' stond al in de database.";
-                        array_push($statussen, $status);
+//                      
+                        $status['RRnr'] = $RRNr;
+                        $status['voornaam'] = $firstName;
+                        $status['familienaam'] = $lastName;
+                        array_push($failStatussen, $status);
                         $fail ++;
                     } else {
                         if (UserService::createCSVuser($firstName, $lastName, $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
 
-                            $status['success'] = "toegevoegd <br>";
-                            array_push($statussen, $status);
+
+                            $status['RRnr'] = $RRNr;
+                            $status['voornaam'] = $firstName;
+                            $status['familienaam'] = $lastName;
+                            array_push($successStatussen, $status);
                             $success ++;
                         } else {
                             print ("fout");
@@ -104,14 +113,20 @@ class UsermanagementController extends AbstractController {
                     //check for whitespaces
                 } else {
                     if ($firstName != "" && $lastName != "" && $RRNr != "") {
-                        $status['wrongdata'] = $i;
-                        array_push($statussen, $status);
+                        $status['RRnr'] = $RRNr;
+                        $status['voornaam'] = $firstName;
+                        $status['familienaam'] = $lastName;
+
+                        array_push($wrongDataStatussen, $status);
                         $wrongdata ++;
                     }
                 }
             }
             fclose($file);
-            $this->render('importstatus.html.twig', array("statussen" => $statussen, "fail" => $fail, "success" => $success, "notValid" => $notValid, "wrongdata" => $wrongdata));
+            //delete temporary file
+            unlink($folder . $fileName);
+            $this->render('importstatus.html.twig', array("failStatussen" => $failStatussen, "fail" => $fail, "success" => $success, "notValid" => $notValid,
+                "wrongdata" => $wrongdata, "filename" => $originalName, "successStatussen" => $successStatussen, "wrongDataStatussen" => $wrongDataStatussen));
         } else {
 //            $notValid = true;
 //            $this->render('importstatus.html.twig', array("notValid" => $notValid));
