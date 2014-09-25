@@ -24,10 +24,11 @@
             <b>
                 <div class="col-xs-2 overflow">Voornaam</div>
                 <div class="col-xs-2 overflow">Familienaam</div>
+                <div class="col-xs-2 overflow">Afgelegd</div>
                 <div class="col-xs-1 ">Score</div>
                 <div class="col-xs-2 overflow text-right">Percentage</div>
                 <div class="col-xs-2 overflow">Geslaagd</div>
-                <div class="col-xs-2 overflow">Afgelegd</div>
+                
 {#                <div class="col-xs-1 overflow">Details</div>#}
             </b>
         </li>
@@ -35,10 +36,11 @@
             <li class="list-group-item clearfix">
                 <div class="col-xs-2">{{ usersession.user.firstname }}</div>
                 <div class="col-xs-2">{{ usersession.user.lastname }}</div>
+                <div class="col-xs-2">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
                 <div class="col-xs-1" style="white-space: nowrap;">{{ usersession.score }} / {{ testsession.test.testmaxscore }}</div>
                 <div class="col-xs-2 text-center">{{ usersession.percentage }}&#37;</div>
                 <div class="col-xs-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
-                <div class="col-xs-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+                
                 <div class="col-xs-1 no-print">{% if usersession.participated %}<a href="{{ app.root }}/scores/showScoresRapport/{{testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
             </li>
         {% endfor %}
