@@ -8,12 +8,7 @@ use Mctesting\Model\Service\UserService;
 
 class BeheerderService {
 
-    public static function registerBeheerder($user) {
-        /*
-         * Standaard wachtwoord
-         */
-        $password = "Vdab";
-
+    public static function registerBeheerder($user) {  
 
         $hashedpassword = UserService::encryptPassword($password);
         $success = UserDAO::registerNewUser($username, $hashedpassword, $address, $postcode, $email, $fullname);

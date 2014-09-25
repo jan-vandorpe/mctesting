@@ -15,4 +15,4 @@ define('DB_DSN', $dsn);
 
 
 $standaardBeheerdersWachtwoord = 'Vdab';
-define('beheerdersWachtwoord', $standaardBeheerdersWachtwoord);
+define('BEH_PASS', $standaardBeheerdersWachtwoord);
