@@ -58,11 +58,12 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">Wachtwoord wijzigen</div>
-        <form name="wijzigww" id="wijzigww" class="form-horizontal"  action="{{ app.root }}" method="post">
+        <form name="wijzigww" id="wijzigww" class="form-horizontal"  action="{{ app.root }}/usermanagement/changepassword/" method="post">
             <div class="panel-body">
                 <div class="form-group">
                     <label for="wachtwoord1" class="col-xs-3 control-label overflow">Wachtwoord:</label>
                     <div class="col-xs-9">
+                        <input type="hidden" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
                         <input type="text" class="form-control" name="wachtwoord1" id="wachtwoord1" required/>
                     </div>  
                 </div>

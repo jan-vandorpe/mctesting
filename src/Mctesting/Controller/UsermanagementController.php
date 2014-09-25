@@ -10,7 +10,7 @@ use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Model\Entity\User;
-use Mctesting\Model\Entity\Feedback;
+use Mctesting\Model\Service\BeheerderService;
 
 /**
  * Description of homecontroller
@@ -262,6 +262,37 @@ class UsermanagementController extends AbstractController {
         $this->render('beheerder_accountpage.html.twig', array(
             'user' => $user,
         ));
+    }
+
+    public function changepassword() {
+        if (isset($_POST["rrnr"])) {
+            $rrnr = $_POST["rrnr"];
+
+            if (isset($_POST["wachtwoord1"])) {
+                if (isset($_POST["wachtwoord2"])) {
+                    $wachtwoord1 = $_POST["wachtwoord1"];
+                    $wachtwoord2 = $_POST["wachtwoord2"];
+
+                    if (preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]{4,})$/i', $wachtwoord1)) {
+                        if ($wachtwoord1 == $wachtwoord2) {
+                            if (BeheerderService::changePassword($rrnr, $wachtwoord1)) {
+                                $FMM = new FlashMessageManager();
+                                $FMM->setFlashMessage('Wachtwoord succesvol aangepast', 1);
+                                //header("location: " . ROOT );
+                            }
+                        } else {
+                            throw new ApplicationException('De wachtwoorden komen niet overeen');
+                        }
+                    } else {
+                        throw new ApplicationException('Het wachtwoord moet minstens 4 tekens, waaronder minstens 1 cijfer bevatten (geen spatie, geen speciale tekens)');
+                    }
+                } else {
+                    throw new ApplicationException('Gelieve het wachtwoord opnieuw in te vullen');
+                }
+            } else {
+                throw new ApplicationException('Gelieve het wachtwoord in te vullen');
+            }
+        }
     }
 
     public function except() {
