@@ -12,7 +12,7 @@ author: Bert
     border:none;
   }
 
-  header, .footer, nav, footer, .no-print{
+  header, .footer, nav, footer, .no-print, .btn{
     display:none    
   }
 

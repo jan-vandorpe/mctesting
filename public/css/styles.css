@@ -131,3 +131,16 @@ change cursor to hand when hovering
 .no-ul-style {
   list-style-type: none;
 }
+
+
+/*
+    Beheerder details
+*/
+.beheerderdetails {
+    position:relative;
+}
+.beheerderdetails .resetww{
+    position:absolute;
+    bottom:9.65%;
+    right:2%;
+}
