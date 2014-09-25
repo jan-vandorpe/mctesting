@@ -35,6 +35,17 @@ class BeheerderController extends AbstractController {
             'beheerders' => $beheerders,
         ));
     }
+    
+    public function beheerderdetails($arguments) {
+
+        $userid = $arguments[0];
+        $user = UserService::getById($userid);        
+
+        //render page
+        $this->render('beheerder_showdetail.html.twig', array(
+            'user' => $user,
+        ));
+    }
 
     public function newBeheerder() {
         if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
@@ -47,7 +58,7 @@ class BeheerderController extends AbstractController {
 
             if (BeheerderService::registerBeheerder($user)) {
                 $FMM = new FlashMessageManager();
-                $FMM->setFlashMessage('Beheerder succesvol aangepast', 1);
+                $FMM->setFlashMessage('Beheerder succesvol aangemaakt', 1);
                 header("location: " . ROOT . "/beheerder/newBeheerderForm/");
             }
         } else {
@@ -75,6 +86,25 @@ class BeheerderController extends AbstractController {
             }
         } else {
             throw new ApplicationException('Gelieve een gebruiker te kiezen');
+        }
+    }
+    
+    public function updateBeheerder() {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
+            $user = new User();
+            $user->setRRnr($_POST["rrnr"]);
+            $user->setFirstName($_POST["vnaam"]);
+            $user->setLastName($_POST["fnaam"]);
+            $user->setEmail($_POST["email"]);
+            $user->setGroup(2);
+
+            if (BeheerderService::updateBeheerder($user)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Beheerder succesvol aangepast', 1);
+                header("location: " . ROOT . "/beheerder/beheerderdetails/" . $user->getRRnr());
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle velden in te vullen');
         }
     }
     
