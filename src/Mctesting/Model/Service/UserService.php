@@ -37,7 +37,11 @@ class UserService {
     public static function getAllUsers() {
         return UserDAO::selectAllBaseUsers();
     }
-
+    
+    public static function getAllActiveUsers() {
+        return UserDAO::selectAllActiveBaseUsers();
+    }
+    
     public static function loginCheck($login, $password) {
         if (UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)) {
             //print("valid");
@@ -179,7 +183,10 @@ class UserService {
             return false;
         }
     }
-
+    public static function updateUser($user) {
+        return UserDAO::update($user);
+    }
+    
     public static function deleteUser($RRNr) {
         if (UserDAO::deleteUser($RRNr)) {
             return true;
@@ -190,15 +197,21 @@ class UserService {
 
     public static function validateNames($firstName, $lastName) {
         $errors = array();
-        $firstName = str_replace('-', '', $firstName);
-        $lastName = str_replace('-', '', $lastName);
-        if (!ctype_alpha($firstName)) {
-            array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
-            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+        $firstName = str_replace(' ', '', $firstName);
+        $lastName = str_replace(' ', '', $lastName);
+//        if (!ctype_alpha($firstName)) {
+//            array_push($errors, 'Voornaam mag enkel letters en koppeltekens bevatten');
+//            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+//        }
+//        if (!ctype_alpha($lastName)) {
+//            array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
+//            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+//        }
+        if(strlen($firstName)<1){
+          array_push($errors, 'Voornaam moet langer zijn dan 1 letter');
         }
-        if (!ctype_alpha($lastName)) {
-            array_push($errors, 'Familienaam mag enkel letters en koppeltekens bevatten');
-            //throw new ApplicationException('Subcategorienaam mag niet enkel cijfers en leestekens bevatten');
+         if(strlen($lastName)<1){
+          array_push($errors, 'Familienaam moet langer zijn dan 1 letter');
         }
         //assess errors
         if (empty($errors)) {

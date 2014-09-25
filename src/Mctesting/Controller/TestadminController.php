@@ -8,6 +8,7 @@ use Mctesting\Model\Service\TestService;
 use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserService;
 use Mctesting\Model\Service\CategoryService;
+use Mctesting\Model\Service\SubcategoryService;
 use Mctesting\Model\Service\QuestionService;
 use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Model\Includes\HelperFunctions;
@@ -55,24 +56,24 @@ class TestadminController extends AbstractController {
       $catid = $_SESSION["testcreation"]["catid"];
 
 
-      $allQuest = QuestionService::getByCategory($catid);
-
+      //$allQuest = QuestionService::getByCategory($catid);
+      $subcategories = SubcategoryService::getActiveByCategoryId($catid);
 
       //view
       $this->render('testcreation.html.twig', array(
-          'allQuest' => $allQuest,
+          'subcats' => $subcategories,
           'testname' => $testname,
       ));
     } else {
       if (isset($_SESSION["testcreation"]["testname"])) {
         $testname = $_SESSION["testcreation"]["testname"];
         $catid = $_SESSION["testcreation"]["catid"];
-        $allQuest = QuestionService::getByCategory($catid);
-
+        //$allQuest = QuestionService::getByCategory($catid);
+        $subcategories = SubcategoryService::getActiveByCategoryId($catid);
 
         //view
         $this->render('testcreation.html.twig', array(
-            'allQuest' => $allQuest,
+            'subcats' => $subcategories,
             'testname' => $testname,
         ));
       } else {

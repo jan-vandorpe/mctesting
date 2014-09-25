@@ -13,36 +13,73 @@
     </div>
 {% endblock %}
 {% block content %}
-    <h3><small>Resultaten van </small>{{ usersessions[0].user.firstname }} {{ usersessions[0].user.lastname }}</h3>
-    <ul class="list-group">
-        <li class="list-group-item clearfix">
-            <b>
-                <div class="col-md-2">Test</div>
-                <div class="col-md-2">Sessie datum</div>
-                <div class="col-md-1">Score</div>
-                <div class="col-md-2">Percentage</div>
-                <div class="col-md-2">Geslaagd</div>
-                <div class="col-md-1">Afgelegd</div>
-                <div class="col-md-1">Details</div>
-            </b>
-        </li>
-        {% for usersession in usersessions %}
-            <li class="list-group-item clearfix">
-                <div class="col-md-2 overflow">{{ usersession.testsession.test.testname }}</div>
-                <div class="col-md-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
-                <div class="col-md-1">{{ usersession.score }}</div>
-                <div class="col-md-2">{{ usersession.percentage }}</div>
-                <div class="col-md-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
-                <div class="col-md-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
-                <div class="col-md-1">{% if usersession.participated %}<a href="{{ app.root }}/usermanagement/showUserRapport/{{usersession.testsession.id}}/{{usersession.user.RRnr}}">details</a>{% endif %}</div>
-            </li>
-        {% endfor %}
-    </ul>
-    <form name="gebrtoev" class="form-horizontal" action="" method="post">
-        <div class="form-group">
-            <div class="col-md-offset-1">
-                <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/listusers"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+    <div class="container-fluid">  
+        <form name="gebrtoev" id="gebrtoev" class="form-horizontal"  action="{{ app.root }}/usermanagement/updateUser" method="post">
+            <div class="panel panel-default">
+                <div class="panel-heading">Gebruiker overzicht</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="fnaam" class="col-xs-3 control-label">Familienaam:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="fnaam" id="fnaam" value="{{user.lastName}}" required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="vnaam" class="col-xs-3 control-label">Voornaam:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="vnaam" id="vnaam" value="{{user.firstName}}" required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label overflow">Rijksregisternummer:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <input type="submit" name="gebrknop" class="btn btn-default" value="Gebruiker aanpassen">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+        <ul class="list-group">
+            <li class="list-group-item clearfix">
+                <b>
+                    <div class="col-xs-2">Test</div>
+                    <div class="col-xs-2 overflow" title="Sessie datum">Sessie datum</div>
+                    <div class="col-xs-1">Score</div>
+                    <div class="col-xs-2">Percentage</div>
+                    <div class="col-xs-2">Geslaagd</div>
+                    <div class="col-xs-1">Afgelegd</div>
+{#                    <div class="col-xs-1">Details</div>#}
+                </b>
+            </li>
+            {% if usersessions|length > 0 %}
+                {% for usersession in usersessions %}
+                    <li class="list-group-item clearfix">
+                        <div class="col-xs-2 overflow" title="{{ usersession.testsession.test.testname }}">{{ usersession.testsession.test.testname }}</div>
+                        <div class="col-xs-2">{{ usersession.testsession.date.date|date('d/m/Y') }}</div>
+                        <div class="col-xs-1">{{ usersession.score }}</div>
+                        <div class="col-xs-2">{{ usersession.percentage }}</div>
+                        <div class="col-xs-2">{% if usersession.passed %}Ja{% else %}Nee{% endif %}</div>
+                        <div class="col-xs-1">{% if usersession.participated %}Ja{% else %}Nee{% endif %}</div>
+                        <div class="col-xs-1">{% if usersession.participated %}<a href="{{ app.root }}/usermanagement/showUserRapport/{{usersession.testsession.id}}/{{usersession.user.RRnr}}">Details</a>{% endif %}</div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="list-group-item clearfix">
+                    <div class="col-xs-12 overflow">De gebruiker is nog niet ingeschreven voor een testsessie.</div>                
+                </li>
+            {% endif %}
+        </ul>
+        <form name="gebrtoev" class="form-horizontal" action="" method="post">
+            <div class="form-group">
+                <div class="col-xs-offset-1">
+                    <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/usermanagement/listusers"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+                </div>
+            </div>
+        </form>
+    </div>
 {% endblock content %}

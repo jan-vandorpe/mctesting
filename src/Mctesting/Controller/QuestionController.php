@@ -35,11 +35,16 @@ class QuestionController extends AbstractController
         foreach ($categories as $category) {
             $category->retrieveSubcategories();
         }
+        
 
         //render page
         $this->render('createquestion.html.twig', array(
             'categories' => $categories,
-            'msg' => $msg));
+            'msg' => $msg,
+           ));
+        //unsets the session variables used to customize the UI
+        unset($_SESSION['nopopup']);
+        unset($_SESSION['subcatprevious']);
     }
     
     /**
@@ -47,7 +52,11 @@ class QuestionController extends AbstractController
      * input form (see create() action)
      */
     public function add()
-    {    
+    { 
+      if(isset($_POST['nopopup'])) {
+        //used to hide the success popup on new question create page after successful creation
+      $_SESSION['nopopup'] = true;
+    }
       $questionMediaFileNames = array();
       if($_FILES['media']['error'][0]==0){
         /**
@@ -94,6 +103,8 @@ class QuestionController extends AbstractController
       
       //assign and typecast variables
         $subcatId = (integer) $_POST['subcat'];
+        //used to preselect the 'previous' subcat on new question creation
+        $_SESSION['subcatprevious'] = $subcatId;
         $questionText = $_POST['vraag'];
         $questionText = ucfirst($questionText);
         $weight = (integer) $_POST['gewicht'];
@@ -102,8 +113,10 @@ class QuestionController extends AbstractController
         //pass it along
         QuestionService::create($subcatId,$questionText,$weight,$correctAnswerId
                 ,$answersArray,$questionMediaFileNames);
-        $msg = new FlashMessageManager();
-        $msg->setFlashMessage('Vraag succesvol toegevoegd',1);
+        if($_SESSION['nopopup'] != true){
+          $msg = new FlashMessageManager();
+        $msg->setFlashMessage('Vraag succesvol toegevoegd'.$_SESSION['nopopup'],1);
+        }
         header('location: '.ROOT.'/question/create');
         exit();
     }

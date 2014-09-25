@@ -104,4 +104,12 @@ input[readonly] {
 .overflow{
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/*
+padding bottom for certain labels (col-sm-X)
+*/
+.label-padding {
+  padding-bottom:1.5em;
 }

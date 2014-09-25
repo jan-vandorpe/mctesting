@@ -33,11 +33,11 @@
           <div class="panel-heading ">Vraag {{loop.index}}</div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-md-9">
-                <span class="col-md-1 glyphicon glyphicon-comment"></span> 
-                <div class="col-md-11"><p>{{ question.text|raw }}</p></div>
+              <div class="col-xs-9">
+                <span class="col-xs-1 glyphicon glyphicon-comment"></span> 
+                <div class="col-xs-11"><p>{{ question.text|raw }}</p></div>
               </div>
-              <div class="col-md-3 print-image">
+              <div class="col-xs-3 print-image">
                 {% if question.media is not empty %}
                   {% for file in question.media %}
                     <figure class="">
@@ -55,14 +55,14 @@
                 <div class="row">
                   <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style="" required/>
                   <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
-                  <div class="col-md-9">
+                  <div class="col-xs-9">
                     <h4>
                       <small>Antwoord {{loop.index}}</small>
                       <br>
                       {{ answer.text|raw }}
                     </h4>
                   </div>
-                  <div class="col-md-3 print-image">
+                  <div class="col-xs-3 print-image">
                     {% if answer.media is not empty %}
                       <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
                     {% endif %}
@@ -74,10 +74,10 @@
         </div>
       {% endfor %}
       <div class="row no-print">
-        <div class="col-md-5 col-md-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
+        <div class="col-xs-5 col-xs-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
       </div>
       <div class="row no-print">
-        <input class="btn btn-default btn-lg col-md-2 col-md-offset-5" type="submit" value="Test voltooien">
+        <input class="btn btn-default btn-lg col-xs-offset-5" type="submit" value="Test voltooien">
       </div>
     </form>
   </div>

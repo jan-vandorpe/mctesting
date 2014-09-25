@@ -3,7 +3,15 @@
 
 $(document).ready(function() {
 
-  tinymce.init({menubar: true, skin: 'bootstrap', toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true, plugins: "visualblocks"});
+  tinymce.init({
+    menubar: true, 
+    skin: 'bootstrap', 
+    toolbar: "", 
+    statusbar: true, 
+    selector: 'textarea.allowcode', 
+    paste_as_text: true, 
+    plugins: "visualblocks"
+  });
 
 
   var $answers = $(".answers"); //antwoorden wrapper
@@ -49,7 +57,15 @@ $(document).ready(function() {
     $correctAns.append('<option value="' + (count - 1) + '">Antwoord ' + count + '</option>');
 
     //herinitialise tinymce op textarea.allowcode
-    tinymce.init({menubar: true, skin: 'bootstrap', toolbar: "", statusbar: false, selector: 'textarea.allowcode', paste_as_text: true, plugins: "visualblocks"});
+    tinymce.init({
+    menubar: true, 
+    skin: 'bootstrap', 
+    toolbar: "", 
+    statusbar: true, 
+    selector: 'textarea.allowcode', 
+    paste_as_text: true, 
+    plugins: "visualblocks"
+  });
 
   });
   

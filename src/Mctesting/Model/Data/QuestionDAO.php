@@ -15,14 +15,12 @@ use Mctesting\Exception\ApplicationException;
  *
  * @author cyber01
  */
-class QuestionDAO
-{
+class QuestionDAO {
     /*
      * Returns a single question object with given id.
      */
 
-    public static function selectById($id)
-    {
+    public static function selectById($id) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -53,11 +51,11 @@ class QuestionDAO
                 $question->setActive((boolean) $record['actief']);
                 return $question;
             } else {
-                throw new ApplicationException('Er werd geen vraag ('.$id.') gevonden, gelieve dit te controleren');
+                throw new ApplicationException('Er werd geen vraag (' . $id . ') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De vraag ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De vraag (' . $id . ') kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -65,8 +63,7 @@ class QuestionDAO
      * Returns an array of question objects based on given categoryid.
      */
 
-    public static function selectByCategory($categoryId)
-    {
+    public static function selectByCategory($categoryId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -101,16 +98,15 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('De gekozen categorie ('.$categoryId.') bevat geen vragen');
+                throw new ApplicationException('De gekozen categorie (' . $categoryId . ') bevat geen vragen');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De vragen van de gekozen categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De vragen van de gekozen categorie (' . $categoryId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
-    public static function selectBySubCategory($subCatId)
-    {
+
+    public static function selectBySubCategory($subCatId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -145,21 +141,19 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                return false;
-                //throw new ApplicationException('Vraag selectBySubCategory record is leeg');
+                return false;                
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subCatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De vragen van de gekozen subcategorie (' . $subCatId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     /*
      * Returns an array of ACTIVE question objects based on given categoryid.
      */
 
-    public static function selectActiveByCategory($categoryId)
-    {
+    public static function selectActiveByCategory($categoryId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -196,11 +190,11 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen actieve vragen voor de categorie ('.$categoryId.') gevonden');
+                throw new ApplicationException('Er zijn geen actieve vragen voor de categorie (' . $categoryId . ') gevonden');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De actieve vragen voor de categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De actieve vragen voor de categorie (' . $categoryId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -208,8 +202,7 @@ class QuestionDAO
      * Returns an array of ACTIVE question objects based on given testid.
      */
 
-    public static function selectActiveByTest($testId)
-    {
+    public static function selectActiveByTest($testId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -246,11 +239,11 @@ class QuestionDAO
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen actieve vragen voor de test ('.$testId.') gevonden');
+                throw new ApplicationException('Er zijn geen actieve vragen voor de test (' . $testId . ') gevonden');
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De actieve vragen voor de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('De actieve vragen voor de test (' . $testId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -258,8 +251,7 @@ class QuestionDAO
      * Inserts a new question in the database.
      */
 
-    public static function insert($questionText, $subcatId, $weight, $correctAnswerId, $answersArray, $questionMediaFileNames)
-    {
+    public static function insert($questionText, $subcatId, $weight, $correctAnswerId, $answersArray, $questionMediaFileNames) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -277,8 +269,8 @@ class QuestionDAO
             AnswerService::create($questionId, $answersArray);
             MediaService::create($questionId, $questionMediaFileNames);
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('Kon geen vraag in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon geen vraag in de database invoeren, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 

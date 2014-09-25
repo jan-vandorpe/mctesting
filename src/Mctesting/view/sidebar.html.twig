@@ -1,7 +1,7 @@
 {% block sidenav %}
   {% if app.user is defined and app.user is not empty %}
     {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-      <aside class="menu_on_left col-md-2 resp no-print">
+      <aside class="menu_on_left col-xs-2 resp no-print">
         <ul class="nav nav-stacked " role="navigation">
           <li></li>
           <li>
@@ -44,7 +44,7 @@
             <li>
               <h4 data-toggle="dropdown">Beheerders<span></span></h4>
               <ul class="nav nav-pills nav-stacked">
-                <li><a href="#">Aanmaken</a></li>
+                <li><a href="{{ app.root }}/beheerder/newBeheerderForm/">Aanmaken</a></li>
                 <li><a href="#">Lijst</a></li>
               </ul>
             </li>

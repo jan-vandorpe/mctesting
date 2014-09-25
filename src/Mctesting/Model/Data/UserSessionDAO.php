@@ -122,7 +122,8 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er werden geen sessies gevonden voor de gekozen gebruiker ('.$userId.')');
+                return false;
+                //throw new ApplicationException('Er werden geen sessies gevonden voor de gekozen gebruiker ('.$userId.')');
             }
         } else {
             $error = $stmt->errorInfo();            

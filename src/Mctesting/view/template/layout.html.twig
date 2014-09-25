@@ -92,12 +92,12 @@
     <main 
       {% if app.user is defined and app.user is not empty %}
         {% if (app.user.group.name == 'admin' or app.user.group.name == 'beheerder') %}
-          class="content clearFix col-md-9 resp"
+          class="content clearFix col-xs-9 resp"
         {% else %}
-          class="col-md-10 col-md-offset-1"
+          class="col-xs-10 col-xs-offset-1"
         {% endif %}
       {% else %}
-        class="col-md-10 col-md-offset-1"
+        class="col-xs-10 col-xs-offset-1"
       {% endif %}
       >
 

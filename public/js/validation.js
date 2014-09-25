@@ -23,8 +23,33 @@ $(document).ready(function () {
                 }
             },
         }});
+    /*
+     * 
+     * createquestion twig
+     */
+    $('#toevoegenvraag').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        }, fields: {
+            vraag: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef een vraag in'
+                    }
+                }
+            },
+            'antwoord[]': {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef tenminste twee antwoorden'
+                    }
+                }
+            }
 
-
+        }
+    });
     /*
      * Category.html.twig
      */
@@ -60,8 +85,6 @@ $(document).ready(function () {
             }
         }
     });
-
-
     /*
      * registerUserForm
      */
@@ -77,10 +100,6 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de familienaam in'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z_]+$/,
-                        message: 'De familienaam kan enkel letters bevatten'
-                    }
                 }
             },
             vnaam: {
@@ -88,10 +107,6 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de voornaam in'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z_]+$/,
-                        message: 'De voornaam kan enkel letters bevatten'
-                    }
                 }
             },
             rrnr: {
@@ -102,9 +117,8 @@ $(document).ready(function () {
                     digits: {
                         message: 'Voer enkel cijfers in'
                     },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
+                    regexp: {
+                        regexp: '[0-9]{11}',
                         message: 'Het rijksregisternummer moet 11 cijfers bevatten'
                     },
                 }
@@ -126,10 +140,6 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de familienaam in'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z_]+$/,
-                        message: 'De familienaam kan enkel letters bevatten'
-                    }
                 }
             },
             vnaam: {
@@ -137,30 +147,21 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de voornaam in'
                     },
-                    regexp: {
-                        regexp: /^[a-zA-Z_]+$/,
-                        message: 'De voornaam kan enkel letters bevatten'
-                    }
                 }
             },
             rrnr: {
                 validators: {
                     notEmpty: {
-                        message: 'Geef de rijksregisternummer in'
+                        message: 'Geef het rijksregisternummer in'
                     },
-                    digits: {
-                        message: 'Voer enkel cijfers in'
-                    },
-                    stringLength: {
-                        min: 11,
-                        max: 11,
-                        message: 'Het rijksregisternummer moet 11 cijfers bevatten'
+                    regexp: {
+                        regexp: '[0-9]{11}',
+                        message: 'Het rijksregisternummer moet 11 <u>cijfers</u> bevatten'
                     },
                 }
             }
         }
     });
-
     /*
      * testcreation.html.twig
      */
@@ -189,7 +190,6 @@ $(document).ready(function () {
             }
 
         }});
-
     $('#testcreation2').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -247,8 +247,6 @@ $(document).ready(function () {
                 }
             },
         }});
-
-
     /*
      * testlink.html.twig
      */
@@ -298,11 +296,89 @@ $(document).ready(function () {
             }
         }
     });
-    $('#ctrlDatePicker')
-            .on('dp.change dp.show', function (e) {
-                // Validate the date when user change it
-                $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
-            });
+    $('#ctrlDatePicker').on('dp.change dp.show', function (e) {
+        // Validate the date when user change it
+        $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');
+    });
+    
+    /*
+     * newBeheerderform.html.twig
+     */
+    $('#behtoev').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            fnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de familienaam in'
+                    },
+                }
+            },
+            vnaam: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de voornaam in'
+                    },
+                }
+            },
+            rrnr: {
+                validators: {
+                    notEmpty: {
+                        message: 'Geef de rijksregisternummer in'
+                    },
+                    digits: {
+                        message: 'Voer enkel cijfers in'
+                    },
+                    regexp: {
+                        regexp: '[0-9]{11}',
+                        message: 'Het rijksregisternummer moet 11 cijfers bevatten'
+                    },
+                }
+            },
+            email:{
+                validators: {
+                    notEmpty: {
+                        message: 'Geef het emailadres in'
+                    },
+                    emailAdress: {
+                        message: 'Voer een geldig emailadres in'
+                    }
+                }
+            }         
+        }
+    });
+    $('#changeUserGroup').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: { 
+            selectuser: {
+                feedbackIcons: false,
+                validators: {
+                    greaterThan: {
+                        value: 1,
+                        message: 'Selecteer een gebruiker'
+                    }
+                }
+            },
+            email:{
+                validators: {
+                    notEmpty: {
+                        message: 'Geef het emailadres in'
+                    },
+                    emailAdress: {
+                        message: 'Voer een geldig emailadres in'
+                    }
+                }
+            }         
+        }
+    });
 });
 
 
