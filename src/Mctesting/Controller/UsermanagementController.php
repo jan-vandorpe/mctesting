@@ -253,9 +253,9 @@ class UsermanagementController extends AbstractController {
         //var_dump($this->app->getUser());
     }
 
-    public function accountdetails() {
+    public function accountdetails($arguments) {
 
-        $userid = $_POST['RRnr'];
+        $userid = $arguments[0];
         $user = UserService::getById($userid);
 
         //render page
@@ -278,7 +278,7 @@ class UsermanagementController extends AbstractController {
                             if (BeheerderService::changePassword($rrnr, $wachtwoord1)) {
                                 $FMM = new FlashMessageManager();
                                 $FMM->setFlashMessage('Wachtwoord succesvol aangepast', 1);
-                                //header("location: " . ROOT );
+                                header("location: " . ROOT . "/usermanagement/accountdetails/" . $rrnr);
                             }
                         } else {
                             throw new ApplicationException('De wachtwoorden komen niet overeen');

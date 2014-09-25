@@ -36,9 +36,8 @@
                         </ul>
                         #}
                         <div class="navbar-form">
-                            <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/" method="post">
+                            <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/{{app.user.RRnr}}" method="post">
                                 <span class="">Ingelogd als  </span><button type='submit'class="btn btn-default"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</button>
-                                <input type='hidden' name='RRnr' value='{{app.user.RRnr}}'>
                             </form>  
                             <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
                                 <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
@@ -83,6 +82,14 @@
                         </div>
                     {% endif %}
                     {# Login form #}
+                    <div class="navbar-form">
+                        <form class="form-group" role="accountdetails" action="{{ app.root }}/usermanagement/accountdetails/{{app.user.RRnr}}" method="post">
+                            <span class="">Ingelogd als  </span><button type='submit'class="btn btn-default"><span class='glyphicon glyphicon-user'></span> {{app.user.firstName}} {{app.user.lastName}}</button>
+                        </form>  
+                        <form class="form-group" role="logout" action="{{ app.root }}/login/logout" method="post">
+                            <button type="submit" class="btn btn-default navbar-btn" name="logout">Afmelden</button>
+                        </form>
+                    </div>
 
                 {% else %}
                     <form class="navbar-form" role="login" action="{{ app.root }}/login/login" method="post" id="frmLogin">
