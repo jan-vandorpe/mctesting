@@ -19,6 +19,12 @@
                 <div class="panel-heading">Gebruiker overzicht</div>
                 <div class="panel-body">
                     <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label overflow">Rijksregisternummer:</label>
+                        <div class="col-xs-9">
+                            <input type="text" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
                         <label for="fnaam" class="col-xs-3 control-label">Familienaam:</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" name="fnaam" id="fnaam" value="{{user.lastName}}" required/>
@@ -30,12 +36,7 @@
                             <input type="text" class="form-control" name="vnaam" id="vnaam" value="{{user.firstName}}" required/>
                         </div>  
                     </div>
-                    <div class="form-group">
-                        <label for="rrnr" class="col-xs-3 control-label overflow">Rijksregisternummer:</label>
-                        <div class="col-xs-9">
-                            <input type="text" class="form-control" name="rrnr" id="rrnr" value="{{user.RRnr}}" readonly/>
-                        </div>  
-                    </div>
+                    
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <input type="submit" name="gebrknop" class="btn btn-default" value="Gebruiker aanpassen">
