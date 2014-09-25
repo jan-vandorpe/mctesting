@@ -15,6 +15,13 @@ and open the template in the editor.
     border-top: 1px solid #dddddd;
 }
 
+/*
+Thumbnail size
+*/
+.thumb {
+  max-height: 100px;
+  max-width:100px;
+}
 
 /**
     Test answers layout

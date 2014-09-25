@@ -148,5 +148,16 @@ class QuestionController extends AbstractController
   
   public function editQuestion($arguments){
     $questionId = $arguments[0];
+    
+    $question = QuestionService::getById($questionId);
+    $categories = CategoryService::getAllExceptEmpty();
+        foreach ($categories as $category) {
+            $category->retrieveSubcategories();
+        }
+    $this->render('editQuestion.html.twig', array(
+            'categories' => $categories,
+            'question' => $question,
+        ));
+    
   }
 }
