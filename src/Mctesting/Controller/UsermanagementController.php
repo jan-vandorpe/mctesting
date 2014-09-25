@@ -295,6 +295,27 @@ class UsermanagementController extends AbstractController {
         }
     }
 
+    public function updateBeheerder() {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
+            
+            $rrnr = $_POST["rrnr"];
+            $user = UserService::getById($rrnr);
+            
+            $user->setFirstName($_POST["vnaam"]);
+            $user->setLastName($_POST["fnaam"]);
+            $user->setEmail($_POST["email"]);
+            $user->setGroup($user->getGroup()->getId());
+            
+            if (BeheerderService::updateBeheerder($user)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Account succesvol aangepast', 1);
+                header("location: " . ROOT . "/usermanagement/accountdetails/" . $rrnr);
+            }
+        } else {
+            throw new ApplicationException('Gelieve alle velden in te vullen');
+        }
+    }
+
     public function except() {
         throw new ApplicationException('Oh dear, controller says no.');
     }
