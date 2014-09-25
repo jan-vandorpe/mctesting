@@ -135,4 +135,18 @@ class QuestionController extends AbstractController
 
     return $file_ary;
 }
+
+  public function editList(){
+    $allcategories = CategoryService::getAll();
+        foreach ($allcategories as $category) {
+            $category->retrieveSubcategories();
+        }
+        $this->render('editQuestionsCatList.html.twig', array(
+            'allcategories' => $allcategories,
+        ));
+  }
+  
+  public function editQuestion($arguments){
+    $questionId = $arguments[0];
+  }
 }
