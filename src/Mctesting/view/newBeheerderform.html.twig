@@ -12,7 +12,7 @@
 {% block contentHeader %}
     <div class="panel-heading">
         <h1>
-            Gebruiker aanmaken
+            Beheerder aanmaken
             <br>
         </h1>
     </div>
@@ -21,9 +21,9 @@
 {%block content%}
 
     <div class="container-fluid">    
-        <form name="gebrtoev" id="gebrtoev" class="form-horizontal" action="{{ app.root }}/usermanagement/newUser" method="post">
+        <form name="behtoev" id="behtoev" class="form-horizontal" action="{{ app.root }}/usermanagement/newUser" method="post">
             <div class="panel panel-default">
-                <div class="panel-heading">Maak hier een nieuwe basisgebruiker aan</div>
+                <div class="panel-heading">Maak hier een nieuwe beheerder aan</div>
                 <div class="panel-body">
                     <div class="form-group">
                         <label for="fnaam" class="col-xs-3 control-label">Familienaam:</label>
@@ -44,8 +44,20 @@
                         </div>  
                     </div>
                     <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label">Emailadres:</label>
+                        <div class="col-xs-9">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Vul hier het emailadres in." required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label">Wachtwoord:</label>
+                        <div class="col-xs-9">
+                            <input type="password" class="form-control" name="wachtwoord" id="wachtwoord" placeholder="Vul hier het wachtwoord in." required/>
+                        </div>  
+                    </div>
+                    <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <input type="submit" name="gebrknop" class="btn btn-default" value="Gebruiker toevoegen">
+                            <input type="submit" name="gebrknop" class="btn btn-default" value="Beheerder toevoegen">
                         </div>
                     </div>
                 </div>
