@@ -37,7 +37,11 @@ class UserService {
     public static function getAllUsers() {
         return UserDAO::selectAllBaseUsers();
     }
-
+    
+    public static function getAllActiveUsers() {
+        return UserDAO::selectAllActiveBaseUsers();
+    }
+    
     public static function loginCheck($login, $password) {
         if (UserService::isValidEmailFormat($login) || UserService::isValidRRNRFormat($login)) {
             //print("valid");

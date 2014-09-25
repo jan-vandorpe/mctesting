@@ -77,6 +77,41 @@ class UserDAO {
             throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
+    
+    public static function selectAllActiveBaseUsers() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM gebruikers where gebruikerstype = 1 AND actief = 1 ORDER BY familienaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $user = new User();
+                    $user->setRRnr($record['rijksregisternr']);
+                    $user->setFirstName($record['voornaam']);
+                    $user->setLastName($record['familienaam']);
+                    $user->setEmail($record['email']);
+                    $user->setGroup($record['gebruikerstype']);
+                    $user->setStatus($record['actief']);
+
+                    array_push($result, $user);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('Er zijn geen gebruikers gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+        }
+    }
 
     public static function selectByEmail($email, $password) {
         //create db connection
@@ -220,7 +255,7 @@ class UserDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon de gebruiker (' . $RRNr . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
+            throw new ApplicationException('Kon de gebruiker (' . $user->getRRnr() . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 

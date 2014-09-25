@@ -342,7 +342,35 @@ $(document).ready(function () {
             email:{
                 validators: {
                     notEmpty: {
-                        message: 'Geef de rijksregisternummer in'
+                        message: 'Geef het emailadres in'
+                    },
+                    emailAdress: {
+                        message: 'Voer een geldig emailadres in'
+                    }
+                }
+            }         
+        }
+    });
+    $('#changeUserGroup').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: { 
+            selectuser: {
+                feedbackIcons: false,
+                validators: {
+                    greaterThan: {
+                        value: 1,
+                        message: 'Selecteer een gebruiker'
+                    }
+                }
+            },
+            email:{
+                validators: {
+                    notEmpty: {
+                        message: 'Geef het emailadres in'
                     },
                     emailAdress: {
                         message: 'Voer een geldig emailadres in'

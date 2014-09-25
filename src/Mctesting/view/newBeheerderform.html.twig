@@ -51,12 +51,41 @@
                     </div>                    
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <input type="submit" name="gebrknop" class="btn btn-default" value="Beheerder toevoegen">
+                            <input type="submit" name="gebrknop" class="btn btn-default" value="Beheerder aanmaken">
                         </div>
                     </div>
                 </div>
             </div>
         </form> 
-    </div>
+        <form name="changeUserGroup" id="changeUserGroup" class="form-horizontal" action="{{ app.root }}/beheerder/changeUserGroup" method="post">
+            <div class="panel panel-default">
+                <div class="panel-heading">Maak hier een nieuwe beheerder van een bestaande gebruiker</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="fnaam" class="col-xs-3 control-label">selecteer gebruiker:</label>
+                        <div class="col-xs-9">
+                            <select class="form-control" name="selectuser">
+                                <option value="0" >Selecteer een gebruiker:</option>
+                                {% for user in users %}
+                                    <option value="{{ user.RRnr }}">{{ user.lastName }} {{ user.firstName }} ({{ user.RRnr }})</option>
+                                {% endfor %}
+                            </select>
+                        </div> 
+                    </div>
+                    <div class="form-group">
+                        <label for="rrnr" class="col-xs-3 control-label">Emailadres:</label>
+                        <div class="col-xs-9">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Vul hier het emailadres in." required/>
+                        </div>  
+                    </div>  
 
+                    <div class="form-group">
+                        <div class="col-xs-offset-3 col-xs-9">
+                            <input type="submit" name="gebrknop" class="btn btn-default" value="Beheerder aanmaken">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>   
+    </div>
 {% endblock %}
