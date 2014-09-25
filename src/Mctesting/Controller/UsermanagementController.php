@@ -81,6 +81,7 @@ class UsermanagementController extends AbstractController {
                 $formatRRNr = str_replace(".", "", $data[0]);
                 $formatRRNr = str_replace("-", "", $formatRRNr);
                 $formatRRNr = str_replace("/", "", $formatRRNr);
+                $formatRRNr = str_replace(",", "", $formatRRNr);
                 $RRNr = $formatRRNr;
 
                 if (isset($data[1])) {
