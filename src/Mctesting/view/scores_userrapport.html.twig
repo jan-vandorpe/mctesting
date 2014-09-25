@@ -26,36 +26,36 @@
         <div class="panel-body">     
           <div class="form-group">
             <label for="score" class="col-xs-3 control-label">Naam:</label>
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <span class="print-only form-control">{{usersession[0].user.firstname}} {{usersession[0].user.lastname}}</span>
               <input type="text" class="form-control no-print" name="name" id="name" placeholder="{{usersession[0].user.firstname}} {{usersession[0].user.lastname}}" disabled/>
             </div>
           </div>    
           <div class="form-group">
             <label for="score" class="col-xs-3 control-label">Score:</label>
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <span class="print-only form-control">{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}</span>
               <input type="text" class="form-control no-print" name="score" id="score" placeholder="{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}" disabled/>
             </div>
           </div>     
           <div class="form-group">
             <label for="percentage" class="col-xs-3 control-label">Percentage:</label>
-            <div class="col-xs-9">
+            <div class="col-xs-8">
               <span class="print-only form-control">{{usersession[0].percentage}}&#37; (min: {{usersession[0].testsession.test.testpasspercentage}}&#37;)</span>
               <input type="text" class="form-control no-print" name="percentage" id="percentage" placeholder="{{usersession[0].percentage}}&#37; (min: {{usersession[0].testsession.test.testpasspercentage}}&#37;)" disabled/>
             </div>
           </div>  
           <div class="form-group">
             <label for="passes" class="col-xs-3 control-label">Geslaagd:</label>
-            <div class="col-xs-7">    
+            <div class="col-xs-6">    
               <span class="print-only form-control">{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}</span>
               <input type="text" class="form-control no-print" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-3">
               {% if not usersession[0].passed %}
-                <button type="submit" class="col-xs-12 btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                <button type="submit" class=" btn btn-default no-print" formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
               {% else %}
-                <button type="submit" class="col-xs-12 btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
+                <button type="submit" class=" btn btn-default no-print" disabled formaction="{{ app.root }}/scores/delibereer/{{usersession[0].testsession.id}}/{{usersession[0].user.RRnr}}" >Delibereer</button>
               {% endif %}
             </div>
           </div> 
@@ -81,6 +81,7 @@
                   {% endif %}
                   <div class="col-xs-5 ">Vraag {{loop.index}}</div>
                   <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
+                  <span class="caret"></span>
                 </div>
                 <ul class="dropdown-menu" aria-labelledby="question{{question.id}}" style="width:100%">
                   <li role="presentation">
