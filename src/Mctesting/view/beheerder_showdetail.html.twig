@@ -36,7 +36,7 @@
                             <input type="text" class="form-control" name="vnaam" id="vnaam" value="{{user.firstName}}" required/>
                         </div>  
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="rrnr" class="col-xs-3 control-label">Emailadres:</label>
                         <div class="col-xs-9">
@@ -44,8 +44,13 @@
                         </div>  
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-offset-3 col-xs-9">
-                            <input type="submit" name="gebrknop" class="btn btn-default" value="Beheerder aanpassen">
+                        <div class=col-xs-12">                            
+                            <div class="col-xs-offset-3 col-xs-3">
+                                <input type="submit" name="gebrknop" class="btn btn-success no-print" value="Beheerder aanpassen">
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button type="submit" class="btn btn-danger no-print" formaction="{{ app.root }}/beheerder/resetwachtwoord">Reset wachtwoord</button>
+                            </div>
                         </div>
                     </div>
                 </div>
