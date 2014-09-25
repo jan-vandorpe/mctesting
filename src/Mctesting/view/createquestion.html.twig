@@ -79,7 +79,7 @@
                               selected
                             {% endif %}
                           {% endif %}    
-                              >{{ subcategory.subcatname|lower }}</option>
+                          >{{ subcategory.subcatname|capitalize }}</option>
                     {% endfor %}
                   </optgroup>
                 {% endfor %}
@@ -99,8 +99,8 @@
           </div>
           {#    Question    #}
           <div class="form-group">
-            <label for="vraag" class="col-xs-3 control-label">Vraag:</label>   
-            <div class="col-xs-9">
+            <label for="vraag" class="col-sm-3 control-label label-padding">Vraag:</label>   
+            <div class="col-sm-9">
               <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in." required></textarea>
             </div>
           </div>
@@ -132,8 +132,8 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="antwoord[]" class="col-xs-3 control-label">Antwoord 1:</label>   
-                  <div class="col-xs-9">
+                  <label for="antwoord[]" class="col-sm-3 control-label label-padding">Antwoord 1:</label>   
+                  <div class="col-sm-9">
                     <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                   </div>
                 </div>
@@ -155,8 +155,8 @@
             <div class="panel panel-default">
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="antwoord[]" class="col-xs-3 control-label">Antwoord 2:</label>   
-                  <div class="col-xs-9">
+                  <label for="antwoord[]" class="col-sm-3 control-label label-padding">Antwoord 2:</label>   
+                  <div class="col-sm-9">
                     <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in."></textarea> 
                   </div>
                 </div>
