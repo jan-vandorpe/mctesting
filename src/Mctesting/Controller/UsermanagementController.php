@@ -139,7 +139,7 @@ class UsermanagementController extends AbstractController {
             $user->setRRnr($_POST["rrnr"]);
             $user->setFirstName($_POST["vnaam"]);
             $user->setLastName($_POST["fnaam"]);
-            
+
             if (UserService::updateUser($user)) {
                 $FMM = new FlashMessageManager();
                 $FMM->setFlashMessage('Gebruiker succesvol aangepast', 1);
