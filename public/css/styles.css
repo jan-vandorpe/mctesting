@@ -32,8 +32,12 @@ and open the template in the editor.
     top:0;
     height: 100%;
     z-index: 5;
-
+    cursor:pointer;
 }
+.answer label:hover{
+    outline:2px solid rgba(0, 132, 255, 0.4);
+}
+
 .answer input[type="radio"]:checked+label{ 
     border:8px solid rgba(0, 132, 255, 0.4);
 } 
