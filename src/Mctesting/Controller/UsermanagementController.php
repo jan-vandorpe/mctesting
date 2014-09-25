@@ -253,9 +253,9 @@ class UsermanagementController extends AbstractController {
         //var_dump($this->app->getUser());
     }
 
-    public function accountdetails($arguments) {
+    public function accountdetails() {
 
-        $userid = $arguments[0];
+        $userid = $_POST['RRnr'];
         $user = UserService::getById($userid);
 
         //render page
@@ -263,7 +263,7 @@ class UsermanagementController extends AbstractController {
             'user' => $user,
         ));
     }
-    
+
     public function except() {
         throw new ApplicationException('Oh dear, controller says no.');
     }
