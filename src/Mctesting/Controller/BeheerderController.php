@@ -3,6 +3,7 @@
 namespace Mctesting\Controller;
 
 use Framework\AbstractController;
+use Mctesting\Exception\ApplicationException;
 
 class BeheerderController extends AbstractController {
     function __construct($app) {
@@ -18,16 +19,13 @@ class BeheerderController extends AbstractController {
     }
     
     public function newBeheerder() {
-        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"]) && isset($_POST["wachtwoord"])) {
+        if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
             $user = new User();
             $user->setRRnr($_POST["rrnr"]);
             $user->setFirstName($_POST["vnaam"]);
             $user->setLastName($_POST["fnaam"]);
             $user->setEmail($_POST["email"]);
             $user->setGroup("2");
-            $user->setStatus("1");  
-            $wachtwoord = $_POST["wachtwoord"];
-            $timestamp = date('Y-m-d G:i:s');
             
             if (true) {
                 header("location: " . ROOT . "/usermanagement/listusers");

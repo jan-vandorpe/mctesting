@@ -348,18 +348,7 @@ $(document).ready(function () {
                         message: 'Voer een geldig emailadres in'
                     }
                 }
-            },
-            wachtwoord:{
-                validators: {
-                    notEmpty: {
-                        message: 'Geef de wachtwoord in'
-                    },
-                    stringLength: {
-                        min: 3,
-                        message: 'Het wachtwoord moet minstens 3 tekens bevatten'
-                    }
-                }
-            }
+            }         
         }
     });
 });
