@@ -15,7 +15,7 @@ author: Bert
   header, .footer, nav, footer, .no-print, .btn{
     display:none    
   }
-
+    
   .no-break {
     page-break-inside: avoid;
   }
