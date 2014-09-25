@@ -27,7 +27,7 @@
                     <div class="col-xs-3">Voornaam</div>
                     <div class="col-xs-2 overflow" title="Rijksregisternr">Rijksregisternr</div>
                     <div class="col-xs-2 text-right">Status</div>
-                    <div class="col-xs-1">Details</div>
+                    <div class="col-xs-1"></div>
                 </label>
             </li>
             {% if allUsers is empty %}
@@ -45,7 +45,7 @@
                             {% if user.status == 1 %}
                                 <div class="col-xs-2 text-right">Actief</div>
                             {% else %}
-                                <div class="col-xs-2">Inactief</div>
+                                <div class="col-xs-2 text-right">Inactief</div>
                             {% endif %}            
                             <div class="col-xs-1"><a href="{{ app.root }}/usermanagement/userdetails/{{user.rrnr}}">Details</a></div>
                         </label>
@@ -61,8 +61,11 @@
                     <div class="btn-group col-xs-8">
                         <button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/inactive">Maak Inactief</button>
                         <button type="submit" class="btn btn-default" formaction="{{app.root}}/usermanagement/active">Maak Actief</button>
-                    </div>                
-                    <button type="submit" class="btn btn-primary" formaction="{{app.root}}/usermanagement/newuserform">Maak nieuwe gebruiker</button>           </div>
+                    </div>   
+                    <div class="col-xs-2">
+                        <button type="submit" class="btn btn-primary" formaction="{{app.root}}/usermanagement/newuserform">Maak nieuwe gebruiker</button>   
+                    </div>
+                </div>
         </nav>
     </form>
 

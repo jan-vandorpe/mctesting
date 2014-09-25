@@ -25,6 +25,16 @@ class BeheerderController extends AbstractController {
             'users' => $allUsers,
         ));
     }
+    
+    public function listBeheerders() {
+        $beheerders = BeheerderService::getAllBeheerders();
+
+
+        //view
+        $this->render('beheerderslist.html.twig', array(
+            'beheerders' => $beheerders,
+        ));
+    }
 
     public function newBeheerder() {
         if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
@@ -65,6 +75,24 @@ class BeheerderController extends AbstractController {
             }
         } else {
             throw new ApplicationException('Gelieve een gebruiker te kiezen');
+        }
+    }
+    
+    //make user inactive
+    public function inactive() {
+        foreach ($_POST['userCheckbox'] as $check) {
+            UserService::updateStatus($check, 0);
+            // array_push($RRNrs, $check);
+            header("location: " . ROOT . "/beheerder/listBeheerders");
+        }
+    }
+
+    //make user active
+    public function active() {
+        foreach ($_POST['userCheckbox'] as $check) {
+            UserService::updateStatus($check, 1);
+            // array_push($RRNrs, $check);
+            header("location: " . ROOT . "/beheerder/listBeheerders");
         }
     }
 
