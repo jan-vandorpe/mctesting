@@ -87,7 +87,12 @@ input[readonly] {
     z-index: 5;
 
 }
-
+/*
+print only
+*/
+.print-only {
+  display:none;
+}
 
 /**
     progress-bar
@@ -112,4 +117,17 @@ padding bottom for certain labels (col-sm-X)
 */
 .label-padding {
   padding-bottom:1.5em;
+}
+
+/*
+change cursor to hand when hovering
+*/
+
+.hover:hover {
+  cursor: pointer;
+}
+
+/*remove UL dot*/
+.no-ul-style {
+  list-style-type: none;
 }
