@@ -253,6 +253,17 @@ class UsermanagementController extends AbstractController {
         //var_dump($this->app->getUser());
     }
 
+    public function accountdetails($arguments) {
+
+        $userid = $arguments[0];
+        $user = UserService::getById($userid);
+
+        //render page
+        $this->render('beheerder_accountpage.html.twig', array(
+            'user' => $user,
+        ));
+    }
+    
     public function except() {
         throw new ApplicationException('Oh dear, controller says no.');
     }

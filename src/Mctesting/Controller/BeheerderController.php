@@ -25,7 +25,7 @@ class BeheerderController extends AbstractController {
             'users' => $allUsers,
         ));
     }
-    
+
     public function listBeheerders() {
         $beheerders = BeheerderService::getAllBeheerders();
 
@@ -35,11 +35,11 @@ class BeheerderController extends AbstractController {
             'beheerders' => $beheerders,
         ));
     }
-    
+
     public function beheerderdetails($arguments) {
 
         $userid = $arguments[0];
-        $user = UserService::getById($userid);        
+        $user = UserService::getById($userid);
 
         //render page
         $this->render('beheerder_showdetail.html.twig', array(
@@ -88,7 +88,18 @@ class BeheerderController extends AbstractController {
             throw new ApplicationException('Gelieve een gebruiker te kiezen');
         }
     }
-    
+
+    public function resetWachtwoord() {
+        if (isset($_POST["rrnr"])) {
+            $rrnr = $_POST["rrnr"];
+            if (BeheerderService::resetPassword($rrnr)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Wachtwoord succesvol gereset', 1);
+                header("location: " . ROOT . "/beheerder/beheerderdetails/".$rrnr);
+            }
+        }
+    }
+
     public function updateBeheerder() {
         if (isset($_POST["vnaam"]) && isset($_POST["fnaam"]) && isset($_POST["rrnr"]) && isset($_POST["email"])) {
             $user = new User();
@@ -107,7 +118,7 @@ class BeheerderController extends AbstractController {
             throw new ApplicationException('Gelieve alle velden in te vullen');
         }
     }
-    
+
     //make user inactive
     public function inactive() {
         foreach ($_POST['userCheckbox'] as $check) {
