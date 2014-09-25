@@ -4,6 +4,9 @@ namespace Mctesting\Controller;
 
 use Framework\AbstractController;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Service\BeheerderService;
+use Mctesting\Model\Entity\User;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 class BeheerderController extends AbstractController {
     function __construct($app) {
@@ -27,8 +30,10 @@ class BeheerderController extends AbstractController {
             $user->setEmail($_POST["email"]);
             $user->setGroup(2);
             
-            if (true) {
-                header("location: " . ROOT . "/usermanagement/listusers");
+            if (BeheerderService::registerBeheerder($user)) {
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Beheerder succesvol aangepast', 1);
+                header("location: " . ROOT . "/beheerder/newBeheerderForm/");
             }
         } else {
             throw new ApplicationException('Gelieve alle vakjes in te vullen');
