@@ -83,7 +83,7 @@ class CategoryDAO
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid GROUP BY catid ORDER BY catnaam';
+        $sql = 'SELECT categorie.catid as catid, categorie.catnaam as catnaam, categorie.actief as actief FROM categorie inner join subcategorie on subcategorie.catid = categorie.catid WHERE subcategorie.actief = 1 GROUP BY catid ORDER BY catnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute())
