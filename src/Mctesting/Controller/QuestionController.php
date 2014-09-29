@@ -159,89 +159,142 @@ class QuestionController extends AbstractController {
   }
 
   public function addedited() {
+    $questionId = $_POST['questionId'];
     $oldQuestion = QuestionService::getById($_POST['questionId']);
     $editedQuestion = new Question();
 
     //QUESTION
-    if (isset($_POST['antwoord'])) {
-      $editedQuestion->setText($_POST['antwoord']);
-    } else {
-      throw new ApplicationException('Gelieve een vraag in te vullen');
+    //Question MEDIA
+    $questionMediaFileNames = array();
+    $previousMedia = $oldQuestion->getMedia();
+    if (isset($_POST['oldMedia'])) {
+      //if any pictures are to be retained, this will be set
+      $oldMedia = $_POST['oldMedia'];
+      foreach ($oldMedia as $file) {
+        if (($key = array_search($file, $previousMedia)) !== false) {
+          //unset from previousmedia list if found, eventually this list will only contain the images to be deleted or it will be empty
+          unset($previousMedia[$key]);
+          //push found file to mediafilenames, as it is still in
+          array_push($questionMediaFileNames, $file);
+          echo 'files still in play: ' . $file . '<br>';
+        }
+      }
+    }
+    //after removing the files still in play, possibly none, delete all remaining files
+    foreach ($previousMedia as $fileToBeDeleted) {
+      echo 'files to be deleted: ' . $fileToBeDeleted . '<br>';
+      //UploadManager::delete($fileToBeDeleted); //must still be created
+      //QuestionService delete from DB
     }
 
-    $questionMediaFileNames = array();
-    if ($_FILES['media']['error'][0] == 0) {
-      /**
-       * if question files have been selected
-       * iterate and upload each of them
-       * upload function returns a randomized filename
-       * push that to $questionMediaFileNames array
-       */
-      $i = 0;
-      foreach ($_FILES['media']['name'] as $value) {
-        list($file, $error) = UploadManager::upload('media', '../public/images/', 'jpg,jpeg,gif,png', $i);
+    /**
+     * if question files [newMedia] have been selected
+     * iterate and upload each of them
+     * upload function returns a randomized filename
+     * push that to $questionMediaFileNames array
+     */
+    $i = 0;
+    foreach ($_FILES['newQMedia']['tmp_name'] as $index => $value) {
+      if ($_FILES['newQMedia']['error'][$index] == 0) {
+        list($file, $error) = UploadManager::upload('newQMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
         if ($error) {
           throw new ApplicationException($error);
         }
         $i++;
         array_push($questionMediaFileNames, $file);
+        echo 'new files added to question: ' . $file . '<br>';
       }
     }
+    $editedQuestion->setMedia($questionMediaFileNames);
 
+    //Question TEXT
+    if (isset($_POST['antwoord'])) {
+      $editedQuestion->setText($_POST['vraag']);
+    } else {
+      throw new ApplicationException('Gelieve een vraag in te vullen');
+    }
 
-
-    //ANSWERSD
+    //ANSWERS
     $answersArray = array();
     $i = 0;
-    foreach ($_POST['antwoord'] as $index => $text) {
-      echo 'answer ' . $index . '<br>';
-      echo '$i = ' . $i . '<br>';
-      /**
-       * for each answer create new Answer object and enter id and text
-       * if a file has been chosen to accompany it the $_FILES array won't
-       * be empty at that index, so we can upload that file
-       * and add the randomized filename to the media attribute of the answer object
-       * Then push the object to the answerArray
-       */
-      $answer = new Answer();
-      $answer->setId($index);
-      $answer->setText($text);
-      if (isset($_POST['oldAnswer' . $index . 'Media'])) {
-        $oldAnswerMedia = $_POST['oldAnswer' . $index . 'Media'];
-        if ($_POST['inputText' . $index] === $oldAnswerMedia) {
-          //all is well, no changes
-          $answer->setMedia($oldAnswerMedia);
-          echo 'no changes for answer ' . $index . '<br>';
-        } elseif ($_FILES['answerMedia']['error'][$index] == 4) {
-          //image was deleted and there used to be one
-          $answer->setMedia('NULL');
-          echo 'delete old image for answer ' . $index . '<br>';
-          //UploadManager::delete($oldAnswerMedia); //still has to be created
+    if (isset($_POST['antwoord'])) {
+      foreach ($_POST['antwoord'] as $index => $text) {
+        echo 'answer ' . $index . '<br>';
+        /**
+         * for each answer create new Answer object and enter id and text
+         * if a file has been chosen to accompany it the $_FILES array won't
+         * be empty at that index, so we can upload that file
+         * and add the randomized filename to the media attribute of the answer object
+         * Then push the object to the answerArray
+         */
+        $answer = new Answer();
+        //Answer INDEX
+        $answer->setId($index);
+        //Answer TEXT
+        $answer->setText($text);
+        //Answer MEDIA
+        if (isset($_POST['oldAnswer' . $index . 'Media'])) {
+          $oldAnswerMedia = $_POST['oldAnswer' . $index . 'Media'];
+          if ($_POST['inputText' . $index] === $oldAnswerMedia) {
+            //all is well, no changes
+            $answer->setMedia($oldAnswerMedia);
+            echo 'no changes for answer ' . $index . '<br>';
+          } elseif ($_FILES['answerMedia']['error'][$index] == 4) {
+            //image was deleted and there used to be one
+            $answer->setMedia('NULL');
+            echo 'delete old image for answer ' . $index . '<br>';
+            //UploadManager::delete($oldAnswerMedia); //still has to be created, also remove from DB
+          } elseif ($_FILES['answerMedia']['error'][$index] == 0) {
+            //there was an image and it's been replaced
+            echo 'delete old image and a new file to upload for answer ' . $index . '<br>';
+            list($file, $error) = UploadManager::upload('answerMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
+            if ($error) {
+              throw new ApplicationException($error);
+            }
+            $answer->setMedia($file);
+            //delete via uploadmanager and remove from DB
+          }
         } elseif ($_FILES['answerMedia']['error'][$index] == 0) {
-          //there was an image and it's been replaced
-          echo 'delete old image and a new file to upload for answer ' . $index . '<br>';
-//          list($file, $error) = UploadManager::upload('answerMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
-//          if ($error) {
-//            throw new ApplicationException($error);
-//          }
-          $answer->setMedia('$newfile');
+          //new file to upload
+          echo 'new file to upload for answer ' . $index . '<br>';
+          list($file, $error) = UploadManager::upload('answerMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
+          if ($error) {
+            throw new ApplicationException($error);
+          }
+          $answer->setMedia($file);
+        } else {
+          //no new file uploaded and there wasn't an image before either
+          echo 'no new file, no old file for answer ' . $index . '<br>';
         }
-      } elseif ($_FILES['answerMedia']['error'][$index] == 0) {
-        //new file to upload
-        echo 'new file to upload for answer ' . $index . '<br>';
-//        list($file,$error) = UploadManager::upload('answerMedia','../public/images/','jpg,jpeg,gif,png',$i);
-//        if($error) {
-//          throw new ApplicationException($error);
-//        }
-        $answer->setMedia('$newfile');
-      } else {
-        //no new file uploaded and there wasn't an image before either
-        echo 'no new file, no old file for answer ' . $index . '<br>';
+        $i++;
+        array_push($answersArray, $answer);
       }
-      $i++;
-      array_push($answersArray, $answer);
+      //ADD TO EDITED QUESTION OBJECT
+      $editedQuestion->setAnswers($answersArray);
+    } else {
+      throw new ApplicationException('Gelieve de antwoorden in te vullen');
     }
-    $editedQuestion->setActive($answersArray);
+
+    //QUESTION SUBCATEGORY
+    $subcatId = (integer) $_POST['subcat'];
+    $editedQuestion->setSubcategory($subcatId);
+    $weight = (integer) $_POST['gewicht'];
+    $editedQuestion->setWeight($weight);
+    $correctAnswerId = (integer) $_POST['correctant'];
+    $editedQuestion->setCorrectAnswer($correctAnswerId);
+    $editedQuestion->setId($questionId);
+    $oldQuestion->setSubcategory($subcatId);
+
+    echo '<br><br><br>Edited:<br>';
+    echo '<pre>';
+    var_dump($editedQuestion);
+    echo '</pre>';
+    echo '<br>-------------------------<br>';
+    echo '<br><br><br>Old:<br>';
+    echo '<pre>';
+    var_dump($oldQuestion);
+    echo '</pre>';
+    echo '<br>-------------------------<br>';
   }
 
 }
