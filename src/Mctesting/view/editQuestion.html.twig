@@ -175,7 +175,7 @@ if false, b ack to editquestion twig
                       <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{answer.media|replace({('.'):''})}}', 'AnswerUpload{{answer.media|replace({('.'):''})}}');">
                         <img id="imgPreview{{answer.media|replace({('.'):''})}}img" src="{{app.root}}/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}"  class="preview-image thumb">
                         <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
-                        <input type="hidden" name="oldAnswer{{loop.index}}Media" value="{{answer.media}}">
+                        <input type="hidden" name="oldAnswer{{answer.id}}Media" value="{{answer.media}}">
                       </figure>
                     </div>
                     <div class="pull-left col-xs-9">
@@ -189,7 +189,7 @@ if false, b ack to editquestion twig
                                      onchange="PreviewAnswerImage('AnswerUpload{{answer.media|replace({('.'):''})}}', 'imgPreview{{answer.media|replace({('.'):''})}}');" id="AnswerUpload{{answer.media|replace({('.'):''})}}"/>
                             </span>
                           </span>
-                          <input type="text" class="form-control" readonly value="{{ answer.media }}" id="inputText{{loop.index}}">
+                          <input type="text" class="form-control" readonly value="{{ answer.media }}" id="inputText{{answer.id}}" name="inputText{{answer.id}}">
                         </div>
                       </div>
                     </div>
