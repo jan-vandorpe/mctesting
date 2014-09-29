@@ -12,18 +12,15 @@ namespace Framework;
  *
  * @author Thomas
  */
-abstract class AbstractController
-{
+abstract class AbstractController {
 
     protected $app;
 
-    function __construct($app)
-    {
+    function __construct($app) {
         $this->app = $app;
     }
 
-    public function render($view, $model)
-    {
+    public function render($view, $model) {
         print($this->app->getAppEnvironment()->render($view, $model));
     }
 

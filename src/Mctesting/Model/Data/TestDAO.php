@@ -250,7 +250,7 @@ class TestDAO {
                 $test->setStatus($record['actief']);
                 return $test;
             } else {
-                throw new ApplicationException('Er is geen actieve test ('.$id.') gevonden');
+                //throw new ApplicationException('Er is geen actieve test ('.$id.') gevonden');
             }
         } else {
             $error = $stmt->errorInfo();            
