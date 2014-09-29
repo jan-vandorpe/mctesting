@@ -20,8 +20,28 @@ Thumbnail size
 */
 .thumb {
   max-height: 100px;
-  max-width:100px;
 }
+
+/*
+preview image styles
+*/
+.preview-wrapper {
+  padding-right:1em;
+}
+.preview-figure {
+  position:relative;
+  height:100px;
+}
+.preview-figure .preview-image {
+  max-height: 100%;
+}
+.preview-close {
+  position:absolute;
+  top:5px;
+  right:5px;
+  z-index:51;
+}
+
 
 /**
     Test answers layout

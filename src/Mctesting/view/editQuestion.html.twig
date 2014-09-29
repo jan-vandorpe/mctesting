@@ -113,45 +113,39 @@ if false, b ack to editquestion twig
           </div>
         </div>
         {#  Question Images    #}
-        <div id="questionImgWrapper">
-          {% if question.media is not empty %}
-            {% for file in question.media %}
-              <div class="form-group" id="QuestionMediaBlock{{loop.index}}">
-                <div class="pull-right col-xs-3">
-                  <figure class="">
-                    <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail thumb" alt="{{file}}" title="{{file}}" id="imagePreview{{loop.index}}"/>
+        <div class="form-group">
+          <label class="control-label col-xs-3">Image Preview:</label>
+          <div id="questionImgPreview" class="col-xs-9 clearfix">
+            {% if question.media is not empty %}
+              {% for file in question.media %}
+                <div class="pull-left preview-wrapper" id="imgPreviewOld{{file|replace({('.'):''})}}">
+                  <figure class="thumbnail preview-figure btn" onclick="removeImage('imgPreviewOld{{file|replace({('.'):''})}}', 'f');">
+                    <img src="{{app.root}}/images/{{ file }}" alt="{{file}}" title="{{file}}"  class="preview-image thumb">
+                    <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
+                    <input type="hidden" name="oldMedia[]" value="{{file}}">
                   </figure>
                 </div>
-                <div class="pull-left col-xs-9">
-                  <label class="col-xs-4 control-label">Afbeelding:</label>
-                  <div class="col-xs-8">
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                          Vervangen... 
-                          <input type="file" name="media[]" class="form-control uploadImage" onchange="PreviewImage('QuestionUpload{{loop.index}}', 'imagePreview{{loop.index}}');" id="QuestionUpload{{loop.index}}"/>
-                        </span>
-                      </span>
-                      <input type="text" class="form-control" readonly value="{{ file }}">
-                    </div>
-                  </div>
-                </div>
-                <div class="pull-left col-xs-9">
-                  <div class="col-xs-4 control-label"></div>
-                  <div class="col-xs-8" style="padding-top:0.5em">
-                    <label class="btn btn-default" onclick="imgInputDelete('#QuestionMediaBlock{{loop.index}}');">
-                      <span>Afbeelding verwijderen</span>
-                    </label>
-                  </div>
-                </div>
-              </div>   
-            {% endfor %}
-          {% endif %}
+              {% endfor %}
+            {% endif %}
+          </div>
         </div>
-        <div class="form-group">
-          <label class="control-label col-xs-3">Afbeelding toevoegen:</label>
-          <div class="col-xs-9">
-            <input type="button" class="btn btn-default" value="Nog een afbeelding toevoegen" id="addQuestionPic">
+        <div id="inputBox">
+          <div class="form-group" id="UploadBox0">
+            <label class="control-label col-xs-3">Afbeelding toevoegen:</label>
+            <div class="col-xs-6">
+              <div class="input-group">
+                <span class="input-group-btn">
+                  <span class="btn btn-default btn-file">
+                    Bladeren... 
+                    <input type="file" name="newQMedia[]" class="form-control uploadImage" id="NewQMedia0"/>
+                  </span>
+                </span>
+                <input type="text" class="form-control" readonly>
+              </div>
+            </div>
+            <div class="col-xs-3">
+              <input type="button" value="Afbeelding uploaden" id="uploadImgPreview" class="btn btn-default" onclick="PreviewImage('NewQMedia0', 'questionImgPreview', 'UploadBox0', 0);">
+            </div>
           </div>
         </div>
       </div>
@@ -177,9 +171,11 @@ if false, b ack to editquestion twig
                 {#                    #}
                 {% if answer.media is not empty %}
                   <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
-                    <div class="pull-right col-xs-3">
-                      <figure class="">
-                        <img src="{{ app.root }}/public/images/{{ answer.media }}" class="img-thumbnail thumb" alt="{{answer.media}}" title="{{answer.media}}" id="imagePreview{{answer.media}}"/>
+                    <div class="pull-right" id="imgPreview{{answer.media|replace({('.'):''})}}" style="padding-right:2em">
+                      <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{answer.media|replace({('.'):''})}}', 'AnswerUpload{{answer.media|replace({('.'):''})}}');">
+                        <img id="imgPreview{{answer.media|replace({('.'):''})}}img" src="{{app.root}}/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}"  class="preview-image thumb">
+                        <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
+                        <input type="hidden" name="oldAnswer{{loop.index}}Media" value="{{answer.media}}">
                       </figure>
                     </div>
                     <div class="pull-left col-xs-9">
@@ -188,28 +184,22 @@ if false, b ack to editquestion twig
                         <div class="input-group">
                           <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                              Vervangen... 
-                              <input type="file" name="answerMedia[]" class="form-control uploadImage" onchange="PreviewImage('AnswerUpload{{answer.media}}', 'imagePreview{{answer.media}}');" id="AnswerUpload{{answer.media}}"/>
+                              Bladeren...
+                              <input type="file" name="answerMedia[]" class="form-control uploadImage" 
+                                     onchange="PreviewAnswerImage('AnswerUpload{{answer.media|replace({('.'):''})}}', 'imgPreview{{answer.media|replace({('.'):''})}}');" id="AnswerUpload{{answer.media|replace({('.'):''})}}"/>
                             </span>
                           </span>
-                          <input type="text" class="form-control" readonly value="{{ answer.media }}">
+                          <input type="text" class="form-control" readonly value="{{ answer.media }}" id="inputText{{loop.index}}">
                         </div>
-                      </div>
-                    </div>
-                    <div class="pull-left col-xs-9">
-                      <div class="col-xs-4 control-label"></div>
-                      <div class="col-xs-8" style="padding-top:0.5em">
-                        <label class="btn btn-default" onclick="imgInputDelete('#AnswerMediaBlock{{loop.index}}');">
-                          <span>Afbeelding verwijderen</span>
-                        </label>
                       </div>
                     </div>
                   </div>   
                 {% else %}
-                  <div class="form-group">
-                    <div class="pull-right col-xs-3">
-                      <figure class="">
-                        <img src="{{ app.root }}/public/images/placeholder.jpg" class="img-thumbnail thumb" id="imagePreview{{answer.id + 999}}"/>
+                  <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
+                    <div class="pull-right" id="imgPreview{{loop.index}}" style="padding-right:2em">
+                      <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{loop.index}}', 'AnswerUpload{{loop.index}}');">
+                        <img id="imgPreview{{loop.index}}img" src="{{app.root}}/images/placeholder.jpg" class="preview-image thumb">
+                        <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
                       </figure>
                     </div>
                     <div class="pull-left col-xs-9">
@@ -218,26 +208,17 @@ if false, b ack to editquestion twig
                         <div class="input-group">
                           <span class="input-group-btn">
                             <span class="btn btn-default btn-file">
-                              Bladeren... 
-                              <input type="file" name="answerMedia[]" class="form-control uploadImage" onchange="PreviewImage('AnswerUpload{{answer.id + 999}}', 'imagePreview{{answer.id + 999}}');" id="AnswerUpload{{answer.id + 999}}"/>
+                              Bladeren...
+                              <input type="file" name="answerMedia[]" class="form-control uploadImage" 
+                                     onchange="PreviewAnswerImage('AnswerUpload{{loop.index}}', 'imgPreview{{loop.index}}');" id="AnswerUpload{{loop.index}}"/>
                             </span>
                           </span>
-                          <input type="text" class="form-control" readonly>
+                          <input type="text" class="form-control" readonly value="" id="inputText{{loop.index}}">
                         </div>
                       </div>
                     </div>
-                    <div class="pull-left col-xs-9">
-                      <div class="col-xs-4 control-label"></div>
-                      <div class="col-xs-8" style="padding-top:0.5em">
-                        <label class="btn btn-default" onclick="resetFormElement('#AnswerUpload{{answer.id + 999}}');">
-                          <span>Reset</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>   
+                  </div>                     
                 {% endif %}
-                {#                      #}
-
               </div>
             </div>
           {% endfor %}
@@ -249,7 +230,7 @@ if false, b ack to editquestion twig
           Extra antwoord toevoegen:
         </label>
         <div class="col-xs-3">
-          <a href="#" id="AddAnswer" class="btn btn-default">Antwoord Toevoegen</a>
+          <div href="" id="editAddAnswer" class="btn btn-default">Antwoord Toevoegen</div>
         </div>
       </div>
       {# Select correct answer #}
@@ -265,10 +246,9 @@ if false, b ack to editquestion twig
         </div>
       </div>
     </div>
-  </div>
   {#   Submit   #}
   <div class="col-xs-3 col-xs-offset-5">
-    <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
+    <input type="submit" class="btn btn-success" name="editquestion" value="Vraag bevestigen" />
   </div>
 </form>
 </div>
