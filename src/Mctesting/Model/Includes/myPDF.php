@@ -48,33 +48,38 @@ class myPDF extends FPDF {
         foreach ($questions as $question) {
 
             //filter out <p> and </p>
-
             $vraag = str_replace("<p>", "", $question->getText());
             $vraag = str_replace("</p>", "", $vraag);
+
+            //decode special signs to UTF-8
             $vraag = html_entity_decode($vraag);
+            $vraag = iconv('UTF-8', 'windows-1252', $vraag);
 
             $this->Cell(190, 10, "", '', 1, 'L', 0);
             $this->cMargin = 5;
             $this->Cell(190, 10, "Vraag " . $i, 'LTR', 1, 'L', 0);
             $this->SetFontSize(18);
             $this->cMargin = 10;
-            $this->MultiCell(190, 15, $vraag, 'LRB', 'L', 0);
+            $this->MultiCell(190, 8, $vraag, 'LR', 'L', 0);
+            $this->Cell(190, 4, "", 'LBR', 1, 'L', 0);
+
 
             $answers = $question->getAnswers();
             $j = 1;
             $this->SetFontSize(12);
             $this->cMargin = 13;
             foreach ($answers as $answer) {
-                //$this->Cell(190, 10, "Antwoord " . $j, 'LR', 1, 'L', 0);
+
                 //filter out <p> and </p>
                 $text = str_replace("<p>", "", $answer->getText());
                 $text = str_replace("</p>", "", $text);
 
+                //decode special signs to UTF-8
                 $text = html_entity_decode($text);
-
+                $text = iconv('UTF-8', 'windows-1252', $text);
 
                 $this->MultiCell(190, 13, $text, 'LR', 'L', 0);
-                $xPlace = $this->GetX() + 4 ;
+                $xPlace = $this->GetX() + 4;
                 $yPlace = $this->GetY() + 4 - 13;
                 $this->Rect($xPlace, $yPlace, 5, 5);
                 $j++;
