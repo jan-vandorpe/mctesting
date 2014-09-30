@@ -31,7 +31,7 @@ class ScoresController extends AbstractController
     {
         //build model
         //retrieve tests
-        $tests = TestService::getAll();
+        $tests = TestService::getAllWithSessions();
 
         //render page
         $this->render('scores_selecttest.html.twig', array(
