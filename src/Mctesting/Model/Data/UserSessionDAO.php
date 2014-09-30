@@ -170,9 +170,23 @@ class UserSessionDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon geen sessiegebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
-            //header("location: /mctesting/agga/dagga");
+        }
+    }
+    
+    public static function delete($sessionId) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+
+        $sql = 'DELETE FROM `sessiegebruiker` WHERE `sessieid` = :sessionid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':sessionid' => $sessionId ))) {
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon sessiegebruikers in de database niet deleten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
     

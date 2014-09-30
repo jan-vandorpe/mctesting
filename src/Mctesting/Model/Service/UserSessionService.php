@@ -36,6 +36,11 @@ class UserSessionService
         return UserSessionDAO::insert($sessionId, $RRNr);
     }
     
+    public static function remove($sessionId)
+    {
+        return UserSessionDAO::delete($sessionId);
+    }
+    
     public static function update($userSession, $subcatResults)
     {
         return UserSessionDAO::update($userSession, $subcatResults);

@@ -26,23 +26,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class="testsessieplannen">
-        {% if errormsg is defined and errormsg is not empty  %}
-            <div class="alert alert-warning alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                {{ errormsg }}
-            </div>
-        {% endif %}
-        <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
+    <div class="testsessieplannen">        
+        <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{% if testsession.id is defined%}{{ app.root }}/testadmin/testlinkupdate{% else %}{{ app.root }}/testadmin/testlinkadd{% endif %}">
+            {% if testsession.id is defined%}
+                <input type="hidden" name="sessionid" value="{{testsession.id}}"/>
+            {% endif %}
             <div class="form-group">
                 <label class="control-label col-xs-3" for="testsetselect">Selecteer een test:</label>
                 <div class="col-xs-9">
                     <select class="form-control" name="testsetselect" id="testsetselect">
-                        <option value="0" >Selecteer een test:</option>
+                        {% if testsession.test.testid is not defined %}<option value="0" >Selecteer een test:</option>{% endif %}
                         {% for key,value in allTest %}  
                             <optgroup label="{{ key }}">
                                 {% for test in value %}                
-                                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
+                                    <option value="{{ test.testid }}" {% if (testsession.test.testid is defined) and (testsession.test.testid == test.testid) %}selected{% endif %}>{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
                                 {% endfor %}
                             </optgroup>
                         {% endfor %}
@@ -53,7 +50,7 @@
                 <label class="control-label col-xs-3">Datum van de testsessie:</label>
                 <div class="col-xs-9">
                     <div class="input-group date datepicker">
-                        <input type="text" class="form-control" id="testdatum" name="testdatum" placeholder="dd/mm/yyyy"/>
+                        <input type="text" class="form-control" id="testdatum" name="testdatum" placeholder="dd/mm/yyyy" {% if testsession.date is defined %}value="{{testsession.date.date|date('d/m/Y')}}"{% endif %}/>
                         <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </div>                
@@ -61,7 +58,7 @@
             <div class="form-group">
                 <label class="control-label col-xs-3">Wachtwoord van de testsessie:</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control col-xs-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
+                    <input type="text" class="form-control col-xs-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required {% if testsession.password is defined %}value="{{testsession.password}}"{% endif %}/>
                 </div>                
             </div>   
             <div class="form-group">
@@ -72,7 +69,7 @@
                             <li class="list-group-item clearfix">
                                 <label class="col-xs-12"  style="font-weight:normal">
                                     <div class="col-xs-1">
-                                        <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
+                                        <input type="checkbox" name='user[]' value='{{ user.rrnr }}' {% if (testsession.users is defined) and (user.rrnr in testsession.users) %}checked{% endif %}/>
                                     </div>
                                     <div class="col-xs-5">{{ user.lastname }}</div>
                                     <div class="col-xs-5">{{ user.firstname }}</div>

@@ -35,12 +35,15 @@ class TestSessionService
     public static function getById($id)
     {
         return TestSessionDAO::selectById($id);
-    }
-    
+    }    
     
     public static function create($datum, $testid, $sessieww, $users)
     {
-        
         return TestSessionDAO::insert($datum, $testid, $sessieww,$users);
+    }
+    
+    public static function update($sessieid, $datum, $testid, $sessieww, $users)
+    {
+        return TestSessionDAO::update($sessieid, $datum, $testid, $sessieww,$users);
     }
 }

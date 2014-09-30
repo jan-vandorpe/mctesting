@@ -220,7 +220,28 @@ class TestSessionDAO
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon geen sessie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
-            //header("location: /mctesting/agga/dagga");
+        }
+    }
+    
+        public static function update($sessieid, $datum, $testid, $sessieww, $users)
+    {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE sessie SET datum = :datum, testid = :testid, sessieww = :sessieww WHERE sessieid = :sessieid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':datum' => $datum,':testid' => $testid,':sessieww' => $sessieww, ':sessieid' => $sessieid))) {            
+            //test if statement succes
+            UserSessionService::remove($sessieid);
+            foreach($users as $user=>$RRNr){                
+                UserSessionService::create($sessieid, $RRNr);            
+            }           
+            
+            return true;
+        } else {            
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon geen sessie in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }
