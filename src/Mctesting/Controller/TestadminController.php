@@ -222,49 +222,21 @@ class TestadminController extends AbstractController {
             ));
         } else {
             throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
-        }
+        }       
+    }
+    
+    public function testselect()
+    {
+        //build model
+        //retrieve tests
+        $tests = TestService::getAllWithoutSessions();
+        $sessions = TestSessionService::getAllFiltered();
 
-
-//        foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-//            $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
-//        }
-//        //model
-//
-//        $_SESSION["testcreation"]["passpercentage"] = $_POST["testpasspercentage"];
-//
-//        $passpercentage = $_SESSION["testcreation"]["passpercentage"];
-//        $testname = $_SESSION["testcreation"]["testname"];
-//        $testduration = $_SESSION["testcreation"]["testduration"];
-//        $questioncount = $_SESSION["testcreation"]["questioncount"];
-//        $maxscore = $_SESSION["testcreation"]["questionweightcount"];
-//        $questions = $_SESSION["testcreation"]["questions"];
-//        $subcatlist = $_SESSION["subcatlist"];
-//
-//        $admin = UserService::unserializeFromSession();
-//        $adminId = $admin->getRRNr();
-//
-//
-//        $testid = TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
-//        $testname = $_SESSION["testcreation"]["testname"];
-//        $testduration = $_SESSION["testcreation"]["testduration"];
-//        $questions = array();
-//        if (isset($_POST["question"])) {
-//            $questions = $_POST["question"];
-//        }
-//
-//        $catid = $_SESSION["testcreation"]["catid"];
-//        $cat = CategoryService::getById($catid);
-//        //view
-//        $this->render('testcreation.html.twig', array(
-//            //'allQuest'=>$allQuest,
-//            'passpercentage' => $passpercentage,
-//            'testid' => $testid,
-//            'testname' => $testname,
-//            'testduration' => $testduration,
-//            'questions' => $questions,
-//            'cat' => $cat,
-//            'subcatlist' => $subcatlist,
-//        ));        
+        //render page
+        $this->render('test_select.html.twig', array(
+            'tests' => $tests,
+            'testsessions' => $sessions
+        ));
     }
 
     public function testlink()

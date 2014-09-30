@@ -12,6 +12,16 @@ use Mctesting\Model\Data\TestSessionDAO;
 
 class TestSessionService
 {
+    public static function getAll()
+    {
+        return TestSessionDAO::selectAll();
+    }
+    
+    public static function getAllFiltered()
+    {
+        return TestSessionDAO::selectAllFiltered();
+    }
+    
     public static function getSessionsByTest($testId)
     {
         return TestSessionDAO::selectByTest($testId);

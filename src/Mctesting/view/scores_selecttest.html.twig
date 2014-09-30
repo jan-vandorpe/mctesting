@@ -25,15 +25,19 @@
                 <label for="subcat" class="col-xs-3 control-label">Selecteer test:</label>
                 <div class="col-xs-9">
                     <select class="form-control" name="selecttest">
-                        {% for test in tests %}
-                            <option value="{{ test.testid }}">{{ test.testname }}</option>
-                        {% endfor %}
+                        {% if tests is empty %}
+                            <option value="">Geen testen gevonden</option>
+                        {% else %}
+                            {% for test in tests %}
+                                <option value="{{ test.testid }}">{{ test.testname }}</option>
+                            {% endfor %}
+                        {% endif %}
                     </select>
                 </div>        
             </div>
             <div class="form-group">
                 <div class="col-xs-offset-3 col-xs-9">
-                    <input type="submit" name="gebrknop" class="btn btn-success" value="Naar stap 2">
+                    <input type="submit" name="gebrknop" class="btn btn-success" value="Naar stap 2" {% if tests is empty %}Disabled{% endif %}>
                 </div>
             </div>
         </form>

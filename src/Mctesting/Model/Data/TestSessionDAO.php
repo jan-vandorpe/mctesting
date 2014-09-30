@@ -15,6 +15,79 @@ use Mctesting\Exception\ApplicationException;
 
 class TestSessionDAO
 {
+    public static function selectAll() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM sessie ORDER BY datum';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $testSession = new TestSession();
+                    $testSession->setId($record['sessieid']);
+                    $testSession->setDate(new \DateTime($record['datum']));
+                    $test =  TestService::getById($record['testid']);
+                    $testSession->setTest($test);
+                    $testSession->setPassword($record['sessieww']);
+                    $testSession->setActive((boolean)$record['actief']);
+                    
+                    //push to result array
+                    array_push($result, $testSession);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('Er zijn geen sessies gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De sessies onden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function selectAllFiltered() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = "SELECT * FROM sessie WHERE datum > CURDATE() AND sessieid NOT IN (SELECT sessieid FROM sessiegebruiker WHERE afgelegd = 1) ORDER BY datum";
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $testSession = new TestSession();
+                    $testSession->setId($record['sessieid']);
+                    $testSession->setDate(new \DateTime($record['datum']));
+                    $test =  TestService::getById($record['testid']);
+                    $testSession->setTest($test);
+                    $testSession->setPassword($record['sessieww']);
+                    $testSession->setActive((boolean)$record['actief']);
+                    
+                    //push to result array
+                    array_push($result, $testSession);
+                }
+                return $result;
+            } else {
+                return false;
+                //throw new ApplicationException('Er zijn geen sessies gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De sessies onden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
     public static function selectByTest($testId)
     {
         //create db connection
