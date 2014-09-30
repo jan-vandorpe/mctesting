@@ -401,7 +401,7 @@ class TestadminController extends AbstractController {
 
         //var_dump($test);
 
-        $testNaam = $test->getTestName();
+        
         $pdf = new myPDF;
         $pdf->createMyPage($test, $catname);
     }
