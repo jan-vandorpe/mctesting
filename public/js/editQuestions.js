@@ -71,7 +71,6 @@ function resetInputForm(previewImg, inputId) {
   $('#' + inputId).wrap('<form>').closest('form').get(0).reset();
   $('#' + inputId).unwrap();
   $('#' + inputId).parents('.input-group').find(':text').val('');
-  $('#' + previewImg).append('');
 }
 
 //delete img input
