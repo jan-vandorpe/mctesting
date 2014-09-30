@@ -10,6 +10,7 @@ use Mctesting\Model\Includes\UploadManager;
 use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Question;
+use Mctesting\Model\Service\AnswerService;
 
 /**
  * Description of QuestionController
@@ -183,7 +184,8 @@ class QuestionController extends AbstractController {
     //after removing the files still in play, possibly none, delete all remaining files
     foreach ($previousMedia as $fileToBeDeleted) {
       echo 'files to be deleted: ' . $fileToBeDeleted . '<br>';
-      //UploadManager::delete($fileToBeDeleted); //must still be created
+      UploadManager::delete($fileToBeDeleted);
+      //QuestionService::deleteQuestionMedia($fileToBeDeleted, $questionId);
       //QuestionService delete from DB
     }
 
@@ -219,7 +221,7 @@ class QuestionController extends AbstractController {
     $i = 0;
     if (isset($_POST['antwoord'])) {
       foreach ($_POST['antwoord'] as $index => $text) {
-        echo 'answer ' . $index . '<br>';
+        //echo 'answer ' . $index . '<br>';
         /**
          * for each answer create new Answer object and enter id and text
          * if a file has been chosen to accompany it the $_FILES array won't
@@ -238,25 +240,28 @@ class QuestionController extends AbstractController {
           if ($_POST['inputText' . $index] === $oldAnswerMedia) {
             //all is well, no changes
             $answer->setMedia($oldAnswerMedia);
-            echo 'no changes for answer ' . $index . '<br>';
+            //echo 'no changes for answer ' . $index . '<br>';
           } elseif ($_FILES['answerMedia']['error'][$index] == 4) {
             //image was deleted and there used to be one
-            $answer->setMedia('NULL');
-            echo 'delete old image for answer ' . $index . '<br>';
-            //UploadManager::delete($oldAnswerMedia); //still has to be created, also remove from DB
+            $answer->setMedia(null);
+            //echo 'delete old image for answer ' . $index . '<br>';
+            //delete from server and remove from DB
+            UploadManager::delete($oldAnswerMedia);
+            //AnswerService::deleteAnswerMedia($oldAnswerMedia, $questionId, $index);
           } elseif ($_FILES['answerMedia']['error'][$index] == 0) {
             //there was an image and it's been replaced
-            echo 'delete old image and a new file to upload for answer ' . $index . '<br>';
+            //echo 'delete old image and a new file to upload for answer ' . $index . '<br>';
             list($file, $error) = UploadManager::upload('answerMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
             if ($error) {
               throw new ApplicationException($error);
             }
             $answer->setMedia($file);
             //delete via uploadmanager and remove from DB
+            UploadManager::delete($oldAnswerMedia);
           }
         } elseif ($_FILES['answerMedia']['error'][$index] == 0) {
           //new file to upload
-          echo 'new file to upload for answer ' . $index . '<br>';
+          //echo 'new file to upload for answer ' . $index . '<br>';
           list($file, $error) = UploadManager::upload('answerMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
           if ($error) {
             throw new ApplicationException($error);
@@ -264,7 +269,6 @@ class QuestionController extends AbstractController {
           $answer->setMedia($file);
         } else {
           //no new file uploaded and there wasn't an image before either
-          echo 'no new file, no old file for answer ' . $index . '<br>';
         }
         $i++;
         array_push($answersArray, $answer);
@@ -283,18 +287,12 @@ class QuestionController extends AbstractController {
     $correctAnswerId = (integer) $_POST['correctant'];
     $editedQuestion->setCorrectAnswer($correctAnswerId);
     $editedQuestion->setId($questionId);
-    $oldQuestion->setSubcategory($subcatId);
 
-    echo '<br><br><br>Edited:<br>';
-    echo '<pre>';
-    var_dump($editedQuestion);
-    echo '</pre>';
-    echo '<br>-------------------------<br>';
-    echo '<br><br><br>Old:<br>';
-    echo '<pre>';
-    var_dump($oldQuestion);
-    echo '</pre>';
-    echo '<br>-------------------------<br>';
+    QuestionService::updateQuestion($editedQuestion);
+    $msg = new FlashMessageManager();
+    $msg->setFlashMessage('Vraag succesvol aangepast', 1);
+    header('location: ' . ROOT . '/question/editquestion/'.$questionId);
+    exit();
   }
 
 }
