@@ -6,7 +6,7 @@
 {% endblock stylesheets %}
 
 {% block title %}
-    {{ parent() }}Home
+    {{ parent() }}Testsessie
 {% endblock title %}
 
 {% block scripts %}
@@ -28,7 +28,7 @@
 {% block contentHeader %}
     <div class="panel-heading">
         <h1>
-            Testsessie plannen
+            Testsessie {% if testsession.id is defined%}aanpassen{% else %}plannen{% endif %}
             <br>
         </h1>
     </div>

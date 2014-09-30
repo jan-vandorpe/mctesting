@@ -180,23 +180,7 @@
                     </form>
 
                 </div>
-            </div>
-            {#      
-                  <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload">
-                    <div class="input-group">
-                      <label for="testpasspercentage" class="input-group-addon widthslaaginput">Slaagpercentage voor de volledige test:</label>
-                      <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
-                    </div>
-            
-                    {% for key, subcat in subcatlist %}
-            
-                      <div class="input-group">
-                        <label for="subcatpasspercentage[]" class="input-group-addon widthslaaginput">Slaagpercentage voor "{{ key }}":</label>
-                        <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
-                      </div>
-            
-                    {% endfor %}
-            #}
+            </div>            
         {% else %}
             <div class="progress">
                 <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
