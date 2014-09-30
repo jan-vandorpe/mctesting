@@ -418,8 +418,14 @@ class TestadminController extends AbstractController {
 
         //var_dump($test);
 
-        
+        $testnaam = $test->getTestName();
         $pdf = new myPDF;
+        $pdf->SetTitle($testnaam);
+        //set author -- de gebruiker die momenteel aangemeld is
+        //set creator -- degene die de test aangemaakt heeft
+        //is normaal hetzelfde
+        $pdf->SetSubject($testnaam);
+        //mss datum
         $pdf->createMyPage($test, $catname);
     }
 
