@@ -41,6 +41,10 @@ class CategoryService {
     return CategoryDAO::selectById($id);
   }
 
+  public static function getByTestId($id) {
+    return CategoryDAO::selectByTestId($id);
+  }
+  
   //function creates specific category
   public static function create($category) {
     $category = ucfirst(strtolower($category));

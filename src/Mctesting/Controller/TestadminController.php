@@ -36,6 +36,18 @@ class TestadminController extends AbstractController {
      * 
      */ {
         unset($_SESSION['testcreation']);
+        
+        if($_POST["selecttest"]){
+            $test = TestService::getById($_POST["selecttest"]);
+            $_SESSION["testcreation"]["testname"] = $test->getTestName();
+            
+            $catid = CategoryService::getByTestId($test->getTestId());
+            $_SESSION["testcreation"]["catid"] = $catid;
+            
+            $_SESSION["testcreation"]["testduration"] = $test->getTestMaxDuration();
+            $questions = QuestionService::getByTest($test->getTestId());
+            $_SESSION["testcreation"]["questions"] = $questions;
+        }
         //model
         $allCat = CategoryService::getAllExceptEmpty();
         //view
