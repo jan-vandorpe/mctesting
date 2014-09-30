@@ -26,7 +26,7 @@ class myPDF extends FPDF {
         //Set the interior cell margin to 1cm
         $this->cMargin = 5;
 
-        $this->SetTopMargin(5);
+        //$this->SetTopMargin(10);
 
         //Make border for heading box thicker
         $this->SetLineWidth(0.7);
