@@ -162,7 +162,7 @@ if false, b ack to editquestion twig
             <div class="panel panel-default form-answer">
               <div class="panel-body">
                 <div class="form-group">
-                  <label for="antwoord[]" class="col-sm-3 control-label label-padding">Antwoord {{answer.id + 1}}:</label>   
+                  <label for="antwoord[]" class="col-sm-3 control-label label-padding answer-label">Antwoord {{answer.id + 1}}:</label>   
                   <div class="col-sm-9">
                     <textarea name="antwoord[]" id="antwoord{{answer.id}}" class="form-control allowcode" placeholder="vul hier een antwoord in.">
                       {{answer.text|raw}}
@@ -225,38 +225,37 @@ if false, b ack to editquestion twig
             </div>
           {% endfor %}
         </div>
-      </div>
-      {#   Add extra answer, triggers addanswer.js   #}
-      <div class="form-group">
-        <label for="AddAnswer" class="col-xs-3 control-label">
-          Extra antwoord toevoegen:
-        </label>
-        <div class="col-xs-3">
-          <div href="" id="editAddAnswer" class="btn btn-default">Antwoord Toevoegen</div>
+        {#   Add extra answer, triggers addanswer.js   #}
+        <div class="form-group">
+          <label for="AddAnswer" class="col-xs-3 control-label">
+            Extra antwoord toevoegen:
+          </label>
+          <div class="col-xs-3">
+            <div href="" id="editAddAnswer" class="btn btn-default">Antwoord Toevoegen</div>
+          </div>
         </div>
-      </div>
-      {# Select correct answer #}
-      <div class="form-group">
-        <label class="col-xs-3 control-label" for="correctant">
-          Correct antwoord:
-        </label>
-        <div class="col-xs-9">
-          <select class="form-control catbijvraag" id="correctant" name="correctant">
-            {% for answer in question.answers %}
-              <option 
-                {% if answer.id == question.correctanswer %}selected{% endif %}
-                value="{{answer.id}}">Antwoord {{answer.id + 1}}</option>
-            {% endfor %}
-          </select>
+        {# Select correct answer #}
+        <div class="form-group">
+          <label class="col-xs-3 control-label" for="correctant">
+            Correct antwoord:
+          </label>
+          <div class="col-xs-9">
+            <select class="form-control catbijvraag" id="correctant" name="correctant">
+              {% for answer in question.answers %}
+                <option 
+                  {% if answer.id == question.correctanswer %}selected{% endif %}
+                  value="{{answer.id}}">Antwoord {{answer.id + 1}}</option>
+              {% endfor %}
+            </select>
+          </div>
         </div>
+        {#   Submit   #}
       </div>
     </div>
-    {#   Submit   #}
     <div class="col-xs-3 col-xs-offset-5">
       <input type="submit" class="btn btn-success" name="editquestion" value="Vraag bevestigen" />
     </div>
   </form>
-</div>
 {% endblock content %}
 
 

@@ -62,7 +62,7 @@ function inputButton(inputId){
 function removeImage(previewImg, inputIdBlock) {
   console.log(previewImg, inputIdBlock);
   $('#' + inputIdBlock).remove();
-  $('#' + previewImg).remove();
+  $('#' + previewImg).hide('slow', function(){$('#' + previewImg).remove();});
 }
 ;
 
