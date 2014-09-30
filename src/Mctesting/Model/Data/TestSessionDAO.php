@@ -188,17 +188,13 @@ class TestSessionDAO
                 $testSession->setTest($test);
                 $testSession->setPassword($record['sessieww']);
                 $testSession->setActive((boolean)$record['actief']);
+                $users = UserSessionService::getUsersBySession($testSession->getId());
+                $testSession->setUsers($users);
                 return $testSession;
             } else {
                 throw new ApplicationException('Er werd geen sessie ('.$id.') gevonden, gelieve dit te controleren');
             }
         } else {
-//            $error = $stmt->errorInfo();
-//            $errormsg = 'Sessie selectById statement kan niet worden uitgevoerd'
-//                    . '<br>'
-//                    . '<br>'
-//                    . $error[2];
-//            throw new ApplicationException($errormsg);
             $error = $stmt->errorInfo();
             throw new ApplicationException('De sessie ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
