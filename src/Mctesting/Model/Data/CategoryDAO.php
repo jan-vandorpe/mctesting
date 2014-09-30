@@ -40,7 +40,28 @@ class CategoryDAO
             throw new ApplicationException('De categorie kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
-
+    
+    public static function selectByTestId($testid){
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT DISTINCT cat.catid FROM categorie AS cat INNER JOIN (subcategorie AS sub INNER JOIN testsubcat AS testsub ON sub.subcatid = testsub.subcatid )ON cat.catid = sub.catid WHERE testsub.testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testid,))) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                return $record['catid'];
+            } else {
+                throw new ApplicationException('Er werd geen categorieId gevonden, gelieve dit te controleren');
+            }
+        } else {
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De categorieId van de test ('.$testid.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
     public static function selectAll()
     {
         //create db connection
