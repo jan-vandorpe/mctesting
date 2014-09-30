@@ -420,6 +420,7 @@ class TestadminController extends AbstractController {
 
         $testNaam = $test->getTestName();
         $pdf = new myPDF;
+        $pdf->setTitle($testNaam);
         $pdf->createMyPage($test, $catname);
     }
 
