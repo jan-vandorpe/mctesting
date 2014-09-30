@@ -35,16 +35,20 @@ class QuestionController extends AbstractController {
     foreach ($categories as $category) {
       $category->retrieveSubcategories();
     }
-
-
+    $question = null;
+    if(isset($_SESSION['tempQuestion'])){
+      $question = unserialize($_SESSION['tempQuestion']);
+    }
     //render page
     $this->render('createquestion.html.twig', array(
         'categories' => $categories,
         'msg' => $msg,
+        'question' => $question,
     ));
     //unsets the session variables used to customize the UI
     unset($_SESSION['nopopup']);
     unset($_SESSION['subcatprevious']);
+    unset($_SESSION['tempQuestion']);
   }
 
   /**
@@ -75,6 +79,21 @@ class QuestionController extends AbstractController {
       }
     }
 
+    //assign and typecast variables
+    $subcatId = (integer) $_POST['subcat'];
+    //used to preselect the 'previous' subcat on new question creation
+    $questionText = $_POST['vraag'];
+    $weight = (integer) $_POST['gewicht'];
+    $correctAnswerId = (integer) $_POST['correctant'];
+
+    $question = new Question();
+    $question->setCorrectAnswer($correctAnswerId);
+    $question->setMedia($questionMediaFileNames);
+    $question->setSubcategory($subcatId);
+    $question->setText($questionText);
+    $question->setWeight($weight);
+    $_SESSION['tempQuestion'] = serialize($question);
+
     $i = 0;
     $answersArray = array();
     foreach ($_POST['antwoord'] as $index => $text) {
@@ -99,15 +118,8 @@ class QuestionController extends AbstractController {
       $i++;
       array_push($answersArray, $answer);
     }
-
-    //assign and typecast variables
-    $subcatId = (integer) $_POST['subcat'];
-    //used to preselect the 'previous' subcat on new question creation
-    $_SESSION['subcatprevious'] = $subcatId;
-    $questionText = $_POST['vraag'];
-    $questionText = ucfirst($questionText);
-    $weight = (integer) $_POST['gewicht'];
-    $correctAnswerId = (integer) $_POST['correctant'];
+    $question->setAnswers($answersArray);
+    $_SESSION['tempQuestion'] = serialize($question);
 
     //pass it along
     QuestionService::create($subcatId, $questionText, $weight, $correctAnswerId
@@ -291,7 +303,7 @@ class QuestionController extends AbstractController {
     QuestionService::updateQuestion($editedQuestion);
     $msg = new FlashMessageManager();
     $msg->setFlashMessage('Vraag succesvol aangepast', 1);
-    header('location: ' . ROOT . '/question/editquestion/'.$questionId);
+    header('location: ' . ROOT . '/question/editquestion/' . $questionId);
     exit();
   }
 

@@ -145,6 +145,7 @@ $(document).ready(function() {
   {
     ++count;
     valCount = $(".answers > div").length;
+    ++valCount;
 
     var strNewAnswer = '<div class="panel panel-default">';
     strNewAnswer += '<div class="panel-body">';
