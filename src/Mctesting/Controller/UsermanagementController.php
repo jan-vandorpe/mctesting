@@ -85,31 +85,32 @@ class UsermanagementController extends AbstractController {
                 $RRNr = $formatRRNr;
 
                 if (isset($data[1])) {
-                    $firstName = htmlspecialchars($data[1]);
+                    $firstName = trim(mb_convert_encoding($data[1], "ISO-8859-1"));
                 }
 
-                if (isset($data[2])) {
-                    $lastName = htmlspecialchars($data[2]);
+                if (isset($data[2]) ) {
+                    $lastName = trim(mb_convert_encoding($data[2], "ISO-8859-1"));
                 }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
-                if ($firstName !== null and $lastName !== null && UserService::isValidRRNRFormat($RRNr) == true) {
+                if ($firstName != null and $lastName != null && UserService::isValidRRNRFormat($RRNr) == true) {
                     if (UserService::getById($RRNr)) {
 //                      
                         $status['RRnr'] = $RRNr;
                         $status['voornaam'] = $firstName;
                         $status['familienaam'] = $lastName;
                         array_push($failStatussen, $status);
+
                         $fail ++;
                     } else {
-                        if (UserService::createCSVuser($firstName, $lastName, $RRNr, $timestamp)) {
+                        if (UserService::createCSVuser(mb_convert_encoding($firstName, "UTF-8"), mb_convert_encoding($lastName, "UTF-8"), $RRNr, $timestamp)) {
                             $_SESSION["importSucces"] = true;
-
 
                             $status['RRnr'] = $RRNr;
                             $status['voornaam'] = $firstName;
                             $status['familienaam'] = $lastName;
                             array_push($successStatussen, $status);
+
                             $success ++;
                         } else {
                             print ("fout");
@@ -130,6 +131,7 @@ class UsermanagementController extends AbstractController {
             fclose($file);
             //delete temporary file
             unlink($folder . $fileName);
+            //var_dump($failStatussen);
             $this->render('importstatus.html.twig', array("failStatussen" => $failStatussen, "fail" => $fail, "success" => $success, "notValid" => $notValid,
                 "wrongdata" => $wrongdata, "filename" => $originalName, "successStatussen" => $successStatussen, "wrongDataStatussen" => $wrongDataStatussen));
         } else {

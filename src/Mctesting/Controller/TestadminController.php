@@ -223,81 +223,49 @@ class TestadminController extends AbstractController {
         } else {
             throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
         }
+    }
 
+    public function testselect() {
+        //build model
+        //retrieve tests
+        $tests = TestService::getAllWithoutSessions();
+        $sessions = TestSessionService::getAllFiltered();
 
-//        foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-//            $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
-//        }
-//        //model
-//
-//        $_SESSION["testcreation"]["passpercentage"] = $_POST["testpasspercentage"];
-//
-//        $passpercentage = $_SESSION["testcreation"]["passpercentage"];
-//        $testname = $_SESSION["testcreation"]["testname"];
-//        $testduration = $_SESSION["testcreation"]["testduration"];
-//        $questioncount = $_SESSION["testcreation"]["questioncount"];
-//        $maxscore = $_SESSION["testcreation"]["questionweightcount"];
-//        $questions = $_SESSION["testcreation"]["questions"];
-//        $subcatlist = $_SESSION["subcatlist"];
-//
-//        $admin = UserService::unserializeFromSession();
-//        $adminId = $admin->getRRNr();
-//
-//
-//        $testid = TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
-//        $testname = $_SESSION["testcreation"]["testname"];
-//        $testduration = $_SESSION["testcreation"]["testduration"];
-//        $questions = array();
-//        if (isset($_POST["question"])) {
-//            $questions = $_POST["question"];
-//        }
-//
-//        $catid = $_SESSION["testcreation"]["catid"];
-//        $cat = CategoryService::getById($catid);
-//        //view
-//        $this->render('testcreation.html.twig', array(
-//            //'allQuest'=>$allQuest,
-//            'passpercentage' => $passpercentage,
-//            'testid' => $testid,
-//            'testname' => $testname,
-//            'testduration' => $testduration,
-//            'questions' => $questions,
-//            'cat' => $cat,
-//            'subcatlist' => $subcatlist,
-//        ));        
+        //render page
+        $this->render('test_select.html.twig', array(
+            'tests' => $tests,
+            'testsessions' => $sessions
+        ));
     }
 
     public function testlink()
     /**
      * 
      */ {
-        //model
-        if (isset($_SESSION["errormsg"])) {
-            $message = $_SESSION["errormsg"];
-            unset($_SESSION["errormsg"]);
-        } else {
-            $message = "";
-        }
+        //model        
         $allTest = TestService::getAll();
-        //var_dump($allTest);
+        $allUsers = UserService::getAllUsers();
+        $testsession = "";
+
+        if (isset($_POST['selectsession'])) {
+            $testsession = TestSessionService::getById($_POST['selectsession']);
+        }
         $result = array();
         foreach ($allTest as $test) {
-
             $catname = TestService::getCatName($test->getTestId());
-
             if (!isset($result[$catname])) {
                 $result[$catname] = array();
             }
             array_push($result[$catname], $test);
         }
 
-        $allUsers = UserService::getAllUsers();
+
         //view
 
         $this->render('testlink.html.twig', array(
             'allTest' => $result,
             'allUsers' => $allUsers,
-            'errormsg' => $message,
+            'testsession' => $testsession
         ));
     }
 
@@ -353,6 +321,55 @@ class TestadminController extends AbstractController {
             }
         } else {
             throw new ApplicationException('Gelieve een test te kiezen');
+        }
+    }
+
+    public function testlinkupdate()
+    /**
+     * update db
+     */ {
+        if (isset($_POST["sessionid"])) {
+            $sessionid = $_POST["sessionid"];
+            if (isset($_POST['testsetselect']) && $_POST['testsetselect'] != 0) {
+                $testid = $_POST["testsetselect"];
+
+                if (isset($_POST['testdatum']) && HelperFunctions::numbers_only(str_replace('/', '', $_POST['testdatum']))) {
+                    $date = explode('/', $_POST['testdatum']);
+                    $time = mktime(0, 0, 0, $date[1], $date[0], $date[2]);
+                    $mysqldate = date('Y-m-d H:i:s', $time);
+
+                    if (isset($_POST['testwachtwoord']) && trim($_POST['testwachtwoord']) != '') {
+                        //throw new ApplicationException($_POST['testwachtwoord']);
+                        $sessieww = $_POST["testwachtwoord"];
+                        $actief = 1;
+                        $afgelegd = 0;
+                        $users = array();
+                        if (isset($_POST["user"])) {
+                            $users = $_POST["user"];
+                        } else {
+                            throw new ApplicationException('Gelieve gebruikers te selecteren');
+                        }
+
+                        if (TestSessionService::update($sessionid, $mysqldate, $testid, $sessieww, $users)) {
+                            $FMM = new FlashMessageManager();
+                            $FMM->setFlashMessage('Testsessie aangepast!<br>De testsessies aangepast. Gebruik het linkermenu om verder te werken.', 1);
+                            header('Location:testselect');
+                            exit(0);
+                        } else {
+                            //niet gelukt
+                        }
+                    } else {
+                        throw new ApplicationException('Gelieve een wachtwoord in te vullen');
+                    }
+                } else {
+                    throw new ApplicationException('Gelieve een geldige datum in te vullen (dd/mm/yyyy)');
+                }
+            } else {
+                throw new ApplicationException('Gelieve een test te kiezen');
+            }
+        } else {
+            header('Location:testlink');
+            exit(0);
         }
     }
 

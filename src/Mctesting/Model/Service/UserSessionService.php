@@ -16,6 +16,11 @@ class UserSessionService
         return UserSessionDAO::selectBySession($sessionId);
     }
     
+    public static function getUsersBySession($sessionId)
+    {
+        return UserSessionDAO::selectUsersBySession($sessionId);
+    }
+    
     public static function getByUserANDSession($sessionId, $userId)
     {
         return UserSessionDAO::selectByUserAndSession($sessionId, $userId);
@@ -29,6 +34,11 @@ class UserSessionService
     public static function create($sessionId, $RRNr)
     {
         return UserSessionDAO::insert($sessionId, $RRNr);
+    }
+    
+    public static function remove($sessionId)
+    {
+        return UserSessionDAO::delete($sessionId);
     }
     
     public static function update($userSession, $subcatResults)

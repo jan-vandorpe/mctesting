@@ -15,8 +15,17 @@ class TestSession
     private $test;
     private $password;
     private $active;
+    private $users = array();
     
-    public function getId()
+    function getUsers() {
+        return $this->users;
+    }
+
+    function setUsers($users) {
+        $this->users = $users;
+    }
+
+        public function getId()
     {
         return $this->id;
     }

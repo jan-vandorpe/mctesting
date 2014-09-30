@@ -23,6 +23,16 @@ class TestService
         return TestDAO::selectAll();
     }
     
+    public static function getAllWithoutSessions()
+    {
+        return TestDAO::selectAllWithoutSessions();
+    }
+    
+    public static function getAllWithSessions()
+    {
+        return TestDAO::selectAllWithSessions();
+    }
+    
     public static function getById($id)
     {
         return TestDAO::selectById($id);
