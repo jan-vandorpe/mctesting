@@ -380,9 +380,13 @@ class TestadminController extends AbstractController {
         unset($_SESSION['test']);
         $admin = UserService::unserializeFromSession();
         $adminId = $admin->getRRNr();
+        
+        if($admin->getGroup()->getId() == 3){
+            $tests = TestService::getAll();
+        }else{
+            $tests = TestService::getByAdminId($adminId);
+        }
 
-        $tests = TestService::getByAdminId($adminId);
-        //var_dump($adminId);
         $this->render('testlist.html.twig', array(
             'tests' => $tests,
         ));
