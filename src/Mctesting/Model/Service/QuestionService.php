@@ -23,6 +23,11 @@ class QuestionService
         return QuestionDAO::selectById($id);
     }
 
+    public static function getByTest($testid)
+    {
+        return QuestionDAO::selectByTest($testid);
+    }
+    
     /**
      * Function returns an array of question objects corresponding to the given
      * categoryId

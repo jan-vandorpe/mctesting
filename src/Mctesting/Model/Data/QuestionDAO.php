@@ -59,6 +59,28 @@ class QuestionDAO {
     }
   }
 
+  public static function selectByTest($testid) {
+      //create db connection
+    $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+    //prepare sql statement
+    $sql = 'SELECT vraagid FROM testvragen WHERE testid = :testid ';
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':testid', $testid);
+    //test if statement can be executed
+    if ($stmt->execute()) {
+      //test if statement retrieved something
+      $recordset = $stmt->fetchAll();
+      if (!empty($recordset)) {        
+        return $recordset;
+      } else {
+        throw new ApplicationException('De gekozen test (' . $testid . ') bevat geen vragen');
+      }
+    } else {
+      $error = $stmt->errorInfo();
+      throw new ApplicationException('De vragen van de gekozen test (' . $testid . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+    }
+  }
+  
   /*
    * Returns an array of question objects based on given categoryid.
    */
