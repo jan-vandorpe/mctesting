@@ -5,18 +5,6 @@
 
 {% endblock stylesheets %}
 
-{% block scripts %}
-    {{ parent() }}
-    <script language="JavaScript">
-        function toggle(source) {
-            checkboxes = document.getElementsByClassName(source.value);
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = source.checked;
-            }
-          }          
-    </script>
-{% endblock scripts %}
-
 {% block title %}
     {{ parent() }}Test aanmaken
 {% endblock title %}
@@ -32,173 +20,36 @@
 
 {% block content %}
 
-    <div class="container-fluid">
-        {% if testname is not defined %}
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
-                    <span>stap 1 van 4</span>
-                </div>
+    <div class="container-fluid">        
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="width: 1%;">
+                <span>stap 1 van 4</span>
             </div>
-            <form name="testcreation" id="testcreation" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
-                <div class="form-group">
-                    <label for="testname" class="col-xs-3 control-label">Naam van test:</label>
-                    <div class="col-xs-9">
-                        <input type="text" class="form-control" title="hallo" name="testname" id="testname" placeholder="Vul hier de naam in van de test." autofocus required />
-                    </div>  
-                </div>
-                <div class="form-group">
-                    <label for="testcatselect" class="col-xs-3 control-label">Categorie van test:</label>
-                    <div class="col-xs-9">
-                        <select class="form-control" name="testcatselect">
-                            <option value="0" >Selecteer een categorie</option>
-                            {% for category in allCat %}
-                                <option value="{{ category.id }}">{{ category.catname }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>  
-                </div>    
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-5">                            
-                        <input type="submit" name="catknop" class="btn btn-success" value="Naar stap 2">
-                    </div>
-                    </div>
+        </div>
+        <form name="testcreation" id="testcreation" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testcreation_step2">
+            <div class="form-group">
+                <label for="testname" class="col-xs-3 control-label">Naam van test:</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" title="test naam" name="testname" id="testname" placeholder="Vul hier de naam in van de test." autofocus required value="{% if testcreation.test.testname is defined %}{{testcreation.test.testname}}{% endif %}"/>  
                 </div>  
-            </form>
-
-        {% elseif testduration is not defined %}
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" style="width: 34%;">
-                    <span>stap 2 van 4</span>
-                </div>
             </div>
-            <form name="testcreation2" id="testcreation2" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testcreation_step3" id="testcreation2">
-                <div class="form-group">
-                    <label for="testduration" class="col-xs-3 control-label">Duur van test:</label>
-                    <div class="col-xs-9">                            
-                        <input type="text" class="form-control" name="testduration" id="testduration" placeholder="Tijdsduur in minuten" required/>
-                    </div>
-                </div> 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label label-padding">Vragen:</label>
-
-                    <div class="col-sm-9"> 
-                        {% for subcat in subcats %}  
-                            {% if subcat.questions|length > 0 %}
-                                <div class="panel panel-default"> 
-                                    <div class="panel-heading categorie clearfix">   
-                                        <div class="col-xs-1">
-                                            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{subcat.id}}" id="subcat{{subcat.id}}" class=""/>
-                                        </div>                    
-                                        <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname }}</label>                         
-                                    </div>          
-                                    <ul class="list-group">
-                                        {% for question in subcat.questions %}   
-                                            <li class="list-group-item subcategorie clearfix">
-                                                <label for="questionid{{question.id}}" class=""></label>
-                                                <div class="col-xs-1">                    
-                                                    <input type="checkbox" class="{{subcat.id}}" name="question[]" value="{{question.id}}" id="questionid{{question.id}}"/>
-                                                </div>                
-                                                <div class="col-xs-8">{{question.text|raw}}</div>                                            
-                                                <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                            {% endif %}
+            <div class="form-group">
+                <label for="testcatselect" class="col-xs-3 control-label">Categorie van test:</label>
+                <div class="col-xs-9">
+                    <select class="form-control" name="testcatselect">
+                        <option value="0" >Selecteer een categorie</option>
+                        {% for category in allCat %}
+                            <option value="{{ category.id }}" {% if (testcreation.catid is defined) and (testcreation.catid == category.id) %}selected{% endif %}>{{ category.catname }}</option>
                         {% endfor %}
-                    </div>
-                </div>                           
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-4">                            
-                        <input type="reset" name="cat_back_knop" id="back-button" class="btn btn-default" value="Terug naar stap 1">
-                    </div>  
-                    <div class="col-xs-2 col-xs-offset-4">                            
-                        <input type="submit" name="catknop" class="btn btn-success" value="Naar stap 3">
-                    </div>
-
-                </div>
-            </form>
-
-        {% elseif passpercentage is not defined %}
-            <div class="progress">
-                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100" style="width: 67%;">
-                    <span>stap 3 van 4</span>
+                    </select>
+                </div>  
+            </div>    
+            <div class="form-group">
+                <div class="col-xs-2 col-xs-offset-5">                            
+                    <input type="submit" name="catknop" class="btn btn-success" value="Naar stap 2">
                 </div>
             </div>
+        </form> 
+    </div> 
 
-            <div class="panel panel-default">
-                <div class="panel-heading clearfix">
-                    <p><span class="col-xs-3">Test naam: </span><span class="col-xs-9"><b>{{testname}}</b></span></p> 
-                    <p><span class="col-xs-3">Categorie: </span><span class="col-xs-9"><b>{{cat.catname}}</b></span></p>
-                    <p><span class="col-xs-3">Duurtijd: </span><span class="col-xs-9"><b>{{testduration}}</b></span></p>
-                    <p><span class="col-xs-3">Aantal vragen: </span><span class="col-xs-9"><b>{{questioncount}}</b></span></p>
-                    <p><span class="col-xs-3">Gewicht vragen: </span><span class="col-xs-9"><b>{{questionweightcount}}</b></span></p>
-                </div>
-                <div class="panel-body">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4>Subcategorie&euml;n:</h4>
-                        </div>
-                        <ul class="list-group">
-                            {% for key, subcat in subcatlist %}
-                                <li class="list-group-item clearfix">
-                                    <span class="col-xs-3">Naam: </span><span class="col-xs-9">{{key}}</span>
-                                    <span class="col-xs-3">Aantal vragen: </span><span class="col-xs-9">{{subcat.count}}</span>
-                                    <span class="col-xs-3">Gewicht vragen: </span><span class="col-xs-9">{{subcat.weight}}</span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <form name="testcreation3" id="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/testadmin/testCreation_TestUpload" role="form">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4>Slaagpercentages:</h4>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="control-label col-xs-5">Slaagpercentage voor volledige test: </label>
-                                    <div class="col-xs-7">
-                                        <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="60" pattern="^[0-9]+$" maxlength='3' required/>
-                                    </div>
-                                </div>
-                                {% for key, subcat in subcatlist %}
-                                    <div class="form-group">
-                                        <label class="control-label col-xs-5">Slaagpercentage voor "{{ key }}":</label>
-                                        <div class="col-xs-7">
-                                            <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="50" pattern="^[0-9]+$" maxlength='3' required/>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-xs-2 col-xs-offset-5">                            
-                                <input type="submit" name="catknop" class="btn btn-success" value="Naar stap 4">
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>            
-        {% else %}
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-                    <span>stap 4 van 4</span>
-                </div>
-            </div>
-            <h4>Test aanmaken voltooid.</h4>
-            <p>Er is een nieuwe test aangemaakt. Gebruik het linkermenu om verder te werken. </p>
-            <br>
-            <h4>Dummytest afleggen</h4>
-            <form name="testcreation3" class="form-horizontal meerboven-onder" method="POST" action="{{ app.root }}/test/rundummy/{{ testid }}" role="form"> 
-                <p>Klik hier om een dummytest af te leggen:</p>
-                <div class="form-group">
-                    <div class="col-xs-3">
-                        <input type="submit" name="catknop" value="Test afleggen" class="btn btn-primary" >
-                    </div>
-                </div>
-            </form>
-        {% endif %}
-    </div>
 {% endblock content %}
