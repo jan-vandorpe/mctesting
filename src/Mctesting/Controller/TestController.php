@@ -12,11 +12,9 @@ use Mctesting\Model\Service\UserSessionService;
  *
  * @author cyber01
  */
-class TestController extends AbstractController
-{
+class TestController extends AbstractController {
 
-    public function choosesession()
-    {
+    public function choosesession() {
         //model
         //$sessionlist= $_SESSION["sessionchoices"];
 //        print('<pre>');
@@ -31,34 +29,33 @@ class TestController extends AbstractController
         ));
     }
 
-    public function runTest($arguments)
-    {
+    public function runTest($arguments) {
         //process arguments
         $testId = $arguments[0];
         $testSessionId = $arguments[1];
-        
+
         //if user already took test, redirect to homepage
-      $user = UserService::unserializeFromSession();
-      $sessionuser = UserSessionService::getByUserANDSession($testSessionId, $user->getRRnr());
-      if($sessionuser === false ){
-        throw new ApplicationException('Er zijn geen testsessies gevonden');
-      }
-      if($sessionuser[0]->getParticipated() === 1){
-        header("location: " . ROOT . "/home");
-      }
-      
+        $user = UserService::unserializeFromSession();
+        $sessionuser = UserSessionService::getByUserANDSession($testSessionId, $user->getRRnr());
+        if ($sessionuser === false) {
+            throw new ApplicationException('Er zijn geen testsessies gevonden');
+        }
+        if ($sessionuser[0]->getParticipated() === 1) {
+            header("location: " . ROOT . "/home");
+        }
+
 
         //build model
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
         $catname = TestService::getCatName($testId);
-        if(isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()){
-          $test = unserialize($_SESSION['test']);
+        if (isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()) {
+            $test = unserialize($_SESSION['test']);
         } else {
-         //shuffle questions
-        $test->shuffleQuestions();
-        //shuffle answers
-        $test->shuffleAnswers();
+            //shuffle questions
+            $test->shuffleQuestions();
+            //shuffle answers
+            $test->shuffleAnswers();
         }
         //store in session for process method
         $_SESSION['test'] = serialize($test);
@@ -71,9 +68,8 @@ class TestController extends AbstractController
                     'catname' => $catname,
         ));
     }
-    
-    public function runDummy($arguments)
-    {
+
+    public function runDummy($arguments) {
         //process arguments
         $testId = $arguments[0];
 
@@ -81,13 +77,13 @@ class TestController extends AbstractController
         //retrieve full test (test info + all questions and answers
         $test = TestService::getActiveFullTestById($testId);
         $catname = TestService::getCatName($testId);
-        if(isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()){
-          $test = unserialize($_SESSION['test']);
+        if (isset($_SESSION['test']) && $test->getTestId() == unserialize($_SESSION['test'])->getTestId()) {
+            $test = unserialize($_SESSION['test']);
         } else {
-         //shuffle questions
-        $test->shuffleQuestions();
-        //shuffle answers
-        $test->shuffleAnswers();
+            //shuffle questions
+            $test->shuffleQuestions();
+            //shuffle answers
+            $test->shuffleAnswers();
         }
 
         //store in session for process method
@@ -100,14 +96,12 @@ class TestController extends AbstractController
                     'catname' => $catname,
         ));
     }
-    
-    public function processDummy(){
+
+    public function processDummy() {
         $this->render('testcreation.html.twig', array());
-        
     }
-    
-    public function process()
-    {
+
+    public function process() {
         //retrieve test from session
         $test = unserialize($_SESSION['test']);
         $testId = $_SESSION['testid'];

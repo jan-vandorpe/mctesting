@@ -1,0 +1,90 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ app.root }}/public/css/datepicker.css" />
+{% endblock stylesheets %}
+
+{% block title %}
+    {{ parent() }}Home
+{% endblock title %}
+
+{% block scripts %}
+    {{ parent() }}
+    <script src="{{ app.root }}/public/js/lib/bootstrap-datepicker.js"></script>
+    <script src="{{ app.root }}/public/js/datepicker.js"></script>
+
+{% endblock scripts %}
+
+{% block contentHeader %}
+    <div class="panel-heading">
+        <h1>
+            Testsessie plannen
+            <br>
+        </h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="testsessieplannen">
+        {% if errormsg is defined and errormsg is not empty  %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                {{ errormsg }}
+            </div>
+        {% endif %}
+        <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
+            <div class="form-group">
+                <label class="control-label col-xs-3" for="testsetselect">Selecteer een test:</label>
+                <div class="col-xs-9">
+                    <select class="form-control" name="testsetselect" id="testsetselect">
+                        <option value="0" >Selecteer een test:</option>
+                        {% for key,value in allTest %}  
+                            <optgroup label="{{ key }}">
+                                {% for test in value %}                
+                                    <option value="{{ test.testid }}">{{ test.testname }} - vragen: {{ test.testquestioncount }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Datum van de testsessie:</label>
+                <div class="col-xs-9">
+                    <div class="input-group date datepicker">
+                        <input type="text" class="form-control" id="testdatum" name="testdatum" placeholder="dd/mm/yyyy"/>
+                        <span class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i></span>
+                    </div>
+                </div>                
+            </div>   
+            <div class="form-group">
+                <label class="control-label col-xs-3">Wachtwoord van de testsessie:</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control col-xs-5" name="testwachtwoord" id="testwachtwoord" placeholder="Vul hier het wachtwoord in." required/>
+                </div>                
+            </div>   
+            <div class="form-group">
+                <label class="col-xs-3 control-label">Gebruikers:</label>
+                <div class="col-xs-9">        
+                    <ul class="list-group">
+                        {% for user in allUsers %} 
+                            <li class="list-group-item clearfix">
+                                <label class="col-xs-12"  style="font-weight:normal">
+                                    <div class="col-xs-1">
+                                        <input type="checkbox" name='user[]' value='{{ user.rrnr }}'/>
+                                    </div>
+                                    <div class="col-xs-5">{{ user.lastname }}</div>
+                                    <div class="col-xs-5">{{ user.firstname }}</div>
+                                </label>
+                            </li>
+                        {% endfor %}
+                    </ul> 
+                </div>
+            </div>
+            <div class="col-xs-2 col-xs-offset-5">
+                <input type="submit" name="catknop" class="btn btn-success" value="Test plannen">
+            </div>
+        </form>
+    </div>
+{% endblock content %}

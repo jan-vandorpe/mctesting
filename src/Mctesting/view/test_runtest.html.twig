@@ -13,7 +13,7 @@
 {% block contentHeader %}
   <div class="panel-heading">
     <h1>
-      {{ test.testname }} 
+        {{ test.testname }}
       <br>
       <small>Per vraag is maar 1 correct antwoord mogelijk</small>
     </h1>
@@ -22,6 +22,7 @@
       <footer class="no-print" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
       <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
     </blockquote>
+      <p class="no-print"><a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}" target="_blank">Download als .PDF bestand.</a></p>
   </div>
 {% endblock %}
 {% block content %}

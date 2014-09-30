@@ -24,8 +24,11 @@
             <li class="list-group-item clearfix">
                 <label class="col-xs-12">
                     <div class="col-xs-4 col-xs-offset-1">Test naam</div>
-                    <div class="col-xs-2">maxduur</div>
-                    <div class="col-xs-3">aantal vragen</div>
+                    <div class="col-xs-1">Duur</div>
+                    <div class="col-xs-1">Vragen</div>
+                    <div class="col-xs-1">Status</div>
+                    <div class="col-xs-2">Dummytest</div>
+                    <div class="col-xs-2">Download .PDF</div>
                 </label>
             </li>
             {% if tests is empty %}
@@ -38,14 +41,15 @@
                                 <input type="checkbox" name="testCheckbox[]" value="{{test.TestId}}" />
                             </div>
                             <div class="col-xs-4 overflow">{{test.TestName}}</div>
-                            <div class="col-xs-2">{{test.TestMaxDuration}}</div>
+                            <div class="col-xs-1">{{test.TestMaxDuration}}</div>
                             <div class="col-xs-1">{{test.TestQuestionCount}}</div>
                             {% if test.status == 1 %}
-                                <div class="col-xs-2">Actief</div>
+                                <div class="col-xs-1">Actief</div>
                             {% else %}
-                                <div class="col-xs-2">Inactief</div>
+                                <div class="col-xs-1">Inactief</div>
                             {% endif %}            
                             <div class="col-xs-2 no-print"><a href="{{ app.root }}/test/rundummy/{{ test.TestId }}">dummytest</a></div>
+                            <div class="col-xs-2 no-print"><a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}" target="_blank">Download .PDF</a></div>
 
                         </label>
                     </li>
