@@ -27,4 +27,9 @@ class MediaService
 //            throw new ApplicationException('Parameter die media bevat is geen array');
 //        }
     }
+    
+    public static function updateQuestionMedia($questionId, $files){
+      MediaDAO::deleteQuestionMedia($questionId);
+      MediaService::create($questionId, $files);
+    }
 }

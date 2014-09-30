@@ -23,3 +23,10 @@ $(document).ready(function () {
     });
 
 });
+
+//reset form element
+  function resetFormElement(e) {
+    console.log(e);
+  $(e).wrap('<form>').closest('form').get(0).reset();
+  $(e).unwrap();
+}
