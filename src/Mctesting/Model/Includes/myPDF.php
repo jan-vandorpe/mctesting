@@ -27,7 +27,6 @@ class myPDF extends FPDF {
         $this->cMargin = 5;
 
         //$this->SetTopMargin(10);
-
         //Make border for heading box thicker
         $this->SetLineWidth(0.7);
 
@@ -119,7 +118,8 @@ class myPDF extends FPDF {
                 $this->AddPage();
             }
 
-            //var_dump($currentY);
+
+            $this->SetFillColor(245);
 
             $this->Cell(190, 10, "Vraag " . $i, 'LTR', 1, 'L', 0);
             $this->SetFontSize(18);
