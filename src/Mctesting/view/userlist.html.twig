@@ -6,7 +6,7 @@
 {% endblock stylesheets %}
 
 {% block title %}
-    {{ parent() }}Home
+    {{ parent() }}Gebruikers lijst
 {% endblock title %}
 
 {% block contentHeader %}
@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-xs-3">{{user.lastname}}</div>
                             <div class="col-xs-3">{{user.firstname}}</div>
-                            <div class="col-xs-2">{{user.rrnr}}</div>
+                            <div class="col-xs-2 rijksregisternummer">{{user.rrnr}}</div>
                             {% if user.status == 1 %}
                                 <div class="col-xs-2 text-right">Actief</div>
                             {% else %}

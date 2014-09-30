@@ -15,6 +15,33 @@ and open the template in the editor.
     border-top: 1px solid #dddddd;
 }
 
+/*
+Thumbnail size
+*/
+.thumb {
+  max-height: 100px;
+}
+
+/*
+preview image styles
+*/
+.preview-wrapper {
+  padding-right:1em;
+}
+.preview-figure {
+  position:relative;
+  height:100px;
+}
+.preview-figure .preview-image {
+  max-height: 100%;
+}
+.preview-close {
+  position:absolute;
+  top:5px;
+  right:5px;
+  z-index:51;
+}
+
 
 /**
     Test answers layout
@@ -136,7 +163,15 @@ change cursor to hand when hovering
   list-style-type: none;
 }
 
-
+/*removeAnswer button*/
+.answers > div {
+  position:relative;
+}
+.remove-answer {
+  position:absolute;
+  top:10px;
+  left:10px;
+}
 /*
     Beheerder details
 */

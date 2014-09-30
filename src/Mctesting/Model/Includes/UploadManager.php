@@ -21,7 +21,7 @@ class UploadManager {
    *                The first element is randomly generated filename to which the file was uploaded to.
    *                The second element is the status - if the upload failed, it will be 'Error : Cannot upload the file 'name.txt'.' or something like that
    */
-  public function upload($file_id, $folder = "", $types = "",$i) {
+  public function upload($file_id, $folder = "", $types = "", $i) {
     if (!$_FILES[$file_id]['name'])
       return array('', 'No file specified');
 
@@ -71,6 +71,23 @@ class UploadManager {
     }
 
     return array($file_name, $result);
+  }
+
+  public function delete($file_name, $folder = "") {
+    /**
+     * Use the $folder var to overwrite base_folder if you want
+     * 
+     */
+    $base_folder = $_SERVER['DOCUMENT_ROOT'] . "/mctesting/public/images/";
+    if (empty($folder)) {
+      $folder = $base_folder;
+    }
+
+    if (unlink($folder . trim($file_name))) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

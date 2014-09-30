@@ -23,6 +23,11 @@ class QuestionService
         return QuestionDAO::selectById($id);
     }
 
+    public static function getByTest($testid)
+    {
+        return QuestionDAO::selectByTest($testid);
+    }
+    
     /**
      * Function returns an array of question objects corresponding to the given
      * categoryId
@@ -154,6 +159,18 @@ class QuestionService
             }
             throw new ApplicationException($errormsg);
         }
+    }
+    
+    public static function updateQuestion($editedQuestion){
+      $subcatId = $editedQuestion->getSubcategory();
+      $text = $editedQuestion->getText();
+      $weight = $editedQuestion->getWeight();
+      $correctAnswerId = $editedQuestion->getCorrectAnswer();
+      $answers = $editedQuestion->getAnswers();
+      $media = $editedQuestion->getMedia();
+      if(QuestionService::validateNewQuestion($subcatId, $text, $weight, $correctAnswerId, $answers, $media)){
+        QuestionDAO::updateQuestion($editedQuestion);
+      }
     }
 
 }

@@ -96,4 +96,37 @@ class AnswerDAO
             throw new ApplicationException('Het antwoord kon niet worden aangemaakt, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+        
+    public static function updateAnswer($answer){
+      //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = "UPDATE `antwoorden` SET `antwoordtekst`=:antwoordtekst,`media`=:media WHERE vraagid=:vraagid and antwoordid=:antwoordid";
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':vraagid' => $answer->getQuestionId(),
+                                ':antwoordid' => $answer->getId(),
+                                ':antwoordtekst' => $answer->getText(),
+                                ':media' => $answer->getMedia(),
+                                ))) {
+        } else {
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Het antwoord kon niet worden aangepast, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function delete($questionId){
+      //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = "DELETE FROM `antwoorden` WHERE vraagid=:vraagid";
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':vraagid' => $questionId))) {
+          return true;
+        } else {
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Het antwoord kon niet worden aangepast, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
 }

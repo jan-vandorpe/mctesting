@@ -36,6 +36,18 @@ class TestadminController extends AbstractController {
      * 
      */ {
         unset($_SESSION['testcreation']);
+        
+        if($_POST["selecttest"]){
+            $test = TestService::getById($_POST["selecttest"]);
+            $_SESSION["testcreation"]["testname"] = $test->getTestName();
+            
+            $catid = CategoryService::getByTestId($test->getTestId());
+            $_SESSION["testcreation"]["catid"] = $catid;
+            
+            $_SESSION["testcreation"]["testduration"] = $test->getTestMaxDuration();
+            $questions = QuestionService::getByTest($test->getTestId());
+            $_SESSION["testcreation"]["questions"] = $questions;
+        }
         //model
         $allCat = CategoryService::getAllExceptEmpty();
         //view
@@ -380,9 +392,13 @@ class TestadminController extends AbstractController {
         unset($_SESSION['test']);
         $admin = UserService::unserializeFromSession();
         $adminId = $admin->getRRNr();
+        
+        if($admin->getGroup()->getId() == 3){
+            $tests = TestService::getAll();
+        }else{
+            $tests = TestService::getByAdminId($adminId);
+        }
 
-        $tests = TestService::getByAdminId($adminId);
-        //var_dump($adminId);
         $this->render('testlist.html.twig', array(
             'tests' => $tests,
         ));

@@ -1,62 +1,24 @@
 {% extends "template/layout.html.twig" %}
 
-{% block stylesheets %}
-    {{ parent() }}
-{% endblock stylesheets %}
-
-{% block scripts %}
-    {{ parent() }}
-    <script language="JavaScript">
-        function toggle(source) {
-            checkboxes = document.getElementsByClassName(source.value);
-            for (var i = 0, n = checkboxes.length; i < n; i++) {
-                checkboxes[i].checked = source.checked;
-            }
-        }
-    </script>
-{% endblock scripts %}
-
-{% block title %}
-    {{ parent() }}Categorie lijst
-{% endblock title%}
-
-{% block contentHeader %}
-    <div class="panel-heading">
-        <h1>
-            Categorielijst
-            <br>
-        </h1>
-    </div>
-{% endblock %}
-
 {% block content %}
-    <form name="catbewerken" action="{{app.root}}/category/categorylist" method="post" id="catForm" class="form-horizontal">
         {% if allcategories is empty %}
             <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
         {% else %}
             {% for category in allcategories %}  
                 <div class="panel panel-default"> 
                     <div class="panel-heading categorie clearfix">   
-                        <div class="col-xs-1">
-                            <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}" class=""/>
-                        </div>                    
+                                 
                         <label class="col-xs-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
                     </div>          
                     <ul class="list-group">
                         {% for subcategory in category.subcategories %}   
                             <li class="list-group-item subcategorie clearfix">
                                 <label for="subcatid{{subcategory.id}}" class=""></label>
-                                <div class="col-xs-1">                    
-                                    <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
-                                </div>                
-                                <div class="col-xs-5">{{subcategory.subcatname}}</div>
+                                            
+                                <div class="col-xs-7">{{subcategory.subcatname}}</div>
                                 <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
-                                {% if subcategory.active == 1 %}
-                                    <div class="col-xs-1">Actief</div>
-                                {% else %}
-                                    <div class="col-xs-1">Inactief</div>
-                                {% endif %}
-                                <div class="col-xs-3 no-print">
+                                
+                                <div class="col-xs-3">
                                     {% if subcategory.questions|length > 0 %}
                                         <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
                                     {% endif %}  
@@ -111,7 +73,5 @@
                     </div>
                 </div>
         </nav>
-    </form>
-
 
 {% endblock content %}

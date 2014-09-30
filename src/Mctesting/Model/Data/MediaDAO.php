@@ -61,4 +61,21 @@ class MediaDAO
             throw new ApplicationException('Kon geen media in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+    
+    public static function deleteQuestionMedia($questionId){
+      //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = "DELETE FROM `media` WHERE vraagid=:vraagid";
+        $stmt = $db->prepare($sql);
+        
+        //test if statement can be executed
+        if ($stmt->execute(array(':vraagid' => $questionId,
+                                ))) {
+        } else {
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('Kon geen vraag-media in de database verwijderen, gelieve dit te controleren:<br>'.$error[2]);
+        }
+        
+    }
 }
