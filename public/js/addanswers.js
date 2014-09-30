@@ -105,7 +105,7 @@ $(document).ready(function() {
     strNewAnswer += '<div class="panel-body"><div class="form-group"><label for="antwoord[]" class="col-sm-3 control-label label-padding answer-label">Antwoord ' + count + ':</label>';
     strNewAnswer += '<div class="col-sm-9"><textarea name="antwoord[]" id="antwoord' + count + '" class="form-control allowcode" placeholder="vul hier een antwoord in.">';
     strNewAnswer += '</textarea></div></div><div class="form-group" id="AnswerMediaBlock' + count + '"><div class="pull-right" id="imgPreview' + count + '" style="padding-right:2em">';
-    strNewAnswer += '<figure class="thumbnail preview-figure btn" onclick="resetInputForm(\'imgPreview' + count + '\', \'AnswerUpload' + count + '\');"><img id="imgPreview' + count + 'img" src="/mctesting/images/placeholder.jpg" class="preview-image thumb">';
+    strNewAnswer += '<figure class="thumbnail preview-figure btn" onclick="resetInputForm(\'imgPreview' + count + '\', \'AnswerUpload' + count + '\');"><img id="imgPreview' + count + 'img" src="/mctesting/public/images/placeholder.jpg" class="preview-image thumb">';
     strNewAnswer += '<span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span></figure></div>';
     strNewAnswer += '<div class="pull-left col-xs-9"><label class="col-xs-4 control-label">Afbeelding:</label><div class="col-xs-8"> <div class="input-group"> <span class="input-group-btn">';
     strNewAnswer += '<span class="btn btn-default btn-file">Bladeren...<input type="file" name="answerMedia[]" class="form-control uploadImage" ',

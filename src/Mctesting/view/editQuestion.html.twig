@@ -174,7 +174,7 @@ if false, b ack to editquestion twig
                   <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
                     <div class="pull-right" id="imgPreview{{answer.media|replace({('.'):''})}}" style="padding-right:2em">
                       <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{answer.media|replace({('.'):''})}}', 'AnswerUpload{{answer.media|replace({('.'):''})}}');">
-                        <img id="imgPreview{{answer.media|replace({('.'):''})}}img" src="{{app.root}}/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}"  class="preview-image thumb">
+                        <img id="imgPreview{{answer.media|replace({('.'):''})}}img" src="{{app.root}}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}"  class="preview-image thumb">
                         <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
                         <input type="hidden" name="oldAnswer{{answer.id}}Media" value="{{answer.media}}">
                       </figure>
@@ -199,7 +199,7 @@ if false, b ack to editquestion twig
                   <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
                     <div class="pull-right" id="imgPreview{{loop.index}}" style="padding-right:2em">
                       <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{loop.index}}', 'AnswerUpload{{loop.index}}');">
-                        <img id="imgPreview{{loop.index}}img" src="{{app.root}}/images/placeholder.jpg" class="preview-image thumb">
+                        <img id="imgPreview{{loop.index}}img" src="{{app.root}}/public/images/placeholder.jpg" class="preview-image thumb">
                         <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
                       </figure>
                     </div>
