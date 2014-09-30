@@ -1,4 +1,23 @@
+//event
+function removeAnswer(e) {
+  console.log(e);
+  e.parent().parent().remove();
+}
+
 $(document).ready(function() {
+
+  //remove answer button event handler attaching
+  $removeButtons = $('.remove-answer');
+  //console.log($removeButtons);
+
+  $removeButtons.each(function(idx) {
+    $(this).click(function() {
+      removeAnswer($(this));
+    });
+  });
+
+
+
   //initialize tinymce op textarea.allowcode
   tinymce.init({
     menubar: true,
@@ -32,13 +51,23 @@ $(document).ready(function() {
     strNewAnswer += '<span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span></figure></div>';
     strNewAnswer += '<div class="pull-left col-xs-9"><label class="col-xs-4 control-label">Afbeelding:</label><div class="col-xs-8"> <div class="input-group"> <span class="input-group-btn">';
     strNewAnswer += '<span class="btn btn-default btn-file">Bladeren...<input type="file" name="answerMedia[]" class="form-control uploadImage" ',
-    strNewAnswer += 'onchange="PreviewAnswerImage(\'AnswerUpload' + count + '\', \'imgPreview' + count + '\');" id="AnswerUpload' + count + '"/> </span> </span><input type="text" class="form-control" readonly value="" id="inputText' + count + '"></div></div></div></div>';
+    strNewAnswer += 'onchange="PreviewAnswerImage(\'AnswerUpload' + count + '\', \'imgPreview' + count + '\');" id="AnswerUpload' + count + '"/> </span> </span><input type="text" class="form-control" readonly value="" id="inputText' + count + '"></div></div>\n\
+                     </div></div><div class="btn btn-warning remove-answer">Antwoord verwijderen</div></div></div>';
     var $newAnswer = $(strNewAnswer);
     $answers.append($newAnswer);
 //    console.log($('#antwoord' + count).parent());
 
     //toevoegen option in correct antwoord select
     $correctAns.append('<option value="' + (count - 1) + '">Antwoord ' + count + '</option>');
+
+    //rerun inputbutton
+    inputButtonBootstrap();
+
+    //attach remove handler
+    $('.remove-answer').click(function(){
+      removeAnswer($(this));
+    });
+
 
     //herinitialise tinymce op textarea.allowcode
     tinymce.init({
@@ -50,8 +79,10 @@ $(document).ready(function() {
       paste_as_text: true,
       plugins: "visualblocks"
     });
+
+
   });
-  
+
 
   $addButton.click(function(e)  //on add input button click
   {
@@ -86,6 +117,10 @@ $(document).ready(function() {
     //toevoegen option in correct antwoord select
     $correctAns.append('<option value="' + (count - 1) + '">Antwoord ' + count + '</option>');
 
+    //rerun inputbutton
+    inputButtonBootstrap();
+
+
     //herinitialise tinymce op textarea.allowcode
     tinymce.init({
       menubar: true,
@@ -104,3 +139,28 @@ $(document).ready(function() {
 }
 );
 
+
+function inputButtonBootstrap() {
+  $(document).on('change', '.btn-file :file', function() {
+    var input = $(this),
+            numFiles = input.get(0).files ? input.get(0).files.length : 1,
+            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  $(document).ready(function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+
+      var input = $(this).parents('.input-group').find(':text'),
+              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+      if (input.length) {
+        input.val(log);
+      } else {
+        if (log)
+          alert(log);
+      }
+
+    });
+  });
+}

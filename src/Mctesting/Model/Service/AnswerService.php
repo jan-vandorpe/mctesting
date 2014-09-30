@@ -37,9 +37,8 @@ class AnswerService {
   }
 
   public static function updateAnswer($questionId, $answers) {
-    foreach ($answers as $answer) {
-      $answer->setQuestionId($questionId);
-      AnswerDAO::updateAnswer($answer);
+    if(AnswerDAO::delete($questionId)){
+          AnswerService::create($questionId, $answers);
     }
   }
 

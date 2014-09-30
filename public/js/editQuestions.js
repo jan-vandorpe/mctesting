@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 //previewImage function
 function PreviewImage(inputId, previewId, uploadBox, loop) {
   console.log(inputId, '#' + previewId, '#' + uploadBox, loop + 1);
@@ -38,29 +37,6 @@ function PreviewImage(inputId, previewId, uploadBox, loop) {
               <input type="button" value="Afbeelding uploaden" id="uploadImgPreview" \n\
           class="btn btn-default" onclick="PreviewImage(\'NewQMedia' + idx + '\', \'questionImgPreview\', \'UploadBox' + idx + '\',' + idx + ');"></div></div>'
             );
-    //rerun inputbutton.js
-    $(document).on('change', '.btn-file :file', function() {
-      var input = $(this),
-              numFiles = input.get(0).files ? input.get(0).files.length : 1,
-              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-      input.trigger('fileselect', [numFiles, label]);
-    });
-
-    $(document).ready(function() {
-      $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-
-        var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-        if (input.length) {
-          input.val(log);
-        } else {
-          if (log)
-            alert(log);
-        }
-
-      });
-    });
 //    document.getElementById(previewId).src = oFREvent.target.result;
   };
 }
@@ -71,7 +47,16 @@ function PreviewAnswerImage(inputId, previewId) {
   oFReader.readAsDataURL(document.getElementById(inputId).files[0]);
   oFReader.onload = function(oFREvent) {
     document.getElementById(previewId + 'img').src = oFREvent.target.result;
+    //inputButton(inputId);
   };
+}
+
+function inputButton(inputId){
+  var input = $('#' + inputId),
+              numFiles = input.get(0).files ? input.get(0).files.length : 1,
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+      input.trigger('fileselect', [numFiles, label]);
+      $('#' + inputId).parents('.input-group').find(':text').val(label);
 }
 
 function removeImage(previewImg, inputIdBlock) {
@@ -137,31 +122,6 @@ $(document).ready(function() {
     console.log(j);
     var newQPic = $(strNewQPic);
     QuestionImgWrapper.append(newQPic);
-
-
-    //rerun inputbutton.js
-    $(document).on('change', '.btn-file :file', function() {
-      var input = $(this),
-              numFiles = input.get(0).files ? input.get(0).files.length : 1,
-              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-      input.trigger('fileselect', [numFiles, label]);
-    });
-
-    $(document).ready(function() {
-      $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
-
-        var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
-
-        if (input.length) {
-          input.val(log);
-        } else {
-          if (log)
-            alert(log);
-        }
-
-      });
-    });
   });
 
 });

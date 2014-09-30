@@ -17,6 +17,8 @@ if false, b ack to editquestion twig
   <script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
   <script src="{{ app.root }}/public/js/addanswers.js"></script>
   <script src="{{ app.root }}/public/js/editQuestions.js"></script>
+  <script src="{{ app.root }}/public/js/removeAnswers.js"></script>
+
 {% endblock scripts %}
 
 {% block title %}
@@ -158,7 +160,7 @@ if false, b ack to editquestion twig
       <div class="panel-body">
         <div class="answers">
           {% for answer in question.answers %}
-            <div class="panel panel-default">
+            <div class="panel panel-default form-answer">
               <div class="panel-body">
                 <div class="form-group">
                   <label for="antwoord[]" class="col-sm-3 control-label label-padding">Antwoord {{answer.id + 1}}:</label>   
@@ -219,6 +221,7 @@ if false, b ack to editquestion twig
                     </div>
                   </div>                     
                 {% endif %}
+                <div class="btn btn-warning remove-answer">Antwoord verwijderen</div>
               </div>
             </div>
           {% endfor %}
@@ -241,19 +244,19 @@ if false, b ack to editquestion twig
         <div class="col-xs-9">
           <select class="form-control catbijvraag" id="correctant" name="correctant">
             {% for answer in question.answers %}
-            <option 
-              {% if answer.id == question.correctanswer %}selected{% endif %}
-              value="{{answer.id}}">Antwoord {{answer.id + 1}}</option>
+              <option 
+                {% if answer.id == question.correctanswer %}selected{% endif %}
+                value="{{answer.id}}">Antwoord {{answer.id + 1}}</option>
             {% endfor %}
           </select>
         </div>
       </div>
     </div>
-  {#   Submit   #}
-  <div class="col-xs-3 col-xs-offset-5">
-    <input type="submit" class="btn btn-success" name="editquestion" value="Vraag bevestigen" />
-  </div>
-</form>
+    {#   Submit   #}
+    <div class="col-xs-3 col-xs-offset-5">
+      <input type="submit" class="btn btn-success" name="editquestion" value="Vraag bevestigen" />
+    </div>
+  </form>
 </div>
 {% endblock content %}
 
