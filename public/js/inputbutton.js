@@ -30,3 +30,9 @@ $(document).ready(function () {
   $(e).wrap('<form>').closest('form').get(0).reset();
   $(e).unwrap();
 }
+
+function resetInputForm(inputId) {
+  $('#' + inputId).wrap('<form>').closest('form').get(0).reset();
+  $('#' + inputId).unwrap();
+  $('#' + inputId).parents('.input-group').find(':text').val('');
+}

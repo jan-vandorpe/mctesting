@@ -62,7 +62,7 @@ function inputButton(inputId){
 function removeImage(previewImg, inputIdBlock) {
   console.log(previewImg, inputIdBlock);
   $('#' + inputIdBlock).remove();
-  $('#' + previewImg).remove();
+  $('#' + previewImg).hide('slow', function(){$('#' + previewImg).remove();});
 }
 ;
 
@@ -71,7 +71,6 @@ function resetInputForm(previewImg, inputId) {
   $('#' + inputId).wrap('<form>').closest('form').get(0).reset();
   $('#' + inputId).unwrap();
   $('#' + inputId).parents('.input-group').find(':text').val('');
-  $('#' + previewImg).append('');
 }
 
 //delete img input
