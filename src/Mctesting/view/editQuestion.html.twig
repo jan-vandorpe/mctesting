@@ -17,7 +17,6 @@ if false, b ack to editquestion twig
   <script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
   <script src="{{ app.root }}/public/js/addanswers.js"></script>
   <script src="{{ app.root }}/public/js/editQuestions.js"></script>
-  <script src="{{ app.root }}/public/js/removeAnswers.js"></script>
 
 {% endblock scripts %}
 
@@ -221,7 +220,7 @@ if false, b ack to editquestion twig
                     </div>
                   </div>                     
                 {% endif %}
-                <div class="btn btn-warning remove-answer">Antwoord verwijderen</div>
+                <span class="glyphicon glyphicon-floppy-remove remove-answer btn" title="Verwijder antwoord"></span>
               </div>
             </div>
           {% endfor %}

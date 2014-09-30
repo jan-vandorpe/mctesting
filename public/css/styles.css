@@ -163,7 +163,15 @@ change cursor to hand when hovering
   list-style-type: none;
 }
 
-
+/*removeAnswer button*/
+.answers > div {
+  position:relative;
+}
+.remove-answer {
+  position:absolute;
+  top:10px;
+  left:10px;
+}
 /*
     Beheerder details
 */

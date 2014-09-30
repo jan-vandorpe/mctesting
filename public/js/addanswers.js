@@ -52,7 +52,7 @@ $(document).ready(function() {
     strNewAnswer += '<div class="pull-left col-xs-9"><label class="col-xs-4 control-label">Afbeelding:</label><div class="col-xs-8"> <div class="input-group"> <span class="input-group-btn">';
     strNewAnswer += '<span class="btn btn-default btn-file">Bladeren...<input type="file" name="answerMedia[]" class="form-control uploadImage" ',
     strNewAnswer += 'onchange="PreviewAnswerImage(\'AnswerUpload' + count + '\', \'imgPreview' + count + '\');" id="AnswerUpload' + count + '"/> </span> </span><input type="text" class="form-control" readonly value="" id="inputText' + count + '"></div></div>\n\
-                     </div></div><div class="btn btn-warning remove-answer">Antwoord verwijderen</div></div></div>';
+                     </div></div><span class="glyphicon glyphicon-floppy-remove remove-answer btn" title="Verwijder antwoord"></span></div></div>';
     var $newAnswer = $(strNewAnswer);
     $answers.append($newAnswer);
 //    console.log($('#antwoord' + count).parent());
@@ -108,11 +108,16 @@ $(document).ready(function() {
     strNewAnswer += ' <input type="text" class="form-control" readonly>';
     strNewAnswer += ' </div>';
     strNewAnswer += ' </div>';
-    strNewAnswer += '</div>';
+    strNewAnswer += '</div><span class="glyphicon glyphicon-floppy-remove remove-answer btn" title="Verwijder antwoord"></span>';
     strNewAnswer += ' </div></div>';
     console.log(strNewAnswer);
     var $newAnswer = $(strNewAnswer);
     $answers.append($newAnswer);
+    
+    //attach remove handler
+    $('.remove-answer').click(function(){
+      removeAnswer($(this));
+    });
 
     //toevoegen option in correct antwoord select
     $correctAns.append('<option value="' + (count - 1) + '">Antwoord ' + count + '</option>');
