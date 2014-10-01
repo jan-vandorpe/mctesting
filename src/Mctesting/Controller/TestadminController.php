@@ -44,13 +44,7 @@ class TestadminController extends AbstractController {
 
     public function testCreation_step1() {
         if (isset($_SESSION["testcreation"])) {
-            $testcreation = unserialize($_SESSION["testcreation"]);
-            if (isset($_POST['testduration'])) {
-                $testcreation->getTest()->setTestMaxDuration($_POST['testduration']);
-            }
-            if (isset($_POST['question'])) {
-                $testcreation->setQuestions($_POST['question']);
-            }
+            $testcreation = unserialize($_SESSION["testcreation"]);            
         } else {
             $testcreation = new TestCreation;
             if (isset($_POST["selecttest"])) {
@@ -81,13 +75,7 @@ class TestadminController extends AbstractController {
 
     public function testCreation_step2() {
         if (isset($_SESSION["testcreation"])) {
-            $testcreation = unserialize($_SESSION["testcreation"]);
-            if (isset($_POST['testpasspercentage'])) {
-                $testcreation->getTest()->setTestPassPercentage($_POST['testpasspercentage']);
-            }
-            if (isset($_POST['subcatpasspercentage'])) {
-                $testcreation->setSubcatspassperc($_POST['subcatpasspercentage']);
-            }
+            $testcreation = unserialize($_SESSION["testcreation"]);            
 
             if ((isset($_POST["testname"]) && trim($_POST['testname']) != '') || $testcreation->getTest()->getTestName() != "") {
                 if (isset($_POST["testname"])) {

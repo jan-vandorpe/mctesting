@@ -19,7 +19,7 @@ and open the template in the editor.
 Thumbnail size
 */
 .thumb {
-  max-height: 100px;
+    max-height: 100px;
 }
 
 .container-fluid{
@@ -30,20 +30,20 @@ Thumbnail size
 preview image styles
 */
 .preview-wrapper {
-  padding-right:1em;
+    padding-right:1em;
 }
 .preview-figure {
-  position:relative;
-  height:100px;
+    position:relative;
+    height:100px;
 }
 .preview-figure .preview-image {
-  max-height: 100%;
+    max-height: 100%;
 }
 .preview-close {
-  position:absolute;
-  top:5px;
-  right:5px;
-  z-index:51;
+    position:absolute;
+    top:5px;
+    right:5px;
+    z-index:51;
 }
 
 
@@ -126,7 +126,7 @@ input[readonly] {
 print only
 */
 .print-only {
-  display:none;
+    display:none;
 }
 
 /**
@@ -141,6 +141,12 @@ print only
     color:black;
 }
 
+.textCreationBack div button{
+    position: absolute;
+    left: 0;
+    bottom : 1600%;
+}
+
 .overflow{
     overflow: hidden;
     text-overflow: ellipsis;
@@ -151,7 +157,7 @@ print only
 padding bottom for certain labels (col-sm-X)
 */
 .label-padding {
-  padding-bottom:1.5em;
+    padding-bottom:1.5em;
 }
 
 /*
@@ -159,22 +165,22 @@ change cursor to hand when hovering
 */
 
 .hover:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 /*remove UL dot*/
 .no-ul-style {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 /*removeAnswer button*/
 .answers > div {
-  position:relative;
+    position:relative;
 }
 .remove-answer {
-  position:absolute;
-  top:10px;
-  left:10px;
+    position:absolute;
+    top:10px;
+    left:10px;
 }
 /*
     Beheerder details
