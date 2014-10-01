@@ -8,6 +8,7 @@ use Mctesting\Model\Service\TestSessionService;
 use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Entity\Subcategory;
 
 /**
  * Description of ScoresController
@@ -27,9 +28,20 @@ class ScoresController extends AbstractController
     $this->selectTest();
   }
 
-    public function selectTest()
+    public function selectTest($arguments = "")
     {
-        //build model
+      
+      if($arguments && $arguments[0] === "input"){
+        print_r($arguments);
+        $tests = TestService::getAllWithSessions();
+
+        //render page
+        $this->render('scores_selecttest_input.html.twig', array(
+            'tests' => $tests,
+        ));
+        
+      } else {
+         //build model
         //retrieve tests
         $tests = TestService::getAllWithSessions();
 
@@ -37,10 +49,23 @@ class ScoresController extends AbstractController
         $this->render('scores_selecttest.html.twig', array(
             'tests' => $tests,
         ));
+      }
     }
 
-    public function showSessions()
+    public function showSessions($arguments)
     {
+      if($arguments && $arguments[0] === "input"){
+        print_r($arguments);
+        $testsessions = TestSessionService::getSessionsByTest($_POST['selecttest']);
+        $test = TestService::getById($_POST['selecttest']);
+
+        //render page
+        $this->render('scores_showsessions_input.html.twig', array(
+            'testsessions' => $testsessions,
+            'test' => $test,
+        ));
+        
+      } else {
         //build model
         //retrieve all testsessions before today for testId
         $testsessions = TestSessionService::getSessionsByTest($_POST['selecttest']);
@@ -52,11 +77,30 @@ class ScoresController extends AbstractController
             'testsessions' => $testsessions,
             'test' => $test,
         ));
+      }
     }
 
-    public function showSessionDetail()
+    public function showSessionDetail($arguments)
     {
-        //assign argument values
+      if($arguments && $arguments[0] === "input"){
+        
+         //assign argument values
+        $sessionId = $_POST['selectsession'];
+        
+        //build model
+        //retrieve testsession
+        $testSession = TestSessionService::getById($sessionId);
+        //retrieve usersessions
+        $userSessions = UserSessionService::getBySession($sessionId);
+
+        //render page
+        $this->render('scores_showsessiondetail_input.html.twig', array(
+            'testsession' => $testSession,
+            'usersessions' => $userSessions,
+        ));
+        
+      } else {
+         //assign argument values
         $sessionId = $_POST['selectsession'];
         
         //build model
@@ -70,6 +114,7 @@ class ScoresController extends AbstractController
             'testsession' => $testSession,
             'usersessions' => $userSessions,
         ));
+      }
     }
     
     public function showScoresRapport($arguments)
@@ -84,20 +129,33 @@ class ScoresController extends AbstractController
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
+        $_SESSION["usersession"] = serialize($userSession);
         if($userSession === false){
           throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
         }
         $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
-        $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
+        
         //var_dump($userSession);
         //var_dump($subcategories);
         //var_dump($userId);
         
+        if(isset($arguments[2]) && $arguments[2] === "input"){          
+          $subcategories = TestQuestionService::getTestCatsByTestId($testId);
+          $_SESSION["subcats"] = serialize($subcategories);
+          //var_dump($subcategories);
+          $this->render('scores_userrapport_input.html.twig', array(
+            'usersession' => $userSession,
+            'subcats' => $subcategories,
+        ));
+        }
+        else {
+          $subcategories = TestQuestionService::getAnsweredCats($sessionId, $userId, $testId);
         //render page
         $this->render('scores_userrapport.html.twig', array(
             'usersession' => $userSession,
             'subcats' => $subcategories,
         ));
+      }
     }
     
     
@@ -112,6 +170,66 @@ class ScoresController extends AbstractController
         UserSessionService::delibereer($sessionId, $userId);
         
         header("location: " . ROOT . "/scores/showScoresRapport/" . $sessionId . "/" . $userId);
+    }
+    /* show session for manual score input */
+    public function showsessionsscoresentry(){
+      
+    }
+    
+    public function manualentry(){
+      $userSession = unserialize($_SESSION["usersession"]);
+      $subcats = unserialize($_SESSION['subcats']);
+      //var_dump($userSession);
+      
+      $score = 0;
+      $maxscore = $userSession[0]->getTestSession()->getTest()->getTestMaxScore();
+      
+      foreach($subcats as $subcat){
+        $subcat->setScore($_POST["catid".$subcat->getId()."score"]);
+        $subcat->setPercentage(TestService::calculatePercentage($subcat->getScore(), $subcat->getMaxScore()));
+        $score += $_POST["catid".$subcat->getId()."score"];
+      }
+      echo '<pre>';
+      echo $score;
+      echo '<br>';
+      echo $maxscore;
+      echo '<br>';
+      $percentageTotal = TestService::calculatePercentage($score, $maxscore);
+      echo $percentageTotal;echo '%<br>';
+      
+      
+      $pass = 1;
+      if($percentageTotal<$userSession[0]->getTestSession()->getTest()->getTestPassPercentage()){
+        $pass = 0;
+      } else {
+        foreach ($subcats as $subcat) {
+          if($subcat->getPercentage()<$subcat->getPassPercentage()){
+            $pass = 0;
+          }
+        }
+      }
+      echo $pass;
+      
+       //prepare usersession return values
+        //set score
+        $userSession[0]->setScore($score);
+        
+        //set percentage
+        $userSession[0]->setPercentage($percentageTotal);
+
+        //set answers
+        $userSession[0]->setAnswers(array());
+        
+        //set participated
+        $userSession[0]->setParticipated(true);
+        
+        //set passed
+        //$userSession[0]->setPassed(TestService::calculatePassFail($result));
+        
+        //persist into DB
+        //UserSessionService::update($userSession,$result['subcategories']);
+        //persist subcat results into NON EXISTENT TABLE 
+        
     }
 
 }

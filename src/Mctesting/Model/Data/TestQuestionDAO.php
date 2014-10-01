@@ -123,4 +123,31 @@ class TestQuestionDAO {
             throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subcatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+    
+    public static function getTestCategoriesByTestId($id){
+       //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT *, testsubcat.subcatid as SID from testsubcat, subcategorie where testid = :testid and testsubcat.subcatid = subcategorie.subcatid ';
+        $stmt = $db->prepare($sql);
+        if ($stmt->execute(array(':testid' => $id))) {
+          $recordset = $stmt->fetchAll();
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create object(s) and return
+                    //retrieve media filename array for question
+                    $subcat = new UserSessionSubCategory();
+                    $subcat->setId($record['SID']);
+                    $subcat->setSubcatname($record['subcatnaam']);
+                    //$subcat->setActive($record['actief']);                  
+                    //$subcat->setQuestions(TestQuestionDAO::selectQuestionsByCategory($subcat->getId(), $sessieid, $userid));
+                    //$subcat->setPercentage($record['percentage']);
+                    $subcat->setMaxScore($record['totgewicht']);
+                    $subcat->setPassPercentage($record['tebehalenscore']);
+                    array_push($result, $subcat);
+                }
+                return $result;
+             
+        } 
+    }
 }

@@ -23,4 +23,8 @@ class TestQuestionService
     {        
         return TestQuestionDAO::selectCategoriesAnsweredQuestions($sessieid, $userid, $testId);
     }
+    
+    public static function getTestCatsByTestId($testId){
+      return TestQuestionDAO::getTestCategoriesByTestId($testId);
+    }
 }
