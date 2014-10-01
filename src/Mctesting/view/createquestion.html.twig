@@ -124,7 +124,7 @@
                   <span class="input-group-btn">
                     <span class="btn btn-default btn-file">
                       Bladeren... 
-                      <input type="file" name="media[]" class="form-control uploadImage" id="NewQMedia0"/>
+                      <input type="file" name="newQMedia[]" class="form-control uploadImage" id="NewQMedia0"/>
                     </span>
                   </span>
                   <input type="text" class="form-control" readonly>
@@ -248,6 +248,7 @@
                 </div>
               {% endif %}
             {% endfor %}
+            </div>
             {#   Add extra answer, triggers addanswer.js   #}
             <div class="form-group">
               <label for="AddAnswer" class="col-xs-3 control-label">
@@ -278,7 +279,7 @@
                 </select>
               </div>
             </div>
-          </div>
+          
         </div>
         {#   Submit   #}
         <div class="col-xs-3 col-xs-offset-5">

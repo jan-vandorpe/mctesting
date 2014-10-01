@@ -61,22 +61,23 @@ class QuestionController extends AbstractController {
       //used to hide the success popup on new question create page after successful creation
       $_SESSION['nopopup'] = true;
     }
+    /**
+     * if question files [newMedia] have been selected
+     * iterate and upload each of them
+     * upload function returns a randomized filename
+     * push that to $questionMediaFileNames array
+     */
     $questionMediaFileNames = array();
-    if ($_FILES['media']['error'][0] == 0) {
-      /**
-       * if question files have been selected
-       * iterate and upload each of them
-       * upload function returns a randomized filename
-       * push that to $questionMediaFileNames array
-       */
-      $i = 0;
-      foreach ($_FILES['media']['name'] as $value) {
-        list($file, $error) = UploadManager::upload('media', '../public/images/', 'jpg,jpeg,gif,png', $i);
+    $i = 0;
+    foreach ($_FILES['newQMedia']['tmp_name'] as $index => $value) {
+      if ($_FILES['newQMedia']['error'][$index] == 0) {
+        list($file, $error) = UploadManager::upload('newQMedia', '../public/images/', 'jpg,jpeg,gif,png', $i);
         if ($error) {
           throw new ApplicationException($error);
         }
         $i++;
         array_push($questionMediaFileNames, $file);
+        echo 'new files added to question: ' . $file . '<br>';
       }
     }
 
