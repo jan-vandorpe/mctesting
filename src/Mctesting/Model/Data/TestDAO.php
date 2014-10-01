@@ -17,6 +17,44 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
+        $sql = 'SELECT * FROM test ORDER BY testnaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $test = new Test();
+                    $test->setTestId($record['testid']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
+                    $test->setTestMaxscore($record['maxscore']);
+                    $test->setTestPassPercentage($record['tebehalenscore']);
+                    $test->setTestCreator($record['beheerder']);
+                    //$catname = TestService::getCatName($record['testid']);
+                    $test->setStatus($record['actief']);
+                    $test->setPublished($record['gepubliceerd']);
+                    array_push($result, $test);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('Er zijn geen testen gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function selectAllPublished() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
         $sql = 'SELECT * FROM test WHERE gepubliceerd = 1 ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed

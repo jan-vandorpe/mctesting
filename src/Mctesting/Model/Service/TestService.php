@@ -23,6 +23,11 @@ class TestService
         return TestDAO::selectAll();
     }
     
+    public static function getAllPublished()
+    {
+        return TestDAO::selectAllPublished();
+    }
+    
     public static function getAllWithoutSessions()
     {
         return TestDAO::selectAllWithoutSessions();

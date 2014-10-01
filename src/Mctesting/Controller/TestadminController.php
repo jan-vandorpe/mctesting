@@ -240,7 +240,7 @@ class TestadminController extends AbstractController {
      * 
      */ {
         //model        
-        $allTest = TestService::getAll();
+        $allTest = TestService::getAllPublished();
         $allUsers = UserService::getAllUsers();
         $testsession = "";
 
