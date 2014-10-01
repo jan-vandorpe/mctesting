@@ -1,6 +1,6 @@
 
 jQuery(function($){
-    $("#rrnr").mask("99.99.99-999.99",{placeholder:" _ "});
+    $("#rrnr").mask("99.99.99-999.99",{placeholder:"*"});
 });
 
 window.onload = function (){              
