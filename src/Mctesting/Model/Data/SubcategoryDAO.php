@@ -301,5 +301,88 @@ class SubcategoryDAO
             throw new ApplicationException('Kon de categorie in de database niet op passief zetten, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+    
+    public static function selectByCategoryIdQuestionsNotInTest($catid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid ORDER BY subcatnaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid)))
+        {
+            //test if statement retrieved something
+            $resultset = $stmt->fetchall();
+            if (!empty($resultset))
+            {
+                //create array
+                $subcatarray = array();
+                
+                //create subcategory object(s)
+                foreach ($resultset as $record)
+                {
+                    $subcat = new Subcategory();
+                    $subcat->setId($record['subcatid']);
+                    $subcat->setSubcatname($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
+
+                    //     don't set because subcategories are put into category object
+                    //         $subcat->setCategory($category);
+                    $subcat->setQuestions(QuestionService::getNotInTestBySubCategory($subcat->getId()));
+                    array_push($subcatarray, $subcat);
+                }
+                return $subcatarray;
+            } else
+            {
+                //create array
+                $subcatarray = array();
+                //create object
+                $subcat = new Subcategory();
+                $subcatname = "nog geen subcategorie aanwezig";
+                $subcat->setSubcatname($subcatname);
+                //push object to array
+                array_push($subcatarray, $subcat);
+                return $subcatarray;
+            }
+        } else
+        {
+            throw new ApplicationException('De subcategorieën van de gekozen categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    //select by id for the edit questions part
+    public static function selectByIdQNIT($subcatid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':subcatid' => $subcatid,)))
+        {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record))
+            {
+                //create object(s) and return                
+                //create  object
+                $subcat = new Subcategory();
+                $subcat->setId($record['subcatid']);
+                $subcat->setSubcatname($record['subcatnaam']);
+                $subcat->setActive($record['actief']);
+                $subcat->setQuestions(QuestionService::getNotInTestBySubCategory($subcat->getId()));
+                return $subcat;
+            } else
+            {
+                throw new ApplicationException('Kon geen subcategorie ophalen, gelieve dit te controleren');
+            }
+        } else
+        {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De subcategorie ('.$subcatid.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
 
 }
