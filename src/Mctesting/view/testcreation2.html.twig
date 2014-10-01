@@ -64,7 +64,7 @@
                                             <div class="col-xs-1">                    
                                                 <input type="checkbox" class="{{subcat.id}}" name="question[]" value="{{question.id}}" id="questionid{{question.id}}" {% if (testcreation.questions is defined) and (question.id in testcreation.questions) %}checked{% endif %}/>
                                             </div>                
-                                            <div class="col-xs-8">{{question.id}} {{question.text|raw}}</div>                                            
+                                            <div class="col-xs-8">{{question.text|raw}}</div>                                            
                                             <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
                                         </li>
                                     {% endfor %}
