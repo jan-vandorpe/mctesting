@@ -1,23 +1,9 @@
 
-        
-        function checkRijksnr(){
-            var eRijksnr    =   document.getElementById("rijksregisternummer");
-            
-            var nRijksnr    =   eRijksnr.value;
-            if (nRijksnr.length === 11){
-                var arrRijksnummer  =   nRijksnr.split('');
-                var sJuistRijksnr   =   
-                console.log(sJuistRijksnr);
-                eRijksnr.value = sJuistRijksnr;
-            }
-            else {
-                // console.log("rijksregisternr GEEN 11 cijfers");
-            }
-        }
+jQuery(function($){
+    $("#rrnr").mask("99.99.99-999.99",{placeholder:" _ "});
+});
 
-
-        
-        window.onload = function (){              
+window.onload = function (){              
           // rijksregisternummer weergeven met tekens
           // array met alle divs (met rijksregisternummer)
           var arrRijksnummerElementen    =   document.getElementsByClassName("rijksregisternummer");
