@@ -11,6 +11,7 @@ use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Question;
 use Mctesting\Model\Service\AnswerService;
+use Mctesting\Model\Service\SubcategoryService;
 
 /**
  * Description of QuestionController
@@ -36,7 +37,7 @@ class QuestionController extends AbstractController {
       $category->retrieveSubcategories();
     }
     $question = null;
-    if(isset($_SESSION['tempQuestion'])){
+    if (isset($_SESSION['tempQuestion'])) {
       $question = unserialize($_SESSION['tempQuestion']);
     }
     //render page
@@ -150,17 +151,29 @@ class QuestionController extends AbstractController {
   public function editList() {
     $allcategories = CategoryService::getAll();
     foreach ($allcategories as $category) {
-      $category->retrieveSubcategories();
+      $catid = $category->getId();
+      $subcats = SubcategoryService::getByCategoryIdQuestionsNotInTest($catid);
+      $category->setSubcategories($subcats);
     }
     $this->render('editQuestionsCatList.html.twig', array(
         'allcategories' => $allcategories,
     ));
   }
 
+  public function subcatvragen($arguments) {
+    $subcatid = $arguments[0];
+
+    $subcategory = SubcategoryService::getBySubCatIdQNIT($subcatid);
+    
+    $this->render('editQuestionsSubcatVragenList.html.twig', array(
+        'subcategorie' => $subcategory,
+    ));
+  }
+
   public function editQuestion($arguments) {
     $questionId = $arguments[0];
 
-    $question = QuestionService::getById($questionId);
+    $question = QuestionService::getByIdQNIT($questionId);
     $categories = CategoryService::getAllExceptEmpty();
     foreach ($categories as $category) {
       $category->retrieveSubcategories();

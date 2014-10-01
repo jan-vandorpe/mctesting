@@ -28,6 +28,10 @@ class QuestionService
         return QuestionDAO::selectByTest($testid);
     }
     
+    public static function getByIdQNIT($id){
+      return QuestionDAO::selectByIdQNIT($id);
+    }
+    
     /**
      * Function returns an array of question objects corresponding to the given
      * categoryId
@@ -42,6 +46,10 @@ class QuestionService
     public static function getBySubCategory($subCatId)
     {
         return QuestionDAO::selectBySubCategory($subCatId);
+    }
+    
+    public static function getNotInTestBySubCategory($subCategoryId){
+        return QuestionDAO::selectQuestionsNotInTestsBySubCategory($subCategoryId);
     }
     
     /**
