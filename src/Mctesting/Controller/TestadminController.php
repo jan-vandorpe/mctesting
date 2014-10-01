@@ -110,6 +110,14 @@ class TestadminController extends AbstractController {
     public function testCreation_step3() {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
+            
+            if(isset($_POST['back'])){
+                $testcreation->getTest()->setTestMaxDuration($_POST['testduration']);
+                $testcreation->setQuestions($_POST['question']);
+                $_SESSION["testcreation"] = serialize($testcreation);
+                header("location: " . ROOT . "/testadmin/testCreation_step1");
+                exit(0);
+            }
 
             if (isset($_POST["testduration"])) {
                 if (HelperFunctions::numbers_only($_POST['testduration']) == true) {
@@ -169,6 +177,15 @@ class TestadminController extends AbstractController {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
 
+            if(isset($_POST['back'])){
+                $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
+                $testcreation->setSubcatspassperc($_POST['subcatpasspercentage']);
+                
+                $_SESSION["testcreation"] = serialize($testcreation);
+                header("location: " . ROOT . "/testadmin/testCreation_step2");
+                exit(0);
+            }
+            
             if (isset($_POST["subcatpasspercentage"])) {
                 foreach ($_POST["subcatpasspercentage"] as $key => $value) {
                     if (HelperFunctions::numbers_only($value) == true) {
