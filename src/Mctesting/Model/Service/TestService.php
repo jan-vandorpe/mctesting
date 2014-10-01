@@ -44,8 +44,7 @@ class TestService
     }
     
     public static function create($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
-    {
-        
+    {        
         return TestDAO::insert($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
     }
     
@@ -198,6 +197,11 @@ class TestService
                     . 'calculate percentages per subcategory <br>'
                     . 'DIVISION BY ZERO');
         }
+    }
+    
+    public static function update($testid, $testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
+    {        
+        return TestDAO::update($testid, $testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
     }
     
     public static function updateStatus($testid, $status) {

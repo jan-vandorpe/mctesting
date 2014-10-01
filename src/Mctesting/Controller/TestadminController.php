@@ -15,6 +15,8 @@ use Mctesting\Model\Includes\HelperFunctions;
 use Mctesting\Model\Includes\myPDF;
 use Mctesting\Model\Entity\TestCreation;
 use Mctesting\Model\Entity\Test;
+use Mctesting\Model\Entity\Category;
+use Mctesting\Model\Service\TestQuestionService;
 
 /**
  * Description of testscontroller
@@ -43,22 +45,31 @@ class TestadminController extends AbstractController {
     public function testCreation_step1() {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
+            if (isset($_POST['testduration'])) {
+                $testcreation->getTest()->setTestMaxDuration($_POST['testduration']);
+            }
+            if (isset($_POST['question'])) {
+                $testcreation->setQuestions($_POST['question']);
+            }
         } else {
             $testcreation = new TestCreation;
-            $test = new Test;
-            $testcreation->setTest($test);
-
-            $_SESSION["testcreation"] = serialize($testcreation);
+            if (isset($_POST["selecttest"])) {
+                $testcreation->setTest(TestService::getById($_POST["selecttest"]));
+                $cat = new Category;
+                $cat->setId(CategoryService::getByTestId($testcreation->getTest()->getTestId()));
+                $testcreation->setCat($cat);
+                $questions = QuestionService::getByTest($testcreation->getTest()->getTestId());
+                $testcreation->setQuestions($questions);
+                $_SESSION["testcreation"] = serialize($testcreation);
+                header("location: " . ROOT . "/testadmin/testCreation_step1");
+                exit(0);
+            } else {
+                $test = new Test;
+                $testcreation->setTest($test);
+            }
         }
-        if (isset($_POST["selecttest"])) {
-            $testcreation->setTest(TestService::getById($_POST["selecttest"]));
-            $testcreation->setCatId(CategoryService::getByTestId($testcreation->getTest()->getTestId()));
 
-            $_SESSION["testcreation"] = serialize($testcreation);
-
-            header("location: " . ROOT . "/testadmin/testCreation_step1");
-            exit(0);
-        }
+        $_SESSION["testcreation"] = serialize($testcreation);
 
         $allCat = CategoryService::getAllExceptEmpty();
 
@@ -71,20 +82,25 @@ class TestadminController extends AbstractController {
     public function testCreation_step2() {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
+            if (isset($_POST['testpasspercentage'])) {
+                $testcreation->getTest()->setTestPassPercentage($_POST['testpasspercentage']);
+            }
+            if (isset($_POST['subcatpasspercentage'])) {
+                $testcreation->setSubcatspassperc($_POST['subcatpasspercentage']);
+            }
 
-            if (isset($_POST["testname"]) && trim($_POST['testname']) != '') {
-                $testcreation->getTest()->setTestName($_POST["testname"]);
+            if ((isset($_POST["testname"]) && trim($_POST['testname']) != '') || $testcreation->getTest()->getTestName() != "") {
+                if (isset($_POST["testname"])) {
+                    $testcreation->getTest()->setTestName($_POST["testname"]);
+                }
 
-                if (isset($_POST["testcatselect"]) && $_POST['testcatselect'] != 0) {
-                    $testcreation->setCatId($_POST["testcatselect"]);
-                    $testcreation->setSubCats(SubcategoryService::getActiveByCategoryId($testcreation->getCatId()));
-
-                    if (isset($_POST['testduration'])) {
-                        $testCreation->getTest()->setTestMaxDuration($_POST['testduration']);
+                if ((isset($_POST["testcatselect"]) && $_POST['testcatselect'] != 0) || $testcreation->getCat() != "") {
+                    if (isset($_POST["testcatselect"])) {
+                        $cat = new Category;
+                        $cat->setId($_POST["testcatselect"]);
+                        $testcreation->setCat($cat);
                     }
-                    if (isset($_POST['question'])) {
-                        $testCreation->setQuestions($_POST['question']);
-                    }
+                    $testcreation->setSubCats(SubcategoryService::getActiveByCategoryId($testcreation->getCat()->getId()));
 
                     $_SESSION["testcreation"] = serialize($testcreation);
 
@@ -92,164 +108,129 @@ class TestadminController extends AbstractController {
                         'testcreation' => $testcreation,
                     ));
                 } else {
-                    $FMM = new FlashMessageManager();
-                    $FMM->setFlashMessage('Gelieve een categorie te selecteren');
-                    header("location: " . ROOT . "/testadmin/testCreation_step1");
-                    exit(0);
+                    throw new ApplicationException('Gelieve een categorie te selecteren');
                 }
             } else {
-                $FMM = new FlashMessageManager();
-                $FMM->setFlashMessage('Gelieve een naam in te vullen en een categorie te selecteren');
-                header("location: " . ROOT . "/testadmin/testCreation_step1");
-                exit(0);
+                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');
             }
         } else {
-            header("location: " . ROOT . "/testadmin/testCreation_step1");
+            header("location: " . ROOT . "/testadmin/testCreation");
             exit(0);
         }
     }
 
-    public function testCreation_step3()
-    /**
-     * 
-     */ {
-        //model
-        if (isset($_POST["testduration"])) {
-            if (HelperFunctions::numbers_only($_POST['testduration']) == true) {
+    public function testCreation_step3() {
+        if (isset($_SESSION["testcreation"])) {
+            $testcreation = unserialize($_SESSION["testcreation"]);
 
-                $_SESSION["testcreation"]["testduration"] = $_POST["testduration"];
-                $testduration = $_SESSION["testcreation"]["testduration"];
+            if (isset($_POST["testduration"])) {
+                if (HelperFunctions::numbers_only($_POST['testduration']) == true) {
+                    $testcreation->getTest()->setTestMaxDuration($_POST['testduration']);
 
-                $questions = array();
-                if (isset($_POST["question"])) {
-                    $_SESSION["testcreation"]["questions"] = $_POST["question"];
-                    $questions = $_SESSION["testcreation"]["questions"];
+                    if (isset($_POST["question"])) {
+                        $testcreation->setQuestions($_POST['question']);
+                        $testcreation->setQuestionweight(0);
+                        $_SESSION["subcatlist"] = array();
+                        foreach ($testcreation->getQuestions() as $question) {
+                            //selectbyid
+                            $questionEntity = QuestionService::getById($question);
+                            $questionWeight = $questionEntity->getWeight();
+                            $questionSubcat = $questionEntity->getSubcategory()->getSubcatname();
 
-                    $questioncount = 0;
-                    $questionWeightCount = 0;
-
-                    $_SESSION["subcatlist"] = array();
-                    foreach ($questions as $question) {
-                        //selectbyid
-                        $questionEntity = QuestionService::getById($question);
-                        $questionWeight = $questionEntity->getWeight();
-                        $questionSubcat = $questionEntity->getSubcategory()->getSubcatname();
-                        //$questionSubcat->subcatname();
-                        //$questionSubcat=$questionSubcat;
-                        //$_SESSION["subcatlist"][$questionSubcat]+=1;                
-                        if (isset($_SESSION["subcatlist"][$questionSubcat])) {
-                            $_SESSION["subcatlist"][$questionSubcat]["count"] ++;
-                            $_SESSION["subcatlist"][$questionSubcat]["weight"]+=$questionWeight;
-                        } else {
-                            $_SESSION["subcatlist"][$questionSubcat]["count"] = 1;
-                            $_SESSION["subcatlist"][$questionSubcat]["weight"] = $questionWeight;
+                            if (isset($_SESSION["subcatlist"][$questionSubcat])) {
+                                $_SESSION["subcatlist"][$questionSubcat]["count"] ++;
+                                $_SESSION["subcatlist"][$questionSubcat]["weight"]+=$questionWeight;
+                            } else {
+                                $_SESSION["subcatlist"][$questionSubcat]["count"] = 1;
+                                $_SESSION["subcatlist"][$questionSubcat]["weight"] = $questionWeight;
+                            }
+                            $_SESSION["subcatlist"][$questionSubcat]["id"] = $questionEntity->getSubcategory()->getId();
+                            $testcreation->setQuestionweight($testcreation->getQuestionweight() + $questionWeight);
                         }
-                        $_SESSION["subcatlist"][$questionSubcat]["id"] = $questionEntity->getSubcategory()->getId();
-                        $questionWeightCount = $questionWeightCount + $questionWeight;
-                        $questioncount++;
+
+                        $subcatlist = $_SESSION["subcatlist"];
+                        $testcreation->setCat(CategoryService::getById($testcreation->getCat()->getId()));
+                        $subcatpasspercentage = SubcategoryService::getByTest($testcreation->getTest()->getTestId());
+                        $testcreation->setSubcatspassperc($subcatpasspercentage);
+                        $_SESSION["testcreation"] = serialize($testcreation);
+
+                        //view
+                        $this->render('testcreation3.html.twig', array(
+                            'testcreation' => $testcreation,
+                            'subcatlist' => $subcatlist,
+                        ));
+                    } else {
+                        throw new ApplicationException('Gelieve vragen te selecteren');
                     }
-
-                    $_SESSION["testcreation"]["questions"] = $questions;
-                    $_SESSION["testcreation"]["questioncount"] = $questioncount;
-                    $_SESSION["testcreation"]["questionweightcount"] = $questionWeightCount;
-
-
-                    //$allQuest = QuestionService::getByCategory($catid);
-                    $subcatlist = $_SESSION["subcatlist"];
-                    $catid = $_SESSION["testcreation"]["catid"];
-                    $testname = $_SESSION["testcreation"]["testname"];
-                    $cat = CategoryService::getById($catid);
-
-                    //view
-                    $this->render('testcreation3.html.twig', array(
-                        //'allQuest'=>$allQuest,
-                        'testduration' => $testduration,
-                        'testname' => $testname,
-                        'questions' => $questions,
-                        'cat' => $cat,
-                        'questioncount' => $questioncount,
-                        'questionweightcount' => $questionWeightCount,
-                        'subcatlist' => $subcatlist,
-                    ));
                 } else {
-                    throw new ApplicationException('Gelieve vragen te selecteren');
+                    throw new ApplicationException('Tijdsduur moet een geheel getal zijn');
                 }
             } else {
-                throw new ApplicationException('Tijdsduur moet een geheel getal zijn');
+                throw new ApplicationException('Gelieve een tijdsduur in te vullen');
             }
         } else {
-            throw new ApplicationException('Gelieve een tijdsduur in te vullen');
+            header("location: " . ROOT . "/testadmin/testCreation");
+            exit(0);
         }
     }
 
-    public function testCreation_TestUpload()
-    /**
-     * 
-     */ {
+    public function testCreation_TestUpload() {
+        if (isset($_SESSION["testcreation"])) {
+            $testcreation = unserialize($_SESSION["testcreation"]);
 
-        if (isset($_POST["subcatpasspercentage"])) {
-            foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-                if (HelperFunctions::numbers_only($value) == true) {
-                    $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
+            if (isset($_POST["subcatpasspercentage"])) {
+                foreach ($_POST["subcatpasspercentage"] as $key => $value) {
+                    if (HelperFunctions::numbers_only($value) == true) {
+                        $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
+                    } else {
+                        throw new ApplicationException('De slaagpercentages moeten gehele getallen zijn');
+                    }
+                }
+                //model
+                if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage'])) {
+                    $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
                 } else {
-//              $FMM = new FlashMessageManager();
-//              $FMM->setFlashMessage('De slaagpercentages moeten gehele getallen zijn test');
-//              header('Location:'.ROOT.'/testadmin/testcreation_step3');
-//              exit(0);
                     throw new ApplicationException('De slaagpercentages moeten gehele getallen zijn');
                 }
-            }
-            //model
-            if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage'])) {
-                $_SESSION["testcreation"]["passpercentage"] = $_POST["testpasspercentage"];
+
+                $subcatlist = $_SESSION["subcatlist"];
+                if($testcreation->getTest()->getTestBeheerder() != ""){
+                    $adminId = $testcreation->getTest()->getTestBeheerder();
+                    $testid = TestService::update($testcreation->getTest()->getTestId(), $testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
+                }else{
+                    $admin = UserService::unserializeFromSession();
+                    $adminId = $admin->getRRNr();
+                    $testid = TestService::create($testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
+                }
+                
+
+                
+
+                header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/".$testid);
+                exit(0);
             } else {
-                throw new ApplicationException('De slaagpercentages moeten gehele getallen zijn');
+                throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
-
-
-            $passpercentage = $_SESSION["testcreation"]["passpercentage"];
-            $testname = $_SESSION["testcreation"]["testname"];
-            $testduration = $_SESSION["testcreation"]["testduration"];
-            $questioncount = $_SESSION["testcreation"]["questioncount"];
-            $maxscore = $_SESSION["testcreation"]["questionweightcount"];
-            $questions = $_SESSION["testcreation"]["questions"];
-            $subcatlist = $_SESSION["subcatlist"];
-
-            $admin = UserService::unserializeFromSession();
-            $adminId = $admin->getRRNr();
-
-
-            $testid = TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
-            $testname = $_SESSION["testcreation"]["testname"];
-            $testduration = $_SESSION["testcreation"]["testduration"];
-            $questions = array();
-            if (isset($_POST["question"])) {
-                $questions = $_POST["question"];
-            }
-            $catid = $_SESSION["testcreation"]["catid"];
-            $cat = CategoryService::getById($catid);
-            //view
-            $this->render('testcreation4.html.twig', array(
-                //'allQuest'=>$allQuest,
-                'passpercentage' => $passpercentage,
-                'testid' => $testid,
-                'testname' => $testname,
-                'testduration' => $testduration,
-                'questions' => $questions,
-                'cat' => $cat,
-                'subcatlist' => $subcatlist,
-            ));
         } else {
-            throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
+            header("location: " . ROOT . "/testadmin/testCreation");
+            exit(0);
         }
+    }
+
+    public function testCreation_TestConfirm($arguments) {
+        $testid = $arguments[0];
+
+        $this->render('testcreation4.html.twig', array(
+            'testid' => $testid,
+        ));
     }
 
     public function testselect() {
-        //build model
+        unset($_SESSION['testcreation']);
         //retrieve tests
         $tests = TestService::getAllWithoutSessions();
         $sessions = TestSessionService::getAllFiltered();
-
+        
         //render page
         $this->render('test_select.html.twig', array(
             'tests' => $tests,

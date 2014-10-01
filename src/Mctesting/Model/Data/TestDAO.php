@@ -285,6 +285,30 @@ class TestDAO {
         }
     }
     
+    public static function update($testid, $testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE `test` SET `testnaam` = :testname, `maxduur` = :testduration, `aantalvragen` = :questioncount, `maxscore` = :maxscore, `tebehalenscore` = :passpercentage, `beheerder` = :adminId  WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId, ':testid' => $testid))) {
+
+            foreach ($subcatlist as $subcat) {
+                TestSubcatService::remove($testid);
+                TestSubcatService::create($testid, $subcat);
+            }
+            foreach ($questions as $questionId) {
+                TestQuestionService::remove($testid);
+                TestQuestionService::create($testid, $questionId);
+            }
+            return $testid;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de test niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
     public static function updateStatus($testid, $status) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);

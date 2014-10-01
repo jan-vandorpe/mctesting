@@ -71,7 +71,11 @@ class QuestionDAO {
       //test if statement retrieved something
       $recordset = $stmt->fetchAll();
       if (!empty($recordset)) {        
-        return $recordset;
+        $result = array();
+        foreach ($recordset as $record) {       
+          array_push($result, $record['vraagid']);
+        }
+        return $result;
       } else {
         throw new ApplicationException('De gekozen test (' . $testid . ') bevat geen vragen');
       }
