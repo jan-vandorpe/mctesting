@@ -11,6 +11,7 @@ use Mctesting\Model\Includes\FlashMessageManager;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Question;
 use Mctesting\Model\Service\AnswerService;
+use Mctesting\Model\Service\SubcategoryService;
 
 /**
  * Description of QuestionController
@@ -150,7 +151,9 @@ class QuestionController extends AbstractController {
   public function editList() {
     $allcategories = CategoryService::getAll();
     foreach ($allcategories as $category) {
-      $category->retrieveSubcategories();
+      $catid = $category->getId();
+      $subcats = SubcategoryService::getByCategoryIdQuestionsNotInTest($catid);
+      $category->setSubcategories($subcats);
     }
     $this->render('editQuestionsCatList.html.twig', array(
         'allcategories' => $allcategories,

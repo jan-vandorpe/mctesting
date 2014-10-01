@@ -11,7 +11,8 @@
                         <label class="col-xs-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
                     </div>          
                     <ul class="list-group">
-                        {% for subcategory in category.subcategories %}   
+                        {% for subcategory in category.subcategories %}  
+                          {% if subcategory.questions|length > 0 %}
                             <li class="list-group-item subcategorie clearfix">
                                 <label for="subcatid{{subcategory.id}}" class=""></label>
                                             
@@ -19,11 +20,10 @@
                                 <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
                                 
                                 <div class="col-xs-3">
-                                    {% if subcategory.questions|length > 0 %}
                                         <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
-                                    {% endif %}  
                                 </div>
                             </li>
+                            {% endif %}  
                         {% endfor %}
                     </ul>
                 </div>

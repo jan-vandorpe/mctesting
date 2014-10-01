@@ -317,5 +317,50 @@ class QuestionDAO {
       throw new ApplicationException('Kon geen vraag in de database updaten, gelieve dit te controleren:<br>' . $error[2]);
     }
   }
+  
+  public static function selectQuestionsNotInTestsBySubCategory($subCategoryId){
+    //create db connection
+    $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+    //prepare sql statement
+    $sql = 'SELECT *,subcategorie.actief AS subcatactive,vraag.actief AS qactive FROM vraag, subcategorie WHERE subcategorie.subcatid = vraag.subcatid AND vraag.subcatid = :subCatId AND vraagid NOT IN (select vraagid from testvragen where 1)';
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':subCatId', $subCategoryId);
+    //test if statement can be executed
+    if ($stmt->execute()) {
+      //test if statement retrieved something
+      $recordset = $stmt->fetchAll();
+      if (!empty($recordset)) {
+        $result = array();
+        foreach ($recordset as $record) {
+          //create object(s) and return
+          $subcategory = new \Mctesting\Model\Entity\Subcategory();
+          $subcategory->setId($subCategoryId);
+          $subcategory->setSubcatname($record['subcatnaam']);
+          $subcategory->setActive((boolean)$record['subcatactive']);
+          //retrieve answers for question
+          $answers = AnswerService::getByQuestion($record['vraagid']);
+          //retrieve media filename array for question
+          $media = MediaService::getByQuestion($record['vraagid']);
+          //create question object
+          $question = new Question();
+          $question->setId($record['vraagid']);
+          $question->setText($record['vraagtekst']);
+          $question->setWeight($record['gewicht']);
+          $question->setSubcategory($subcategory);
+          $question->setCorrectAnswer($record['correctantwoord']);
+          $question->setAnswers($answers);
+          $question->setMedia($media);
+          $question->setActive((boolean) $record['qactive']);
+          array_push($result, $question);
+        }
+        return $result;
+      } else {
+        return false;
+      }
+    } else {
+      $error = $stmt->errorInfo();
+      throw new ApplicationException('De vragen van de gekozen subcategorie (' . $subCatId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+    }
+  }
 
 }

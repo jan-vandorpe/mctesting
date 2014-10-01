@@ -75,5 +75,11 @@ class SubcategoryService
     {
         SubcategoryDAO::deactivateById($id);
     }
+    
+    public static function getByCategoryIdQuestionsNotInTest($catid)
+    {
+        return SubcategoryDAO::selectByCategoryIdQuestionsNotInTest($catid);
+    }
+    
 
 }

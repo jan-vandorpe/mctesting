@@ -69,11 +69,4 @@ class CategoryService {
     return CategoryDAO::checkName($categoryname);
   }
 
-  //function retrieves the subcategories of a category
-  public static function getSubcategories($category) {
-
-    $subcategories = SubcategoryService::getByCategory($category);
-    $category->setSubcategories($subcategories);
-  }
-
 }

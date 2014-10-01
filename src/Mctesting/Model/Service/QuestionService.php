@@ -44,6 +44,10 @@ class QuestionService
         return QuestionDAO::selectBySubCategory($subCatId);
     }
     
+    public static function getNotInTestBySubCategory($subCategoryId){
+        return QuestionDAO::selectQuestionsNotInTestsBySubCategory($subCategoryId);
+    }
+    
     /**
      * Function returns an array of ACTIVE question objects corresponding to the given
      * categoryId
