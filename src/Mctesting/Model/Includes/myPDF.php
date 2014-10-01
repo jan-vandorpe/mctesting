@@ -181,13 +181,65 @@ class myPDF extends FPDF {
                 $text = iconv('UTF-8', 'windows-1252', $text);
 
                 //het antwoord
-                $this->MultiCell(190, 13, $text, 'LR', 'L', 0);
 
-                //positie van vraag zoeken om vierkant naast te plaatsen
-                $xPlace = $this->GetX() + 4;
-                $yPlace = $this->GetY() + 4 - 13;
-                $this->Rect($xPlace, $yPlace, 5, 5);
-                $j++;
+                $x = $this->GetX();
+                $y = $this->GetY();
+
+                //Image naast antwoord
+                //get path naar image
+                $answerMedia = $answer->getMedia();
+                $answerMediaPath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $answerMedia;
+
+                //als er een image bestaat voor het antwoord
+                if (count($answerMedia) > 0) {
+
+                    //plaats maken boven eerste antwoord / image
+
+                    $this->Cell(190, 5, "", 'LR', 1, 'L', 0);
+
+                    $x = $this->GetX();
+                    $y = $this->GetY();
+
+                    //antwoord korter maken om er een image naast te kunnen pleuren
+                    $this->MultiCell(145, 13, $text, 'L', 'L', 0);
+
+                    //hoogte van de antwoord berekenen (als het een lange vraag is komt hij op meerdere lijnen
+                    $aheight = $this->GetMultiCellHeight(145, 13, $text);
+
+
+                    //var_dump($answerMediaPath);
+                    //wat extra plaats aan de bovenkant voorzien
+                    //$this->Cell(190, 10, "dd", "", 1, "L", 0);
+                    //cursur op de juiste plaats zetten naast het antwoord
+                    $this->Rect($x + 4, $y + 4, 5, 5);
+
+                    $this->SetXY($x + 145, $y);
+
+                    //zorgen dat image nooit groter is dan constante vanboven gedeclareerd
+                    list($awd, $ahg) = $this->resizeToFit($answerMediaPath);
+
+                    $this->Cell(45, $ahg, $this->Image($answerMediaPath, $this->GetX(), $this->GetY(), $awd, $ahg), 'R', 0, 'C', 0);
+                    $this->Ln(0);
+                    $this->SetXY($x, $y + $aheight);
+                    //** cel ONDER antwoord die compenseert voor de hoogte van de afbeelding **//
+                    $this->Cell(40, $ahg - $aheight + 5, '', 'L', 1, 'L', 0);
+
+                    //nog cel maken om gap op te vullen
+                    $this->setY($this->GetY() - 5);
+                    $this->Cell(190, 5, '', 'R', 1, 'L', 0);
+                } else {
+                    $this->MultiCell(190, 13, $text, 'LR', 'L', 0);
+
+                    //hoogte van de antwoord berekenen (als het een lange vraag is komt hij op meerdere lijnen
+                    $aheight = $this->GetMultiCellHeight(190, 13, $text);
+
+
+                    //positie van vraag zoeken om vierkant naast te plaatsen
+                    $xPlace = $this->GetX() + 4;
+                    $yPlace = $this->GetY() + 4 - 13;
+                    $this->Rect($xPlace, $yPlace, 5, 5);
+                    $j++;
+                }
             }
             $this->Cell(190, 0, "", 'T', 1, 'L', 0);
 
