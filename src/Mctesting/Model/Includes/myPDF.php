@@ -81,9 +81,10 @@ class myPDF extends FPDF {
 
 
             //filter out <p> and </p>
-            $vraag = str_replace("<p>", "", $question->getText());
-            $vraag = str_replace("</p>", "", $vraag);
-
+            //$vraag = str_replace("<p>", "", $question->getText());
+            //$vraag = str_replace("</p>", "", $vraag);
+            $vraag = $question->getText();
+            $vraag = preg_replace("/\<[^>]+\>/", "", $vraag);
             //decode special signs to UTF-8
             $vraag = html_entity_decode($vraag);
             $vraag = iconv('UTF-8', 'windows-1252', $vraag);
@@ -173,8 +174,11 @@ class myPDF extends FPDF {
             foreach ($answers as $answer) {
 
                 //filter out <p> and </p>
-                $text = str_replace("<p>", "", $answer->getText());
-                $text = str_replace("</p>", "", $text);
+//                $text = str_replace("<p>", "", $answer->getText());
+//                $text = str_replace("</p>", "", $text);
+
+                $text = $answer->getText();
+                $text = preg_replace("/\<[^>]+\>/", "", $text);
 
                 //decode special signs to UTF-8
                 $text = html_entity_decode($text);
