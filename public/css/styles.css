@@ -141,12 +141,6 @@ print only
     color:black;
 }
 
-.textCreationBack div button{
-    position: absolute;
-    left: 0;
-    bottom : 1600%;
-}
-
 .overflow{
     overflow: hidden;
     text-overflow: ellipsis;
