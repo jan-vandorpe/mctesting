@@ -37,7 +37,7 @@ class QuestionController extends AbstractController {
       $category->retrieveSubcategories();
     }
     $question = null;
-    if(isset($_SESSION['tempQuestion'])){
+    if (isset($_SESSION['tempQuestion'])) {
       $question = unserialize($_SESSION['tempQuestion']);
     }
     //render page
@@ -160,10 +160,20 @@ class QuestionController extends AbstractController {
     ));
   }
 
+  public function subcatvragen($arguments) {
+    $subcatid = $arguments[0];
+
+    $subcategory = SubcategoryService::getBySubCatIdQNIT($subcatid);
+    
+    $this->render('editQuestionsSubcatVragenList.html.twig', array(
+        'subcategorie' => $subcategory,
+    ));
+  }
+
   public function editQuestion($arguments) {
     $questionId = $arguments[0];
 
-    $question = QuestionService::getById($questionId);
+    $question = QuestionService::getByIdQNIT($questionId);
     $categories = CategoryService::getAllExceptEmpty();
     foreach ($categories as $category) {
       $category->retrieveSubcategories();

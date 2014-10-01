@@ -16,11 +16,11 @@
                             <li class="list-group-item subcategorie clearfix">
                                 <label for="subcatid{{subcategory.id}}" class=""></label>
                                             
-                                <div class="col-xs-7">{{subcategory.subcatname}}</div>
-                                <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
+                                <div class="col-xs-6">{{subcategory.subcatname}}</div>
+                                <div class="col-xs-3">{{subcategory.questions|length}} vragen</div>
                                 
                                 <div class="col-xs-3">
-                                        <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
+                                        <a href="{{ app.root }}/question/subcatvragen/{{ subcategory.id }}">Aanpassen vragen</a>
                                 </div>
                             </li>
                             {% endif %}  
@@ -58,20 +58,4 @@
                 {# </ul>#}
             {% endfor %}
         {% endif %}
-
-        <!-- DE BEWERKINGSKNOPEN -->
-        <nav>
-            <div class="form-group">
-                <label class="col-xs-2 control-label">Selectie:</label>                            
-                <div class="col-xs-10 btn-toolbar" role="toolbar">     
-                    <div class="btn-group col-xs-8">
-                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/category/inactive">Maak Inactief</button>
-                        <button type="submit" class="btn btn-default" formaction="{{app.root}}/category/active">Maak Actief</button>
-                    </div> 
-                    <div class="col-xs-2">
-                        <button type="submit" class="btn btn-primary" formaction="{{app.root}}/category">Maak nieuwe categorie</button>
-                    </div>
-                </div>
-        </nav>
-
 {% endblock content %}

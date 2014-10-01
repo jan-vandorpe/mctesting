@@ -350,5 +350,39 @@ class SubcategoryDAO
             throw new ApplicationException('De subcategorieën van de gekozen categorie ('.$categoryId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+    
+    //select by id for the edit questions part
+    public static function selectByIdQNIT($subcatid)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie WHERE subcatid = :subcatid limit 1';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':subcatid' => $subcatid,)))
+        {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record))
+            {
+                //create object(s) and return                
+                //create  object
+                $subcat = new Subcategory();
+                $subcat->setId($record['subcatid']);
+                $subcat->setSubcatname($record['subcatnaam']);
+                $subcat->setActive($record['actief']);
+                $subcat->setQuestions(QuestionService::getNotInTestBySubCategory($subcat->getId()));
+                return $subcat;
+            } else
+            {
+                throw new ApplicationException('Kon geen subcategorie ophalen, gelieve dit te controleren');
+            }
+        } else
+        {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De subcategorie ('.$subcatid.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
 
 }

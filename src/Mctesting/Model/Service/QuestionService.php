@@ -28,6 +28,10 @@ class QuestionService
         return QuestionDAO::selectByTest($testid);
     }
     
+    public static function getByIdQNIT($id){
+      return QuestionDAO::selectByIdQNIT($id);
+    }
+    
     /**
      * Function returns an array of question objects corresponding to the given
      * categoryId

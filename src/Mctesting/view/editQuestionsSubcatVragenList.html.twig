@@ -1,0 +1,92 @@
+{% extends "template/layout.html.twig" %}
+
+{% block stylesheets %}
+  {{parent()}}
+{% endblock %}
+
+{% block title %}
+  {{ parent() }}Subcategorie details
+{% endblock %}
+
+{% block contentHeader %}
+  <div class="panel-heading">
+    <h1>
+      Subcategorie details
+      <br>
+    </h1>
+  </div>
+{% endblock %}
+
+{%block content%}
+
+  <div class="gebruikertoevoegen container-fluid">
+    <form name="gebrtoev" class="form-horizontal meerboven-onder" action="" method="post">
+      <div class="panel panel-default">
+        <div class="panel-heading">Details</div>
+        <div class="panel-body">
+          <div class="form-group">
+            <label for="subcatid" class="col-xs-3 control-label">SubcatId:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="id" id="subcatid" placeholder="{{ subcategorie.id }}" disabled/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="naam" class="col-xs-3 control-label">Naam:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="naam" id="naam" placeholder="{{ subcategorie.subcatname }}" disabled/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="actief" class="col-xs-3 control-label">Actief:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="actief" id="actief" placeholder="{% if subcategorie.active %}Ja{% else %}Nee{% endif %}" disabled/>
+            </div>
+          </div>   
+          <div class="form-group">
+            <label for="actief" class="col-xs-3 control-label">Aantal vragen:</label>
+            <div class="col-xs-9">
+              <input type="text" class="form-control" name="naam" id="naam" placeholder="{{ subcategorie.questions|length }}" disabled/>
+            </div>
+          </div> 
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Vragen</div>
+        <div class="panel-body">                
+          {% for question in subcategorie.questions %}
+            <div class="panel panel-default">
+              <div class="panel-heading clearfix"> 
+                <span class="col-xs-1 glyphicon glyphicon-comment"></span>
+                <div class="col-xs-4 ">Vraag {{loop.index}}</div>
+                <div class="col-xs-3 text-right"><small>Gewicht: {{question.weight}}</small></div>
+                <a href="{{ app.root }}/question/editquestion/{{question.id}}" class="col-xs-2 col-xs-offset-1 no-print pull-right">
+                <input type="button" class="btn btn-default btn-sm" value="Aanpassen">
+              </a>
+              </div>
+              <div class="panel-body" style="font-weight: normal">     
+                <div class="col-xs-9">
+                  <p>{{ question.text|raw }}</p>
+                </div>
+                <div class="col-xs-3">
+                  {% if question.media is not empty %}
+                    {% for file in question.media %}
+                      <figure class="">
+                        <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                      </figure>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %} 
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-xs-offset-1">
+          <button type="submit" class="btn btn-default no-print" formaction="{{ app.root }}/question/editlist"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+        </div>
+      </div>                    
+    </form>
+  </div>
+{% endblock %}

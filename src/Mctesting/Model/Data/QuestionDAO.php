@@ -362,5 +362,45 @@ class QuestionDAO {
       throw new ApplicationException('De vragen van de gekozen subcategorie (' . $subCatId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
     }
   }
+  
+  //for questions not in test
+  public static function selectByIdQNIT($id) {
+    //create db connection
+    $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+    //prepare sql statement
+    $sql = 'SELECT * FROM vraag WHERE vraagid = :vraagid AND vraagid NOT IN (select vraagid from testvragen where 1)';
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':vraagid', $id);
+    //test if statement can be executed
+    if ($stmt->execute()) {
+      //test if statement retrieved something
+      $record = $stmt->fetch();
+      if (!empty($record)) {
+        //create object(s) and return
+        //retrieve subcategory object
+        $subcategory = SubcategoryService::getById($record['subcatid']);
+        //retrieve answers for question
+        $answers = AnswerService::getByQuestion($record['vraagid']);
+        //retrieve media filename array for question
+        $media = MediaService::getByQuestion($record['vraagid']);
+        //create question object
+        $question = new Question();
+        $question->setId($record['vraagid']);
+        $question->setText($record['vraagtekst']);
+        $question->setWeight($record['gewicht']);
+        $question->setSubcategory($subcategory);
+        $question->setCorrectAnswer($record['correctantwoord']);
+        $question->setAnswers($answers);
+        $question->setMedia($media);
+        $question->setActive((boolean) $record['actief']);
+        return $question;
+      } else {
+        throw new ApplicationException('Deze vraag kan niet langer worden aangepast. Gelieve een nieuwe vraag aan te maken.');
+      }
+    } else {
+      $error = $stmt->errorInfo();
+      throw new ApplicationException('De vraag (' . $id . ') kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+    }
+  }
 
 }
