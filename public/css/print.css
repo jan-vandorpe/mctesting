@@ -23,6 +23,7 @@ author: Bert
   .print-image {
     max-height:100px;
     max-width: 100px;
+    float:left;
   }
 
   .print-question {
@@ -37,10 +38,10 @@ author: Bert
   }
   .print-answers:before {
     content: '';
-    height:50px;
-    width:50px;
-    border:1px solid black;
-    float:right;
+    height:25px;
+    width:25px;
+    outline:1px solid black;
+    float:left;
   }
 
   .print-rapport {

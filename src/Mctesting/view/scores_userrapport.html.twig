@@ -48,7 +48,7 @@
           <div class="form-group">
             <label for="passes" class="col-xs-3 control-label">Geslaagd:</label>
             <div class="col-xs-6">    
-              <span class="print-only form-control">{{usersession[0].score}} / {{ usersession[0].testsession.test.testmaxscore }}</span>
+              <span class="print-only form-control">{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}</span>
               <input type="text" class="form-control no-print" name="passes" id="passes" placeholder="{% if usersession[0].passed %}Ja{% else %}Nee{% endif %}" disabled/>
             </div>
             <div class="col-xs-3">
