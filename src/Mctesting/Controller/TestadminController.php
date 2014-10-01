@@ -44,7 +44,7 @@ class TestadminController extends AbstractController {
 
     public function testCreation_step1() {
         if (isset($_SESSION["testcreation"])) {
-            $testcreation = unserialize($_SESSION["testcreation"]);            
+            $testcreation = unserialize($_SESSION["testcreation"]);
         } else {
             $testcreation = new TestCreation;
             if (isset($_POST["selecttest"])) {
@@ -75,7 +75,7 @@ class TestadminController extends AbstractController {
 
     public function testCreation_step2() {
         if (isset($_SESSION["testcreation"])) {
-            $testcreation = unserialize($_SESSION["testcreation"]);            
+            $testcreation = unserialize($_SESSION["testcreation"]);
 
             if ((isset($_POST["testname"]) && trim($_POST['testname']) != '') || $testcreation->getTest()->getTestName() != "") {
                 if (isset($_POST["testname"])) {
@@ -138,8 +138,11 @@ class TestadminController extends AbstractController {
 
                         $subcatlist = $_SESSION["subcatlist"];
                         $testcreation->setCat(CategoryService::getById($testcreation->getCat()->getId()));
-                        $subcatpasspercentage = SubcategoryService::getByTest($testcreation->getTest()->getTestId());
-                        $testcreation->setSubcatspassperc($subcatpasspercentage);
+
+                        if ($testcreation->getTest()->getTestBeheerder() != "") {
+                            $subcatpasspercentage = SubcategoryService::getByTest($testcreation->getTest()->getTestId());
+                            $testcreation->setSubcatspassperc($subcatpasspercentage);
+                        }
                         $_SESSION["testcreation"] = serialize($testcreation);
 
                         //view
@@ -182,20 +185,26 @@ class TestadminController extends AbstractController {
                 }
 
                 $subcatlist = $_SESSION["subcatlist"];
-                if($testcreation->getTest()->getTestBeheerder() != ""){
+                if ($testcreation->getTest()->getTestBeheerder() != "") {
                     $adminId = $testcreation->getTest()->getTestBeheerder();
                     $testid = TestService::update($testcreation->getTest()->getTestId(), $testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
-                }else{
+                } else {
                     $admin = UserService::unserializeFromSession();
                     $adminId = $admin->getRRNr();
                     $testid = TestService::create($testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
                 }
-                
+                if (isset($_POST['pusliceer'])) {
+                    TestService::publish($testid);
+                    header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/" . $testid);
+                    exit(0);
+                }else{
+                    $FMM = new FlashMessageManager();
+                    $FMM->setFlashMessage('Test succesvol aangemaakt', 1);
+                    header("location: " . ROOT . "/testadmin/testlist/");
+                }
+
 
                 
-
-                header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/".$testid);
-                exit(0);
             } else {
                 throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
@@ -216,9 +225,9 @@ class TestadminController extends AbstractController {
     public function testselect() {
         unset($_SESSION['testcreation']);
         //retrieve tests
-        $tests = TestService::getAllWithoutSessions();
+        $tests = TestService::getUnpublishedTests();
         $sessions = TestSessionService::getAllFiltered();
-        
+
         //render page
         $this->render('test_select.html.twig', array(
             'tests' => $tests,

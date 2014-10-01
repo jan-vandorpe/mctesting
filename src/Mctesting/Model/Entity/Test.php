@@ -19,6 +19,15 @@ class Test
     private $TestCreator;
     //private $TestCatName;
     private $status;
+    private $published;
+
+    function getPublished() {
+        return $this->published;
+    }
+
+    function setPublished($published) {
+        $this->published = $published;
+    }
 
     public function getTestId()
     {

@@ -211,4 +211,11 @@ class TestService
             return false;
         }
     }
+    public static function publish($testid) {
+        return TestDAO::publish($testid);
+    }
+    
+    public static function getUnpublishedTests() {
+        return TestDAO::selectUnpublishedTests();
+    }
 }
