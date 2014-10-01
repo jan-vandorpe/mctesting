@@ -77,7 +77,7 @@ class QuestionController extends AbstractController {
         }
         $i++;
         array_push($questionMediaFileNames, $file);
-        echo 'new files added to question: ' . $file . '<br>';
+        //echo 'new files added to question: ' . $file . '<br>';
       }
     }
 
