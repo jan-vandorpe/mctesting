@@ -216,7 +216,7 @@ class TestadminController extends AbstractController {
                     exit(0);
                 }else{
                     $FMM = new FlashMessageManager();
-                    $FMM->setFlashMessage('Test succesvol aangemaakt', 1);
+                    $FMM->setFlashMessage('Test tijdelijk opgeslagen', 1);
                     header("location: " . ROOT . "/testadmin/testlist/");
                 }
 
