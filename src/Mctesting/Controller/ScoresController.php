@@ -129,11 +129,13 @@ class ScoresController extends AbstractController
         //build model
         //retrieve
         $userSession = UserSessionService::getByUserANDSession($sessionId, $userId);
+        
         $_SESSION["usersession"] = serialize($userSession);
         if($userSession === false){
           throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van gebruiker en sessie');
         }
         $testId = $userSession[0]->getTestSession()->getTest()->getTestId();
+       
         
         //var_dump($userSession);
         //var_dump($subcategories);
@@ -183,12 +185,22 @@ class ScoresController extends AbstractController
       
       $score = 0;
       $maxscore = $userSession[0]->getTestSession()->getTest()->getTestMaxScore();
-      
+      $result['subcategories'] = array();
       foreach($subcats as $subcat){
         $subcat->setScore($_POST["catid".$subcat->getId()."score"]);
         $subcat->setPercentage(TestService::calculatePercentage($subcat->getScore(), $subcat->getMaxScore()));
         $score += $_POST["catid".$subcat->getId()."score"];
+        
+        //fucktarded bullcrap because predecessor reasons
+      $result['subcategories'][$subcat->getId()]['score'] = $_POST["catid".$subcat->getId()."score"];
+      $result['subcategories'][$subcat->getId()]['percentage'] = $subcat->getPercentage();
+        
       }
+      
+      
+      
+      
+      
       echo '<pre>';
       echo $score;
       echo '<br>';
@@ -198,13 +210,13 @@ class ScoresController extends AbstractController
       echo $percentageTotal;echo '%<br>';
       
       
-      $pass = 1;
+      $pass = true;
       if($percentageTotal<$userSession[0]->getTestSession()->getTest()->getTestPassPercentage()){
-        $pass = 0;
+        $pass = false;
       } else {
         foreach ($subcats as $subcat) {
           if($subcat->getPercentage()<$subcat->getPassPercentage()){
-            $pass = 0;
+            $pass = false;
           }
         }
       }
@@ -224,11 +236,14 @@ class ScoresController extends AbstractController
         $userSession[0]->setParticipated(true);
         
         //set passed
-        //$userSession[0]->setPassed(TestService::calculatePassFail($result));
+        $userSession[0]->setPassed($pass);
         
         //persist into DB
-        //UserSessionService::update($userSession,$result['subcategories']);
+        UserSessionService::update($userSession[0],$result['subcategories']);
         //persist subcat results into NON EXISTENT TABLE 
+        
+        unset($_SESSION["usersession"]);
+        unset($_SESSION["subcats"]);
         
     }
 

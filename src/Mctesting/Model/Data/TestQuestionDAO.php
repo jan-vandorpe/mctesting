@@ -116,7 +116,8 @@ class TestQuestionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('De gekozen subcategorie ('.$subcatId.') bevat geen vragen');
+              return false;
+                //throw new ApplicationException('De gekozen subcategorie ('.$subcatId.') bevat geen vragen');
             }
         } else {
             $error = $stmt->errorInfo();            

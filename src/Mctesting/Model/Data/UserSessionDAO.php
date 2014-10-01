@@ -100,7 +100,7 @@ class UserSessionDAO {
                     $userSession->setPercentage($record['percentage']);
                     $userSession->setPassed((boolean) $record['geslaagd']);
                     $userSession->setParticipated((boolean) $record['afgelegd']);
-                    $testSession = TestSessionService::getById($record['sessieid']);
+                    $testSession = TestSessionService::getById($sessionId);
                     $userSession->setTestSession($testSession);
                     $userSession->setActive((boolean) $record['actief']);
 
