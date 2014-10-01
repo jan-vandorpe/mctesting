@@ -22,6 +22,10 @@ Thumbnail size
   max-height: 100px;
 }
 
+.container-fluid{
+    position: relative;
+}
+
 /*
 preview image styles
 */
@@ -135,6 +139,12 @@ print only
     position: absolute;
     left:45%;
     color:black;
+}
+
+.textCreationBack div button{
+    position: absolute;
+    left: 0;
+    bottom : 1600%;
 }
 
 .overflow{
