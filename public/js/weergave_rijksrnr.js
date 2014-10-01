@@ -11,7 +11,7 @@
                 eRijksnr.value = sJuistRijksnr;
             }
             else {
-                // alert("rijksregisternr GEEN 11 cijfers");
+                // console.log("rijksregisternr GEEN 11 cijfers");
             }
         }
 
