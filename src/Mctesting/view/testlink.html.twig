@@ -13,7 +13,7 @@
     {{ parent() }}
     <script src="{{ app.root }}/public/js/lib/bootstrap-datepicker.js"></script>
     <script src="{{ app.root }}/public/js/datepicker.js"></script>
-    
+
     <script language="JavaScript">
         function toggle(source) {
             checkboxes = document.getElementsByClassName(source.value);
@@ -36,7 +36,7 @@
 
 {% block content %}
     <div class="testsessieplannen">        
-        <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{% if testsession.id is defined%}{{ app.root }}/testadmin/testlinkupdate{% else %}{{ app.root }}/testadmin/testlinkadd{% endif %}">
+        <form name="testsessiesel" id="testsessiesel" class="form-horizontal" method="POST" action="{{ app.root }}/testadmin/testlinkadd">
             {% if testsession.id is defined%}
                 <input type="hidden" name="sessionid" value="{{testsession.id}}"/>
             {% endif %}
@@ -98,7 +98,12 @@
                 </div>
             </div>
             <div class="col-xs-2 col-xs-offset-5">
-                <input type="submit" name="catknop" class="btn btn-success" value="Test plannen">
+                {% if testsession.id is defined%}
+                    <input type="submit" name="aanpassen" class="btn btn-success" value="Sessie aanpassen">
+                {% else %}
+                    <input type="submit" name="plannen" class="btn btn-success" value="Test plannen">
+                {% endif %}
+                
             </div>
         </form>
     </div>
