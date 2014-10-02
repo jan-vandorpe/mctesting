@@ -4,6 +4,11 @@
   {{parent()}}
 {% endblock %}
 
+{% block scripts %}
+  {{parent()}}
+  <script src="{{ app.root }}/public/js/print.js"></script>
+{% endblock %}
+
 {% block title %}
   {{ parent() }}Scores ingeven
 {% endblock %}
@@ -62,9 +67,9 @@
       </div> 
     </form>
     <div class="panel panel-default">
-      <form role="form" method="post" class="form-horizontal" action="{{ app.root }}/scores/manualentry">  
-        <div class="panel-heading">Test details</div>            
-        <div class="panel-body">
+      <div class="panel-heading">Test details</div>            
+      <div class="panel-body">
+        <form role="form" method="post" class="form-horizontal" action="{{ app.root }}/scores/manualentry">  
           <input type="hidden" name="sessionid" value="{{usersession[0].testsession.id}}">
           <input type="hidden" name="userid" value="{{usersession[0].user.RRnr}}">
           <input type="hidden" name="testid" value="{{ usersession[0].testsession.test.testid }}">
@@ -79,7 +84,7 @@
             </div>                 
           {% endfor %}  
 
-          <div class="print-only">
+          <div class="print-only" id="outprint">
             {% for subcat in subcats %}
               <div class="panel panel-default"> 
                 <div class="panel-heading categorie clearfix">   
@@ -104,11 +109,11 @@
               </div>
             {% endfor %} 
           </div>
-        </div>
-        <div class="panel-footer">
-          <input type="submit" value="Scores ingeven" name="submit" class="btn btn-success col-xs-offset-5">
-          <div class="btn btn-default print-me no-print pull-right">Vragen afdrukken <span class="glyphicon glyphicon-print"></span></div>
-        </div>
+      </div>
+      <div class="panel-footer">
+        <input type="submit" value="Scores ingeven" name="submit" class="btn btn-success col-xs-offset-5">
+        <div class="btn btn-default printMe no-print pull-right">Vragen afdrukken <span class="glyphicon glyphicon-print"></span></div>
+      </div>
     </div> 
     {% block terugknop %}
       <div class="form-group no-print">
