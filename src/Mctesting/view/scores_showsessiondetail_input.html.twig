@@ -32,8 +32,7 @@
         {#                <div class="col-xs-1 overflow">Details</div>#}
       </b>
     </li>
-    {{ dump(usersession) }}
-    {% if usersession != false %}
+    {% if usersessions != false %}
       {% for usersession in usersessions %}
         <li class="list-group-item clearfix">
           <div class="col-xs-2">{{ usersession.user.firstname }}</div>
@@ -46,10 +45,8 @@
         </li>
       {% endfor %}
     {% else %}
-      <li class="list-group-item clearfix">
-        <div class="col-xs-12 alert-warning alert">
+      <li class="list-group-item clearfix list-group-item-warning">
           Iedereen heeft de test al afgelegd
-        </div>
       </li>
     {% endif %}
   </ul>

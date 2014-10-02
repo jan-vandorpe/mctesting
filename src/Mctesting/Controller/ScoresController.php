@@ -87,7 +87,6 @@ class ScoresController extends AbstractController
         
          //assign argument values
         $sessionId = $_POST['selectsession'];
-        echo $sessionId;
         //build model
         //retrieve testsession
         $testSession = TestSessionService::getById($sessionId);
