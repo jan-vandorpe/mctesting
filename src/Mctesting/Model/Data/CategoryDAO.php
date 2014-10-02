@@ -90,7 +90,8 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Er zijn geen categorieën gevonden');
+                return false;
+                //throw new ApplicationException('Er zijn geen categorieën gevonden');
             }
         } else
         {
@@ -127,7 +128,7 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Kon geen categorieset ophalen, gelieve dit te controleren');
+                throw new ApplicationException('Er zijn geen categorieën gevonden, gelieve nieuwe categorieën aan te maken.');
             }
         } else
         {

@@ -32,7 +32,9 @@
 {% block content %}
     <form name="catbewerken" action="{{app.root}}/category/categorylist" method="post" id="catForm" class="form-horizontal">
         {% if allcategories is empty %}
-            <p class="info-tekst">U heeft nog geen categorieën aangemaakt.</p>
+            <ul class="list-group">
+                <li class="list-group-item-warning list-group-item">U heeft nog geen categorieën aangemaakt.</li>
+            </ul>
         {% else %}
             {% for category in allcategories %}  
                 <div class="panel panel-default"> 
@@ -64,36 +66,7 @@
                             </li>
                         {% endfor %}
                     </ul>
-                </div>
-                {#    <div class="input-group">
-                      <span class="input-group-addon addon-finetune">
-                        <input type="checkbox" onChange="toggle(this)" name="catCheckbox[]" value="{{category.id}}" id="catid{{category.id}}"/>  
-                      </span>
-                      <label class="form-control" for="catid{{category.id}}">{{ category.catname }}</label>
-                    </div>
-                    <ul>
-                      {% for subcategory in category.subcategories %}   
-                        <li class="input-group">                    
-                          <span class="input-group-addon addon-finetune">
-                            <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
-                          </span>
-                          <label for="subcatid{{subcategory.id}}" class="form-control">
-                            <div class="col-xs-6">{{subcategory.subcatname}}</div>
-                            <div class="col-xs-2">{{subcategory.questions|length}} vragen</div>
-                            {% if subcategory.active == 1 %}
-                              <div class="col-xs-1">Actief</div>
-                            {% else %}
-                              <div class="col-xs-1">Inactief</div>
-                            {% endif %}
-                            {% if subcategory.questions|length > 0 %}
-                              <div class="col-xs-3">
-                                <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
-                              </div>
-                            {% endif %}       
-                          </label>
-                        </li>#}
-                {#            {% endfor %}#}
-                {# </ul>#}
+                </div>                
             {% endfor %}
         {% endif %}
 
