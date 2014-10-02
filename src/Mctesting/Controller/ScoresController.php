@@ -33,7 +33,7 @@ class ScoresController extends AbstractController
     {
       
       if($arguments && $arguments[0] === "input"){
-        print_r($arguments);
+        //print_r($arguments);
         $tests = TestService::getAllWithSessions();
 
         //render page
@@ -56,7 +56,7 @@ class ScoresController extends AbstractController
     public function showSessions($arguments)
     {
       if($arguments && $arguments[0] === "input"){
-        print_r($arguments);
+        //print_r($arguments);
         $testsessions = TestSessionService::getSessionsByTest($_POST['selecttest']);
         $test = TestService::getById($_POST['selecttest']);
 
