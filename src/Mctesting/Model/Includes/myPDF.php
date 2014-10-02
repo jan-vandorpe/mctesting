@@ -136,7 +136,19 @@ class myPDF extends FPDF {
             //hoogte van de vraag berekenen (als het een lange vraag is komt hij op meerdere lijnen
             $height = $this->GetMultiCellHeight(145, 8, $vraag);
             //als er een image bij de vraag zit
+
+            $c = 0;
+
             if (count($media) > 0) {
+
+                while ($c < count($media)) {
+                    $file = $question->getMedia();
+                    $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $file[$c];
+                    
+                    $c++;
+                }
+                //var_dump($media);
+
                 $file = $question->getMedia();
                 $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $file[0];
 
