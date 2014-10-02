@@ -171,7 +171,7 @@ class TestDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM test INNER JOIN sessie on sessie.testid = test.testid ORDER BY testnaam';
+        $sql = 'SELECT * FROM test WHERE testid IN (SELECT testid FROM sessie) ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
