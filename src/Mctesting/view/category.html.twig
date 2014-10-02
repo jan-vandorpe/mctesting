@@ -46,9 +46,13 @@
                         <label for="category" class="col-xs-3 control-label">Categorie: </label>
                         <div class="col-xs-9">
                             <select class="form-control catbijvraag " name="category" id="category"/>
-                            {% for category in allcategories %}  
-                                <option value="{{category.id}}">{{category.catname}}</option>
-                            {% endfor %}
+                            {% if allcategories is empty %}
+                                <option value="">Geen categorieën gevonden</option>
+                            {% else %}
+                                {% for category in allcategories %}  
+                                    <option value="{{category.id}}">{{category.catname}}</option>
+                                {% endfor %}
+                            {% endif %}
                             </select>
                         </div>
                     </div>                    
@@ -60,7 +64,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <input type="submit" name="subcatknop" class="btn btn-success" value="Subcategorie toevoegen">
+                            <input type="submit" name="subcatknop" class="btn btn-success" value="Subcategorie toevoegen" {% if allcategories is empty %}Disabled{% endif %}>
                         </div>
                     </div>
                     </form>

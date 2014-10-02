@@ -35,14 +35,7 @@ class TestadminController extends AbstractController {
         $this->testCreation();
     }
 
-    public function testCreation() {
-        unset($_SESSION['testcreation']);
-
-        header("location: " . ROOT . "/testadmin/testCreation_step1");
-        exit(0);
-    }
-
-    public function testCreation_step1() {
+    public function testCreation_step1() {        
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
         } else {
@@ -58,6 +51,7 @@ class TestadminController extends AbstractController {
                 header("location: " . ROOT . "/testadmin/testCreation_step1");
                 exit(0);
             } else {
+                unset($_SESSION['testcreation']);
                 $test = new Test;
                 $testcreation->setTest($test);
             }
@@ -210,7 +204,7 @@ class TestadminController extends AbstractController {
                     $adminId = $admin->getRRNr();
                     $testid = TestService::create($testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
                 }
-                if (isset($_POST['pusliceer'])) {
+                if (isset($_POST['publiceer'])) {
                     TestService::publish($testid);
                     header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/" . $testid);
                     exit(0);
@@ -219,6 +213,7 @@ class TestadminController extends AbstractController {
                     $FMM->setFlashMessage('Test tijdelijk opgeslagen', 1);
                     header("location: " . ROOT . "/testadmin/testlist/");
                 }
+                unset($_SESSION['testcreation']);
             } else {
                 throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
@@ -261,18 +256,25 @@ class TestadminController extends AbstractController {
         if (isset($_POST['selectsession'])) {
             $testsession = TestSessionService::getById($_POST['selectsession']);
         }
-        $result = array();
-        foreach ($allTest as $test) {
-            $catname = TestService::getCatName($test->getTestId());
-            if (!isset($result[$catname])) {
-                $result[$catname] = array();
-            }
-            array_push($result[$catname], $test);
-        }
 
 
         //view
+        $result = array();
+        if ($allTest === false) {
+            $FMM = new FlashMessageManager();
+            $FMM->setFlashMessage('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
+            exit(0);
+        } else {
 
+            foreach ($allTest as $test) {
+                $catname = TestService::getCatName($test->getTestId());
+                if (!isset($result[$catname])) {
+                    $result[$catname] = array();
+                }
+                array_push($result[$catname], $test);
+            }
+        }
         $this->render('testlink.html.twig', array(
             'allTest' => $result,
             'allUsers' => $allUsers,
@@ -338,7 +340,7 @@ class TestadminController extends AbstractController {
             throw new ApplicationException('Gelieve een test te kiezen');
         }
     }
- 
+
     /**
      * Overzicht gemaakte testen weergeven
      */
