@@ -45,7 +45,15 @@ preview image styles
     right:5px;
     z-index:51;
 }
-
+.padding-all {
+  padding:0.5em;
+}
+.padding-left {
+  padding-left:1em;
+}
+.padding-right {
+  padding-right:1em;
+}
 
 /**
     Test answers layout

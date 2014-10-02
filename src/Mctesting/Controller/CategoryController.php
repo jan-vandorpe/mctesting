@@ -35,8 +35,10 @@ class CategoryController extends AbstractController {
 
     public function categoryList() {
         $allcategories = CategoryService::getAll();
-        foreach ($allcategories as $category) {
-            $category->retrieveSubcategories();
+        if ($allcategories !== false) {
+            foreach ($allcategories as $category) {
+                $category->retrieveSubcategories();
+            }
         }
         $this->render('categorylist.html.twig', array(
             'allcategories' => $allcategories,
@@ -70,8 +72,8 @@ class CategoryController extends AbstractController {
             //creates a new subcategory
             SubcategoryService::create($categoryid, $subcategory);
             $FMM = new FlashMessageManager();
-            $FMM->setFlashMessage('Subcategorie succesvol toegevoegd',1);
-            
+            $FMM->setFlashMessage('Subcategorie succesvol toegevoegd', 1);
+
             header("location: go");
         } else {
             //throw new ApplicationException('Subcategorie bestaat al');

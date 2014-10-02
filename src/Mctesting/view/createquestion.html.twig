@@ -4,6 +4,8 @@
   {{ parent() }}
   <script src="{{ app.root }}/public/js/lib/tinymce/tinymce.min.js"></script>
   <script src="{{ app.root }}/public/js/addanswers.js"></script>
+  <script src="{{ app.root }}/public/js/editQuestions.js"></script>
+
 {% endblock scripts %}
 
 {% block title %}
@@ -111,23 +113,30 @@
           </div>
           {#  Question Images    #}
           <div class="form-group">
-            <label class="col-xs-3 control-label">Afbeeldingen:</label>
-            <div class="col-xs-6">
-              <div class="input-group">
-                <span class="input-group-btn">
-                  <span class="btn btn-default btn-file">
-                    Bladeren... 
-                    <input type="file" name="media[]" class="form-control" multiple="true" />
+            <label class="control-label col-xs-3">Image Preview:</label>
+            <div id="questionImgPreview" class="col-xs-9 clearfix"></div>
+          </div>
+          <div id="inputBox">
+            <div class="form-group" id="UploadBox0">
+              <label class="control-label col-xs-3">Afbeelding toevoegen:</label>
+              <div class="col-xs-6">
+                <div class="input-group">
+                  <span class="input-group-btn">
+                    <span class="btn btn-default btn-file">
+                      Bladeren... 
+                      <input type="file" name="newQMedia[]" class="form-control uploadImage" id="NewQMedia0"/>
+                    </span>
                   </span>
-                </span>
-                <input type="text" class="form-control" readonly>
+                  <input type="text" class="form-control" readonly>
+                </div>
+              </div>
+              <div class="col-xs-3">
+                <input type="button" value="Afbeelding uploaden" id="uploadImgPreview" class="btn btn-default" onclick="PreviewImage('NewQMedia0', 'questionImgPreview', 'UploadBox0', 0);">
               </div>
             </div>
-            <div class="btn btn-default reset-input">reset</div>
           </div>
         </div>
       </div>
-
       {# Answers #}
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -143,21 +152,29 @@
                     <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in.">{{question.answers[0].text|raw}}</textarea> 
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-xs-3 control-label">Afbeelding:</label>
-                  <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                          Bladeren... 
-                          <input type="file" name="answerMedia[]" class="form-control" />
+                <div class="form-group" id="AnswerMediaBlock0">
+                  <div class="pull-right" id="imgPreview0" style="padding-right:2em">
+                    <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview0', 'AnswerUpload0');">
+                      <img id="imgPreview0img" src="{{app.root}}/public/images/placeholder.jpg" class="preview-image thumb">
+                      <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
+                    </figure>
+                  </div>
+                  <div class="pull-left col-xs-9">
+                    <label class="col-xs-4 control-label">Afbeelding:</label>
+                    <div class="col-xs-8">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                            Bladeren...
+                            <input type="file" name="answerMedia[]" class="form-control uploadImage" 
+                                   onchange="PreviewAnswerImage('AnswerUpload0', 'imgPreview0');" id="AnswerUpload0"/>
+                          </span>
                         </span>
-                      </span>
-                      <input type="text" class="form-control" readonly>
+                        <input type="text" class="form-control" readonly value="" id="inputText0">
+                      </div>
                     </div>
                   </div>
-                  <div class="btn btn-default reset-input">reset</div>
-                </div>
+                </div>                     
               </div></div>
             <div class="panel panel-default">
               <div class="panel-body">
@@ -167,87 +184,107 @@
                     <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in.">{{question.answers[1].text|raw}}</textarea> 
                   </div>
                 </div>
-                <div class="form-group">
-                  <label class="col-xs-3 control-label">Afbeelding:</label>
-                  <div class="col-xs-6">
-                    <div class="input-group">
-                      <span class="input-group-btn">
-                        <span class="btn btn-default btn-file">
-                          Bladeren... 
-                          <input type="file" name="answerMedia[]" class="form-control" />
+                <div class="form-group" id="AnswerMediaBlock1">
+                  <div class="pull-right" id="imgPreview1" style="padding-right:2em">
+                    <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview1', 'AnswerUpload1');">
+                      <img id="imgPreview1img" src="{{app.root}}/public/images/placeholder.jpg" class="preview-image thumb">
+                      <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
+                    </figure>
+                  </div>
+                  <div class="pull-left col-xs-9">
+                    <label class="col-xs-4 control-label">Afbeelding:</label>
+                    <div class="col-xs-8">
+                      <div class="input-group">
+                        <span class="input-group-btn">
+                          <span class="btn btn-default btn-file">
+                            Bladeren...
+                            <input type="file" name="answerMedia[]" class="form-control uploadImage" 
+                                   onchange="PreviewAnswerImage('AnswerUpload1', 'imgPreview1');" id="AnswerUpload1"/>
+                          </span>
                         </span>
-                      </span>
-                      <input type="text" class="form-control" readonly>
+                        <input type="text" class="form-control" readonly value="" id="inputText1">
+                      </div>
                     </div>
                   </div>
-                  <div class="btn btn-default reset-input">reset</div>
-                </div>
+                </div>                     
               </div></div>
               {% for answer in question.answers %}
                 {% if loop.index > 2 %}
-                <div class="panel panel-default">
+                <div class="panel panel-default form-answer">
                   <div class="panel-body">
                     <div class="form-group">
                       <label for="antwoord[]" class="col-sm-3 control-label label-padding answer-label">Antwoord {{loop.index}}:</label>   
                       <div class="col-sm-9">
-                        <textarea name="antwoord[]" id="antwoord{{loop.index}}" class="form-control allowcode" placeholder="vul hier een antwoord in.">{{answer.text|raw}}</textarea> 
+                        <textarea name="antwoord[]" id="antwoord{{loop.index}}" class="form-control allowcode" placeholder="vul hier een antwoord in.">
+                          {{answer.text|raw}}
+                        </textarea> 
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="col-xs-3 control-label">Afbeelding:</label>
-                      <div class="col-xs-6">
-                        <div class="input-group">
-                          <span class="input-group-btn">
-                            <span class="btn btn-default btn-file">
-                              Bladeren... 
-                              <input type="file" name="answerMedia[]" class="form-control" />
+                    <div class="form-group" id="AnswerMediaBlock{{loop.index}}">
+                      <div class="pull-right" id="imgPreview{{loop.index}}" style="padding-right:2em">
+                        <figure class="thumbnail preview-figure btn" onclick="resetInputForm('imgPreview{{loop.index}}', 'AnswerUpload{{loop.index}}');">
+                          <img id="imgPreview{{loop.index}}img" src="{{app.root}}/public/images/placeholder.jpg" class="preview-image thumb">
+                          <span class="preview-close glyphicon glyphicon-remove-circle" title="verwijder afbeelding"></span>
+                        </figure>
+                      </div>
+                      <div class="pull-left col-xs-9">
+                        <label class="col-xs-4 control-label">Afbeelding:</label>
+                        <div class="col-xs-8">
+                          <div class="input-group">
+                            <span class="input-group-btn">
+                              <span class="btn btn-default btn-file">
+                                Bladeren...
+                                <input type="file" name="answerMedia[]" class="form-control uploadImage" 
+                                       onchange="PreviewAnswerImage('AnswerUpload{{loop.index}}', 'imgPreview{{loop.index}}');" id="AnswerUpload{{loop.index}}"/>
+                              </span>
                             </span>
-                          </span>
-                          <input type="text" class="form-control" readonly>
+                            <input type="text" class="form-control" readonly value="" id="inputText{{loop.index}}">
+                          </div>
                         </div>
                       </div>
-                      <div class="btn btn-default reset-input">reset</div>
-                    </div><span class="glyphicon glyphicon-floppy-remove remove-answer btn" title="Verwijder antwoord"></span>
-                  </div></div>
-                {% endif %}
-              {% endfor %}
-          </div>
-          {#   Add extra answer, triggers addanswer.js   #}
-          <div class="form-group">
-            <label for="AddAnswer" class="col-xs-3 control-label">
-              Extra antwoord toevoegen:
-            </label>
-            <div class="col-xs-3">
-              <div href="#" id="AddAnswer" class="btn btn-default">Antwoord Toevoegen</div>
+                    </div>   
+                    <span class="glyphicon glyphicon-floppy-remove remove-answer btn" title="Verwijder antwoord"></span>
+                  </div>
+                </div>
+              {% endif %}
+            {% endfor %}
             </div>
-          </div>
-          {# Select correct answer #}
-          <div class="form-group">
-            <label class="col-xs-3 control-label" for="correctant">
-              Correct antwoord:
-            </label>
-            <div class="col-xs-9">
-              <select class="form-control catbijvraag" id="correctant" name="correctant">
-                <option value="0">Antwoord 1</option>
-                <option value="1">Antwoord 2</option>
-                {% for answer in question.answers %}
-                  {% if loop.index > 2 %}
-                    <option value="{{answer.id}}"
-                    {% if question.correctAnswer == answer.id %}
-                      selected
+            {#   Add extra answer, triggers addanswer.js   #}
+            <div class="form-group">
+              <label for="AddAnswer" class="col-xs-3 control-label">
+                Extra antwoord toevoegen:
+              </label>
+              <div class="col-xs-3">
+                <div href="#" id="editAddAnswer" class="btn btn-default">Antwoord Toevoegen</div>
+              </div>
+            </div>
+            {# Select correct answer #}
+            <div class="form-group">
+              <label class="col-xs-3 control-label" for="correctant">
+                Correct antwoord:
+              </label>
+              <div class="col-xs-9">
+                <select class="form-control catbijvraag" id="correctant" name="correctant">
+                  <option value="0">Antwoord 1</option>
+                  <option value="1">Antwoord 2</option>
+                  {% for answer in question.answers %}
+                    {% if loop.index > 2 %}
+                      <option value="{{answer.id}}"
+                              {% if question.correctAnswer == answer.id %}
+                                selected
+                              {% endif %}
+                              >Antwoord {{answer.id+1}}</option>
                     {% endif %}
-                    >Antwoord {{answer.id+1}}</option>
-                  {% endif %}
-                {% endfor %}
-              </select>
+                  {% endfor %}
+                </select>
+              </div>
             </div>
-          </div>
+          
         </div>
-      </div>
-      {#   Submit   #}
-      <div class="col-xs-3 col-xs-offset-5">
-        <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
-      </div>
+        {#   Submit   #}
+        <div class="col-xs-3 col-xs-offset-5">
+          <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
+        </div>
     </form>
   </div>
 {% endblock content %}

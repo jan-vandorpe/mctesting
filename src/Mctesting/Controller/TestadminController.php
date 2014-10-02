@@ -35,14 +35,7 @@ class TestadminController extends AbstractController {
         $this->testCreation();
     }
 
-    public function testCreation() {
-        unset($_SESSION['testcreation']);
-
-        header("location: " . ROOT . "/testadmin/testCreation_step1");
-        exit(0);
-    }
-
-    public function testCreation_step1() {
+    public function testCreation_step1() {        
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
         } else {
@@ -58,6 +51,7 @@ class TestadminController extends AbstractController {
                 header("location: " . ROOT . "/testadmin/testCreation_step1");
                 exit(0);
             } else {
+                unset($_SESSION['testcreation']);
                 $test = new Test;
                 $testcreation->setTest($test);
             }
@@ -110,8 +104,8 @@ class TestadminController extends AbstractController {
     public function testCreation_step3() {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
-            
-            if(isset($_POST['back'])){
+
+            if (isset($_POST['back'])) {
                 $testcreation->getTest()->setTestMaxDuration($_POST['testduration']);
                 $testcreation->setQuestions($_POST['question']);
                 $_SESSION["testcreation"] = serialize($testcreation);
@@ -177,15 +171,15 @@ class TestadminController extends AbstractController {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
 
-            if(isset($_POST['back'])){
+            if (isset($_POST['back'])) {
                 $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
                 $testcreation->setSubcatspassperc($_POST['subcatpasspercentage']);
-                
+
                 $_SESSION["testcreation"] = serialize($testcreation);
                 header("location: " . ROOT . "/testadmin/testCreation_step2");
                 exit(0);
             }
-            
+
             if (isset($_POST["subcatpasspercentage"])) {
                 foreach ($_POST["subcatpasspercentage"] as $key => $value) {
                     if (HelperFunctions::numbers_only($value) == true) {
@@ -210,18 +204,16 @@ class TestadminController extends AbstractController {
                     $adminId = $admin->getRRNr();
                     $testid = TestService::create($testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
                 }
-                if (isset($_POST['pusliceer'])) {
+                if (isset($_POST['publiceer'])) {
                     TestService::publish($testid);
                     header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/" . $testid);
                     exit(0);
-                }else{
+                } else {
                     $FMM = new FlashMessageManager();
                     $FMM->setFlashMessage('Test tijdelijk opgeslagen', 1);
                     header("location: " . ROOT . "/testadmin/testlist/");
                 }
-
-
-                
+                unset($_SESSION['testcreation']);
             } else {
                 throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
@@ -264,18 +256,25 @@ class TestadminController extends AbstractController {
         if (isset($_POST['selectsession'])) {
             $testsession = TestSessionService::getById($_POST['selectsession']);
         }
-        $result = array();
-        foreach ($allTest as $test) {
-            $catname = TestService::getCatName($test->getTestId());
-            if (!isset($result[$catname])) {
-                $result[$catname] = array();
-            }
-            array_push($result[$catname], $test);
-        }
 
 
         //view
+        $result = array();
+        if ($allTest === false) {
+            $FMM = new FlashMessageManager();
+            $FMM->setFlashMessage('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
+            exit(0);
+        } else {
 
+            foreach ($allTest as $test) {
+                $catname = TestService::getCatName($test->getTestId());
+                if (!isset($result[$catname])) {
+                    $result[$catname] = array();
+                }
+                array_push($result[$catname], $test);
+            }
+        }
         $this->render('testlink.html.twig', array(
             'allTest' => $result,
             'allUsers' => $allUsers,
@@ -314,18 +313,22 @@ class TestadminController extends AbstractController {
                         throw new ApplicationException('Gelieve gebruikers te selecteren');
                     }
 
-                    //print_r($_SESSION);
-//        print("<pre>");
-//        var_dump($_POST);
-//        print("</pre>");
-                    if (TestSessionService::create($mysqldate, $testid, $sessieww, $users)) {
-                        $FMM = new FlashMessageManager();
-                        $FMM->setFlashMessage('Testsessie aangemaakt!<br>Er is een nieuwe testsessie aangemaakt. Gebruik het linkermenu om verder te werken.', 1);
-                        header('Location:testlink');
-                        exit(0);
-                        //$this->render('testlinkconfirm.html.twig', array());             
+                    if (isset($_POST['aanpassen'])) {
+                        $sessionid = $_POST["sessionid"];
+                        if (TestSessionService::update($sessionid, $mysqldate, $testid, $sessieww, $users)) {
+                            $FMM = new FlashMessageManager();
+                            $FMM->setFlashMessage('Testsessie aangepast!<br>De testsessies aangepast. Gebruik het linkermenu om verder te werken.', 1);
+                            header('Location:testselect');
+                            exit(0);
+                        }
                     } else {
-                        //niet gelukt
+                        if (TestSessionService::create($mysqldate, $testid, $sessieww, $users)) {
+                            $FMM = new FlashMessageManager();
+                            $FMM->setFlashMessage('Testsessie aangemaakt!<br>Er is een nieuwe testsessie aangemaakt. Gebruik het linkermenu om verder te werken.', 1);
+                            header('Location:testlink');
+                            exit(0);
+                            //$this->render('testlinkconfirm.html.twig', array());             
+                        }
                     }
                 } else {
                     throw new ApplicationException('Gelieve een wachtwoord in te vullen');
@@ -335,55 +338,6 @@ class TestadminController extends AbstractController {
             }
         } else {
             throw new ApplicationException('Gelieve een test te kiezen');
-        }
-    }
-
-    public function testlinkupdate()
-    /**
-     * update db
-     */ {
-        if (isset($_POST["sessionid"])) {
-            $sessionid = $_POST["sessionid"];
-            if (isset($_POST['testsetselect']) && $_POST['testsetselect'] != 0) {
-                $testid = $_POST["testsetselect"];
-
-                if (isset($_POST['testdatum']) && HelperFunctions::numbers_only(str_replace('/', '', $_POST['testdatum']))) {
-                    $date = explode('/', $_POST['testdatum']);
-                    $time = mktime(0, 0, 0, $date[1], $date[0], $date[2]);
-                    $mysqldate = date('Y-m-d H:i:s', $time);
-
-                    if (isset($_POST['testwachtwoord']) && trim($_POST['testwachtwoord']) != '') {
-                        //throw new ApplicationException($_POST['testwachtwoord']);
-                        $sessieww = $_POST["testwachtwoord"];
-                        $actief = 1;
-                        $afgelegd = 0;
-                        $users = array();
-                        if (isset($_POST["user"])) {
-                            $users = $_POST["user"];
-                        } else {
-                            throw new ApplicationException('Gelieve gebruikers te selecteren');
-                        }
-
-                        if (TestSessionService::update($sessionid, $mysqldate, $testid, $sessieww, $users)) {
-                            $FMM = new FlashMessageManager();
-                            $FMM->setFlashMessage('Testsessie aangepast!<br>De testsessies aangepast. Gebruik het linkermenu om verder te werken.', 1);
-                            header('Location:testselect');
-                            exit(0);
-                        } else {
-                            //niet gelukt
-                        }
-                    } else {
-                        throw new ApplicationException('Gelieve een wachtwoord in te vullen');
-                    }
-                } else {
-                    throw new ApplicationException('Gelieve een geldige datum in te vullen (dd/mm/yyyy)');
-                }
-            } else {
-                throw new ApplicationException('Gelieve een test te kiezen');
-            }
-        } else {
-            header('Location:testlink');
-            exit(0);
         }
     }
 

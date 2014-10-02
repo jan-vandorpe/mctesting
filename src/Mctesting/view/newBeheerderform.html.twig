@@ -64,11 +64,15 @@
                     <div class="form-group">
                         <label for="fnaam" class="col-xs-3 control-label">selecteer gebruiker:</label>
                         <div class="col-xs-9">
-                            <select class="form-control" name="selectuser">
-                                <option value="0" >Selecteer een gebruiker:</option>
-                                {% for user in users %}
-                                    <option value="{{ user.RRnr }}">{{ user.lastName }} {{ user.firstName }} ({{ user.RRnr }})</option>
-                                {% endfor %}
+                            <select class="form-control" name="selectuser">                                
+                                {% if users is empty %}
+                                    <option value="">Geen gebruikers gevonden</option>
+                                {% else %}
+                                    <option value="0" >Selecteer een gebruiker:</option>
+                                    {% for user in users %}
+                                        <option value="{{ user.RRnr }}">{{ user.lastName }} {{ user.firstName }} ({{ user.RRnr }})</option>
+                                    {% endfor %}
+                                {% endif %}
                             </select>
                         </div> 
                     </div>
@@ -81,7 +85,7 @@
 
                     <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
-                            <input type="submit" name="gebrknop" class="btn btn-success" value="Beheerder aanmaken">
+                            <input type="submit" name="gebrknop" class="btn btn-success" value="Beheerder aanmaken" {% if users is empty %}Disabled{% endif %}>
                         </div>
                     </div>
                 </div>

@@ -81,7 +81,8 @@ class TestDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen testen gevonden');
+                return false;
+                //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
             $error = $stmt->errorInfo(); 
