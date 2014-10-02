@@ -187,3 +187,8 @@ change cursor to hand when hovering
     bottom:9.65%;
     right:2%;
 }
+
+/* Force Vertical Scrollbar */
+html {
+       overflow-y: scroll;
+}
