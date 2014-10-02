@@ -92,7 +92,7 @@ class ScoresController extends AbstractController
         //retrieve testsession
         $testSession = TestSessionService::getById($sessionId);
         //retrieve usersessions
-        $userSessions = UserSessionService::getBySession($sessionId);
+        $userSessions = UserSessionService::getBySessionNotParticipated($sessionId);
 
         //render page
         $this->render('scores_showsessiondetail_input.html.twig', array(
