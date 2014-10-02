@@ -63,18 +63,40 @@ class myPDF extends FPDF {
             $answers = $question->getAnswers();
             $length = count($answers);
 
+            //hoogte images berekenen bij antwoorden
+
+            foreach ($answers as $answer) {
+                //voor elke answer de eventuele image ophalen
+                $answerMedia = $answer->getMedia();
+                if (count($answerMedia) > 0) {
+                    //als er een image is, de hoogte berekenen
+                    $answerMediaPath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $answerMedia;
+                    list($awd, $ahg) = $this->resizeToFit($answerMediaPath);
+                    //hoogte image aftrekken met 13 (hoogte van de vraag zelf die er achteraf bij opgeteld wordt)
+                    $totalHeight += $ahg - 13;
+                }
+            }
+
             $heightAnswers = $length * 13;
 
             $totalHeight += $heightAnswers;
 
             $heightImg = 0;
+            $c = 0;
 
             //hoogte van eventuele image
             $media = $question->getMedia();
             if (count($media) > 0) {
-                $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $media[0];
-                list($wd, $hg) = $this->resizeToFit($filePath);
-                $heightImg += $hg;
+
+                while ($c < count($media)) {
+                    $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $media[$c];
+                    list($wd, $hg) = $this->resizeToFit($filePath);
+                    $heightImg += $hg;
+                    $heightImg += 3;
+                    $c++;
+                }
+
+                $c = 0;
             }
 
             $totalHeight += $heightImg;
@@ -136,24 +158,42 @@ class myPDF extends FPDF {
             //hoogte van de vraag berekenen (als het een lange vraag is komt hij op meerdere lijnen
             $height = $this->GetMultiCellHeight(145, 8, $vraag);
             //als er een image bij de vraag zit
+
+
+            $imgHeight = 0;
+
             if (count($media) > 0) {
-                $file = $question->getMedia();
-                $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $file[0];
 
-                //cursor op de juiste positie zetten naast de vraagbox
-                $this->SetXY($x + 145, $y);
+                while ($c < count($media)) {
 
-                //zorgen dat image nooit groter is dan constante vanboven gedeclareerd
-                list($wd, $hg) = $this->resizeToFit($filePath);
-                $this->Cell(45, $hg, $this->Image($filePath, $this->GetX(), $this->GetY(), $wd, $hg), 'R', 0, 'C', 0);
-                //$this->cell(1, 1, '', 'RBL', 1, 'R', 0);
-                $this->Ln(0);
-                $this->SetXY($x, $y + $height);
+                    $file = $question->getMedia();
+                    $filePath = $_SERVER['DOCUMENT_ROOT'] . ROOT . "/public/images/" . $file[$c];
+                    //cursor op de juiste positie zetten naast de vraagbox
+                    $this->SetXY($x + 145, $y + $imgHeight);
+
+                    //zorgen dat image nooit groter is dan constante vanboven gedeclareerd
+                    list($wd, $hg) = $this->resizeToFit($filePath);
+
+                    //image genereren
+                    $this->Cell(45, $hg, $this->Image($filePath, $this->GetX(), $this->GetY(), $wd, $hg), 'R', 0, 'C', 0);
+
+                    //naar een nieuwe lijn gaan
+                    $this->Ln(0);
+
+                    //cursur verlagen met de hoogte van de afbeelding
+                    $this->SetXY($x, $y + $height);
+                    $imgHeight += $hg;
+
+                    $this->SetXY($x + 145, $y + $imgHeight);
+                    $this->Cell(45, 3, '', 'R', 0, 'C', 0);
+                    $this->Ln(0);
+                    $this->SetXY($x, $y + $height);
+                    $imgHeight += 3;
+                    $c++;
+                }
 
                 //** cel ONDER vraag die compenseert voor de hoogte van de afbeelding **//
-                $this->Cell(40, $hg - $height, '', 'L', 1, 'L', 0);
-
-                //var_dump($filePath);
+                $this->Cell(40, $imgHeight - $height - 3, '', 'L', 1, 'L', 0);
             } else {
                 $this->SetXY($x + 150, $y);
 
@@ -161,6 +201,8 @@ class myPDF extends FPDF {
                 $this->Cell(40, $height, '', 'R', 1, 'L', 0);
                 $this->Ln(0);
             }
+
+
 
 
             //kotje van vraag afsluiten vanonder
