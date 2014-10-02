@@ -105,7 +105,8 @@ class UserDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er zijn geen gebruikers gevonden');
+                return false;
+                //throw new ApplicationException('Er zijn geen gebruikers gevonden');
             }
         } else {
             $error = $stmt->errorInfo();
