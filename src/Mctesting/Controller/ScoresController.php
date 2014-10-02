@@ -10,6 +10,7 @@ use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Subcategory;
 use Mctesting\Model\Includes\HelperFunctions;
+use Mctesting\Model\Includes\FlashMessageManager;
 
 /**
  * Description of ScoresController
@@ -144,13 +145,10 @@ class ScoresController extends AbstractController
         if(isset($arguments[2]) && $arguments[2] === "input"){          
           $subcategories = TestQuestionService::getTestCatsByTestId($testId);
           $fulltest = TestService::getActiveFullTestById($testId);
-//          echo '<pre>';
-//         foreach($fulltest->getQuestions() as $question){
-//           var_dump($question->getText());
-//           var_dump($question->getSubcategory()->getSubcatname());
-//           var_dump($question->getWeight());
-//          }
-//          echo '</pre>';
+        if($userSession[0]->getParticipated() == 1){
+            header("location: " . ROOT . "/scores/showScoresRapport/" . $sessionId . "/" . $userId);
+            exit(0);
+        }
           $_SESSION["subcats"] = serialize($subcategories);
           //var_dump($subcategories);
           $this->render('scores_userrapport_input.html.twig', array(
@@ -198,6 +196,9 @@ class ScoresController extends AbstractController
         $subcatId = $subcat->getId();
         if(isset($_POST["catid".$subcatId."score"]) && HelperFunctions::numbers_only($_POST["catid".$subcatId."score"]) === true ){
         $subcat->setScore($_POST["catid".$subcatId."score"]);
+        if($subcat->getScore()>$subcat->getMaxScore()){
+          throw new ApplicationException('Ingegeven score kan niet hoger zijn dan de maximale score');
+        }
         //calculate subcat percentage
         $subcat->setPercentage(TestService::calculatePercentage($subcat->getScore(), $subcat->getMaxScore()));
         $score += $_POST["catid".$subcatId."score"];
@@ -236,9 +237,18 @@ class ScoresController extends AbstractController
         UserSessionService::update($userSession[0],$result['subcategories']);
         //persist subcat results into NON EXISTENT TABLE 
         
+        
+        
+        $sessionId = $userSession[0]->getTestSession()->getId();
+        $userId = $userSession[0]->getUser()->getRRnr();
+        
+        $FMM = new FlashMessageManager();
+        $FMM->setFlashMessage('Scores ingegeven',1);
         unset($_SESSION["usersession"]);
         unset($_SESSION["subcats"]);
-        
+        //echo ROOT . "/scores/showScoresRapport/" . $sessionId . "/" . $userId;
+        header("location: " . ROOT . "/scores/showScoresRapport/" . $sessionId . "/" . $userId);
+        exit(0);
     }
 
 }

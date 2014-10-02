@@ -90,7 +90,7 @@
                 <div class="panel-heading categorie clearfix">   
                   <div class="col-xs-1">
                   </div>                    
-                  <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname }}</label>                         
+                  <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname|capitalize }}</label>                         
                 </div>          
                 <ul class="list-group">
                   {% for question in fulltest.questions %} 

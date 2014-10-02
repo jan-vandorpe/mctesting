@@ -40,7 +40,7 @@ class TestController extends AbstractController {
         if ($sessionuser === false) {
             throw new ApplicationException('Er zijn geen testsessies gevonden');
         }
-        if ($sessionuser[0]->getParticipated() === 1) {
+        if ($sessionuser[0]->getParticipated() == 1) {
             header("location: " . ROOT . "/home");
         }
 

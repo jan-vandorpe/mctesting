@@ -4,6 +4,11 @@
   {{parent()}}
 {% endblock %}
 
+{% block scripts %}
+  {{parent()}}
+  <script src="{{ app.root }}/public/js/print.js"></script>
+{% endblock %}
+
 {% block title %}
   {{ parent() }}Rapport scores
 {% endblock %}
@@ -66,69 +71,58 @@
       <div class="panel panel-default">
         <div class="panel-heading">Test details</div>            
         <div class="panel-body">
-          {% for category in subcats %}
-            <div class="form-group no-print">
-              <h4 class="col-xs-offset-1">{{category.Subcatname|capitalize}}<small class="col-xs-offset-1">{{category.percentage}}&#37; (min: {{category.passPercentage}}&#37;)</small></h4>
-            </div>                 
-
-            {% for question in category.questions %}
-              <div class="panel panel-default dropdown no-print">
-                <div class="panel-heading dropdown-toggle hover" data-toggle="dropdown" id="question{{question.id}}"> &nbsp;
-                  {% if question.correct %}
-                    <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                  {% else %}
-                    <span class="col-xs-1 glyphicon glyphicon-remove"></span>
-                  {% endif %}
-                  <div class="col-xs-5 ">Vraag {{loop.index}}</div>
-                  <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
-                  <span class="caret"></span>
-                </div>
-                <ul class="dropdown-menu" aria-labelledby="question{{question.id}}" style="width:100%">
-                  <li role="presentation">
-                    <div class="panel-body" style="font-weight: normal">     
-                      <div class="col-xs-9">
-                        <p>{{ question.text|raw }}</p>
+          <div class="" id="outprint">
+            {% for subcat in subcats %}
+              <div class="panel panel-default"> 
+                <div class="panel-heading categorie clearfix">   
+                  <div class="col-xs-1">
+                  </div>                    
+                  <label class="col-xs-10" for="subcat{{subcat.id}}">{{ subcat.subcatname|capitalize }}<small class="col-xs-offset-1">{{subcat.percentage}}&#37; (min: {{subcat.passPercentage}}&#37;)</small></label>                         
+                </div>          
+                <ul class="list-group">
+                  {% for question in subcat.questions %} 
+                    <li class="list-group-item subcategorie clearfix dropdown">
+                      <div class="dropdown-toggle" data-toggle="dropdown" id="question{{question.id}}">
+                        <label for="questionid{{question.id}}" class="hover"></label>
+                        <div class="col-xs-1">   
+                          {% if question.correct %}
+                            <span class="glyphicon glyphicon-ok"></span>
+                          {% else %}
+                            <span class="glyphicon glyphicon-remove"></span>
+                          {% endif %}
+                        </div>                
+                          <div class="col-xs-7"><span class="no-print">Vraag {{loop.index}}</span><span class="print-only">{{ question.text|raw }}</span></div>                                            
+                        <div class="col-xs-3"><small>Gewicht: {{question.weight}}</small></div>
+                        <span class="caret no-print"></span>
                       </div>
-                      <div class="col-xs-3">
-                        {% if question.media is not empty %}
-                          {% for file in question.media %}
-                            <figure class="">
-                              <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
-                            </figure>
-                          {% endfor %}
-                        {% endif %}
-                      </div>
-                    </div>
-                  </li>
+                      <ul class="dropdown-menu no-print" aria-labelledby="question{{question.id}}" style="width:100%">
+                        <li role="presentation">
+                          <div class="panel-body" style="font-weight: normal">     
+                            <div class="col-xs-9">
+                              <p>{{ question.text|raw }}</p>
+                            </div>
+                            <div class="col-xs-3">
+                              {% if question.media is not empty %}
+                                {% for file in question.media %}
+                                  <figure class="">
+                                    <img src="{{ app.root }}/public/images/{{ file }}" class="img-thumbnail" alt="{{file}}" title="{{file}}"/>
+                                  </figure>
+                                {% endfor %}
+                              {% endif %}
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </li>
+                  {% endfor %}
                 </ul>
               </div>
-            {% endfor %}  
-          {% endfor %}  
-
-          {#       print             #}
-          {% for category in subcats %}
-            <ul class="print-only no-ul-style">
-              <h4 class="">
-                {{category.Subcatname|capitalize}}: <small>{{category.percentage}}&#37; (min: {{category.passPercentage}}&#37;)</small>
-              </h4>
-              {% for question in category.questions %}
-                <li class="">
-                  <div class="" data-toggle="dropdown" id="question{{question.id}}"> &nbsp;
-                    {% if question.correct %}
-                      <span class="col-xs-1 glyphicon glyphicon-ok"></span>
-                    {% else %}
-                      <span class="col-xs-1 glyphicon glyphicon-remove"></span>
-                    {% endif %}
-                    <div class="col-xs-5 ">Vraag {{loop.index}}</div>
-                    <div class="col-xs-3 col-xs-offset-2 text-right"><small>Gewicht: {{question.weight}}</small></div>
-                  </div>
-                </li>
-              {% endfor %}  
-            </ul>
-            <br>
-          {% endfor %}  
-
+            {% endfor %} 
+          </div>
         </div>
+          <div class="panel-footer clearfix">
+        <div class="btn btn-default printMe no-print pull-right">Vragen afdrukken <span class="glyphicon glyphicon-print"></span></div>
+      </div>
       </div> 
       {% block terugknop %}
         <div class="form-group no-print">
