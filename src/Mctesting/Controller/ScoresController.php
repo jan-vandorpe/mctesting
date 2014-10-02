@@ -187,19 +187,23 @@ class ScoresController extends AbstractController
       $maxscore = $userSession[0]->getTestSession()->getTest()->getTestMaxScore();
       $result['subcategories'] = array();
       foreach($subcats as $subcat){
-        $subcat->setScore($_POST["catid".$subcat->getId()."score"]);
+        $subcatId = $subcat->getId();
+        if(isset($_POST["catid".$subcatId."score"])){
+        $subcat->setScore($_POST["catid".$subcatId."score"]);
         $subcat->setPercentage(TestService::calculatePercentage($subcat->getScore(), $subcat->getMaxScore()));
-        $score += $_POST["catid".$subcat->getId()."score"];
+        $score += $_POST["catid".$subcatId."score"];
         
         //fucktarded bullcrap because predecessor reasons
-        $result['subcategories'][$subcat->getId()]['score'] = $_POST["catid".$subcat->getId()."score"];
-        $result['subcategories'][$subcat->getId()]['percentage'] = $subcat->getPercentage();
+        $result['subcategories'][$subcatId]['score'] = $_POST["catid".$subcatId."score"];
+        $result['subcategories'][$subcatId]['percentage'] = $subcat->getPercentage();
+        } else {
+          throw new ApplicationException('Gelieve alle scores in te vullen');
+        }
       }
-
-      $percentageTotal = TestService::calculatePercentage($score, $maxscore);      
+        $percentageTotal = TestService::calculatePercentage($score, $maxscore);      
       
-      
-      $pass = TestService::calculatePercentageManualEntry($percentageTotal, $userSession, $subcats);
+        //calculate if user passed or failed
+        $pass = TestService::calculatePassFailManualEntry($percentageTotal, $userSession, $subcats);
       
        //prepare usersession return values
         //set score
@@ -208,7 +212,7 @@ class ScoresController extends AbstractController
         //set percentage
         $userSession[0]->setPercentage($percentageTotal);
 
-        //set answers
+        //set answers, empty because only scores were entered
         $userSession[0]->setAnswers(array());
         
         //set participated
