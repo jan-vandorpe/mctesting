@@ -155,13 +155,15 @@ $(document).ready(function () {
                         message: 'Geef het rijksregisternummer in'
                     },
                     regexp: {
-                        regexp: '\d',
+                        regexp: '\d{2}.\d{2}.\d{2}-\d{3}.\d{2}',
                         message: 'Het rijksregisternummer moet 11 <u>cijfers</u> bevatten'
                     },
                 }
             }
         }
-    });
+    })
+    .find('[name="rrnr"]').mask("00.00.00-000.00");
+    ;
     /*
      * testcreation.html.twig
      */
