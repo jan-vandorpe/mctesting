@@ -157,7 +157,7 @@ class TestQuestionDAO {
                     $subcat->setId($record['SID']);
                     $subcat->setSubcatname($record['subcatnaam']);
                     //$subcat->setActive($record['actief']);                  
-                    //$subcat->setQuestions(TestQuestionDAO::selectQuestionsByCategory($subcat->getId(), $sessieid, $userid));
+                    //$subcat->setQuestions(QuestionDAO::selectActiveByTest($id));
                     //$subcat->setPercentage($record['percentage']);
                     $subcat->setMaxScore($record['totgewicht']);
                     $subcat->setPassPercentage($record['tebehalenscore']);

@@ -144,6 +144,13 @@ class ScoresController extends AbstractController
         if(isset($arguments[2]) && $arguments[2] === "input"){          
           $subcategories = TestQuestionService::getTestCatsByTestId($testId);
           $fulltest = TestService::getActiveFullTestById($testId);
+//          echo '<pre>';
+//         foreach($fulltest->getQuestions() as $question){
+//           var_dump($question->getText());
+//           var_dump($question->getSubcategory()->getSubcatname());
+//           var_dump($question->getWeight());
+//          }
+//          echo '</pre>';
           $_SESSION["subcats"] = serialize($subcategories);
           //var_dump($subcategories);
           $this->render('scores_userrapport_input.html.twig', array(
