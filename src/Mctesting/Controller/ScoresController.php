@@ -87,7 +87,7 @@ class ScoresController extends AbstractController
         
          //assign argument values
         $sessionId = $_POST['selectsession'];
-        
+        echo $sessionId;
         //build model
         //retrieve testsession
         $testSession = TestSessionService::getById($sessionId);
@@ -144,11 +144,13 @@ class ScoresController extends AbstractController
         
         if(isset($arguments[2]) && $arguments[2] === "input"){          
           $subcategories = TestQuestionService::getTestCatsByTestId($testId);
+          $fulltest = TestService::getActiveFullTestById($testId);
           $_SESSION["subcats"] = serialize($subcategories);
           //var_dump($subcategories);
           $this->render('scores_userrapport_input.html.twig', array(
             'usersession' => $userSession,
             'subcats' => $subcategories,
+            'fulltest' => $fulltest,
         ));
         }
         else {

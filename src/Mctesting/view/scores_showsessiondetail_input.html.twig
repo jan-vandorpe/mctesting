@@ -32,6 +32,7 @@
         {#                <div class="col-xs-1 overflow">Details</div>#}
       </b>
     </li>
+    {{ dump(usersession) }}
     {% if usersession != false %}
       {% for usersession in usersessions %}
         <li class="list-group-item clearfix">
