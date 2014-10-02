@@ -4,10 +4,10 @@
  *  Contains variables needed for application
  */
 //Database access
-define('DB_USER', 'root');
-define('DB_PASS', 'vdab');
+define('DB_USER', 'usermctesting');
+define('DB_PASS', 'qsdf');
 
-$dbhost = 'localhost';
+$dbhost = 'sat07';
 $dbname = 'mctesting';
 $dbcharset = 'utf8mb4';
 $dsn = 'mysql:host=' . $dbhost . ';dbname=' . $dbname . ';charset=' . $dbcharset;
