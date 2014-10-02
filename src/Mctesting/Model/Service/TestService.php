@@ -207,4 +207,18 @@ class TestService
             return false;
         }
     }
+    
+    public static function calculatePassFailManualEntry($percentageTotal,$userSession, $subcats){
+      $pass = true;
+      if($percentageTotal<$userSession[0]->getTestSession()->getTest()->getTestPassPercentage()){
+        $pass = false;
+      } else {
+        foreach ($subcats as $subcat) {
+          if($subcat->getPercentage()<$subcat->getPassPercentage()){
+            $pass = false;
+          }
+        }
+      }
+      return $pass;
+    }
 }

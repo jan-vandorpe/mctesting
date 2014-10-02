@@ -192,35 +192,14 @@ class ScoresController extends AbstractController
         $score += $_POST["catid".$subcat->getId()."score"];
         
         //fucktarded bullcrap because predecessor reasons
-      $result['subcategories'][$subcat->getId()]['score'] = $_POST["catid".$subcat->getId()."score"];
-      $result['subcategories'][$subcat->getId()]['percentage'] = $subcat->getPercentage();
-        
+        $result['subcategories'][$subcat->getId()]['score'] = $_POST["catid".$subcat->getId()."score"];
+        $result['subcategories'][$subcat->getId()]['percentage'] = $subcat->getPercentage();
       }
+
+      $percentageTotal = TestService::calculatePercentage($score, $maxscore);      
       
       
-      
-      
-      
-      echo '<pre>';
-      echo $score;
-      echo '<br>';
-      echo $maxscore;
-      echo '<br>';
-      $percentageTotal = TestService::calculatePercentage($score, $maxscore);
-      echo $percentageTotal;echo '%<br>';
-      
-      
-      $pass = true;
-      if($percentageTotal<$userSession[0]->getTestSession()->getTest()->getTestPassPercentage()){
-        $pass = false;
-      } else {
-        foreach ($subcats as $subcat) {
-          if($subcat->getPercentage()<$subcat->getPassPercentage()){
-            $pass = false;
-          }
-        }
-      }
-      echo $pass;
+      $pass = TestService::calculatePercentageManualEntry($percentageTotal, $userSession, $subcats);
       
        //prepare usersession return values
         //set score
