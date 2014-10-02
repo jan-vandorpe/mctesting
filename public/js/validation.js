@@ -155,7 +155,7 @@ $(document).ready(function () {
                         message: 'Geef het rijksregisternummer in'
                     },
                     regexp: {
-                        regexp: '[0-9]{11}',
+                        regexp: '\d',
                         message: 'Het rijksregisternummer moet 11 <u>cijfers</u> bevatten'
                     },
                 }
