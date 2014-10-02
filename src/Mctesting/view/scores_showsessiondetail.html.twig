@@ -45,4 +45,14 @@
             </li>
         {% endfor %}
     </ul>
+        {% block terugknop %}
+    <div class="form-group no-print">
+      <div class="col-xs-offset-1">
+        <form class="form-horizontal" method="post" action="{{ app.root }}/scores/showsessions">
+          <input type="hidden" name="selecttest" value="{{ testsession.test.testid }}">
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+        </form>
+      </div>
+    </div>
+  {% endblock %}
 {% endblock content %}

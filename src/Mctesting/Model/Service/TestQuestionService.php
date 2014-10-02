@@ -27,4 +27,8 @@ class TestQuestionService
     {        
         return TestQuestionDAO::delete($testid);
     }
+    
+    public static function getTestCatsByTestId($testId){
+      return TestQuestionDAO::getTestCategoriesByTestId($testId);
+    }
 }
