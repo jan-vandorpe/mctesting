@@ -114,17 +114,16 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de rijksregisternummer in'
                     },
-                    digits: {
-                        message: 'Voer enkel cijfers in'
-                    },
                     regexp: {
-                        regexp: '[0-9]{11}',
+                        regexp: '\d{2}.\d{2}.\d{2}-\d{3}.\d{2}',
                         message: 'Het rijksregisternummer moet 11 cijfers bevatten'
                     },
                 }
             }
         }
-    });
+    })
+    .find('[name="rrnr"]').mask("00.00.00-000.00");
+    ;
     /*
      * newuserform.html.twig
      */
@@ -155,13 +154,15 @@ $(document).ready(function () {
                         message: 'Geef het rijksregisternummer in'
                     },
                     regexp: {
-                        regexp: '\d',
+                        regexp: '\d{2}.\d{2}.\d{2}-\d{3}.\d{2}',
                         message: 'Het rijksregisternummer moet 11 <u>cijfers</u> bevatten'
                     },
                 }
             }
         }
-    });
+    })
+    .find('[name="rrnr"]').mask("00.00.00-000.00");
+    ;
     /*
      * testcreation.html.twig
      */
@@ -330,11 +331,8 @@ $(document).ready(function () {
                     notEmpty: {
                         message: 'Geef de rijksregisternummer in'
                     },
-                    digits: {
-                        message: 'Voer enkel cijfers in'
-                    },
                     regexp: {
-                        regexp: '[0-9]{11}',
+                        regexp: '\d{2}.\d{2}.\d{2}-\d{3}.\d{2}',
                         message: 'Het rijksregisternummer moet 11 cijfers bevatten'
                     },
                 }
@@ -350,7 +348,9 @@ $(document).ready(function () {
                 }
             }
         }
-    });
+    })
+    .find('[name="rrnr"]').mask("00.00.00-000.00");
+    ;
     $('#changeUserGroup').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
