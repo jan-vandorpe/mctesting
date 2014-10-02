@@ -83,16 +83,16 @@
         <div class="panel-footer">
           <input type="submit" value="Scores ingeven" name="submit" class="btn btn-success col-xs-offset-5">
         </div>
-      </form>
     </div> 
     {% block terugknop %}
       <div class="form-group no-print">
         <div class="col-xs-offset-1">
           <input type="hidden" name="selectsession" value="{{usersession[0].testsession.id}}">
-          <button type="submit" class="btn btn-default" formaction="{{ app.root }}/scores/showsessiondetail/"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+          <button type="submit" class="btn btn-default" formaction="{{ app.root }}/scores/showsessiondetail/input"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
         </div>
       </div>
     {% endblock %}
-  </div>
+  </form>
+</div>
 
 {% endblock %}
