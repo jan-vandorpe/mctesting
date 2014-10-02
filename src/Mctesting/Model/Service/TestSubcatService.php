@@ -22,4 +22,9 @@ class TestSubcatService
     {
         return TestSubcatDAO::selectByTestANDSubcategory($testId, $subcatId);
     }
+    
+    public static function remove($testid)
+    {        
+        return TestSubcatDAO::delete($testid);
+    }
 }

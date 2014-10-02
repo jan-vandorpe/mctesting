@@ -85,5 +85,9 @@ class SubcategoryService
       return SubcategoryDAO::selectByIdQNIT($subcatid);
     }
     
+    public static function getByTest($testid)
+    {
+        return SubcategoryDAO::selectByTest($testid);
+    }
 
 }

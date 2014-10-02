@@ -123,4 +123,20 @@ class TestQuestionDAO {
             throw new ApplicationException('De vragen van de gekozen subcategorie ('.$subcatId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
+    
+    public static function delete($testId) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+
+        $sql = 'DELETE FROM `testvragen` WHERE `testid` = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testId ))) {
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon vragen in de database niet verwijderen, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
 }

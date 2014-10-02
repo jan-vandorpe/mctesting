@@ -23,6 +23,11 @@ class TestService
         return TestDAO::selectAll();
     }
     
+    public static function getAllPublished()
+    {
+        return TestDAO::selectAllPublished();
+    }
+    
     public static function getAllWithoutSessions()
     {
         return TestDAO::selectAllWithoutSessions();
@@ -44,8 +49,7 @@ class TestService
     }
     
     public static function create($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
-    {
-        
+    {        
         return TestDAO::insert($testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
     }
     
@@ -200,11 +204,23 @@ class TestService
         }
     }
     
+    public static function update($testid, $testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist)
+    {        
+        return TestDAO::update($testid, $testname, $testduration, $questioncount, $maxscore,$passpercentage, $adminId, $questions, $subcatlist);
+    }
+    
     public static function updateStatus($testid, $status) {
         if (TestDAO::updateStatus($testid, $status)) {
             return true;
         } else {
             return false;
         }
+    }
+    public static function publish($testid) {
+        return TestDAO::publish($testid);
+    }
+    
+    public static function getUnpublishedTests() {
+        return TestDAO::selectUnpublishedTests();
     }
 }

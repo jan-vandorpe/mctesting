@@ -38,6 +38,45 @@ class TestDAO {
                     $test->setTestCreator($record['beheerder']);
                     //$catname = TestService::getCatName($record['testid']);
                     $test->setStatus($record['actief']);
+                    $test->setPublished($record['gepubliceerd']);
+                    array_push($result, $test);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('Er zijn geen testen gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function selectAllPublished() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE gepubliceerd = 1 ORDER BY testnaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $test = new Test();
+                    $test->setTestId($record['testid']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
+                    $test->setTestMaxscore($record['maxscore']);
+                    $test->setTestPassPercentage($record['tebehalenscore']);
+                    $test->setTestCreator($record['beheerder']);
+                    //$catname = TestService::getCatName($record['testid']);
+                    $test->setStatus($record['actief']);
+                    $test->setPublished($record['gepubliceerd']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -55,6 +94,44 @@ class TestDAO {
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'SELECT * FROM test WHERE testid NOT IN (SELECT testid FROM sessie) ORDER BY testnaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                //create object(s) and return
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create usergroup object
+                    $test = new Test();
+                    $test->setTestId($record['testid']);
+                    $test->setTestName($record['testnaam']);
+                    $test->setTestMaxDuration($record['maxduur']);
+                    $test->setTestQuestionCount($record['aantalvragen']);
+                    $test->setTestMaxscore($record['maxscore']);
+                    $test->setTestPassPercentage($record['tebehalenscore']);
+                    $test->setTestCreator($record['beheerder']);
+                    //$catname = TestService::getCatName($record['testid']);
+                    $test->setStatus($record['actief']);
+                    array_push($result, $test);
+                }
+                return $result;
+            } else {
+                return false;
+                //throw new ApplicationException('Er zijn geen testen gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo(); 
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function selectUnpublishedTests() {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE gepubliceerd = 0 ORDER BY testnaam';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute()) {
@@ -183,6 +260,7 @@ class TestDAO {
                     $test->setTestPassPercentage($record['tebehalenscore']);
                     $test->setTestCreator($record['beheerder']);
                     $test->setStatus($record['actief']);
+                    $test->setPublished($record['gepubliceerd']);
                     array_push($result, $test);
                 }
                 return $result;
@@ -285,6 +363,30 @@ class TestDAO {
         }
     }
     
+    public static function update($testid, $testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE `test` SET `testnaam` = :testname, `maxduur` = :testduration, `aantalvragen` = :questioncount, `maxscore` = :maxscore, `tebehalenscore` = :passpercentage, `beheerder` = :adminId  WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId, ':testid' => $testid))) {
+
+            foreach ($subcatlist as $subcat) {
+                TestSubcatService::remove($testid);
+                TestSubcatService::create($testid, $subcat);
+            }
+            foreach ($questions as $questionId) {
+                TestQuestionService::remove($testid);
+                TestQuestionService::create($testid, $questionId);
+            }
+            return $testid;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de test niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
     public static function updateStatus($testid, $status) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -298,6 +400,23 @@ class TestDAO {
         } else {
             $error = $stmt->errorInfo();
             throw new ApplicationException('Kon de status van deze test ('.$testid.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+            
+        }
+    }
+    
+    public static function publish($testid) {
+        //create db connection        
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'UPDATE test SET gepubliceerd = 1 WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':testid' => $testid))) {
+            //test if statement succes
+            return true;
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('Kon de test ('.$testid.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
             
         }
     }

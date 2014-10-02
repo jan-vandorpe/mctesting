@@ -23,4 +23,8 @@ class TestQuestionService
     {        
         return TestQuestionDAO::selectCategoriesAnsweredQuestions($sessieid, $userid, $testId);
     }
+    public static function remove($testid)
+    {        
+        return TestQuestionDAO::delete($testid);
+    }
 }
