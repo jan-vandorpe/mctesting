@@ -100,7 +100,7 @@ class UserSessionDAO {
                     $userSession->setPercentage($record['percentage']);
                     $userSession->setPassed((boolean) $record['geslaagd']);
                     $userSession->setParticipated((boolean) $record['afgelegd']);
-                    $testSession = TestSessionService::getById($record['sessieid']);
+                    $testSession = TestSessionService::getById($sessionId);
                     $userSession->setTestSession($testSession);
                     $userSession->setActive((boolean) $record['actief']);
 
@@ -271,6 +271,44 @@ class UserSessionDAO {
             //throw new ApplicationException($error[2]);
             throw new ApplicationException('Kon geen subcat resultaten in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
             //header("location: /mctesting/agga/dagga");
+        }
+    }
+    
+    public static function selectBySessionNotParticipated($sessionId) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid AND afgelegd IS NULL ORDER BY rijksregisternr';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':sessieid' => $sessionId,))) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+                $result = array();
+                foreach ($recordset as $record) {
+                    //create object(s) and return
+                    $userSession = new UserSession();
+                    $user = UserService::getById($record['rijksregisternr']);
+                    $userSession->setUser($user);
+                    $userSession->setScore($record['score']);
+                    $userSession->setPercentage($record['percentage']);
+                    $userSession->setPassed((boolean) $record['geslaagd']);
+                    $userSession->setParticipated((boolean) $record['afgelegd']);
+                    $testSession = TestSessionService::getById($record['sessieid']);
+                    $userSession->setTestSession($testSession);
+                    $userSession->setActive((boolean) $record['actief']);
+
+                    //push to result array
+                    array_push($result, $userSession);
+                }
+                return $result;
+            } else {
+              return false;
+            }
+        } else {
+            $error = $stmt->errorInfo();            
+            throw new ApplicationException('De sessie ('.$sessionId.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 

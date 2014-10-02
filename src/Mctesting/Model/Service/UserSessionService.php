@@ -50,4 +50,9 @@ class UserSessionService
     {
         return UserSessionDAO::delibereer($sessionId, $userId);
     }
+    
+    public static function getBySessionNotParticipated($sessionId)
+    {
+        return UserSessionDAO::selectBySessionNotParticipated($sessionId);
+    }
 }

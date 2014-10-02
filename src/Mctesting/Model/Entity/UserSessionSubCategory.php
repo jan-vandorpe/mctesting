@@ -19,7 +19,17 @@ class UserSessionSubCategory extends Subcategory {
  private $score;
  private $percentage;
  private $passPercentage;
+ private $maxScore;
  
+ public function getMaxScore() {
+   return $this->maxScore;
+ }
+
+ public function setMaxScore($maxScore) {
+   $this->maxScore = $maxScore;
+ }
+
+  
  public function getScore() {
    return $this->score;
  }

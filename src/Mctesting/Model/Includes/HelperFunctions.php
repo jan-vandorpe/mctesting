@@ -46,7 +46,9 @@ class HelperFunctions {
   }
   
   public function numbers_only($value)
-{
+{/*
+  return true if all numbers in a string, false otherwise
+ *  */
     //return preg_match('/^([0-9]+)$/', $value);
     return ctype_digit(strval($value));
 }
