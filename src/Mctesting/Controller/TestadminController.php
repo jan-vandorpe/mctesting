@@ -35,7 +35,7 @@ class TestadminController extends AbstractController {
         $this->testCreation();
     }
 
-    public function testCreation_step1() {        
+    public function testCreation_step1() {
         if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
         } else {
@@ -261,12 +261,16 @@ class TestadminController extends AbstractController {
         //view
         $result = array();
         if ($allTest === false) {
-            $FMM = new FlashMessageManager();
-            $FMM->setFlashMessage('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
-            header("location: " . ROOT . "/testadmin/testCreation_step1");
-            exit(0);
+            $FMM = new FlashMessageManager ();
+            $FMM->setFlashMessage ('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
+            header ("location: " . ROOT . "/testadmin/testCreation_step1");
+            exit (0);
+        } else if ($allUsers === false){
+            $FMM = new FlashMessageManager ();
+            $FMM->setFlashMessage ('Er zijn geen gebruikers gevonden! <br> Gelieve een nieuwe gebruiker aan te maken voordat u een test plant.');
+            header ("location: " . ROOT . "/usermanagement/newuserform");
+            exit (0);
         } else {
-
             foreach ($allTest as $test) {
                 $catname = TestService::getCatName($test->getTestId());
                 if (!isset($result[$catname])) {

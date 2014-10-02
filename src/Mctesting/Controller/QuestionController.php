@@ -151,10 +151,13 @@ class QuestionController extends AbstractController {
 
   public function editList() {
     $allcategories = CategoryService::getAll();
-    foreach ($allcategories as $category) {
-      $catid = $category->getId();
-      $subcats = SubcategoryService::getByCategoryIdQuestionsNotInTest($catid);
-      $category->setSubcategories($subcats);
+    
+    if ($allcategories !== false) {
+        foreach ($allcategories as $category) {
+          $catid = $category->getId();
+          $subcats = SubcategoryService::getByCategoryIdQuestionsNotInTest($catid);
+          $category->setSubcategories($subcats);
+        }
     }
     $this->render('editQuestionsCatList.html.twig', array(
         'allcategories' => $allcategories,
