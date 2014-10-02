@@ -9,6 +9,7 @@ use Mctesting\Model\Service\UserSessionService;
 use Mctesting\Model\Service\TestQuestionService;
 use Mctesting\Exception\ApplicationException;
 use Mctesting\Model\Entity\Subcategory;
+use Mctesting\Model\Includes\HelperFunctions;
 
 /**
  * Description of ScoresController
@@ -181,25 +182,27 @@ class ScoresController extends AbstractController
     public function manualentry(){
       $userSession = unserialize($_SESSION["usersession"]);
       $subcats = unserialize($_SESSION['subcats']);
-      //var_dump($userSession);
       
       $score = 0;
       $maxscore = $userSession[0]->getTestSession()->getTest()->getTestMaxScore();
       $result['subcategories'] = array();
       foreach($subcats as $subcat){
         $subcatId = $subcat->getId();
-        if(isset($_POST["catid".$subcatId."score"])){
+        if(isset($_POST["catid".$subcatId."score"]) && HelperFunctions::numbers_only($_POST["catid".$subcatId."score"]) === true ){
         $subcat->setScore($_POST["catid".$subcatId."score"]);
+        //calculate subcat percentage
         $subcat->setPercentage(TestService::calculatePercentage($subcat->getScore(), $subcat->getMaxScore()));
         $score += $_POST["catid".$subcatId."score"];
         
-        //fucktarded bullcrap because predecessor reasons
+        //because predecessor reasons, ::update uses this $results array in array thing instead of objects
+        //so not much point in continuing to use objects to hold the variables
         $result['subcategories'][$subcatId]['score'] = $_POST["catid".$subcatId."score"];
         $result['subcategories'][$subcatId]['percentage'] = $subcat->getPercentage();
         } else {
-          throw new ApplicationException('Gelieve alle scores in te vullen');
+          throw new ApplicationException('Gelieve alle scores correct in te vullen');
         }
       }
+        //calculate overall test percentage
         $percentageTotal = TestService::calculatePercentage($score, $maxscore);      
       
         //calculate if user passed or failed
