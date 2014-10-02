@@ -35,12 +35,15 @@ class TestadminController extends AbstractController {
         $this->testCreation();
     }
 
-    public function testCreation_step1() {
-        if (isset($_SESSION["testcreation"])) {
-            $testcreation = unserialize($_SESSION["testcreation"]);
-        } else {
+    public function testCreation_step1($arguments) {
+        if ($arguments[0] == "new") {
+            unset($_SESSION['testcreation']);
             $testcreation = new TestCreation;
+            $test = new Test;
+            $testcreation->setTest($test);
+        } else if ($arguments[0] == "edit") {
             if (isset($_POST["selecttest"])) {
+                $testcreation = new TestCreation;
                 $testcreation->setTest(TestService::getById($_POST["selecttest"]));
                 $cat = new Category;
                 $cat->setId(CategoryService::getByTestId($testcreation->getTest()->getTestId()));
@@ -51,10 +54,15 @@ class TestadminController extends AbstractController {
                 header("location: " . ROOT . "/testadmin/testCreation_step1");
                 exit(0);
             } else {
-                unset($_SESSION['testcreation']);
-                $test = new Test;
-                $testcreation->setTest($test);
+                header("location: " . ROOT . "/testadmin/testCreation_step1/new");
+                exit(0);
             }
+        } else if(isset($_SESSION["testcreation"])){
+            $testcreation = unserialize($_SESSION["testcreation"]);
+        } else {            
+            $testcreation = new TestCreation;
+            $test = new Test;
+            $testcreation->setTest($test);
         }
 
         $_SESSION["testcreation"] = serialize($testcreation);
@@ -93,10 +101,10 @@ class TestadminController extends AbstractController {
                     throw new ApplicationException('Gelieve een categorie te selecteren');
                 }
             } else {
-                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');
+                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');                
             }
         } else {
-            header("location: " . ROOT . "/testadmin/testCreation");
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
             exit(0);
         }
     }
@@ -162,7 +170,7 @@ class TestadminController extends AbstractController {
                 throw new ApplicationException('Gelieve een tijdsduur in te vullen');
             }
         } else {
-            header("location: " . ROOT . "/testadmin/testCreation");
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
             exit(0);
         }
     }
@@ -218,7 +226,7 @@ class TestadminController extends AbstractController {
                 throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
         } else {
-            header("location: " . ROOT . "/testadmin/testCreation");
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
             exit(0);
         }
     }
@@ -262,14 +270,14 @@ class TestadminController extends AbstractController {
         $result = array();
         if ($allTest === false) {
             $FMM = new FlashMessageManager ();
-            $FMM->setFlashMessage ('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
-            header ("location: " . ROOT . "/testadmin/testCreation_step1");
-            exit (0);
-        } else if ($allUsers === false){
+            $FMM->setFlashMessage('Er zijn geen testen gevonden! <br> Gelieve een nieuwe test aan te maken voordat u een test plant.');
+            header("location: " . ROOT . "/testadmin/testCreation_step1");
+            exit(0);
+        } else if ($allUsers === false) {
             $FMM = new FlashMessageManager ();
-            $FMM->setFlashMessage ('Er zijn geen gebruikers gevonden! <br> Gelieve een nieuwe gebruiker aan te maken voordat u een test plant.');
-            header ("location: " . ROOT . "/usermanagement/newuserform");
-            exit (0);
+            $FMM->setFlashMessage('Er zijn geen gebruikers gevonden! <br> Gelieve een nieuwe gebruiker aan te maken voordat u een test plant.');
+            header("location: " . ROOT . "/usermanagement/newuserform");
+            exit(0);
         } else {
             foreach ($allTest as $test) {
                 $catname = TestService::getCatName($test->getTestId());
