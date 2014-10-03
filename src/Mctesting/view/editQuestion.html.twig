@@ -79,15 +79,17 @@ if false, b ack to editquestion twig
           <div class="col-xs-9">
             <select class="form-control catbijvraag " name="subcat">
               {% for category in categories %}
-                <optgroup label="{{category.catname|capitalize}}">
-                  {% for subcategory in category.subcategories %}
-                    <option value="{{ subcategory.id }}"
-                            {% if question.subcategory.id == subcategory.id %}
-                              selected
-                            {% endif %}
-                            >{{ subcategory.subcatname|capitalize }}</option>
-                  {% endfor %}
-                </optgroup>
+                {% if category.subcategories != false %}
+                  <optgroup label="{{category.catname|capitalize}}">
+                    {% for subcategory in category.subcategories %}
+                      <option value="{{ subcategory.id }}"
+                              {% if question.subcategory.id == subcategory.id %}
+                                selected
+                              {% endif %}
+                              >{{ subcategory.subcatname|capitalize }}</option>
+                    {% endfor %}
+                  </optgroup>
+                {% endif %}
               {% endfor %}
             </select>
           </div>
