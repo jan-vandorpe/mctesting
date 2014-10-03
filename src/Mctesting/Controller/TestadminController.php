@@ -191,17 +191,17 @@ class TestadminController extends AbstractController {
 
             if (isset($_POST["subcatpasspercentage"])) {
                 foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-                    if (HelperFunctions::numbers_only($value) == true) {
+                    if (HelperFunctions::numbers_only($value) == true  && $_POST['subcatpasspercentage']<=100 && $_POST['subcatpasspercentage']>0) {
                         $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
                     } else {
-                        throw new ApplicationException('De slaagpercentages moeten gehele getallen zijn');
+                        throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
                     }
                 }
                 //model
-                if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage'])) {
+                if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage']) && $_POST['testpasspercentage']<=100 && $_POST['testpasspercentage']>0) {
                     $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
                 } else {
-                    throw new ApplicationException('De slaagpercentages moeten gehele getallen zijn');
+                    throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
                 }
 
                 $subcatlist = $_SESSION["subcatlist"];

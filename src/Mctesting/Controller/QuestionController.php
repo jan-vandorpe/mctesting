@@ -179,7 +179,7 @@ class QuestionController extends AbstractController {
         $questionId = $arguments[0];
 
         $question = QuestionService::getByIdQNIT($questionId);
-        $categories = CategoryService::getAllExceptEmpty();
+        $categories = CategoryService::getAll();
         foreach ($categories as $category) {
             $category->retrieveSubcategories();
         }

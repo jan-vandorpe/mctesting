@@ -128,7 +128,7 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Er zijn geen categorieën met vragen gevonden, gelieve nieuwe categorieën aan te maken.');
+                throw new ApplicationException('Er zijn geen actieve categorieën met vragen gevonden, gelieve nieuwe categorieën aan te maken.');
             }
         } else
         {
@@ -208,7 +208,7 @@ class CategoryDAO
         $sql = 'INSERT INTO categorie(catnaam) values(:catname)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':catname' => $catname)))
+        if ($stmt->execute(array(':catname' => ucfirst($catname))))
         {            
         } else
         {

@@ -45,26 +45,30 @@
                         <label class="col-xs-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
                     </div>          
                     <ul class="list-group">
-                        {% for subcategory in category.subcategories %}   
-                            <li class="list-group-item subcategorie clearfix">
-                                <label for="subcatid{{subcategory.id}}" class=""></label>
-                                <div class="col-xs-1">                    
-                                    <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
-                                </div>                
-                                <div class="col-xs-5">{{subcategory.subcatname}}</div>
-                                <div class="col-xs-2">{{subcategory.questionCount}} vragen</div>
-                                {% if subcategory.active == 1 %}
-                                    <div class="col-xs-1">Actief</div>
-                                {% else %}
-                                    <div class="col-xs-1">Inactief</div>
-                                {% endif %}
-                                <div class="col-xs-3 no-print">
-                                    {% if subcategory.questionCount > 0 %}
-                                        <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
-                                    {% endif %}  
-                                </div>
-                            </li>
-                        {% endfor %}
+                        {% if category.subcategories is empty %}
+                            <li class="list-group-item-warning list-group-item">Nog geen subcategorie aanwezig.</li>
+                        {% else %}
+                            {% for subcategory in category.subcategories %}   
+                                <li class="list-group-item subcategorie clearfix">
+                                    <label for="subcatid{{subcategory.id}}" class=""></label>
+                                    <div class="col-xs-1">                    
+                                        <input type="checkbox" class="{{category.id}}" name="subcatCheckbox[]" value="{{subcategory.id}}" id="subcatid{{subcategory.id}}"/>
+                                    </div>                
+                                    <div class="col-xs-5">{{subcategory.subcatname}}</div>
+                                    <div class="col-xs-2">{{subcategory.questionCount}} vragen</div>
+                                    {% if subcategory.active == 1 %}
+                                        <div class="col-xs-1">Actief</div>
+                                    {% else %}
+                                        <div class="col-xs-1">Inactief</div>
+                                    {% endif %}
+                                    <div class="col-xs-3 no-print">
+                                        {% if subcategory.questionCount > 0 %}
+                                            <a href="{{ app.root }}/category/subcatvragen/{{ subcategory.id }}">Bekijk vragen</a>
+                                        {% endif %}  
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        {% endif %}
                     </ul>
                 </div>                
             {% endfor %}
