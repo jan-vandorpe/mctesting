@@ -308,7 +308,7 @@ class TestDAO {
         $sql = 'INSERT INTO `test`(`testnaam`, `maxduur`, `aantalvragen`, `maxscore`, `tebehalenscore`, `beheerder`) VALUES (:testname,:testduration,:questioncount,:maxscore,:passpercentage,:adminId)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId))) {
+        if ($stmt->execute(array(':testname' => ucfirst($testname), ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId))) {
             //test if statement succes
             $testid = $db->lastInsertId();
             foreach ($subcatlist as $subcat) {
@@ -371,7 +371,7 @@ class TestDAO {
         $sql = 'UPDATE `test` SET `testnaam` = :testname, `maxduur` = :testduration, `aantalvragen` = :questioncount, `maxscore` = :maxscore, `tebehalenscore` = :passpercentage, `beheerder` = :adminId  WHERE testid = :testid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId, ':testid' => $testid))) {
+        if ($stmt->execute(array(':testname' => ucfirst($testname), ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId, ':testid' => $testid))) {
             TestSubcatService::remove($testid);
             foreach ($subcatlist as $subcat) {
                 TestSubcatService::create($testid, $subcat);

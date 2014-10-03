@@ -68,15 +68,7 @@ class SubcategoryDAO {
                 }
                 return $subcatarray;
             } else {
-                //create array
-                $subcatarray = array();
-                //create object
-                $subcat = new Subcategory();
-                $subcatname = "nog geen subcategorie aanwezig";
-                $subcat->setSubcatname($subcatname);
-                //push object to array
-                array_push($subcatarray, $subcat);
-                return $subcatarray;
+               return false;
             }
         } else {
             throw new ApplicationException('De subcategorieën van de gekozen categorie (' . $categoryId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
@@ -111,15 +103,7 @@ class SubcategoryDAO {
                 }
                 return $subcatarray;
             } else {
-                //create array
-                $subcatarray = array();
-                //create object
-                $subcat = new Subcategory();
-                $subcatname = "nog geen subcategorie aanwezig";
-                $subcat->setSubcatname($subcatname);
-                //push object to array and return
-                array_push($subcatarray, $subcat);
-                return $subcatarray;
+                return false;
             }
         } else {
             throw new ApplicationException('De actieve subcategorieën voor de categorie (' . $catid . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
@@ -220,7 +204,7 @@ class SubcategoryDAO {
         $sql = 'INSERT INTO subcategorie(catid, subcatnaam) values(:catid, :subcatnaam)';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':subcatnaam' => $subcatname, ':catid' => $catid,))) {
+        if ($stmt->execute(array(':subcatnaam' => ucfirst($subcatname), ':catid' => $catid,))) {
             
         } else {
             $error = $stmt->errorInfo();
@@ -317,15 +301,7 @@ class SubcategoryDAO {
                 return $subcatarray;
             } else
             {
-                //create array
-                $subcatarray = array();
-                //create object
-                $subcat = new Subcategory();
-                $subcatname = "nog geen subcategorie aanwezig";
-                $subcat->setSubcatname($subcatname);
-                //push object to array
-                array_push($subcatarray, $subcat);
-                return $subcatarray;
+             return false;
             }
         } else
         {
@@ -423,15 +399,7 @@ class SubcategoryDAO {
                 }
                 return $subcatarray;
             } else {
-                //create array
-                $subcatarray = array();
-                //create object
-                $subcat = new Subcategory();
-                $subcatname = "nog geen subcategorie aanwezig";
-                $subcat->setSubcatname($subcatname);
-                //push object to array
-                array_push($subcatarray, $subcat);
-                return $subcatarray;
+              return false;
             }
         } else {
             throw new ApplicationException('De subcategorieën van de gekozen categorie (' . $categoryId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);

@@ -37,9 +37,11 @@ class CategoryController extends AbstractController {
         $allcategories = CategoryService::getAll();  //need count for questions
         if ($allcategories !== false) {
             foreach ($allcategories as $category) {
-                $category->retrieveSubcategories();
+              $category->retrieveSubcategories();
+                if($category->getSubcategories() !== false){
                 foreach ($category->getSubcategories() as $subcategory){
                     $subcategory->retrieveQuestionCount();
+                }
                 }
             }
         }
