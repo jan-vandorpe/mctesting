@@ -1,6 +1,7 @@
 <?php
 
 namespace Mctesting\Model\Entity;
+use Mctesting\Model\Service\QuestionService;
 
 /* * *** Author: Bert Mortier **** */
 
@@ -11,7 +12,20 @@ class Subcategory
     private $subcatname;
     private $active;
     private $questions = array();
+    private $questionCount;
     
+    public function getQuestionCount() {
+      return $this->questionCount;
+    }
+
+    public function setQuestionCount($questionCount) {
+      $this->questionCount = $questionCount;
+    }
+
+    public function retrieveQuestionCount(){
+      $this->setQuestionCount(QuestionService::getCountBySubcatId($this->id));
+    }
+        
     public function getId()
     {
         return $this->id;

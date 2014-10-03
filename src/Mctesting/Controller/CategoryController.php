@@ -28,13 +28,13 @@ class CategoryController extends AbstractController {
     }
 
     public function newCatForm() {
-        $allcategories = CategoryService::getAll();
+        $allcategories = CategoryService::getAll();  //no need for questions
         $this->render('category.html.twig', array('allcategories' => $allcategories,
         ));
     }
 
     public function categoryList() {
-        $allcategories = CategoryService::getAll();
+        $allcategories = CategoryService::getAll();  //need count for questions
         if ($allcategories !== false) {
             foreach ($allcategories as $category) {
                 $category->retrieveSubcategories();
