@@ -129,8 +129,8 @@ class QuestionController extends AbstractController {
         if ($_SESSION['nopopup'] != true) {
             $msg = new FlashMessageManager();
             $msg->setFlashMessage('Vraag succesvol toegevoegd' . $_SESSION['nopopup'], 1);
-            unset($_SESSION['tempQuestion']);
         }
+        unset($_SESSION['tempQuestion']);
         header('location: ' . ROOT . '/question/create');
         exit();
     }
