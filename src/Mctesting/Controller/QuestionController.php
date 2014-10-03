@@ -31,7 +31,7 @@ class QuestionController extends AbstractController {
     public function create($msg = null) {
         //build model
         //get categories, but only the ones with subcategories
-        $categories = CategoryService::getAllExceptEmpty();
+        $categories = CategoryService::getAll();
         //load subcategories
         foreach ($categories as $category) {
             $category->retrieveSubcategories();

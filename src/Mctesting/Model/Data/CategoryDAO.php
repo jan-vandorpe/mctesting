@@ -128,7 +128,7 @@ class CategoryDAO
                 return $categories;
             } else
             {
-                throw new ApplicationException('Er zijn geen categorieën gevonden, gelieve nieuwe categorieën aan te maken.');
+                throw new ApplicationException('Er zijn geen categorieën met vragen gevonden, gelieve nieuwe categorieën aan te maken.');
             }
         } else
         {
