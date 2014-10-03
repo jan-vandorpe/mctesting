@@ -54,7 +54,7 @@
                                     {% for status in successStatussen %}
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <p>{{status.RRnr}}</p>
+                                                <p class="rijksregisternummer">{{status.RRnr}}</p>
                                             </div> 
                                             <div class="col-md-4">
                                                 <p>{{status.voornaam|convert_encoding('UTF-8', 'ISO-8859-1')}}</p>
@@ -95,7 +95,7 @@
                                         {% for status in failStatussen %}
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <p>{{status.RRnr}}</p>
+                                                    <p class="rijksregisternummer">{{status.RRnr}}</p>
                                                 </div> 
                                                 <div class="col-md-4">
                                                     <p>{{status.voornaam|convert_encoding('UTF-8', 'ISO-8859-1')}}</p>
@@ -136,7 +136,7 @@
                                         {% for status in wrongDataStatussen %}
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <p>{{status.RRnr}}</p>
+                                                    <p class="rijksregisternummer">{{status.RRnr}}</p>
                                                 </div> 
                                                 <div class="col-md-4">
                                                     <p>{{status.voornaam|convert_encoding('UTF-8', 'ISO-8859-1')}}</p>
