@@ -45,14 +45,14 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er werd geen sessie ('.$sessionId.') gevonden, gelieve dit te controleren');
+                throw new ApplicationException('Er werd geen sessie (' . $sessionId . ') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De sessie ('.$sessionId.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De sessie (' . $sessionId . ') kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectUsersBySession($sessionId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -65,20 +65,20 @@ class UserSessionDAO {
             $recordset = $stmt->fetchAll();
             if (!empty($recordset)) {
                 $result = array();
-                foreach ($recordset as $record) {     
+                foreach ($recordset as $record) {
                     //push to result array
                     array_push($result, $record['rijksregisternr']);
                 }
                 return $result;
             } else {
-                throw new ApplicationException('Er werd geen gebruikers voor de sessie ('.$sessionId.') gevonden, gelieve dit te controleren');
+                throw new ApplicationException('Er werd geen gebruikers voor de sessie (' . $sessionId . ') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De gebruikers van sessie ('.$sessionId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De gebruikers van sessie (' . $sessionId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectByUserAndSession($sessionId, $userId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -86,7 +86,7 @@ class UserSessionDAO {
         $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid AND rijksregisternr = :userid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':sessieid' => $sessionId,':userid' => $userId))) {
+        if ($stmt->execute(array(':sessieid' => $sessionId, ':userid' => $userId))) {
             //test if statement retrieved something
             $recordset = $stmt->fetchAll();
             if (!empty($recordset)) {
@@ -113,8 +113,8 @@ class UserSessionDAO {
                 //throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De sessie kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De sessie kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -152,11 +152,11 @@ class UserSessionDAO {
                 //throw new ApplicationException('Er werden geen sessies gevonden voor de gekozen gebruiker ('.$userId.')');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De testen van de gekozen gebruiker ('.$userId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen van de gekozen gebruiker (' . $userId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function insert($sessionId, $RRNr) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -170,10 +170,10 @@ class UserSessionDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon geen sessiegebruiker in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon geen sessiegebruiker in de database invoeren, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function delete($sessionId) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -182,18 +182,18 @@ class UserSessionDAO {
         $sql = 'DELETE FROM `sessiegebruiker` WHERE `sessieid` = :sessionid';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':sessionid' => $sessionId ))) {
+        if ($stmt->execute(array(':sessionid' => $sessionId))) {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon sessiegebruikers in de database niet deleten, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon sessiegebruikers in de database niet deleten, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function update($userSession, $subcatRes) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
-        
+
         //prepare sql statement
         $sql = 'UPDATE sessiegebruiker SET score = :score, percentage = :percentage, afgelegd = :participated, geslaagd = :passed 
                     WHERE rijksregisternr = :rrnr AND sessieid = :sessieid';
@@ -205,33 +205,30 @@ class UserSessionDAO {
         $stmt->bindParam(':passed', $userSession->getPassed());
         $stmt->bindParam(':rrnr', $userSession->getUser()->getRRnr());
         $stmt->bindParam(':sessieid', $userSession->getTestSession()->getId());
-        
+
         //test if statement can be executed
         if ($stmt->execute()) {
             //add user answers to DB
             foreach ($userSession->getAnswers() as $questionId => $correct) {
                 UserAnswerService::create(
-                        $userSession->getTestSession()->getId(),
-                        $userSession->getUser()->getRRnr(),
-                        $questionId,
-                        $correct);
+                        $userSession->getTestSession()->getId(), $userSession->getUser()->getRRnr(), $questionId, $correct);
             }
-            
-            foreach ($subcatRes as $subcatId => $subcatResults){
-            $score = $subcatResults['score'];
-            $percentage = $subcatResults['percentage'];
-            self::createSubCatTestResults($userSession, $subcatId, $score, $percentage);
+
+            foreach ($subcatRes as $subcatId => $subcatResults) {
+                $score = $subcatResults['score'];
+                $percentage = $subcatResults['percentage'];
+                self::createSubCatTestResults($userSession, $subcatId, $score, $percentage);
             }
-            
+
             return true;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon deze sessiegebruiker niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon deze sessiegebruiker niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
-    
+
     public static function delibereer($sessionId, $userId) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -244,12 +241,12 @@ class UserSessionDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('kan de gebruiker niet delibereren, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('kan de gebruiker niet delibereren, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
-    public static function createSubCatTestResults($userSession, $subcatId, $score, $percentage){
-      //create db connection        
+
+    public static function createSubCatTestResults($userSession, $subcatId, $score, $percentage) {
+        //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
         $sql = 'INSERT INTO `sessiegebruikercategoriepercentages`(`sessieid`, `rijksregisternr`, `testid`, `subcatid`, `score`, `percentage`) '
@@ -265,15 +262,15 @@ class UserSessionDAO {
         $stmt->bindParam(':percentage', $percentage);
         //test if statement can be executed
         if ($stmt->execute()) {
-          return true;
+            return true;
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon geen subcat resultaten in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon geen subcat resultaten in de database invoeren, gelieve dit te controleren:<br>' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
-    
+
     public static function selectBySessionNotParticipated($sessionId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -304,11 +301,11 @@ class UserSessionDAO {
                 }
                 return $result;
             } else {
-              return false;
+                return false;
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De sessie ('.$sessionId.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De sessie (' . $sessionId . ') kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
