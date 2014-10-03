@@ -32,7 +32,8 @@ class TestadminController extends AbstractController {
     }
 
     public function go() {
-        $this->testCreation();
+        header("location: " . ROOT . "/testadmin/testCreation_step1/new");
+        exit(0);
     }
 
     public function testCreation_step1($arguments) {
@@ -57,9 +58,9 @@ class TestadminController extends AbstractController {
                 header("location: " . ROOT . "/testadmin/testCreation_step1/new");
                 exit(0);
             }
-        } else if(isset($_SESSION["testcreation"])){
+        } else if (isset($_SESSION["testcreation"])) {
             $testcreation = unserialize($_SESSION["testcreation"]);
-        } else {            
+        } else {
             $testcreation = new TestCreation;
             $test = new Test;
             $testcreation->setTest($test);
@@ -101,7 +102,7 @@ class TestadminController extends AbstractController {
                     throw new ApplicationException('Gelieve een categorie te selecteren');
                 }
             } else {
-                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');                
+                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');
             }
         } else {
             header("location: " . ROOT . "/testadmin/testCreation_step1");
@@ -204,6 +205,7 @@ class TestadminController extends AbstractController {
                 }
 
                 $subcatlist = $_SESSION["subcatlist"];
+                
                 if ($testcreation->getTest()->getTestBeheerder() != "") {
                     $adminId = $testcreation->getTest()->getTestBeheerder();
                     $testid = TestService::update($testcreation->getTest()->getTestId(), $testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
