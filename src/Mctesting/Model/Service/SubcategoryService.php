@@ -90,8 +90,11 @@ class SubcategoryService
         return SubcategoryDAO::selectByTest($testid);
     }
     
-    public static function getByIdForQuestions($subcatid){
-       return SubcategoryDAO::selectByIdForQuestions($subcatid);
+    public static function getByIdWithoutQuestions($subcatid){
+       return SubcategoryDAO::selectByIdWithoutQuestions($subcatid);
     }
 
+    public static function getByCategoryIdWithoutQuestions($catid){
+      return SubcategoryDAO::selectByCategoryIdWithoutQuestions($catid);
+    }
 }

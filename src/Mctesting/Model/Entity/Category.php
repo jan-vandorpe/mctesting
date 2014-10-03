@@ -51,7 +51,7 @@ class Category
 
     public function retrieveSubcategories()
     {
-        $this->subcategories = SubcategoryService::getByCategoryId($this->id);
+        $this->subcategories = SubcategoryService::getByCategoryIdWithoutQuestions($this->id);
     }
 
     public function setActive($active)
