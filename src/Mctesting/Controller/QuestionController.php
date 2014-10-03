@@ -150,7 +150,7 @@ class QuestionController extends AbstractController {
   }
 
   public function editList() {
-    $allcategories = CategoryService::getAll();
+    $allcategories = CategoryService::getAll();   //needs full questions mebbe count?
     
     if ($allcategories !== false) {
         foreach ($allcategories as $category) {
