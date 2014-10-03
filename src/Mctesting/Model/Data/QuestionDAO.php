@@ -407,4 +407,21 @@ class QuestionDAO {
     }
   }
 
+  public static function selectCountBySubcatId($subcatid){
+        //create db connection
+    $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+    //prepare sql statement
+    $sql = 'SELECT COUNT(*) FROM `vraag` WHERE subcatid = :subcatid';
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':subcatid', $subcatid);
+    //test if statement can be executed
+    if ($stmt->execute()) {
+      //test if statement retrieved something
+      $record = $stmt->fetch();   
+      return $record[0];
+    } else {
+      $error = $stmt->errorInfo();
+      throw new ApplicationException('De vragen van de gekozen subcategorie (' . $subcatid . ') konden niet worden getelt , gelieve dit te controleren:<br>' . $error[2]);
+    }
+  }
 }

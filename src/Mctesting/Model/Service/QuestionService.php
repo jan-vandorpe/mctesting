@@ -180,5 +180,9 @@ class QuestionService
         QuestionDAO::updateQuestion($editedQuestion);
       }
     }
+    
+    public static function getCountBySubcatId($subcatId){
+        return QuestionDAO::selectCountBySubcatId($subcatId);
+    }
 
 }
