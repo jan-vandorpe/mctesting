@@ -107,7 +107,7 @@
           <div class="form-group">
             <label for="vraag" class="col-sm-3 control-label label-padding">Vraag:</label>   
             <div class="col-sm-9">
-              <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in." required>{% if question.text %}{{question.text|raw}}{% endif %}</textarea>
+              <textarea name="vraag" class="form-control allowcode vraaginput" placeholder="Vul hier uw vraag in." required>{#{% if question.text %}{{question.text|raw}}{% endif %}#}</textarea>
             </div>
           </div>
           {#  Question Images    #}
@@ -148,7 +148,7 @@
                 <div class="form-group">
                   <label for="antwoord[]" class="col-sm-3 control-label label-padding answer-label">Antwoord 1:</label>   
                   <div class="col-sm-9">
-                    <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in.">{{question.answers[0].text|raw}}</textarea> 
+                    <textarea name="antwoord[]" id="antwoord1" class="form-control allowcode" placeholder="vul hier een antwoord in.">{#{{question.answers[0].text|raw}}#}</textarea> 
                   </div>
                 </div>
                 <div class="form-group" id="AnswerMediaBlock0">
@@ -180,7 +180,7 @@
                 <div class="form-group">
                   <label for="antwoord[]" class="col-sm-3 control-label label-padding answer-label">Antwoord 2:</label>   
                   <div class="col-sm-9">
-                    <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in.">{{question.answers[1].text|raw}}</textarea> 
+                    <textarea name="antwoord[]" id="antwoord2" class="form-control allowcode" placeholder="vul hier een antwoord in.">{#{{question.answers[1].text|raw}}#}</textarea> 
                   </div>
                 </div>
                 <div class="form-group" id="AnswerMediaBlock1">

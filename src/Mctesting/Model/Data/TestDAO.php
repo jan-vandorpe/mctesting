@@ -47,11 +47,11 @@ class TestDAO {
                 //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            $error = $stmt->errorInfo(); 
-            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectAllPublished() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -86,11 +86,11 @@ class TestDAO {
                 //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            $error = $stmt->errorInfo(); 
-            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectAllWithoutSessions() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -124,11 +124,11 @@ class TestDAO {
                 //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            $error = $stmt->errorInfo(); 
-            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectUnpublishedTests() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -162,11 +162,11 @@ class TestDAO {
                 //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            $error = $stmt->errorInfo(); 
-            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function selectAllWithSessions() {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -200,8 +200,8 @@ class TestDAO {
                 //throw new ApplicationException('Er zijn geen testen gevonden');
             }
         } else {
-            $error = $stmt->errorInfo(); 
-            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -227,14 +227,14 @@ class TestDAO {
                 $test->setTestPassPercentage($record['tebehalenscore']);
                 $test->setTestCreator($record['beheerder']);
                 //$test->setTestCatName(TestService::getCatName($record['testid']));
-                $test->setStatus($record['actief']);                
+                $test->setStatus($record['actief']);
                 return $test;
             } else {
-                throw new ApplicationException('Er werd geen test ('.$id.') gevonden, gelieve dit te controleren');
+                throw new ApplicationException('Er werd geen test (' . $id . ') gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De test ('.$id.') kon niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De test (' . $id . ') kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
@@ -271,11 +271,11 @@ class TestDAO {
                 //throw new ApplicationException('users selectByBeheerder recordset is leeg');
             }
         } else {
-            $error = $stmt->errorInfo();  
-            throw new ApplicationException('De testen van de gekozen beheerder ('.$adminId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De testen van de gekozen beheerder (' . $adminId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function getCatName($testId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -296,11 +296,11 @@ class TestDAO {
                 throw new ApplicationException('Er werd geen categorienaam gevonden, gelieve dit te controleren');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De categorienaam van de test ('.$testId.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De categorienaam van de test (' . $testId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function insert($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -321,13 +321,12 @@ class TestDAO {
         } else {
             $error = $stmt->errorInfo();
             //throw new ApplicationException($error[2]);
-            throw new ApplicationException('Kon geen test in de database invoeren, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon geen test in de database invoeren, gelieve dit te controleren:<br>' . $error[2]);
             //header("location: /mctesting/agga/dagga");
         }
     }
-   
-    public static function selectActiveFullTestById($id)
-    {
+
+    public static function selectActiveFullTestById($id) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -360,11 +359,11 @@ class TestDAO {
                 //throw new ApplicationException('Er is geen actieve test ('.$id.') gevonden');
             }
         } else {
-            $error = $stmt->errorInfo();            
-            throw new ApplicationException('De actieve test ('.$id.') konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De actieve test (' . $id . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function update($testid, $testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -373,22 +372,21 @@ class TestDAO {
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':testname' => $testname, ':testduration' => $testduration, ':questioncount' => $questioncount, ':maxscore' => $maxscore, ':passpercentage' => $passpercentage, ':adminId' => $adminId, ':testid' => $testid))) {
-
+            TestSubcatService::remove($testid);
             foreach ($subcatlist as $subcat) {
-                TestSubcatService::remove($testid);
                 TestSubcatService::create($testid, $subcat);
             }
+            TestQuestionService::remove($testid);
             foreach ($questions as $questionId) {
-                TestQuestionService::remove($testid);
                 TestQuestionService::create($testid, $questionId);
             }
             return $testid;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de test niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
+            throw new ApplicationException('Kon de test niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function updateStatus($testid, $status) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -401,11 +399,10 @@ class TestDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de status van deze test ('.$testid.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
-            
+            throw new ApplicationException('Kon de status van deze test (' . $testid . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
-    
+
     public static function publish($testid) {
         //create db connection        
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
@@ -418,8 +415,8 @@ class TestDAO {
             return true;
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('Kon de test ('.$testid.') niet aanpassen, gelieve dit te controleren:<br>'.$error[2]);
-            
+            throw new ApplicationException('Kon de test (' . $testid . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
+
 }
