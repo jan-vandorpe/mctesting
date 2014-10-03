@@ -1,5 +1,10 @@
 {% extends "template/layout.html.twig" %}
 
+{% block scripts %}
+  {{parent()}}
+  <script src="{{ app.root }}/public/js/editableQuestionFeedback.js"></script>
+{% endblock %}
+
 {% block title %}
   {{ parent() }}Vragen aanpassen
 {% endblock title%}
@@ -26,7 +31,7 @@
 
             <label class="col-xs-10" for="catid{{category.id}}">{{ category.catname }}</label>                         
           </div>          
-          <ul class="list-group">
+          <ul class="list-group subcats">
             {% for subcategory in category.subcategories %}  
               {% if subcategory.questioncount > 0 %}
                 <li class="list-group-item subcategorie clearfix">
