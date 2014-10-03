@@ -311,7 +311,7 @@ class SubcategoryDAO {
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
-                    $subcat->setQuestions(QuestionService::getNotInTestBySubCategory($subcat->getId()));
+                    $subcat->setQuestionCount(QuestionService::getCountNotInTestBySubCategory($subcat->getId()));
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
@@ -367,7 +367,7 @@ class SubcategoryDAO {
         }
     }
     
-    public static function selectByIdForQuestions($subcatid) {
+    public static function selectByIdWithoutQuestions($subcatid) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
@@ -395,5 +395,47 @@ class SubcategoryDAO {
         }
     }
 
+     public static function selectByCategoryIdWithoutQuestions($catid) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM subcategorie WHERE catid = :catid ORDER BY subcatnaam';
+        $stmt = $db->prepare($sql);
+        //test if statement can be executed
+        if ($stmt->execute(array(':catid' => $catid))) {
+            //test if statement retrieved something
+            $resultset = $stmt->fetchall();
+            if (!empty($resultset)) {
+                //create array
+                $subcatarray = array();
+
+                //create subcategory object(s)
+                foreach ($resultset as $record) {
+                    $subcat = new Subcategory();
+                    $subcat->setId($record['subcatid']);
+                    $subcat->setSubcatname($record['subcatnaam']);
+                    $subcat->setActive($record['actief']);
+
+                    //     don't set because subcategories are put into category object
+                    //         $subcat->setCategory($category);
+                    //$subcat->setQuestions(QuestionService::getBySubCategory($subcat->getId()));
+                    array_push($subcatarray, $subcat);
+                }
+                return $subcatarray;
+            } else {
+                //create array
+                $subcatarray = array();
+                //create object
+                $subcat = new Subcategory();
+                $subcatname = "nog geen subcategorie aanwezig";
+                $subcat->setSubcatname($subcatname);
+                //push object to array
+                array_push($subcatarray, $subcat);
+                return $subcatarray;
+            }
+        } else {
+            throw new ApplicationException('De subcategorieën van de gekozen categorie (' . $categoryId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+        }
+    }
 
 }

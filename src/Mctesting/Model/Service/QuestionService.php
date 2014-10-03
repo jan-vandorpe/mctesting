@@ -184,5 +184,9 @@ class QuestionService
     public static function getCountBySubcatId($subcatId){
         return QuestionDAO::selectCountBySubcatId($subcatId);
     }
+    
+    public static function getCountNotInTestBySubCategory($subcatid){
+      return QuestionDAO::selectEditableCountBySubcatId($subcatid);
+    }
 
 }
