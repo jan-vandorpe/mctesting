@@ -122,8 +122,13 @@ $(document).ready(function () {
             }
         }
     })
-    .find('[name="rrnr"]').mask("00.00.00-000.00");
+            .find('[name="rrnr"]').mask("00.00.00-000.00");
     ;
+    $('#gebrreg').submit(function () {
+
+        $('[name="rrnr"]').unmask();
+    });
+
     /*
      * newuserform.html.twig
      */
@@ -161,8 +166,13 @@ $(document).ready(function () {
             }
         }
     })
-    .find('[name="rrnr"]').mask("00.00.00-000.00");
+            .find('[name="rrnr"]').mask("00.00.00-000.00");
     ;
+
+    $('#gebrtoev').submit(function () {
+
+        $('[name="rrnr"]').unmask();
+    });
     /*
      * testcreation.html.twig
      */
@@ -197,7 +207,7 @@ $(document).ready(function () {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
-        submitButtons: '#btnNaarStap3' ,
+        submitButtons: '#btnNaarStap3',
         fields: {
             testduration: {
                 message: 'Voer duur van de test in minuten in',
@@ -350,8 +360,14 @@ $(document).ready(function () {
             }
         }
     })
-    .find('[name="rrnr"]').mask("00.00.00-000.00");
+            .find('[name="rrnr"]').mask("00.00.00-000.00");
     ;
+
+    $('#behtoev').submit(function () {
+
+        $('[name="rrnr"]').unmask();
+    });
+
     $('#changeUserGroup').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
