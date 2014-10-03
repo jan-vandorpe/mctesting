@@ -27,12 +27,12 @@
                 </div>          
                 <ul class="list-group">
                     {% for subcategory in category.subcategories %}  
-                        {% if subcategory.questions|length > 0 %}
+                        {% if subcategory.questioncount > 0 %}
                             <li class="list-group-item subcategorie clearfix">
                                 <label for="subcatid{{subcategory.id}}" class=""></label>
 
                                 <div class="col-xs-6">{{subcategory.subcatname}}</div>
-                                <div class="col-xs-3">{{subcategory.questions|length}} vragen</div>
+                                <div class="col-xs-3">{{subcategory.questioncount}} vragen</div>
 
                                 <div class="col-xs-3">
                                     <a href="{{ app.root }}/question/subcatvragen/{{ subcategory.id }}">Aanpassen vragen</a>

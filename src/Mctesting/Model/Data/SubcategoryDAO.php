@@ -311,7 +311,7 @@ class SubcategoryDAO {
 
                     //     don't set because subcategories are put into category object
                     //         $subcat->setCategory($category);
-                    $subcat->setQuestions(QuestionService::getNotInTestBySubCategory($subcat->getId()));
+                    $subcat->setQuestionCount(QuestionService::getCountNotInTestBySubCategory($subcat->getId()));
                     array_push($subcatarray, $subcat);
                 }
                 return $subcatarray;
