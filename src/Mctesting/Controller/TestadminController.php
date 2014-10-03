@@ -85,11 +85,16 @@ class TestadminController extends AbstractController {
                     $testcreation->getTest()->setTestName($_POST["testname"]);
                 }
 
-                if ((isset($_POST["testcatselect"]) && $_POST['testcatselect'] != 0) || $testcreation->getCat() != "") {
-                    if (isset($_POST["testcatselect"])) {
+                if ((isset($_POST["testcatselect"]) && $_POST['testcatselect'] != 0) || $testcreation->getCat()->getId() != "") {
+                    if (isset($_POST["testcatselect"]) && $_POST['testcatselect'] != 0) {
                         $cat = new Category;
                         $cat->setId($_POST["testcatselect"]);
                         $testcreation->setCat($cat);
+                    } else {
+                        $FMM = new FlashMessageManager();
+                        $FMM->setFlashMessage('Gelieve een categorie te selecteren');
+                        header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                        exit(0);
                     }
                     $testcreation->setSubCats(SubcategoryService::getActiveByCategoryId($testcreation->getCat()->getId()));
 
@@ -99,10 +104,16 @@ class TestadminController extends AbstractController {
                         'testcreation' => $testcreation,
                     ));
                 } else {
-                    throw new ApplicationException('Gelieve een categorie te selecteren');
+                    $FMM = new FlashMessageManager();
+                    $FMM->setFlashMessage('Gelieve een categorie te selecteren');
+                    header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                    exit(0);
                 }
             } else {
-                throw new ApplicationException('Gelieve een naam in te vullen en een categorie te selecteren');
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gelieve een naam in te vullen en een categorie te selecteren');
+                header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                exit(0);
             }
         } else {
             header("location: " . ROOT . "/testadmin/testCreation_step1");
@@ -162,13 +173,22 @@ class TestadminController extends AbstractController {
                             'subcatlist' => $subcatlist,
                         ));
                     } else {
-                        throw new ApplicationException('Gelieve vragen te selecteren');
+                        $FMM = new FlashMessageManager();
+                        $FMM->setFlashMessage('Gelieve vragen te selecteren');
+                        header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                        exit(0);
                     }
                 } else {
-                    throw new ApplicationException('Tijdsduur moet een geheel getal zijn');
+                    $FMM = new FlashMessageManager();
+                    $FMM->setFlashMessage('Tijdsduur moet een geheel getal zijn');
+                    header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                    exit(0);
                 }
             } else {
-                throw new ApplicationException('Gelieve een tijdsduur in te vullen');
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gelieve een tijdsduur in te vullen');
+                header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                exit(0);
             }
         } else {
             header("location: " . ROOT . "/testadmin/testCreation_step1");
@@ -191,25 +211,28 @@ class TestadminController extends AbstractController {
 
             if (isset($_POST["subcatpasspercentage"])) {
                 foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-                    if (HelperFunctions::numbers_only($value) == true  && $value<=100 && $value>0) {
+                    if (HelperFunctions::numbers_only($value) == true && $value <= 100 && $value > 0) {
                         $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
                     } else {
-                      $FMM = new FlashMessageManager();
-                      $FMM->setFlashMessage('De slaagpercentages moeten gehele getallen onder 100 zijn');
-                      header("location: " . ROOT . "/testadmin/testCreation_step1/");
-                      exit(0);
+                        $FMM = new FlashMessageManager();
+                        $FMM->setFlashMessage('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                        header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                        exit(0);
                     }
-                }                      
+                }
 
                 //model
-                if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage']) && $_POST['testpasspercentage']<=100 && $_POST['testpasspercentage']>0) {
+                if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage']) && $_POST['testpasspercentage'] <= 100 && $_POST['testpasspercentage'] > 0) {
                     $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
                 } else {
-                  throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                    $FMM = new FlashMessageManager();
+                    $FMM->setFlashMessage('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                    header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                    exit(0);
                 }
                 //exit(0);
                 $subcatlist = $_SESSION["subcatlist"];
-                
+
                 if ($testcreation->getTest()->getTestBeheerder() != "") {
                     $adminId = $testcreation->getTest()->getTestBeheerder();
                     $testid = TestService::update($testcreation->getTest()->getTestId(), $testcreation->getTest()->getTestName(), $testcreation->getTest()->getTestMaxDuration(), count($testcreation->getQuestions()), $testcreation->getQuestionweight(), $testcreation->getTest()->getTestPassPercentage(), $adminId, $testcreation->getQuestions(), $subcatlist);
@@ -230,9 +253,11 @@ class TestadminController extends AbstractController {
                     header("location: " . ROOT . "/testadmin/testlist/");
                     exit(0);
                 }
-                
             } else {
-                throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
+                $FMM = new FlashMessageManager();
+                $FMM->setFlashMessage('Gelieve de slaagpercentages in te vullen');
+                header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                exit(0);
             }
         } else {
             header("location: " . ROOT . "/testadmin/testCreation_step1");
