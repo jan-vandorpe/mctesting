@@ -38,6 +38,9 @@ class CategoryController extends AbstractController {
         if ($allcategories !== false) {
             foreach ($allcategories as $category) {
                 $category->retrieveSubcategories();
+                foreach ($category->getSubcategories() as $subcategory){
+                    $subcategory->retrieveQuestionCount();
+                }
             }
         }
         $this->render('categorylist.html.twig', array(
