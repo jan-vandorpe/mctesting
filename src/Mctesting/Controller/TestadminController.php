@@ -191,19 +191,23 @@ class TestadminController extends AbstractController {
 
             if (isset($_POST["subcatpasspercentage"])) {
                 foreach ($_POST["subcatpasspercentage"] as $key => $value) {
-                    if (HelperFunctions::numbers_only($value) == true  && $_POST['subcatpasspercentage']<=100 && $_POST['subcatpasspercentage']>0) {
+                    if (HelperFunctions::numbers_only($value) == true  && $value<=100 && $value>0) {
                         $_SESSION["subcatlist"][$key]["passpercentage"] = $value;
                     } else {
-                        throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                      $FMM = new FlashMessageManager();
+                      $FMM->setFlashMessage('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                      header("location: " . ROOT . "/testadmin/testCreation_step1/");
+                      exit(0);
                     }
-                }
+                }                      
+
                 //model
                 if (isset($_POST['testpasspercentage']) && HelperFunctions::numbers_only($_POST['testpasspercentage']) && $_POST['testpasspercentage']<=100 && $_POST['testpasspercentage']>0) {
                     $testcreation->getTest()->setTestPassPercentage($_POST["testpasspercentage"]);
                 } else {
-                    throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
+                  throw new ApplicationException('De slaagpercentages moeten gehele getallen onder 100 zijn');
                 }
-
+                //exit(0);
                 $subcatlist = $_SESSION["subcatlist"];
                 
                 if ($testcreation->getTest()->getTestBeheerder() != "") {
@@ -216,14 +220,17 @@ class TestadminController extends AbstractController {
                 }
                 if (isset($_POST['publiceer'])) {
                     TestService::publish($testid);
+                    unset($_SESSION['testcreation']);
                     header("location: " . ROOT . "/testadmin/testCreation_TestConfirm/" . $testid);
                     exit(0);
                 } else {
                     $FMM = new FlashMessageManager();
                     $FMM->setFlashMessage('Test tijdelijk opgeslagen', 1);
+                    unset($_SESSION['testcreation']);
                     header("location: " . ROOT . "/testadmin/testlist/");
+                    exit(0);
                 }
-                unset($_SESSION['testcreation']);
+                
             } else {
                 throw new ApplicationException('Gelieve de slaagpercentages in te vullen');
             }
