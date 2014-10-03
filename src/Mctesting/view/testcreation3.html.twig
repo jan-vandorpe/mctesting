@@ -59,14 +59,14 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-5">Slaagpercentage voor volledige test: </label>
                                 <div class="col-xs-7">
-                                    <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="{% if testcreation.test.TestPassPercentage %}{{testcreation.test.TestPassPercentage}}{% else %}60{% endif %}" pattern="^[0-9]+$" maxlength='3' required/>
+                                    <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="{% if testcreation.test.TestPassPercentage %}{{testcreation.test.TestPassPercentage}}{% else %}60{% endif %}" required/>
                                 </div>
                             </div>
                             {% for key, subcat in subcatlist %}
                                 <div class="form-group">
                                     <label class="control-label col-xs-5">Slaagpercentage voor "{{ key }}":</label>
                                     <div class="col-xs-7">
-                                        <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="{% if testcreation.subcatspassperc[key] is defined %}{{testcreation.subcatspassperc[key]}}{% else %}50{% endif %}" pattern="^[0-9]+$" maxlength='3' required/>
+                                        <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="{% if testcreation.subcatspassperc[key] is defined %}{{testcreation.subcatspassperc[key]}}{% else %}50{% endif %}"/>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -77,10 +77,10 @@
                             <button type="submit" name="back" class="btn btn-default">Terug naar stap 2</button>
                         </div> 
                         <div class="col-xs-2 col-xs-offset-5">                            
-                            <input type="submit" name="opslaan" class="btn btn-default" value="Opslaan">
+                            <input type="submit" name="opslaan" class="btn btn-default opslaanOfPubliceren" value="Opslaan">
                         </div>
                         <div class="col-xs-2">                            
-                            <input type="submit" name="publiceer" class="btn btn-success" value="Opslaan en publiceer">
+                            <input type="submit" name="publiceer" class="btn btn-success opslaanOfPubliceren" value="Opslaan en publiceer">
                         </div>
                     </div>
                 </form>                

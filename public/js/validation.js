@@ -237,24 +237,30 @@ $(document).ready(function () {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
+        submitButtons: '.opslaanOfPubliceren',
         fields: {
             testpasspercentage: {
                 validators: {
                     notEmpty: {
                         message: 'Voer een test percentage in'
                     },
-                    digits: {
-                        message: 'Voer enkel cijfers in'
+                    between: {
+                        min: 0,
+                        max: 100,
+                        message: 'Het slaagpercentage moet tussen 0 of 100% liggen'
                     }
                 }
             },
-            'subcatpasspercentage[]': {
+            blabla: {
+                selector: ".frmcontrolwidth-slaaginvoeg",
                 validators: {
                     notEmpty: {
                         message: 'Voer een test percentage in'
                     },
-                    digits: {
-                        message: 'Voer enkel cijfers in'
+                    between: {
+                        min: 0,
+                        max: 100,
+                        message: 'Het slaagpercentage moet tussen 0 of 100% liggen'
                     }
                 }
             },
