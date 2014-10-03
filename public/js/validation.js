@@ -197,6 +197,7 @@ $(document).ready(function () {
             invalid: 'glyphicon glyphicon-remove',
             validating: 'glyphicon glyphicon-refresh'
         },
+        submitButtons: '#btnNaarStap3' ,
         fields: {
             testduration: {
                 message: 'Voer duur van de test in minuten in',
