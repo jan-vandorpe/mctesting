@@ -417,7 +417,8 @@ class QuestionDAO {
     //test if statement can be executed
     if ($stmt->execute()) {
       //test if statement retrieved something
-      return $stmt->fetch();      
+      $record = $stmt->fetch();   
+      return $record[0];
     } else {
       $error = $stmt->errorInfo();
       throw new ApplicationException('De vragen van de gekozen subcategorie (' . $subcatid . ') konden niet worden getelt , gelieve dit te controleren:<br>' . $error[2]);

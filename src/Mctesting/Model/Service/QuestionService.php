@@ -182,7 +182,7 @@ class QuestionService
     }
     
     public static function getCountBySubcatId($subcatId){
-        return QuestionDAO::selectCountBySubcatId($testId);
+        return QuestionDAO::selectCountBySubcatId($subcatId);
     }
 
 }
