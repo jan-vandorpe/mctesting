@@ -59,9 +59,9 @@
                             <div class="form-group">
                                 <label class="control-label col-xs-5">Slaagpercentage voor volledige test: </label>
                                 <div class="col-xs-7">
-                                    <div class="input-group">
-                                        <div class="input-group-addon">%</div>
+                                    <div class="input-group">                                        
                                         <input type="text" class="form-control" name="testpasspercentage" id="testpasspercentage" value="{% if testcreation.test.TestPassPercentage %}{{testcreation.test.TestPassPercentage}}{% else %}60{% endif %}" required/>
+                                        <div class="input-group-addon">%</div>
                                     </div>
                                 </div>
                             </div>
@@ -69,9 +69,9 @@
                                 <div class="form-group">
                                     <label class="control-label col-xs-5">Slaagpercentage voor "{{ key }}":</label>
                                     <div class="col-xs-7">
-                                        <div class="input-group">
-                                            <div class="input-group-addon">%</div>
+                                        <div class="input-group">                                            
                                             <input type="text" class="form-control  frmcontrolwidth-slaaginvoeg" name='subcatpasspercentage[{{ key }}]' id="subcatpasspercentage" value="{% if testcreation.subcatspassperc[key] is defined %}{{testcreation.subcatspassperc[key]}}{% else %}50{% endif %}"/>
+                                            <div class="input-group-addon">%</div>
                                         </div>
                                     </div>
                                 </div>
