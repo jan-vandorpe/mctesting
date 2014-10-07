@@ -293,6 +293,7 @@ class myPDF extends FPDF {
         }
 
         $this->Output($test->getTestName() . ".pdf", 'D');
+        
     }
 
     function resizeToFit($imgFilename) {
