@@ -117,8 +117,7 @@ input[readonly] {
 .subcategorie{
     position:relative;
 }
-.subcategorie a{
-    position: absolute;
+.subcategorie a, .subcategorie div{
     z-index: 6;
 }
 .subcategorie label{
