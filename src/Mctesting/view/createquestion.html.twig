@@ -71,18 +71,18 @@
                         <div class="col-xs-9">
                             <select class="form-control catbijvraag " name="subcat">
                                 {% for category in categories %}
-                                  {% if category.subcategories != false %}
-                                    <optgroup label="{{category.catname|capitalize}}">
-                                        {% for subcategory in category.subcategories %}
-                                            <option value="{{ subcategory.id }}"
-                                                    {% if question.subcategory %}
-                                                        {% if question.subcategory == subcategory.id %}
-                                                            selected
-                                                        {% endif %}
-                                                    {% endif %}    
-                                                    >{{ subcategory.subcatname|capitalize }}</option>
-                                        {% endfor %}
-                                    </optgroup>
+                                    {% if category.subcategories != false %}
+                                        <optgroup label="{{category.catname|capitalize}}">
+                                            {% for subcategory in category.subcategories %}
+                                                <option value="{{ subcategory.id }}"
+                                                        {% if question.subcategory %}
+                                                            {% if question.subcategory == subcategory.id %}
+                                                                selected
+                                                            {% endif %}
+                                                        {% endif %}    
+                                                        >{{ subcategory.subcatname|capitalize }}</option>
+                                            {% endfor %}
+                                        </optgroup>
                                     {% endif %}
                                 {% endfor %}
                             </select>
@@ -283,8 +283,10 @@
 
                 </div>
                 {#   Submit   #}
-                <div class="col-xs-3 col-xs-offset-5">
-                    <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
+                <div class="form-group">
+                    <div class="col-xs-3 col-xs-offset-5">
+                        <input type="submit" class="btn btn-success" name="vrtoev" value="Vraag bevestigen" />
+                    </div>
                 </div>
         </form>
     </div>
