@@ -5,18 +5,23 @@
  */
 
 function printDiv(divName) {
-      var printContents = document.getElementById(divName).innerHTML;     
-   var originalContents = document.body.innerHTML;       
-   document.body.innerHTML = printContents;      
-   window.print();      
-   document.body.innerHTML = originalContents;
-   }
+  var printContents = document.getElementById(divName).innerHTML;
+  var originalContents = document.body.innerHTML;
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+
+  $('.printMe').click(function() {
+    printDiv('outprint');
+  });
+
+}
 
 $(document).ready(function() {
-  
+
   console.log('test');
 
-  $('.printMe').click(function(){
+  $('.printMe').click(function() {
     printDiv('outprint');
   });
 
