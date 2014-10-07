@@ -26,7 +26,7 @@
                 <div class="col-xs-9">
                     <select class="form-control" name="selecttest">
                         {% if tests is empty %}
-                            <option value="">Geen testen gevonden</option>
+                            <option value="">Geen testen met sessies gevonden</option>
                         {% else %}
                             {% for test in tests %}
                                 <option value="{{ test.testid }}">{{ test.testname }}</option>
