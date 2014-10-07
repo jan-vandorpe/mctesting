@@ -20,7 +20,7 @@
     </div>
     <h3>Testsessie: {{ testsession.test.testname }}<small> van {{ testsession.date.date|date('d/m/Y') }}</small></h3>
     <ul class="list-group print-rapport">
-        <li class="list-group-item clearfix">
+        <li class="list-group-item clearfix listGroupHeader">
             <b>
                 <div class="col-xs-2 overflow">Voornaam</div>
                 <div class="col-xs-2 overflow">Familienaam</div>
@@ -47,10 +47,10 @@
     </ul>
         {% block terugknop %}
     <div class="form-group no-print">
-      <div class="col-xs-offset-1">
+      <div class="">
         <form class="form-horizontal" method="post" action="{{ app.root }}/scores/showsessions">
           <input type="hidden" name="selecttest" value="{{ testsession.test.testid }}">
-          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button>
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span> Terug</button>
         </form>
       </div>
     </div>
