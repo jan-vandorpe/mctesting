@@ -444,6 +444,7 @@ class TestadminController extends AbstractController {
 
 //        header('Content-type: application/pdf');
 //        header('Content-Disposition: attachment; filename="' . $testnaam . '.pdf"');
+        
         setcookie("fileDownloadToken", $downloadTokenValue, time() + 500, '/');
         //var_dump($_COOKIE);
         //var_dump($_COOKIE['fileDownloadToken']);
