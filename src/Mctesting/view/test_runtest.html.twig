@@ -32,8 +32,10 @@
             <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
         </blockquote>
         <p class="no-print">
-            <a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}"
-               class="btn btn-default ladda-button downloadPDF" data-style="expand-left" data-size="xs" data-spinner-color="#333" id="downloadPDF"><span class="ladda-label">Download als .PDF bestand</span></a>
+            {% if app.user.group.name == 'admin' or app.user.group.name == 'beheerder' %}
+                <a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}"
+                   class="btn btn-default ladda-button downloadPDF" data-style="expand-left" data-size="xs" data-spinner-color="#333" id="downloadPDF"><span class="ladda-label">Download als .PDF bestand</span></a>
+            {% endif %}
             {#<a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}">Download als .PDF bestand.</a>#}</p>
     </div>
 {% endblock %}

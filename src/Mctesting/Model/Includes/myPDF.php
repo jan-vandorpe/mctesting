@@ -29,6 +29,10 @@ class myPDF extends FPDF {
         //$this->SetTopMargin(10);
         //Make border for heading box thicker
         $this->SetLineWidth(0.7);
+        
+        //Invullen RRNr & Naam
+        
+        $this->Cell(190, 10, 'Naam:', '', 1, 'L', 0);
 
         //TestName
         $this->Cell(190, 20, $test->getTestName(), 'LTR', 1, 'L', 0);
@@ -292,7 +296,7 @@ class myPDF extends FPDF {
             $i++;
         }
 
-        $this->Output($test->getTestName() . ".pdf", 'D');
+        $this->Output($test->getTestName() . ".pdf", 'I');
         
     }
 
