@@ -110,7 +110,7 @@ class BeheerderDAO {
                     throw new ApplicationException('Kon de gebruiker (' . $user->getRRnr() . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
                 }
             } else {
-                throw new ApplicationException('Het emailadres bestaat al');
+                throw new ApplicationException('De beheerder (' . $user->getEmail() . ') bestaat al. <br> Gelieve een ander emailadres in te vullen.');
             }
         } else {
             $error = $stmt->errorInfo();
