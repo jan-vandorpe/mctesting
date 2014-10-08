@@ -29,12 +29,16 @@ class myPDF extends FPDF {
         //$this->SetTopMargin(10);
         //Make border for heading box thicker
         $this->SetLineWidth(0.7);
-        
+
         //Invullen RRNr & Naam
+        $this->SetFontSize(15);
         
-        $this->Cell(190, 10, 'Naam:', '', 1, 'L', 0);
+        $this->Cell(50, 10, 'Naam:', '',1, 'L', 0);
+        $this->Cell(50, 10, 'Voornaam:', '', 1, 'L', 0);
+        $this->Cell(50, 10, 'Rijksregisternummer:', '', 1, 'L', 0);
 
         //TestName
+        $this->SetFontSize(30);
         $this->Cell(190, 20, $test->getTestName(), 'LTR', 1, 'L', 0);
 
         $this->SetFontSize(20);
@@ -297,7 +301,6 @@ class myPDF extends FPDF {
         }
 
         $this->Output($test->getTestName() . ".pdf", 'I');
-        
     }
 
     function resizeToFit($imgFilename) {
