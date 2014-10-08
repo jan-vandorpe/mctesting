@@ -119,7 +119,7 @@ class UserDAO {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM gebruikers WHERE email = :email';
+        $sql = 'SELECT * FROM gebruikers WHERE email = :email and actief = 1';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
         if ($stmt->execute(array(':email' => $email))) {
