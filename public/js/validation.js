@@ -85,6 +85,14 @@ $(document).ready(function () {
             }
         }
     });
+    $('#gebrdetails').find('[name="rrnr"]').mask("00.00.00-000.00");
+    $('#gebrdetails').submit(function () {
+
+        $('[name="rrnr"]').unmask();
+    });
+
+
+
     /*
      * registerUserForm
      */
