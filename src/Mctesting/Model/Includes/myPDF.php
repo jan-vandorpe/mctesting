@@ -31,11 +31,17 @@ class myPDF extends FPDF {
         $this->SetLineWidth(0.7);
 
         //Invullen RRNr & Naam
-        $this->SetFontSize(15);
+        $this->SetFontSize(13);
         
-        $this->Cell(50, 10, 'Naam:', '',1, 'L', 0);
-        $this->Cell(50, 10, 'Voornaam:', '', 1, 'L', 0);
-        $this->Cell(50, 10, 'Rijksregisternummer:', '', 1, 'L', 0);
+        $this->Cell(190, 10, 'Voornaam: ..................................................', '', 1, 'L', 0);
+        $this->Cell(190, 10, 'Familienaam: ..............................................', '',1, 'L', 0);
+        
+        $this->Cell(190, 10, 'Rijksregisternummer: ..................................', '', 1, 'L', 0);
+        
+        
+        $this->SetLineWidth(0.2);
+        $this->Cell(190,3, "", '', 1, 'L', 0);
+        
 
         //TestName
         $this->SetFontSize(30);
@@ -300,7 +306,7 @@ class myPDF extends FPDF {
             $i++;
         }
 
-        $this->Output($test->getTestName() . ".pdf", 'I');
+        $this->Output($test->getTestName() . ".pdf", 'D');
     }
 
     function resizeToFit($imgFilename) {

@@ -444,7 +444,7 @@ class TestadminController extends AbstractController {
 
 //        header('Content-type: application/pdf');
 //        header('Content-Disposition: attachment; filename="' . $testnaam . '.pdf"');
-        
+
         setcookie("fileDownloadToken", $downloadTokenValue, time() + 500, '/');
         //var_dump($_COOKIE);
         //var_dump($_COOKIE['fileDownloadToken']);
@@ -457,6 +457,10 @@ class TestadminController extends AbstractController {
         //is normaal hetzelfde
         $pdf->SetSubject($testnaam);
         //mss datum
+        //shuffle questions
+        $test->shuffleQuestions();
+        //shuffle answers
+        $test->shuffleAnswers();
 
         $pdf->createMyPage($test, $catname);
     }
