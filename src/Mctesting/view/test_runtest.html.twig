@@ -1,87 +1,99 @@
 {% extends "template/layout.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ app.root }}/public/css/ladda-themeless.min.css">
+{% endblock stylesheets %}
+
 {% block scripts %}
-  {{ parent() }}
-  <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
-  <script src="{{ app.root }}/public/js/answeredCounter.js"></script>
+    {{ parent() }}
+    <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
+    <script src="{{ app.root }}/public/js/answeredCounter.js"></script>
+    <script src="{{ app.root }}/public/js/lib/spin.min.js"></script>
+    <script src="{{ app.root }}/public/js/lib/ladda.min.js"></script>
+    <script src="{{ app.root }}/public/js/lib/jquery.cookie.js"></script>
+    <script src="{{ app.root }}/public/js/myProcessingIcon.js"></script>
 {% endblock scripts %}
 
 {% block title %}
-  {{ parent() }}Test afleggen
+    {{ parent() }}Test afleggen
 {% endblock title %}
 
 {% block contentHeader %}
-  <div class="panel-heading">
-    <h1>
-      {{ test.testname }}
-      <br>
-      <small>Per vraag is maar 1 correct antwoord mogelijk</small>
-    </h1>
-    <blockquote class="">
-      <p class="">Categorie: {{ catname|capitalize }} </p>
-      <footer class="no-print" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
-      <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
-    </blockquote>
-    <p class="no-print"><a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}">Download als .PDF bestand.</a></p>
-  </div>
+    <div class="panel-heading">
+        <h1>
+            {{ test.testname }}
+            <br>
+            <small>Per vraag is maar 1 correct antwoord mogelijk</small>
+        </h1>
+        <blockquote class="">
+            <p class="">Categorie: {{ catname|capitalize }} </p>
+            <footer class="no-print" >Nog te beantwoorden vragen: <span id="questioncount" class="badge questioncount">{{ test.testquestioncount }}</span></footer>
+            <footer class="">Maximum duurtijd: <span class="badge">{{ test.testmaxduration }}</span> minuten</footer>
+        </blockquote>
+        <p class="no-print">
+            <a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}"
+               class="btn btn-default ladda-button downloadPDF" data-style="expand-left" data-size="xs" data-spinner-color="#333" id="downloadPDF"><span class="ladda-label">Download als .PDF bestand</span></a>
+            {#<a href="{{ app.root }}/testadmin/generatepdf/{{ test.TestId }}">Download als .PDF bestand.</a>#}</p>
+    </div>
 {% endblock %}
 {% block content %}
-  <div class="{% block class %}testafleggenpag {% endblock class %}">
-    <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post" role="form" class="form-horizontal">
-      {% for question in test.questions %}
-        <div class="panel panel-default no-break print-question">
-          <!-- Default panel contents -->
-          <div class="panel-heading ">Vraag {{loop.index}}</div>
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-xs-9">
-                <span class="col-xs-1 glyphicon glyphicon-comment"></span> 
-                <div class="col-xs-11"><p>{{ question.text|raw }}</p></div>
-              </div>
-            </div>
-            {% if question.media is not empty %}
-              <div class="row">
-                {% for file in question.media %}
-                  <div class="padding-right padding-left pull-left">
-                  <figure class="thumbnail preview-figure">
-                    <img src="{{ app.root }}/public/images/{{ file }}" class="preview-image thumb" alt="{{file}}" title="{{file}}"/>
-                  </figure>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-            </div>
-            <!-- List group -->
-            <ul class="list-group ">
-              {% for answer in question.answers %}
-                <li class="list-group-item answer print-answers">
-                  <div class="row">
-                    <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style="" required/>
-                    <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
-                    <div class="col-xs-9">
-                      <h4>
-                        <small>Antwoord {{loop.index}}</small>
-                        <br>
-                        {{ answer.text|raw }}
-                      </h4>
+    <div class="{% block class %}testafleggenpag {% endblock class %}">
+        <form name="" action={% block form %}"{{ app.root }}/test/process/" {% endblock form %} method="post" role="form" class="form-horizontal">
+            {% for question in test.questions %}
+                <div class="panel panel-default no-break print-question">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading ">Vraag {{loop.index}}</div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-9">
+                                <span class="col-xs-1 glyphicon glyphicon-comment"></span> 
+                                <div class="col-xs-11"><p>{{ question.text|raw }}</p></div>
+                            </div>
+                        </div>
+                        {% if question.media is not empty %}
+                            <div class="row">
+                                {% for file in question.media %}
+                                    <div class="padding-right padding-left pull-left">
+                                        <figure class="thumbnail preview-figure">
+                                            <img src="{{ app.root }}/public/images/{{ file }}" class="preview-image thumb" alt="{{file}}" title="{{file}}"/>
+                                        </figure>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
-                    <div class="col-xs-3 print-image">
-                      {% if answer.media is not empty %}
-                        <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
-                      {% endif %}
-                    </div>
-                  </div>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endfor %}
+                    <!-- List group -->
+                    <ul class="list-group ">
+                        {% for answer in question.answers %}
+                            <li class="list-group-item answer print-answers">
+                                <div class="row">
+                                    <input type="radio" name="answer[{{ question.id }}]" value="{{ answer.id }}" id="question{{question.id}}answer{{answer.id}}" style="" required/>
+                                    <label for="question{{question.id}}answer{{answer.id}}" class=""></label>
+                                    <div class="col-xs-9">
+                                        <h4>
+                                            <small>Antwoord {{loop.index}}</small>
+                                            <br>
+                                            {{ answer.text|raw }}
+                                        </h4>
+                                    </div>
+                                    <div class="col-xs-3 print-image">
+                                        {% if answer.media is not empty %}
+                                            <img src="{{ app.root }}/public/images/{{ answer.media }}" alt="{{answer.media}}" title="{{answer.media}}" class="img-thumbnail" />
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
             <div class="row no-print">
-              <div class="col-xs-5 col-xs-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
+                <div class="col-xs-5 col-xs-offset-4"><h4>Nog te beantwoorden vragen: <span id="" class="badge questioncount">{{ test.testquestioncount }}</span></h4></div>
             </div>
             <div class="row no-print">
-              <input class="btn btn-default btn-lg col-xs-offset-5" type="submit" value="Test voltooien">
+                <input class="btn btn-default btn-lg col-xs-offset-5" type="submit" value="Test voltooien">
             </div>
-          </form>
-        </div>
-        {% endblock content %}
+        </form>
+    </div>
+{% endblock content %}
