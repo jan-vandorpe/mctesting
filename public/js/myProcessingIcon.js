@@ -20,7 +20,7 @@ $(document).ready(function () {
         fileDownloadCheckTimer = window.setInterval(function () {
 
             var cookieValue = $.cookie("fileDownloadToken");
-            console.log($.cookie('fileDownloadToken'));
+            
             if (cookieValue == token)
                 finishDownload(l, token);
         }, 500);
