@@ -321,7 +321,7 @@ class QuestionController extends AbstractController {
         QuestionService::updateQuestion($editedQuestion);
         $msg = new FlashMessageManager();
         $msg->setFlashMessage('Vraag succesvol aangepast', 1);
-        header('location: ' . ROOT . '/question/editquestion/' . $questionId);
+        header('location: ' . ROOT . '/question/editlist');
         exit();
     }
 
