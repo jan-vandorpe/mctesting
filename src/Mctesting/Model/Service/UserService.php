@@ -55,7 +55,9 @@ class UserService {
 
                 $user = UserDAO::selectByEmail($login, $password);
                 UserService::serializeToSession($user);
-
+                if (isset($_SESSION['pwreset'])) {
+                    unset($_SESSION['pwreset']);
+                }
                 if (UserService::checkForPasswordReset($password)) {
                     $_SESSION['pwreset'] = true;
                 }
