@@ -71,27 +71,32 @@ class UserService {
             } elseif (UserService::isValidRRNRFormat($login)) {
                 //print(" rijksregister");
                 $user = UserDAO::selectByRRNr($login);
-                $sessions = TestSessionService::getSessionByPW($password);
-                unset($_SESSION["sessionchoices"]);
-                if ($sessions !== null) {
-                    foreach ($sessions as $session) {
-                        $id = $session->getId();
-                        $test = $session->getTest();
-                        $name = $test->getTestName();
-                        $testid = $test->getTestId();
-                        //throw new ApplicationException($id.' and '.$user->getRRnr());
-                        if (UserSessionService::getByUserANDSession($id, $user->getRRnr()) !== false) {
-                            $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
-                            $_SESSION["sessionchoices"][$id] = array($testid => $name);
-                            $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
-                        }
-                    }
-                    //$_SESSION["testsessions"]=$sessions;  unused?
-                    UserService::serializeToSession($user);
-                    return true;
+                if ($user === false) {
+                    throw new ApplicationException('De opgegeven login was foutief. Gelieve een geldig rijksregisternummer of e-mail adres in te voeren');
                 } else {
-                    return false;
+                    $sessions = TestSessionService::getSessionByPW($password);
+                    unset($_SESSION["sessionchoices"]);
+                    if ($sessions !== null) {
+                        foreach ($sessions as $session) {
+                            $id = $session->getId();
+                            $test = $session->getTest();
+                            $name = $test->getTestName();
+                            $testid = $test->getTestId();
+                            //throw new ApplicationException($id.' and '.$user->getRRnr());
+                            if (UserSessionService::getByUserANDSession($id, $user->getRRnr()) !== false) {
+                                $sessionUser = UserSessionService::getByUserANDSession($id, $user->getRRnr());
+                                $_SESSION["sessionchoices"][$id] = array($testid => $name);
+                                $_SESSION["sessionParticipation"][$id] = array("participated" => $sessionUser[0]->getParticipated());
+                            }
+                        }
+                        //$_SESSION["testsessions"]=$sessions;  unused?
+                        UserService::serializeToSession($user);
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
+
 //             $foundTest = UserService::getTest($password);
 //             if($foundTest == true){
 //                 $magAfleggen = UserService::GetTestUser($login, $password);

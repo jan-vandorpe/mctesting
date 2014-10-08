@@ -1,28 +1,28 @@
 $(document).ready(function () {
 
-    $('#frmLogin').bootstrapValidator({
-        container: 'tooltip',
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            Login: {
-                validators: {
-                    notEmpty: {
-                        message: 'Voornaam is verplicht'
-                    },
-                }
-            },
-            Wachtwoord: {
-                validators: {
-                    notEmpty: {
-                        message: 'Wachtwoord is verplicht'
-                    },
-                }
-            },
-        }});
+//    $('#frmLogin').bootstrapValidator({
+//        container: 'tooltip',
+//        feedbackIcons: {
+//            valid: 'glyphicon glyphicon-ok',
+//            invalid: 'glyphicon glyphicon-remove',
+//            validating: 'glyphicon glyphicon-refresh'
+//        },
+//        fields: {
+//            Login: {
+//                validators: {
+//                    notEmpty: {
+//                        message: 'Voornaam is verplicht'
+//                    },
+//                }
+//            },
+//            Wachtwoord: {
+//                validators: {
+//                    notEmpty: {
+//                        message: 'Wachtwoord is verplicht'
+//                    },
+//                }
+//            },
+//        }});
     /*
      * 
      * createquestion twig
