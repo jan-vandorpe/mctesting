@@ -221,6 +221,7 @@ $(document).ready(function () {
                 }
             },
             'question[]': {
+                container: '#messages',
                 feedbackIcons: false,
                 validators: {
                     choice: {
@@ -230,7 +231,19 @@ $(document).ready(function () {
                 }
             }
 
-        }});
+        }})
+            .on('error.field.bv', function (e, data) {
+                var $panel = data.element.parents('.panelGoesRed');
+                $panel.css("border-color", "#a94442");
+                $panel.css("box-shadow", "inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483")
+            })
+            .on('success.field.bv', function (e, data) {
+                var $panel = data.element.parents('.panelGoesRed');
+                $panel.css("border-color", "#3c763d");
+                $panel.css("box-shadow", "none");
+            })
+
+            ;
     $('#testcreation3').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -240,6 +253,7 @@ $(document).ready(function () {
         submitButtons: '.opslaanOfPubliceren',
         fields: {
             testpasspercentage: {
+                feedbackIcons: false,
                 validators: {
                     notEmpty: {
                         message: 'Voer een test percentage in'
@@ -252,6 +266,7 @@ $(document).ready(function () {
                 }
             },
             blabla: {
+                feedbackIcons: false,
                 selector: ".frmcontrolwidth-slaaginvoeg",
                 validators: {
                     notEmpty: {
@@ -304,6 +319,7 @@ $(document).ready(function () {
                 }
             },
             'user[]': {
+                container: '#messages',
                 feedbackIcons: false,
                 validators: {
                     choice: {
@@ -313,7 +329,19 @@ $(document).ready(function () {
                 }
             }
         }
-    });
+    })
+            .on('error.field.bv', function (e, data) {
+                var $panel = data.element.parents('.panelGoesRed');
+                $panel.css("border-color", "#a94442");
+                $panel.css("box-shadow", "inset 0 1px 1px rgba(0,0,0,.075),0 0 6px #ce8483")
+            })
+            .on('success.field.bv', function (e, data) {
+                var $panel = data.element.parents('.panelGoesRed');
+                $panel.css("border-color", "#3c763d");
+                $panel.css("box-shadow", "none");
+            })
+
+            ;
     $('#ctrlDatePicker').on('dp.change dp.show', function (e) {
         // Validate the date when user change it
         $('#testsessiesel').bootstrapValidator('revalidateField', 'testdatum');

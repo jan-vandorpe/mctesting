@@ -400,7 +400,7 @@ class TestadminController extends AbstractController {
         } else {
             $tests = TestService::getByAdminId($adminId);
         }
-
+        //unset($_COOKIE['fileDownloadToken']);
         $this->render('testlist.html.twig', array(
             'tests' => $tests,
         ));
@@ -428,6 +428,8 @@ class TestadminController extends AbstractController {
 
     public function generatepdf($arguments) {
 
+
+
         $testId = $arguments[0];
 
 
@@ -437,6 +439,16 @@ class TestadminController extends AbstractController {
         //var_dump($test);
 
         $testnaam = $test->getTestName();
+
+        $downloadTokenValue = $_GET['downloadId'];
+
+//        header('Content-type: application/pdf');
+//        header('Content-Disposition: attachment; filename="' . $testnaam . '.pdf"');
+        setcookie("fileDownloadToken", $downloadTokenValue, time() + 500, '/');
+        //var_dump($_COOKIE);
+        //var_dump($_COOKIE['fileDownloadToken']);
+
+
         $pdf = new myPDF;
         $pdf->SetTitle($testnaam);
         //set author -- de gebruiker die momenteel aangemeld is
@@ -444,6 +456,7 @@ class TestadminController extends AbstractController {
         //is normaal hetzelfde
         $pdf->SetSubject($testnaam);
         //mss datum
+
         $pdf->createMyPage($test, $catname);
     }
 

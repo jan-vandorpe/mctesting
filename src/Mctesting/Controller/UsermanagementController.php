@@ -88,12 +88,12 @@ class UsermanagementController extends AbstractController {
                     $firstName = trim(mb_convert_encoding($data[1], "ISO-8859-1"));
                 }
 
-                if (isset($data[2]) ) {
+                if (isset($data[2])) {
                     $lastName = trim(mb_convert_encoding($data[2], "ISO-8859-1"));
                 }
 
                 //validaten of het geen lege regel is en of het RRNr wel klopt
-                if ($firstName != null and $lastName != null && UserService::isValidRRNRFormat($RRNr) == true) {
+                if (isset($firstName) && $firstName != null and isset($lastName) && $lastName != null && UserService::isValidRRNRFormat($RRNr) == true) {
                     if (UserService::getById($RRNr)) {
 //                      
                         $status['RRnr'] = $RRNr;
@@ -118,7 +118,7 @@ class UsermanagementController extends AbstractController {
                     }
                     //check for whitespaces
                 } else {
-                    if ($firstName != "" && $lastName != "" && $RRNr != "") {
+                    if (isset($firstName) && $firstName != "" && $lastName != "" && $RRNr != "") {
                         $status['RRnr'] = $RRNr;
                         $status['voornaam'] = $firstName;
                         $status['familienaam'] = $lastName;

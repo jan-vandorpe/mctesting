@@ -37,7 +37,8 @@
             </div>
             <div class="form-group">
                 <div class="col-xs-offset-3 col-xs-9">
-                    <input type="submit" name="gebrknop" class="btn btn-success" value="Naar stap 2" {% if tests is empty %}Disabled{% endif %}>
+                    
+                    <button type="submit" name="gebrknop" class="btn btn-success" {% if tests is empty %}Disabled{% endif %}>Naar stap 2 <span class="glyphicon glyphicon-chevron-right"></span></button>
                 </div>
             </div>
         </form>
