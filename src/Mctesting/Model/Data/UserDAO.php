@@ -143,7 +143,7 @@ class UserDAO {
                     throw new ApplicationException('Wachtwoord is incorrect');
                 }
             } else {
-                throw new ApplicationException('Er zijn geen gebruikers gevonden met het email (' . $email . ')');
+                throw new ApplicationException('Er zijn geen actieve gebruikers gevonden met het email (' . $email . ')');
             }
         } else {
             $error = $stmt->errorInfo();

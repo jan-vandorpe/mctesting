@@ -82,39 +82,57 @@ class UserSessionDAO {
     public static function selectByUserAndSession($sessionId, $userId) {
         //create db connection
         $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
         //prepare sql statement
-        $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid AND rijksregisternr = :userid  and actief = 1';
+        $sql = 'SELECT * FROM gebruikers WHERE rijksregisternr = :userid and actief = 1';
         $stmt = $db->prepare($sql);
         //test if statement can be executed
-        if ($stmt->execute(array(':sessieid' => $sessionId, ':userid' => $userId))) {
+        if ($stmt->execute(array(':userid' => $userId))) {
             //test if statement retrieved something
-            $recordset = $stmt->fetchAll();
-            if (!empty($recordset)) {
-                $result = array();
-                foreach ($recordset as $record) {
-                    //create object(s) and return
-                    $userSession = new UserSession();
-                    $user = UserService::getById($record['rijksregisternr']);
-                    $userSession->setUser($user);
-                    $userSession->setScore($record['score']);
-                    $userSession->setPercentage($record['percentage']);
-                    $userSession->setPassed((boolean) $record['geslaagd']);
-                    $userSession->setParticipated((boolean) $record['afgelegd']);
-                    $testSession = TestSessionService::getById($sessionId);
-                    $userSession->setTestSession($testSession);
-                    $userSession->setActive((boolean) $record['actief']);
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //prepare sql statement
+                $sql = 'SELECT * FROM sessiegebruiker WHERE sessieid = :sessieid AND rijksregisternr = :userid';
+                $stmt = $db->prepare($sql);
+                //test if statement can be executed
+                if ($stmt->execute(array(':sessieid' => $sessionId, ':userid' => $userId))) {
+                    //test if statement retrieved something
+                    $recordset = $stmt->fetchAll();
+                    if (!empty($recordset)) {
+                        $result = array();
+                        foreach ($recordset as $record) {
+                            //create object(s) and return
+                            $userSession = new UserSession();
+                            $user = UserService::getById($record['rijksregisternr']);
+                            $userSession->setUser($user);
+                            $userSession->setScore($record['score']);
+                            $userSession->setPercentage($record['percentage']);
+                            $userSession->setPassed((boolean) $record['geslaagd']);
+                            $userSession->setParticipated((boolean) $record['afgelegd']);
+                            $testSession = TestSessionService::getById($sessionId);
+                            $userSession->setTestSession($testSession);
+                            $userSession->setActive((boolean) $record['actief']);
 
-                    //push to result array
-                    array_push($result, $userSession);
+                            //push to result array
+                            array_push($result, $userSession);
+                        }
+                        return $result;
+                    } else {
+                        return false;
+                        //throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
+                    }
+                } else {
+                    $error = $stmt->errorInfo();
+                    throw new ApplicationException('De sessie kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
                 }
-                return $result;
             } else {
-                return false;
-                //throw new ApplicationException('Er zijn geen testsessies gevonden voor deze combinatie van rijksregisternummer en wachtwoord');
+                throw new ApplicationException('Er zijn geen actieve gebruikers gevonden met het rijksregisternummer (' . $userId . ')');
             }
         } else {
             $error = $stmt->errorInfo();
-            throw new ApplicationException('De sessie kon niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+            throw new ApplicationException('De gebruikers met het rijksregisternummer (' . $userId . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
 
