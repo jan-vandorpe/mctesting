@@ -292,7 +292,7 @@ class TestadminController extends AbstractController {
      */ {
         //model        
         $allTest = TestService::getAllPublished();
-        $allUsers = UserService::getAllUsers();
+        $allUsers = UserService::getAllActiveUsers();
         $testsession = "";
 
         if (isset($_POST['selectsession'])) {
