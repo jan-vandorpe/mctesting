@@ -1531,7 +1531,7 @@ class FPDF {
     }
 
     function _putinfo() {
-        $this->_out('/Producer ' . $this->_textstring('MCTesting'));
+        $this->_out('/Producer ' . $this->_textstring(SITE));
         if (!empty($this->title))
             $this->_out('/Title ' . $this->_textstring($this->title));
         if (!empty($this->subject))

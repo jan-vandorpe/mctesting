@@ -33,9 +33,14 @@ class QuestionController extends AbstractController {
         //get categories, but only the ones with subcategories
         $categories = CategoryService::getAll();
         //load subcategories
-        foreach ($categories as $category) {
-            $category->retrieveSubcategories();
+        if (!empty($categories)) {
+            foreach ($categories as $category) {
+                $category->retrieveSubcategories();
+            }
+        } else {
+            throw new ApplicationException('Geen categorieën gevonden. Gelieve een categorie toe te voegen.');
         }
+        
         $question = null;
         if (isset($_SESSION['tempQuestion'])) {
             $question = unserialize($_SESSION['tempQuestion']);

@@ -148,7 +148,7 @@ class UserService {
     }
 
     public function checkForPasswordReset($password) {
-        if ($password == "Vdab") {
+        if ($password == BEH_PASS) {
             return true;
         } else {
             return false;
