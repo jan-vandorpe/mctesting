@@ -427,8 +427,6 @@ class TestDAO {
         $stmt = $db->prepare($sql);
         //bind statement parameters
         $stmt->bindParam(':testid', $id);
-        $active = true;
-        $stmt->bindParam(':actief', $active);
         //test if statement can be executed
         if ($stmt->execute()) {
             //test if statement retrieved something

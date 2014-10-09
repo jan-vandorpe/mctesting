@@ -17,6 +17,7 @@ use Mctesting\Model\Entity\TestCreation;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Entity\Category;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Service\TestSubcatService;
 
 /**
  * Description of testscontroller
@@ -470,32 +471,30 @@ class TestadminController extends AbstractController {
             $test = TestService::getFullTestById($testid);
             $admin = UserService::unserializeFromSession();
             $adminId = $admin->getRRNr();
-            $testname = $test->setTestName($test->getTestName().'_copy');
+            $testname = $test->getTestName().'_copy';
             $testduration = $test->getTestMaxDuration();
             $questioncount = $test->getTestQuestionCount();
             $maxscore = $test->getTestMaxScore();
             $passpercentage = $test->getTestPassPercentage();
             $questions = $test->getQuestions();
+            $questionidlist = array();
+            foreach($questions as $question){
+              $id = $question->getId();
+              array_push($questionidlist, $id);
+            }            
+            $subcats = TestSubcatService::getSubCatsByTest($testid);
             $array = array();
-            foreach ($test->getQuestions() as $question) {
-                            //selectbyid
-                            $questionId = $question->getId();
-                            $questionWeight = $question->getWeight();
-                            $questionSubcat = $question->getSubcategory()->getSubcatname();
-                            if(isset($array["subcatlist"][$questionSubcat])){
-                            $array["subcatlist"][$questionSubcat]["count"]++;
-                            $array["subcatlist"][$questionSubcat]["weight"] += $questionWeight;
-                            } else {
-                            $array["subcatlist"][$questionSubcat]["count"] = 1;
-                            $array["subcatlist"][$questionSubcat]["weight"] = $questionWeight;
-                            }
-                            $array["subcatlist"][$questionSubcat]["id"] = $questionId;
-                            $array["subcatlist"][$questionSubcat]["id"] = $question->getSubcategory()->getId();
-                        }
-            $subcatlist = $array["subcatlist"];
-            TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
-            
+            foreach ($subcats as $subcat){ 
+              $array["subcatlist"]["id"] = $subcat->getId();
+              $array["subcatlist"]["count"] = $subcat->getquestionCount();
+              $array["subcatlist"]["weight"] = $subcat->getMaxScore();
+              $array["subcatlist"]["passpercentage"] = $subcat->getPassPercentage();
+            }
+            $subcatlist = $array;
+            TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questionidlist, $subcatlist);
         }
+        header('Location:'.ROOT.'/testadmin/testlist');
+        exit(0);
     }
 
 }
