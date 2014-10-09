@@ -418,5 +418,41 @@ class TestDAO {
             throw new ApplicationException('Kon de test (' . $testid . ') niet aanpassen, gelieve dit te controleren:<br>' . $error[2]);
         }
     }
+    
+    public static function selectFullTestById($id) {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM test WHERE testid = :testid ORDER BY testnaam';
+        $stmt = $db->prepare($sql);
+        //bind statement parameters
+        $stmt->bindParam(':testid', $id);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $record = $stmt->fetch();
+            if (!empty($record)) {
+                //create object(s) and return
+                //retrieve subcategory object
+                $test = new FullTest();
+                $test->setTestId($record['testid']);
+                $test->setTestName($record['testnaam']);
+                $test->setTestMaxDuration($record['maxduur']);
+                $test->setTestQuestionCount($record['aantalvragen']);
+                $test->setTestMaxscore($record['maxscore']);
+                $test->setTestPassPercentage($record['tebehalenscore']);
+                $test->setTestCreator($record['beheerder']);
+                $questions = QuestionService::getActiveByTest($id);
+                $test->setQuestions($questions);
+                $test->setStatus($record['actief']);
+                return $test;
+            } else {
+                //throw new ApplicationException('Er is geen actieve test ('.$id.') gevonden');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('De actieve test (' . $id . ') konden niet worden opgehaald, gelieve dit te controleren:<br>' . $error[2]);
+        }
+    }
 
 }

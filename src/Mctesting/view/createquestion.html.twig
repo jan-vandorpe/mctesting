@@ -75,11 +75,9 @@
                                         <optgroup label="{{category.catname|capitalize}}">
                                             {% for subcategory in category.subcategories %}
                                                 <option value="{{ subcategory.id }}"
-                                                        {% if question.subcategory %}
-                                                            {% if question.subcategory == subcategory.id %}
+                                                            {% if question.subcategory == subcategory.id or subcatprevious == subcategory.id %}
                                                                 selected
                                                             {% endif %}
-                                                        {% endif %}    
                                                         >{{ subcategory.subcatname|capitalize }}</option>
                                             {% endfor %}
                                         </optgroup>

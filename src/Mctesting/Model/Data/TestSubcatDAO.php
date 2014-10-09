@@ -3,6 +3,7 @@
 namespace Mctesting\Model\Data;
 
 use Mctesting\Exception\ApplicationException;
+use Mctesting\Model\Entity\UserSessionSubCategory;
 
 /**
  * Description of TestSessionDAO
@@ -109,6 +110,44 @@ class TestSubcatDAO {
         } else {
             $error = $stmt->errorInfo();
             throw new ApplicationException('Kon subcategorieen in de database niet verwijderen, gelieve dit te controleren:<br>'.$error[2]);
+        }
+    }
+    
+    public static function selectSubCatsByTest($testId)
+    {
+        //create db connection
+        $db = new \PDO(DB_DSN, DB_USER, DB_PASS);
+        //prepare sql statement
+        $sql = 'SELECT * FROM testsubcat WHERE testid = :testid';
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':testid', $testId);
+        //test if statement can be executed
+        if ($stmt->execute()) {
+            //test if statement retrieved something
+            $recordset = $stmt->fetchAll();
+            if (!empty($recordset)) {
+//                $result = array(
+//                    'questioncount' => 4,
+//                    'totalweight' => 18,
+//                    'passpercentage' => 50,
+//                    );
+                $result = array();
+                foreach ($recordset as $record) {
+                    //
+                    $subcat = new UserSessionSubCategory();
+                    $subcat->setId($record['subcatid']);
+                    $subcat->setMaxScore($record['totgewicht']);
+                    $subcat->setPassPercentage($record['tebehalenscore']);
+                    $subcat->setQuestionCount($record['aantal']);
+                    array_push($result, $subcat);
+                }
+                return $result;
+            } else {
+                throw new ApplicationException('Er werd geen testsubcat gevonden voor deze combinatie van test ('.$testId.') en subcat ('.$subcatId.')');
+            }
+        } else {
+            $error = $stmt->errorInfo();
+            throw new ApplicationException('testsubcat konden niet worden opgehaald, gelieve dit te controleren:<br>'.$error[2]);
         }
     }
 }

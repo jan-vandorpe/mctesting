@@ -27,4 +27,8 @@ class TestSubcatService
     {        
         return TestSubcatDAO::delete($testid);
     }
+    
+    public static function getSubCatsByTest($testId){
+      return TestSubcatDAO::selectSubCatsByTest($testId);
+    }
 }

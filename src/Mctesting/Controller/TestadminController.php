@@ -17,6 +17,7 @@ use Mctesting\Model\Entity\TestCreation;
 use Mctesting\Model\Entity\Test;
 use Mctesting\Model\Entity\Category;
 use Mctesting\Model\Service\TestQuestionService;
+use Mctesting\Model\Service\TestSubcatService;
 
 /**
  * Description of testscontroller
@@ -463,6 +464,37 @@ class TestadminController extends AbstractController {
         $test->shuffleAnswers();
 
         $pdf->createMyPage($test, $catname);
+    }
+    
+    public function testcopy(){
+      foreach ($_POST['testCheckbox'] as $testid) {
+            $test = TestService::getFullTestById($testid);
+            $admin = UserService::unserializeFromSession();
+            $adminId = $admin->getRRNr();
+            $testname = $test->getTestName().'_copy';
+            $testduration = $test->getTestMaxDuration();
+            $questioncount = $test->getTestQuestionCount();
+            $maxscore = $test->getTestMaxScore();
+            $passpercentage = $test->getTestPassPercentage();
+            $questions = $test->getQuestions();
+            $questionidlist = array();
+            foreach($questions as $question){
+              $id = $question->getId();
+              array_push($questionidlist, $id);
+            }            
+            $subcats = TestSubcatService::getSubCatsByTest($testid);
+            $array = array();
+            foreach ($subcats as $subcat){ 
+              $array["subcatlist"]["id"] = $subcat->getId();
+              $array["subcatlist"]["count"] = $subcat->getquestionCount();
+              $array["subcatlist"]["weight"] = $subcat->getMaxScore();
+              $array["subcatlist"]["passpercentage"] = $subcat->getPassPercentage();
+            }
+            $subcatlist = $array;
+            TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questionidlist, $subcatlist);
+        }
+        header('Location:'.ROOT.'/testadmin/testlist');
+        exit(0);
     }
 
 }

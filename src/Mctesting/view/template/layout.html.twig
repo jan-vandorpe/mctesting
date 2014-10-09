@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="{{ app.root }}/public/css/styles.css" />
     <link rel="stylesheet" href="{{ app.root }}/public/css/responsiveMenu.css" />
     <link rel="stylesheet" href="{{ app.root }}/public/css/print.css" />
-
+    <link rel="shortcut icon" href="{{ app.root }}/public/favicon.ico" type="image/x-icon" />
 {% endblock stylesheets %}
 {% block scripts %}
     {{ parent() }}
-    <link rel="shortcut icon" href="{{ app.root }}/public/favicon.ico" type="image/x-icon" />
     <script src="{{ app.root }}/public/js/lib/jquery-1.11.0.min.js"></script>
     <script src="{{ app.root }}/public/js/lib/bootstrap.min.js"></script>
     <script src="{{ app.root }}/public/js/lib/bootstrapValidator.min.js"></script>
@@ -19,6 +18,7 @@
     <script src="{{ app.root }}/public/js/jquery.mask.min.js"></script>
     <script src="{{ app.root }}/public/js/weergave_rijksrnr.js"></script>
     <script src="{{ app.root }}/public/js/changeColorOnHover.js"></script>
+
 
 {% endblock scripts %}
 
