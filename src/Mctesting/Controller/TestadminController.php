@@ -464,5 +464,38 @@ class TestadminController extends AbstractController {
 
         $pdf->createMyPage($test, $catname);
     }
+    
+    public function testcopy(){
+      foreach ($_POST['testCheckbox'] as $testid) {
+            $test = TestService::getFullTestById($testid);
+            $admin = UserService::unserializeFromSession();
+            $adminId = $admin->getRRNr();
+            $testname = $test->setTestName($test->getTestName().'_copy');
+            $testduration = $test->getTestMaxDuration();
+            $questioncount = $test->getTestQuestionCount();
+            $maxscore = $test->getTestMaxScore();
+            $passpercentage = $test->getTestPassPercentage();
+            $questions = $test->getQuestions();
+            $array = array();
+            foreach ($test->getQuestions() as $question) {
+                            //selectbyid
+                            $questionId = $question->getId();
+                            $questionWeight = $question->getWeight();
+                            $questionSubcat = $question->getSubcategory()->getSubcatname();
+                            if(isset($array["subcatlist"][$questionSubcat])){
+                            $array["subcatlist"][$questionSubcat]["count"]++;
+                            $array["subcatlist"][$questionSubcat]["weight"] += $questionWeight;
+                            } else {
+                            $array["subcatlist"][$questionSubcat]["count"] = 1;
+                            $array["subcatlist"][$questionSubcat]["weight"] = $questionWeight;
+                            }
+                            $array["subcatlist"][$questionSubcat]["id"] = $questionId;
+                            $array["subcatlist"][$questionSubcat]["id"] = $question->getSubcategory()->getId();
+                        }
+            $subcatlist = $array["subcatlist"];
+            TestService::create($testname, $testduration, $questioncount, $maxscore, $passpercentage, $adminId, $questions, $subcatlist);
+            
+        }
+    }
 
 }

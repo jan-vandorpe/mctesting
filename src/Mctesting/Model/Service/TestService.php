@@ -63,6 +63,10 @@ class TestService
         return TestDAO::getCatName($testId);
     }
     
+    public static function getFullTestById($id){
+      return TestDAO::selectFullTestById($id);
+    }
+    
     /**
      * Process answers given by user.
      * 
