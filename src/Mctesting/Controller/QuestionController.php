@@ -40,11 +40,16 @@ class QuestionController extends AbstractController {
         if (isset($_SESSION['tempQuestion'])) {
             $question = unserialize($_SESSION['tempQuestion']);
         }
+        $subcatprevious = null;
+        if(isset($_SESSION['subcatprevious'])) {
+          $subcatprevious = unserialize($_SESSION['subcatprevious']);
+        }
         //render page
         $this->render('createquestion.html.twig', array(
             'categories' => $categories,
             'msg' => $msg,
             'question' => $question,
+            'subcatprevious' => $subcatprevious,
         ));
         //unsets the session variables used to customize the UI
         unset($_SESSION['nopopup']);
@@ -131,6 +136,7 @@ class QuestionController extends AbstractController {
             $msg->setFlashMessage('Vraag succesvol toegevoegd' . $_SESSION['nopopup'], 1);
         }
         unset($_SESSION['tempQuestion']);
+        $_SESSION['subcatprevious'] = serialize($subcatId);
         header('location: ' . ROOT . '/question/create');
         exit();
     }
