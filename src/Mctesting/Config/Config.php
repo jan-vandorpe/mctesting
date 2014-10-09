@@ -9,7 +9,7 @@ $standaardBeheerdersWachtwoord = 'Vdab';
 
 //Database access
 define('DB_USER', 'root');
-define('DB_PASS', 'vdab');
+define('DB_PASS', '');
 
 $dbhost = 'localhost';
 $dbname = 'mctesting';
