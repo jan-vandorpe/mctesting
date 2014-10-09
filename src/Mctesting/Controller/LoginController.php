@@ -34,7 +34,12 @@ class LoginController extends AbstractController {
                 header("location: " . ROOT . "/home/go");
             }
         } else {
-            if (UserService::loginCheck($login, $password)) {
+            $formatRRNr = str_replace(".", "", $login);
+            $formatRRNr = str_replace("-", "", $formatRRNr);
+            $formatRRNr = str_replace("/", "", $formatRRNr);
+            $formatRRNr = str_replace(",", "", $formatRRNr);
+            $RRNr = $formatRRNr;
+            if (UserService::loginCheck($RRNr, $password)) {
                 header("location: " . ROOT . "/test/choosesession");
             } else {
                 header("location: " . ROOT . "/home/go");
