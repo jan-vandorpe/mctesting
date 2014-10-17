@@ -4,7 +4,9 @@
  *  Contains variables needed for application
  */
 
+//site naam
 $site = 'MC Testing';
+//default wachtwoord -- reset wachtwoord wordt hiernaar gereset
 $standaardBeheerdersWachtwoord = 'Vdab';
 
 //Database access

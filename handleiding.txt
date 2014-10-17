@@ -31,8 +31,4 @@
 
 2. Aanmelden
 	
-	Aanmelden als gebruiker kan met de testgebruiker met RRnr 12345678900 en een willekeurig wachtwoord.
-
-	Aanmelden als beheerder kan met de testbeheerder met email beheerder@email.be en wachtwoord qsdf.
-
-	Aanmelden als admin kan oa. met email bram@email.be en wachtwoord wxcv.
+	Aanmelden als admin kan met email admin@email.be en wachtwoord Vdab
