@@ -18,8 +18,7 @@ use Mctesting\Model\Service\UserService;
  *
  * @author Thomas
  */
-class Application extends AbstractFramework
-{
+class Application extends AbstractFramework {
 
     protected $appName;
     protected $appLoader;
@@ -28,8 +27,7 @@ class Application extends AbstractFramework
     protected $user;
     protected $root;
 
-    function __construct($appName, $appRoot)
-    {
+    function __construct($appName, $appRoot) {
         //call framework constructor
         parent::__construct();
         $this->appName = $appName;
@@ -58,55 +56,53 @@ class Application extends AbstractFramework
             $user = UserService::unserializeFromSession();
         }
         $this->user = $user;
+
+        if (DEBUG == true) {
+            ini_set('display_errors', 'On');
+            error_reporting(E_ALL);
+        } else {
+            ini_set('display_errors', 'Off');
+            error_reporting(0);
+        }
     }
 
-    public function getRoot()
-    {
+    public function getRoot() {
         return $this->root;
     }
 
-    public function setRoot($root)
-    {
+    public function setRoot($root) {
         $this->root = $root;
     }
 
-    public function getAppName()
-    {
+    public function getAppName() {
         return $this->appName;
     }
 
-    public function getAppLoader()
-    {
+    public function getAppLoader() {
         return $this->appLoader;
     }
 
-    public function getDispatcher()
-    {
+    public function getDispatcher() {
         return $this->dispatcher;
     }
 
-    public function getUrl()
-    {
+    public function getUrl() {
         return '/' . $this->getAppName();
     }
 
-    public function getAppEnvironment()
-    {
+    public function getAppEnvironment() {
         return $this->appEnvironment;
     }
 
-    public function render($view, $model)
-    {
+    public function render($view, $model) {
         print($this->getFrameworkEnvironment()->render($view, $model));
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         return $this->user;
     }
 
-    public function setUser($user)
-    {
+    public function setUser($user) {
         $this->user = $user;
     }
 
